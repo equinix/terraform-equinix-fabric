@@ -35,3 +35,46 @@ In the given example, the folder to perform CRUD operations on an FCR resource c
 | READ      |         `terraform show`          |                          Reads/Shows the current state of the FCR resource |
 | UPDATE    |    `terraform apply -refresh`     | Updates the FCR resource with values provided in the terraform.tfvars file |
 | DELETE    | `terraform destroy –auto-approve` |                                           Deletes the created FCR resource |
+<!-- BEGIN_TF_DOCS -->
+## Requirements
+
+No requirements.
+
+## Providers
+
+| Name | Version |
+|------|---------|
+| <a name="provider_equinix"></a> [equinix](#provider\_equinix) | n/a |
+
+## Modules
+
+No modules.
+
+## Resources
+
+| Name | Type |
+|------|------|
+| [equinix_fabric_cloud_router.test](https://registry.terraform.io/providers/equinix/equinix/latest/docs/resources/fabric_cloud_router) | resource |
+
+## Inputs
+
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| <a name="input_equinix_client_id"></a> [equinix\_client\_id](#input\_equinix\_client\_id) | n/a | `any` | n/a | yes |
+| <a name="input_equinix_client_secret"></a> [equinix\_client\_secret](#input\_equinix\_client\_secret) | n/a | `any` | n/a | yes |
+| <a name="input_fcr_account"></a> [fcr\_account](#input\_fcr\_account) | n/a | `any` | n/a | yes |
+| <a name="input_fcr_location"></a> [fcr\_location](#input\_fcr\_location) | n/a | `any` | n/a | yes |
+| <a name="input_fcr_name"></a> [fcr\_name](#input\_fcr\_name) | n/a | `any` | n/a | yes |
+| <a name="input_fcr_package"></a> [fcr\_package](#input\_fcr\_package) | n/a | `any` | n/a | yes |
+| <a name="input_fcr_project"></a> [fcr\_project](#input\_fcr\_project) | n/a | `any` | n/a | yes |
+| <a name="input_fcr_type"></a> [fcr\_type](#input\_fcr\_type) | n/a | `any` | n/a | yes |
+| <a name="input_notifications_emails"></a> [notifications\_emails](#input\_notifications\_emails) | n/a | `any` | n/a | yes |
+| <a name="input_notifications_type"></a> [notifications\_type](#input\_notifications\_type) | n/a | `any` | n/a | yes |
+| <a name="input_purchase_order_number"></a> [purchase\_order\_number](#input\_purchase\_order\_number) | n/a | `any` | n/a | yes |
+
+## Outputs
+
+| Name | Description |
+|------|-------------|
+| <a name="output_fcr_result"></a> [fcr\_result](#output\_fcr\_result) | n/a |
+<!-- END_TF_DOCS -->
