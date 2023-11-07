@@ -1,3 +1,17 @@
+variable "equinix_client_id" {
+    description = "Equinix client ID (consumer key), obtained after registering app in the developer platform"
+    type = string
+}
+variable "equinix_client_secret" {
+    description = "Equinix client secret ID (consumer secret), obtained after registering app in the developer platform"
+    type = string
+}
+
+variable "fcr_uuid" {
+    description = "Equinix-assigned Fabric Cloud Router identifier"
+    type = string
+}
+
 variable "connection_name" {
     description = "Connection name. An alpha-numeric 24 characters string which can include only hyphens and underscores"
     type = string
@@ -31,18 +45,6 @@ variable "aside_ap_type" {
     description = "Access point type - COLO, VD, VG, SP, IGW, SUBNET, GW"
     type = string
 }
-variable "aside_link_protocol_type" {
-    description = "Type of the link protocol - UNTAGGED, DOT1Q, QINQ, EVPN_VXLAN"
-    type = string
-}
-variable "aside_link_protocol_stag" {
-    description = "Vlan Provider Tag information, vlanSTag value specified for QINQ connections"
-    type = string
-}
-variable "aside_link_protocol_ctag" {
-    description = "Vlan Customer Tag information, vlanCTag value specified for QINQ connections"
-    type = string
-}
 variable "zside_ap_type" {
     description = "Access point type - COLO, VD, VG, SP, IGW, SUBNET, GW"
     type = string
@@ -63,11 +65,16 @@ variable "fabric_sp_name" {
     description = "Equinix Service Profile Name"
     type = string
 }
-variable "equinix_port_name" {
-    description = "Equinix Port Name"
-    type = string
-}
 variable "seller_region" {
     description = "Access point seller region"
+    type = string
+}
+
+variable "aws_access_key" {
+    description = "AWS Access Key from the AWS Console"
+    type = string
+}
+variable "aws_secret_key" {
+    description = "AWS Secret Key from the AWS Console"
     type = string
 }

@@ -1,5 +1,5 @@
-equinix_client_id      = ""
-equinix_client_secret  = ""
+equinix_client_id      = "<MyEquinixClientId>"
+equinix_client_secret  = "<MyEquinixSecret>"
 
 notifications_type = "ALL"
 notifications_emails = ["example@equinix.com","test1@equinix.com"]
@@ -12,11 +12,11 @@ redundancy = "SECONDARY"
 aside_ap_type = "CLOUD_ROUTER"
 
 zside_ap_type = "SP"
-zside_ap_authentication_key = ""
+zside_ap_authentication_key = "<AWS Account ID>"
 zside_ap_profile_type = "L2_PROFILE"
 zside_location = "SV"
 seller_region = "us-west-1"
 fabric_sp_name = "AWS Direct Connect"
 
-aws_access_key = "AWS Client Access Key"
-aws_secret_key = "AWS Client Secret Key"
+aws_access_key = "<AWS Client Access Key>"
+aws_secret_key = "<AWS Client Secret Key>"

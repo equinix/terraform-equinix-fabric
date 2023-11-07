@@ -1,5 +1,5 @@
-equinix_client_id      = "MyEquinixClientId"
-equinix_client_secret  = "MyEquinixSecret"
+equinix_client_id      = "<MyEquinixClientId>"
+equinix_client_secret  = "<MyEquinixSecret>"
 
 connection_name = "terra_e2e_aws"
 connection_type = "EVPL_VC"

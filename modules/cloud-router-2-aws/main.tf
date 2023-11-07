@@ -1,7 +1,12 @@
-provider "equinix" {
-  client_id     = var.equinix_client_id
-  client_secret = var.equinix_client_secret
+terraform {
+  required_providers {
+    equinix = {
+      source="developer.equinix.com/terraform/equinix"
+      version = "9.0.0"
+    }
+  }
 }
+
 data "equinix_fabric_service_profiles" "aws" {
   filter {
     property = "/name"
@@ -47,9 +52,5 @@ resource "equinix_fabric_connection" "fcr2aws"{
       }
     }
   }
-}
-
-output "connection_result" {
-  value = equinix_fabric_connection.fcr2aws.id
 }
 
