@@ -21,21 +21,19 @@ module "cloud_router_port_connection" {
   notifications_type    = var.notifications_type
   notifications_emails  = var.notifications_emails
   bandwidth             = var.bandwidth
-  redundancy            = var.redundancy
   purchase_order_number = var.purchase_order_number
 
   #Aside
-  aside_ap_type = var.aside_ap_type
-  fcr_uuid      = var.fcr_uuid
+  aside_ap_type   = var.aside_ap_type
+  aside_fcr_uuid  = var.aside_fcr_uuid
 
   #Zside
   zside_ap_type               = var.zside_ap_type
   zside_ap_authentication_key = var.zside_ap_authentication_key
   zside_ap_profile_type       = var.zside_ap_profile_type
   zside_location              = var.zside_location
-  seller_region               = var.seller_region
-  fabric_sp_name              = var.fabric_sp_name
+  zside_seller_region         = var.zside_seller_region
+  zside_fabric_sp_name        = var.zside_fabric_sp_name
   zside_port_name             = var.zside_port_name
   zside_vlan_tag              = var.zside_vlan_tag
-  zside_link_protocol_type    = var.zside_link_protocol_type
 }

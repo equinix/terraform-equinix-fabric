@@ -28,10 +28,6 @@ variable "bandwidth" {
   description = "Connection bandwidth in Mbps"
   type        = number
 }
-variable "redundancy" {
-  description = "Redundancy Priority for the connection"
-  type        = string
-}
 variable "purchase_order_number" {
   description = "Purchase order number"
   type        = string
@@ -40,7 +36,7 @@ variable "aside_ap_type" {
   description = "Access point type - COLO, VD, VG, SP, IGW, SUBNET, GW"
   type        = string
 }
-variable "fcr_uuid" {
+variable "aside_fcr_uuid" {
   description = "Equinix-assigned Fabric Cloud Router identifier"
   type        = string
 }
@@ -69,11 +65,6 @@ variable "zside_location" {
   type        = string
   default     = "SP"
 }
-variable "zside_link_protocol_type" {
-  description = "Access point protocol type - UNTAGGED, DOT1Q, QINQ, EVPN_VXLAN"
-  type        = string
-  default     = "DOT1Q"
-}
 variable "zside_vlan_tag" {
   description = "Access point protocol Vlan tag number for DOT1Q connections"
   default     = ""
@@ -86,20 +77,20 @@ variable "zside_vlan_ctag" {
   description = "Access point protocol Vlan ctag number for QINQ connections"
   default     = ""
 }
-variable "peering_type" {
+variable "zside_peering_type" {
   description = "Access point peering type - PRIVATE, MICROSOFT, PUBLIC, MANUAL"
   default     = "PRIVATE"
 }
-variable "network_uuid" {
+variable "zside_network_uuid" {
   description = "Network UUID"
   default     = ""
 }
-variable "fabric_sp_name" {
+variable "zside_fabric_sp_name" {
   description = "Equinix Service Profile Name"
   type        = string
   default     = ""
 }
-variable "seller_region" {
+variable "zside_seller_region" {
   description = "Access point seller region"
   type        = string
   default     = ""
@@ -117,7 +108,7 @@ variable "secret_key" {
 }
 
 variable "additional_info" {
-  description = "Additional parameters required for some service profiles. It should be a list of maps containing 'name' and 'value  e.g. `[{ name='asn' value = '65000'}, { name='ip' value = '192.168.0.1'}]`"
+  description = "Additional parameters required for some service profiles. It should be a list of maps containing 'key' and 'value  e.g. `[{ key='asn' value = '65000'}, { key='ip' value = '192.168.0.1'}]`"
   type        = list(object({ key = string, value = string }))
   default     = []
 }
@@ -127,15 +118,10 @@ variable "secondary_connection_name" {
   type        = string
   default     = ""
 }
-variable "sec_fcr_uuid" {
+variable "aside_sec_fcr_uuid" {
   description = "Equinix-assigned Fabric Cloud Router identifier for Secondary Connection"
   type        = string
   default     = ""
-}
-variable "secondary_redundancy" {
-  description = "Redundancy Priority for the Secondary connection"
-  type        = string
-  default     = "SECONDARY"
 }
 variable "secondary_purchase_order_number" {
   description = "Purchase order number"
