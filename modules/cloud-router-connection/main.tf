@@ -6,7 +6,6 @@ terraform {
     }
   }
 }
-
 data "equinix_fabric_service_profiles" "zside" {
     count = var.zside_ap_type == "SP" ? 1 : 0
   filter {
@@ -56,7 +55,7 @@ resource "equinix_fabric_connection" "primary_cloud_router_connection" {
         link_protocol {
           type       = one(data.equinix_fabric_ports.zside[0].data[0].encapsulation).type
           vlan_tag   = one(data.equinix_fabric_ports.zside[0].data[0].encapsulation).type == "DOT1Q" ? var.zside_vlan_tag : null
-          vlan_c_tag = one(data.equinix_fabric_ports.zside[0].data[0].encapsulation).type == "QINQ" ? var.zside_vlan_ctag : null
+          vlan_c_tag = one(data.equinix_fabric_ports.zside[0].data[0].encapsulation).type == "QINQ" ? var.zside_vlan_tag : null
           vlan_s_tag = one(data.equinix_fabric_ports.zside[0].data[0].encapsulation).type == "QINQ" ? var.zside_vlan_stag : null
         }
         location {
@@ -134,10 +133,10 @@ resource "equinix_fabric_connection" "secondary_cloud_router_connection" {
           uuid = data.equinix_fabric_ports.zside[0].id
         }
         link_protocol {
-          type       = one(data.equinix_fabric_ports.zside[0].data[0].encapsulation).type
-          vlan_tag   = one(data.equinix_fabric_ports.zside[0].data[0].encapsulation).type == "DOT1Q" ? var.zside_vlan_tag : null
-          vlan_c_tag = one(data.equinix_fabric_ports.zside[0].data[0].encapsulation).type == "QINQ" ? var.zside_vlan_ctag : null
-          vlan_s_tag = one(data.equinix_fabric_ports.zside[0].data[0].encapsulation).type == "QINQ" ? var.zside_vlan_stag : null
+          type       = one(data.equinix_fabric_ports.zside[0].data.0.encapsulation).type
+          vlan_tag   = one(data.equinix_fabric_ports.zside[0].data.0.encapsulation).type == "DOT1Q" ? var.zside_vlan_tag : null
+          vlan_c_tag = one(data.equinix_fabric_ports.zside[0].data.0.encapsulation).type == "QINQ" ? var.zside_vlan_tag : null
+          vlan_s_tag = one(data.equinix_fabric_ports.zside[0].data.0.encapsulation).type == "QINQ" ? var.zside_vlan_stag : null
         }
         location {
           metro_code = var.zside_location

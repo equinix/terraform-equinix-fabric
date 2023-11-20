@@ -40,6 +40,7 @@ variable "zside_port_name" {
 variable "zside_ap_authentication_key" {
   description = "Authentication key for provider based connections"
   type        = string
+  default     = ""
 }
 variable "zside_ap_type" {
   description = "Access point type - COLO, VD, VG, SP, IGW, SUBNET, GW"
@@ -57,15 +58,11 @@ variable "zside_location" {
   default     = "SP"
 }
 variable "zside_vlan_tag" {
-  description = "Access point protocol Vlan tag number for DOT1Q connections"
+  description = "Access point protocol Vlan tag number for DOT1Q or QINQ connections"
   default     = ""
 }
 variable "zside_vlan_stag" {
-  description = "Access point protocol Vlan stag number for QINQ connections"
-  default     = ""
-}
-variable "zside_vlan_ctag" {
-  description = "Access point protocol Vlan ctag number for QINQ connections"
+  description = "Access point protocol Vlan tag number for QINQ connections"
   default     = ""
 }
 variable "zside_peering_type" {
@@ -79,10 +76,12 @@ variable "zside_network_uuid" {
 variable "zside_fabric_sp_name" {
   description = "Equinix Service Profile Name"
   type        = string
+  default     = ""
 }
 variable "zside_seller_region" {
   description = "Access point seller region"
   type        = string
+  default     = ""
 }
 variable "access_key" {
   description = "AWS Access Key from the AWS Console"

@@ -40,11 +40,6 @@ variable "aside_fcr_uuid" {
   description = "Equinix-assigned Fabric Cloud Router identifier"
   type        = string
 }
-variable "zside_port_name" {
-  description = "Equinix Zside Port Name"
-  type        = string
-  default     = ""
-}
 variable "zside_ap_authentication_key" {
   description = "Authentication key for provider based connections"
   type        = string
@@ -65,55 +60,15 @@ variable "zside_location" {
   type        = string
   default     = "SP"
 }
-variable "zside_vlan_tag" {
-  description = "Access point protocol Vlan tag number for DOT1Q connections"
-  default     = ""
-}
-variable "zside_vlan_stag" {
-  description = "Access point protocol Vlan stag number for QINQ connections"
-  default     = ""
-}
-variable "zside_vlan_ctag" {
-  description = "Access point protocol Vlan ctag number for QINQ connections"
-  default     = ""
-}
 variable "zside_peering_type" {
   description = "Access point peering type - PRIVATE, MICROSOFT, PUBLIC, MANUAL"
   default     = "PRIVATE"
-}
-variable "zside_network_uuid" {
-  description = "Network UUID"
-  default     = ""
 }
 variable "zside_fabric_sp_name" {
   description = "Equinix Service Profile Name"
   type        = string
   default     = ""
 }
-variable "zside_seller_region" {
-  description = "Access point seller region"
-  type        = string
-  default     = ""
-}
-
-variable "access_key" {
-  description = "AWS Access Key from the AWS Console"
-  type        = string
-  default     = null
-}
-variable "secret_key" {
-  description = "AWS Secret Key from the AWS Console"
-  type        = string
-  default     = null
-}
-
-variable "additional_info" {
-  description = "Additional parameters required for some service profiles. It should be a list of maps containing 'key' and 'value  e.g. `[{ key='asn' value = '65000'}, { key='ip' value = '192.168.0.1'}]`"
-  type        = list(object({key = string, value = string}))
-  default     = []
-}
-
-
 variable "secondary_connection_name" {
   description = "Secondary Connection name"
   type        = string

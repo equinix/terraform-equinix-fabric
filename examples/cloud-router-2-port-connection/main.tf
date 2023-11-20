@@ -29,11 +29,7 @@ module "cloud_router_port_connection" {
 
   #Zside
   zside_ap_type               = var.zside_ap_type
-  zside_ap_authentication_key = var.zside_ap_authentication_key
-  zside_ap_profile_type       = var.zside_ap_profile_type
   zside_location              = var.zside_location
-  zside_seller_region         = var.zside_seller_region
-  zside_fabric_sp_name        = var.zside_fabric_sp_name
   zside_port_name             = var.zside_port_name
   zside_vlan_tag              = var.zside_vlan_tag
 }

@@ -12,7 +12,7 @@ provider "equinix" {
   client_secret = var.equinix_client_secret
 }
 
-module "cloud_router_port_connection" {
+module "cloud_router_aws_connection" {
   source = "../../modules/cloud-router-connection"
 
   connection_name       = var.connection_name
@@ -34,5 +34,4 @@ module "cloud_router_port_connection" {
   zside_location              = var.zside_location
   zside_seller_region         = var.zside_seller_region
   zside_fabric_sp_name        = var.zside_fabric_sp_name
-  zside_vlan_tag              = var.zside_vlan_tag
 }

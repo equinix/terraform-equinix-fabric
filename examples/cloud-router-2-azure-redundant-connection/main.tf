@@ -12,7 +12,7 @@ provider "equinix" {
   client_secret = var.equinix_client_secret
 }
 
-module "cloud_router_port_connection" {
+module "cloud_router_azure_redundant_connection" {
   source = "../../modules/cloud-router-connection"
 
   #Primary Connection
@@ -32,9 +32,8 @@ module "cloud_router_port_connection" {
   zside_ap_authentication_key = var.zside_ap_authentication_key
   zside_ap_profile_type       = var.zside_ap_profile_type
   zside_location              = var.zside_location
-  zside_seller_region         = var.zside_seller_region
   zside_fabric_sp_name        = var.zside_fabric_sp_name
-  zside_vlan_tag              = var.zside_vlan_tag
+  zside_peering_type          = var.zside_peering_type
 
   #Secondary-Connection
   secondary_connection_name       = var.secondary_connection_name
