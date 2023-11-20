@@ -1,0 +1,17 @@
+equinix_client_id      = "MyEquinixClientId"
+equinix_client_secret  = "MyEquinixSecret"
+
+connection_name             = "Port2Azure"
+connection_type             = "EVPL_VC"
+notifications_type          = "ALL"
+notifications_emails        = ["example@equinix.com"]
+bandwidth                   = 100
+purchase_order_number       = "1-323292"
+aside_port_name             = "sit-001-200009-CX-TY4-NL-Qinq-STD-10G-PRI-JP-252"
+aside_vlan_tag              = "2019"
+aside_vlan_inner_tag        = "2022"
+zside_ap_type               = "SP"
+zside_ap_authentication_key = "<Azure Express Route Service Key>"
+zside_ap_profile_type       = "L2_PROFILE"
+zside_location              = "SV"
+zside_sp_name               = "Azure ExpressRoute"

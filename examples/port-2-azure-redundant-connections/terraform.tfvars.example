@@ -1,0 +1,20 @@
+equinix_client_id      = "MyEquinixClientId"
+equinix_client_secret  = "MyEquinixSecret"
+
+connection_name             = "Port2Azure"
+secondary_connection_name   = "Port2Azure_2ndary"
+connection_type             = "EVPL_VC"
+notifications_type          = "ALL"
+notifications_emails        = ["example@equinix.com"]
+bandwidth                   = 100
+secondary_bandwidth         = 100
+purchase_order_number       = "1-323292"
+aside_port_name             = "200001-SV1-CX-Primary-01"
+aside_secondary_port_name   = "200001-SV5-CX-Secondary-02"
+aside_vlan_tag              = "2867"
+aside_vlan_inner_tag        = "2098"
+zside_ap_type               = "SP"
+zside_ap_authentication_key = "<Azure Express Route Service Key>"
+zside_ap_profile_type       = "L2_PROFILE"
+zside_location              = "SV"
+zside_sp_name               = "Azure ExpressRoute"

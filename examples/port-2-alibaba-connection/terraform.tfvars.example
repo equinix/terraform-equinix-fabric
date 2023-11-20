@@ -1,0 +1,17 @@
+equinix_client_id      = "MyEquinixClientId"
+equinix_client_secret  = "MyEquinixSecret"
+
+connection_name             = "Port_2_alibaba"
+connection_type             = "EVPL_VC"
+notifications_type          = "ALL"
+notifications_emails        = ["example@equinix.com"]
+bandwidth                   = 50
+purchase_order_number       = "1-323292"
+aside_port_name             = "sit-tb1-dc-e5.tlab,10GSMF,A,001,201257, 21951980"
+aside_vlan_tag              = "2019"
+zside_ap_type               = "SP"
+zside_ap_authentication_key = "<Alibaba Auth Key>"
+zside_ap_profile_type       = "L2_PROFILE"
+zside_location              = "SY"
+zside_sp_name               = "Alibaba Cloud Express Connect"
+zside_seller_region         = "ap-southeast-2"
