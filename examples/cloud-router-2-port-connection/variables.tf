@@ -49,8 +49,8 @@ variable "zside_ap_type" {
   type        = string
   default     = "SP"
 }
-variable "zside_vlan_tag" {
-  description = "Access point protocol Vlan tag number for DOT1Q connections"
+variable "zside_vlan_outer_tag" {
+  description = "Access point protocol Vlan tag number for DOT1Q or QINQ connections"
   default     = ""
 }
 variable "zside_location" {
@@ -58,3 +58,4 @@ variable "zside_location" {
   type        = string
   default     = "SP"
 }
+

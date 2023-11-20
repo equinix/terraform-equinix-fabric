@@ -70,13 +70,12 @@ variable "zside_seller_region" {
   type        = string
   default     = ""
 }
-
-variable "access_key" {
+variable "aws_access_key" {
   description = "AWS Access Key from the AWS Console"
   type        = string
   default     = null
 }
-variable "secret_key" {
+variable "aws_secret_key" {
   description = "AWS Secret Key from the AWS Console"
   type        = string
   default     = null

@@ -79,13 +79,13 @@ variable "aside_sec_fcr_uuid" {
   type        = string
   default     = ""
 }
+variable "secondary_bandwidth" {
+  description = "Connection bandwidth in Mbps"
+  type        = number
+  default     = 50
+}
 variable "secondary_redundancy" {
   description = "Redundancy Priority for the Secondary connection"
   type        = string
   default     = "SECONDARY"
-}
-variable "secondary_purchase_order_number" {
-  description = "Purchase order number"
-  type        = string
-  default     = ""
 }

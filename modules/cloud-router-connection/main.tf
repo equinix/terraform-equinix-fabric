@@ -54,9 +54,9 @@ resource "equinix_fabric_connection" "primary_cloud_router_connection" {
         }
         link_protocol {
           type       = one(data.equinix_fabric_ports.zside[0].data[0].encapsulation).type
-          vlan_tag   = one(data.equinix_fabric_ports.zside[0].data[0].encapsulation).type == "DOT1Q" ? var.zside_vlan_tag : null
-          vlan_c_tag = one(data.equinix_fabric_ports.zside[0].data[0].encapsulation).type == "QINQ" ? var.zside_vlan_tag : null
-          vlan_s_tag = one(data.equinix_fabric_ports.zside[0].data[0].encapsulation).type == "QINQ" ? var.zside_vlan_stag : null
+          vlan_tag   = one(data.equinix_fabric_ports.zside[0].data[0].encapsulation).type == "DOT1Q" ? var.zside_vlan_outer_tag : null
+          vlan_s_tag = one(data.equinix_fabric_ports.zside[0].data[0].encapsulation).type == "QINQ" ? var.zside_vlan_outer_tag : null
+          vlan_c_tag = one(data.equinix_fabric_ports.zside[0].data[0].encapsulation).type == "QINQ" ? var.zside_vlan_inner_tag : null
         }
         location {
           metro_code = var.zside_location
@@ -99,20 +99,20 @@ resource "equinix_fabric_connection" "primary_cloud_router_connection" {
 
 resource "equinix_fabric_connection" "secondary_cloud_router_connection" {
   count = var.secondary_connection_name != "" ? 1: 0
-  name = var.connection_name
+  name = var.secondary_connection_name
   type = var.connection_type
   notifications {
       type   = var.notifications_type
       emails = var.notifications_emails
   }
   additional_info = var.additional_info != [] ? var.additional_info : null
-  bandwidth       = var.bandwidth
+  bandwidth       = var.secondary_bandwidth
   redundancy {
       priority = "SECONDARY"
       group    = one(equinix_fabric_connection.primary_cloud_router_connection.redundancy).group
   }
   order {
-      purchase_order_number = var.secondary_purchase_order_number
+      purchase_order_number = var.purchase_order_number
   }
   a_side {
       access_point {
@@ -133,10 +133,10 @@ resource "equinix_fabric_connection" "secondary_cloud_router_connection" {
           uuid = data.equinix_fabric_ports.zside[0].id
         }
         link_protocol {
-          type       = one(data.equinix_fabric_ports.zside[0].data.0.encapsulation).type
-          vlan_tag   = one(data.equinix_fabric_ports.zside[0].data.0.encapsulation).type == "DOT1Q" ? var.zside_vlan_tag : null
-          vlan_c_tag = one(data.equinix_fabric_ports.zside[0].data.0.encapsulation).type == "QINQ" ? var.zside_vlan_tag : null
-          vlan_s_tag = one(data.equinix_fabric_ports.zside[0].data.0.encapsulation).type == "QINQ" ? var.zside_vlan_stag : null
+          type       = one(data.equinix_fabric_ports.zside[0].data[0].encapsulation).type
+          vlan_tag   = one(data.equinix_fabric_ports.zside[0].data[0].encapsulation).type == "DOT1Q" ? var.zside_vlan_outer_tag : null
+          vlan_s_tag = one(data.equinix_fabric_ports.zside[0].data[0].encapsulation).type == "QINQ" ? var.zside_vlan_outer_tag : null
+          vlan_c_tag = one(data.equinix_fabric_ports.zside[0].data[0].encapsulation).type == "QINQ" ? var.zside_vlan_inner_tag : null
         }
         location {
           metro_code = var.zside_location

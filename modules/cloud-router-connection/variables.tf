@@ -57,11 +57,11 @@ variable "zside_location" {
   type        = string
   default     = "SP"
 }
-variable "zside_vlan_tag" {
+variable "zside_vlan_outer_tag" {
   description = "Access point protocol Vlan tag number for DOT1Q or QINQ connections"
   default     = ""
 }
-variable "zside_vlan_stag" {
+variable "zside_vlan_inner_tag" {
   description = "Access point protocol Vlan tag number for QINQ connections"
   default     = ""
 }
@@ -83,25 +83,15 @@ variable "zside_seller_region" {
   type        = string
   default     = ""
 }
-variable "access_key" {
-  description = "AWS Access Key from the AWS Console"
-  type        = string
-  default     = ""
-}
-variable "secret_key" {
-  description = "AWS Secret Key from the AWS Console"
-  type        = string
-  default     = ""
-}
 variable "secondary_connection_name" {
   description = "Secondary Connection name"
   type        = string
   default     = ""
 }
-variable "secondary_purchase_order_number" {
-  description = "Purchase order number"
-  type        = string
-  default     = ""
+variable "secondary_bandwidth" {
+  description = "Connection bandwidth in Mbps"
+  type        = number
+  default     = 50
 }
 variable "aside_sec_fcr_uuid" {
   description = "Equinix-assigned Fabric Cloud Router identifier for Secondary Connection"

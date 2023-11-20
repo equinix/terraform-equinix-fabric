@@ -37,6 +37,6 @@ module "cloud_router_azure_redundant_connection" {
 
   #Secondary-Connection
   secondary_connection_name       = var.secondary_connection_name
-  secondary_purchase_order_number = var.secondary_purchase_order_number
+  secondary_bandwidth             = var.secondary_bandwidth
   aside_sec_fcr_uuid              = var.aside_sec_fcr_uuid
 }

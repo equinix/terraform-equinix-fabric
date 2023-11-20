@@ -15,7 +15,6 @@ provider "equinix" {
 module "cloud_router_port_connection" {
   source = "../../modules/cloud-router-connection"
 
-
   connection_name       = var.connection_name
   connection_type       = var.connection_type
   notifications_type    = var.notifications_type
@@ -31,5 +30,5 @@ module "cloud_router_port_connection" {
   zside_ap_type               = var.zside_ap_type
   zside_location              = var.zside_location
   zside_port_name             = var.zside_port_name
-  zside_vlan_tag              = var.zside_vlan_tag
+  zside_vlan_tag              = var.zside_vlan_outer_tag
 }
