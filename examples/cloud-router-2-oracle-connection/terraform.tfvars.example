@@ -1,0 +1,18 @@
+equinix_client_id      = "<MyEquinixClientId>"
+equinix_client_secret  = "<MyEquinixSecret>"
+
+connection_name                 = "fcr_2_oracle"
+connection_type                 = "IP_VC"
+notifications_type              = "ALL"
+notifications_emails            = ["example@equinix.com","test1@equinix.com"]
+purchase_order_number           = "1-323292"
+bandwidth                       = 1000
+aside_ap_type                   = "CLOUD_ROUTER"
+aside_fcr_uuid                  = "<Primary Fabric Cloud router UUID>"
+zside_ap_type                   = "SP"
+zside_ap_authentication_key     = "<Oracle Authentication Key>"
+zside_ap_profile_type           = "L2_PROFILE"
+zside_location                  = "SV"
+zside_peering_type              = "PRIVATE"
+zside_seller_region             = "us-ashburn-1"
+zside_fabric_sp_name            = "Oracle Cloud Infrastructure -OCI- FastConnect"

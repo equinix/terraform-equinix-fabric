@@ -1,0 +1,17 @@
+equinix_client_id      = "<MyEquinixClientId>"
+equinix_client_secret  = "<MyEquinixSecret>"
+
+connection_name                 = "fcr_2_gcp"
+connection_type                 = "IP_VC"
+notifications_type              = "ALL"
+notifications_emails            = ["example@equinix.com","test1@equinix.com"]
+purchase_order_number           = "1-323292"
+bandwidth                       = 50
+aside_ap_type                   = "CLOUD_ROUTER"
+aside_fcr_uuid                  = "<Primary Fabric Cloud router UUID>"
+zside_ap_type                   = "SP"
+zside_ap_authentication_key     = "<GCP Service Key>"
+zside_ap_profile_type           = "L2_PROFILE"
+zside_location                  = "SV"
+zside_seller_region             = "us-west-1"
+zside_fabric_sp_name            = "Google Cloud Partner Interconnect Zone 1"
