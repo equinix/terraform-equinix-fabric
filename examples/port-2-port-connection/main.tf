@@ -1,62 +1,29 @@
+terraform {
+  required_providers {
+    equinix = {
+      source = "equinix/equinix"
+    }
+  }
+}
+
 provider "equinix" {
   client_id     = var.equinix_client_id
   client_secret = var.equinix_client_secret
 }
 
-data "equinix_fabric_ports" "aside" {
-  filters {
-    name = var.aside_port_name
-  }
-}
+module "create_port_2_port_connection" {
+  source = "../../modules/port-connection"
 
-data "equinix_fabric_ports" "zside" {
-  filters {
-    name = var.zside_port_name
-  }
-}
-resource "equinix_fabric_connection" "p2p-qinq" {
-  name = var.connection_name
-  type = var.connection_type
-  notifications{
-    type=var.notifications_type
-    emails=var.notifications_emails
-  }
-  bandwidth = var.bandwidth
-  order {
-    purchase_order_number= var.purchase_order_number
-  }
-  a_side {
-    access_point {
-      type= var.aside_ap_type
-      port {
-        uuid= data.equinix_fabric_ports.aside.data.0.uuid
-      }
-      link_protocol {
-        type= var.aside_link_protocol_type
-        vlan_s_tag= var.aside_link_protocol_stag
-      }
-      gateway {
-        uuid= "XF_ROUTER"
-      }
-    }
-  }
-  z_side {
-    access_point {
-      type= var.zside_ap_type
-      port {
-        uuid= data.equinix_fabric_ports.zside.data.0.uuid
-      }
-      link_protocol {
-        type= var.zside_link_protocol_type
-        vlan_s_tag= var.zside_link_protocol_stag
-      }
-      location {
-        metro_code= var.zside_location
-      }
-    }
-  }
-}
-
-output "connection_result" {
-  value = equinix_fabric_connection.p2p-qinq.id
+  connection_name       = var.connection_name
+  connection_type       = var.connection_type
+  notifications_type    = var.notifications_type
+  notifications_emails  = var.notifications_emails
+  bandwidth             = var.bandwidth
+  purchase_order_number = var.purchase_order_number
+  aside_port_name       = var.aside_port_name
+  aside_vlan_tag        = var.aside_vlan_tag
+  zside_ap_type         = var.zside_ap_type
+  zside_port_name       = var.zside_port_name
+  zside_vlan_tag        = var.zside_vlan_tag
+  zside_location        = var.zside_location
 }

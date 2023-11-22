@@ -1,62 +1,31 @@
+terraform {
+  required_providers {
+    equinix = {
+      source = "equinix/equinix"
+    }
+  }
+}
+
 provider "equinix" {
   client_id     = var.equinix_client_id
   client_secret = var.equinix_client_secret
 }
 
-data "equinix_fabric_service_profiles" "oracle" {
-  filter {
-    property = "/name"
-    operator = "="
-    values = [var.fabric_sp_name]
-  }
-}
+module "create_port_2_oracle_connection" {
+  source = "../../modules/port-connection"
 
-data "equinix_fabric_ports" "qinq-pri" {
-  filters {
-    name = var.equinix_port_name
-  }
-}
-
-resource "equinix_fabric_connection" "oracle-qinq" {
-  name = var.connection_name
-  type = var.connection_type
-  notifications{
-    type=var.notifications_type
-    emails=var.notifications_emails
-  }
-  bandwidth = var.bandwidth
-  redundancy {priority= var.redundancy}
-  order {
-    purchase_order_number= var.purchase_order_number
-  }
-  a_side {
-    access_point {
-      type= var.aside_ap_type
-      port {
-        uuid= data.equinix_fabric_ports.qinq-pri.data.0.uuid
-      }
-      link_protocol {
-        type= var.aside_link_protocol_type
-        vlan_tag= var.aside_link_protocol_tag
-      }
-    }
-  }
-  z_side {
-    access_point {
-      type= var.zside_ap_type
-      authentication_key= var.zside_ap_authentication_key
-      seller_region=var.seller_region
-      profile {
-        type= var.zside_ap_profile_type
-        uuid= data.equinix_fabric_service_profiles.oracle.data.0.uuid
-      }
-      location {
-        metro_code= var.zside_location
-      }
-    }
-  }
-}
-
-output "connection_result" {
-  value = equinix_fabric_connection.oracle-qinq.id
+  connection_name             = var.connection_name
+  connection_type             = var.connection_type
+  notifications_type          = var.notifications_type
+  notifications_emails        = var.notifications_emails
+  bandwidth                   = var.bandwidth
+  purchase_order_number       = var.purchase_order_number
+  aside_port_name             = var.aside_port_name
+  aside_vlan_tag              = var.aside_vlan_tag
+  zside_ap_type               = var.zside_ap_type
+  zside_ap_authentication_key = var.zside_ap_authentication_key
+  zside_ap_profile_type       = var.zside_ap_profile_type
+  zside_location              = var.zside_location
+  zside_seller_region         = var.zside_seller_region
+  zside_sp_name               = var.zside_sp_name
 }

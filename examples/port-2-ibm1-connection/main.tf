@@ -11,7 +11,7 @@ provider "equinix" {
   client_secret = var.equinix_client_secret
 }
 
-module "create_port_2_ibm2_connection" {
+module "create_port_2_ibm1_connection" {
   source = "../../modules/port-connection"
 
   connection_name             = var.connection_name

@@ -1,21 +1,19 @@
 equinix_client_id      = "MyEquinixClientId"
 equinix_client_secret  = "MyEquinixSecret"
 
-connection_name = "terra_e2e_oracle"
-connection_type = "EVPL_VC"
-notifications_type = "ALL"
-notifications_emails = ["example@equinix.com"]
-bandwidth = 50
-redundancy = "PRIMARY"
-purchase_order_number = "1-323292"
-aside_ap_type = "COLO"
-aside_link_protocol_type = "DOT1Q"
-aside_link_protocol_tag = "2019"
-zside_ap_type = "SP"
-zside_ap_authentication_key = "ocid1.virtualcircuit.oc1.phx.aaaaaaaa62hgxtczqwpaour5gnaq4qn2wupjwpqtsknr2mvxblrcdtuyda2q"
-zside_ap_profile_type = "L2_PROFILE"
-zside_location = "DC"
-fabric_sp_name = "Oracle Cloud Infrastructure -OCI- FastConnect"
-equinix_port_name = "ops-user100-CX-SV5-NL-Dot1q-STD-1G-PRI-JP-170"
-seller_region = "us-ashburn-1"
+connection_name             = "Port2Oracle"
+connection_type             = "EVPL_VC"
+notifications_type          = "ALL"
+notifications_emails        = ["example@equinix.com"]
+bandwidth                   = 1000
+purchase_order_number       = "1-323292"
+aside_port_name             = "sit-tb1-dc-e5.tlab,10GSMF,A,001,201257, 21951980"
+aside_vlan_tag              = "2019"
+aside_vlan_inner_tag        = "2020"
+zside_ap_type               = "SP"
+zside_ap_authentication_key = "<Oracle Auth Key>"
+zside_ap_profile_type       = "L2_PROFILE"
+zside_location              = "DC"
+zside_sp_name               = "Oracle Cloud Infrastructure -OCI- FastConnect"
+zside_seller_region         = "us-ashburn-1"
 

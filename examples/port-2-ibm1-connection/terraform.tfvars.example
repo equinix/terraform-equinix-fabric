@@ -1,18 +1,19 @@
 equinix_client_id      = "MyEquinixClientId"
-equinix_client_secret  = "MyEquinixSecret"
+equinix_client_secret  = "MyEquinixClientSecret"
 
-connection_name             = "Port_2_google"
+connection_name             = "Port2IBM1"
 connection_type             = "EVPL_VC"
 notifications_type          = "ALL"
 notifications_emails        = ["example@equinix.com"]
 bandwidth                   = 50
 purchase_order_number       = "1-323292"
 aside_port_name             = "sit-tb1-dc-e5.tlab,10GSMF,A,001,201257, 21951980"
-aside_vlan_tag              = "2032"
-aside_vlan_inner_tag        = "2033"
+aside_vlan_tag              = "3202"
+aside_vlan_inner_tag        = "3195"
 zside_ap_type               = "SP"
-zside_ap_authentication_key = "<Google Auth Key>"
+zside_ap_authentication_key = "<IBM Auth Key>"
 zside_ap_profile_type       = "L2_PROFILE"
 zside_location              = "SV"
-zside_seller_region         = "us-west1"
-zside_sp_name               = "Google Cloud Partner Interconnect Zone 2"
+zside_sp_name               = "IBM Cloud Direct Link Exchange"
+zside_seller_region         = "San Jose 2"
+additional_info             = [{ key = "ASN", value = "14353" }]
