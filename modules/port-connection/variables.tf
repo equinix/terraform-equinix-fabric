@@ -1,4 +1,3 @@
-
 variable "connection_name" {
   description = "Connection name. An alpha-numeric 24 characters string which can include only hyphens and underscores"
   type        = string
@@ -126,4 +125,3 @@ variable "secondary_additional_info" {
   type        = list(object({key = string, value = string}))
   default     = []
 }
-

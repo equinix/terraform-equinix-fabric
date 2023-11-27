@@ -16,4 +16,3 @@ zside_ap_profile_type       = "L2_PROFILE"
 zside_location              = "DC"
 zside_sp_name               = "Oracle Cloud Infrastructure -OCI- FastConnect"
 zside_seller_region         = "us-ashburn-1"
-

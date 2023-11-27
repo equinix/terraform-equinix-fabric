@@ -13,4 +13,3 @@ zside_ap_type         = "SP"
 zside_ap_profile_type = "L2_PROFILE"
 zside_location        = "SV"
 zside_sp_name         = "AMCRH-Gen-SP"
-

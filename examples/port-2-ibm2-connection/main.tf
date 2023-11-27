@@ -20,9 +20,13 @@ module "create_port_2_ibm2_connection" {
   notifications_emails        = var.notifications_emails
   bandwidth                   = var.bandwidth
   purchase_order_number       = var.purchase_order_number
+
+  # A-side
   aside_port_name             = var.aside_port_name
   aside_vlan_tag              = var.aside_vlan_tag
   aside_vlan_inner_tag        = var.aside_vlan_inner_tag
+
+  # Z-side
   zside_ap_type               = var.zside_ap_type
   zside_ap_authentication_key = var.zside_ap_authentication_key
   zside_ap_profile_type       = var.zside_ap_profile_type

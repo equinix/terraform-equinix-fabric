@@ -20,8 +20,12 @@ module "create_port_2_public_sp_connection" {
   notifications_emails  = var.notifications_emails
   bandwidth             = var.bandwidth
   purchase_order_number = var.purchase_order_number
+
+  # A-side
   aside_port_name       = var.aside_port_name
   aside_vlan_tag        = var.aside_vlan_tag
+
+  # Z-side
   zside_ap_type         = var.zside_ap_type
   zside_ap_profile_type = var.zside_ap_profile_type
   zside_location        = var.zside_location
