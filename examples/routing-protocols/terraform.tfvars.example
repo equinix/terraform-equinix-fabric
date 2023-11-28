@@ -1,0 +1,15 @@
+equinix_client_id     = "<MyEquinixClientId>"
+equinix_client_secret = "<MyEquinixSecret>"
+
+connection_uuid        = "<Equinix_Connection_UUID>"
+
+direct_rp_name         = "DIRECT_RP"
+direct_equinix_ipv4_ip = "190.1.1.1/30"
+direct_equinix_ipv6_ip = "190::1:1/126"
+
+bgp_rp_name            = "BGP_RP"
+bgp_customer_peer_ipv4 = "190.1.1.2"
+bgp_customer_peer_ipv6 = "190::1:2"
+bgp_enabled_ipv4       = true
+bgp_enabled_ipv6       = true
+bgp_customer_asn       = "100"
