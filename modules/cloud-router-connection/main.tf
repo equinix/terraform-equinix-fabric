@@ -1,5 +1,5 @@
 data "equinix_fabric_service_profiles" "zside" {
-    count = var.zside_ap_type == "SP" ? 1 : 0
+  count = var.zside_ap_type == "SP" ? 1 : 0
   filter {
     property = "/name"
     operator = "="
@@ -7,9 +7,9 @@ data "equinix_fabric_service_profiles" "zside" {
   }
 }
 data "equinix_fabric_ports" "zside" {
-    count  = var.zside_ap_type == "COLO" ? 1 : 0
+  count = var.zside_ap_type == "COLO" ? 1 : 0
   filters {
-    name   = var.zside_port_name
+    name = var.zside_port_name
   }
 }
 
@@ -40,7 +40,7 @@ resource "equinix_fabric_connection" "primary_cloud_router_connection" {
     for_each = var.zside_ap_type == "COLO" ? [1] : []
     content {
       access_point {
-          type = var.zside_ap_type
+        type = var.zside_ap_type
         port {
           uuid = data.equinix_fabric_ports.zside[0].id
         }
@@ -80,7 +80,7 @@ resource "equinix_fabric_connection" "primary_cloud_router_connection" {
     for_each = var.zside_ap_type == "NETWORK" ? [1] : []
     content {
       access_point {
-          type= var.zside_ap_type
+        type = var.zside_ap_type
         network {
           uuid = var.zside_network_uuid
         }
@@ -90,30 +90,30 @@ resource "equinix_fabric_connection" "primary_cloud_router_connection" {
 }
 
 resource "equinix_fabric_connection" "secondary_cloud_router_connection" {
-  count = var.secondary_connection_name != "" ? 1: 0
-  name = var.secondary_connection_name
-  type = var.connection_type
+  count = var.secondary_connection_name != "" ? 1 : 0
+  name  = var.secondary_connection_name
+  type  = var.connection_type
   notifications {
-      type   = var.notifications_type
-      emails = var.notifications_emails
+    type   = var.notifications_type
+    emails = var.notifications_emails
   }
   additional_info = var.additional_info != [] ? var.additional_info : null
   bandwidth       = var.secondary_bandwidth
   redundancy {
-      priority = "SECONDARY"
-      group    = one(equinix_fabric_connection.primary_cloud_router_connection.redundancy).group
+    priority = "SECONDARY"
+    group    = one(equinix_fabric_connection.primary_cloud_router_connection.redundancy).group
   }
   order {
-      purchase_order_number = var.purchase_order_number
+    purchase_order_number = var.purchase_order_number
   }
   a_side {
-      access_point {
-        type = var.aside_ap_type
+    access_point {
+      type = var.aside_ap_type
 
-        router {
-          uuid = var.aside_sec_fcr_uuid
-        }
+      router {
+        uuid = var.aside_sec_fcr_uuid
       }
+    }
   }
   dynamic "z_side" {
     #ports z_side type
@@ -161,7 +161,7 @@ resource "equinix_fabric_connection" "secondary_cloud_router_connection" {
     for_each = var.zside_ap_type == "NETWORK" ? [1] : []
     content {
       access_point {
-        type= var.zside_ap_type
+        type = var.zside_ap_type
         network {
           uuid = var.zside_network_uuid
         }

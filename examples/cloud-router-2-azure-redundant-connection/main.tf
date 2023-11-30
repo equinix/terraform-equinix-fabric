@@ -27,7 +27,7 @@ module "cloud_router_azure_redundant_connection" {
   zside_peering_type          = var.zside_peering_type
 
   #Secondary-Connection
-  secondary_connection_name       = var.secondary_connection_name
-  secondary_bandwidth             = var.secondary_bandwidth
-  aside_sec_fcr_uuid              = var.aside_sec_fcr_uuid
+  secondary_connection_name = var.secondary_connection_name
+  secondary_bandwidth       = var.secondary_bandwidth
+  aside_sec_fcr_uuid        = var.aside_sec_fcr_uuid
 }

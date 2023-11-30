@@ -100,6 +100,6 @@ variable "aside_sec_fcr_uuid" {
 }
 variable "additional_info" {
   description = "Additional parameters required for some service profiles. It should be a list of maps containing 'key' and 'value  e.g. `[{ key='asn' value = '65000'}, { key='ip' value = '192.168.0.1'}]`"
-  type        = list(object({key = string, value = string}))
+  type        = list(object({ key = string, value = string }))
   default     = []
 }

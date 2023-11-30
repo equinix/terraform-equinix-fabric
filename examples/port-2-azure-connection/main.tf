@@ -6,17 +6,17 @@ provider "equinix" {
 module "create_port_2_azure_connection" {
   source = "../../modules/port-connection"
 
-  connection_name             = var.connection_name
-  connection_type             = var.connection_type
-  notifications_type          = var.notifications_type
-  notifications_emails        = var.notifications_emails
-  bandwidth                   = var.bandwidth
-  purchase_order_number       = var.purchase_order_number
+  connection_name       = var.connection_name
+  connection_type       = var.connection_type
+  notifications_type    = var.notifications_type
+  notifications_emails  = var.notifications_emails
+  bandwidth             = var.bandwidth
+  purchase_order_number = var.purchase_order_number
 
   # A-side
-  aside_port_name             = var.aside_port_name
-  aside_vlan_tag              = var.aside_vlan_tag
-  aside_vlan_inner_tag        = var.aside_vlan_inner_tag
+  aside_port_name      = var.aside_port_name
+  aside_vlan_tag       = var.aside_vlan_tag
+  aside_vlan_inner_tag = var.aside_vlan_inner_tag
 
   # Z-side
   zside_ap_type               = var.zside_ap_type

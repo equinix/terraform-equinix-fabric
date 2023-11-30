@@ -116,12 +116,12 @@ variable "zside_peering_type" {
 
 variable "primary_additional_info" {
   description = "Additional info parameters. It's a list of maps containing 'key' and 'value' keys with their corresponding values."
-  type        = list(object({key = string, value = string}))
+  type        = list(object({ key = string, value = string }))
   default     = []
 }
 
 variable "secondary_additional_info" {
   description = "Additional info parameters. It's a list of maps containing 'key' and 'value' keys with their corresponding values."
-  type        = list(object({key = string, value = string}))
+  type        = list(object({ key = string, value = string }))
   default     = []
 }

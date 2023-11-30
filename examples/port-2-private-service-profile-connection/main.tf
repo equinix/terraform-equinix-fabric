@@ -14,8 +14,8 @@ module "create_port_2_private_sp_connection" {
   purchase_order_number = var.purchase_order_number
 
   # A-side
-  aside_port_name       = var.aside_port_name
-  aside_vlan_tag        = var.aside_vlan_tag
+  aside_port_name = var.aside_port_name
+  aside_vlan_tag  = var.aside_vlan_tag
 
   # Z-side
   zside_ap_type         = var.zside_ap_type

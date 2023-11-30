@@ -18,6 +18,6 @@ module "cloud_router_wan_connection" {
   aside_fcr_uuid = var.aside_fcr_uuid
 
   #Zside
-  zside_ap_type               = var.zside_ap_type
-  zside_network_uuid          = var.zside_network_uuid
+  zside_ap_type      = var.zside_ap_type
+  zside_network_uuid = var.zside_network_uuid
 }

@@ -14,12 +14,12 @@ module "create_port_2_port_connection" {
   purchase_order_number = var.purchase_order_number
 
   # A-side
-  aside_port_name       = var.aside_port_name
-  aside_vlan_tag        = var.aside_vlan_tag
+  aside_port_name = var.aside_port_name
+  aside_vlan_tag  = var.aside_vlan_tag
 
   # Z-side
-  zside_ap_type         = var.zside_ap_type
-  zside_port_name       = var.zside_port_name
-  zside_vlan_tag        = var.zside_vlan_tag
-  zside_location        = var.zside_location
+  zside_ap_type   = var.zside_ap_type
+  zside_port_name = var.zside_port_name
+  zside_vlan_tag  = var.zside_vlan_tag
+  zside_location  = var.zside_location
 }

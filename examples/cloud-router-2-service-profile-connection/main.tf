@@ -18,8 +18,8 @@ module "cloud_router_sp_connection" {
   aside_fcr_uuid = var.aside_fcr_uuid
 
   #Zside
-  zside_ap_type               = var.zside_ap_type
-  zside_ap_profile_type       = var.zside_ap_profile_type
-  zside_location              = var.zside_location
-  zside_fabric_sp_name        = var.zside_fabric_sp_name
+  zside_ap_type         = var.zside_ap_type
+  zside_ap_profile_type = var.zside_ap_profile_type
+  zside_location        = var.zside_location
+  zside_fabric_sp_name  = var.zside_fabric_sp_name
 }
