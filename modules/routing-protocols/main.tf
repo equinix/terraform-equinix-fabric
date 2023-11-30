@@ -1,11 +1,3 @@
-terraform {
-  required_providers {
-    equinix = {
-      source = "equinix/equinix"
-    }
-  }
-}
-
 resource "equinix_fabric_routing_protocol" "direct" {
   connection_uuid = var.connection_uuid
   name            = var.direct_rp_name

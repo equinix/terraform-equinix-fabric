@@ -1,22 +1,3 @@
-terraform {
-  required_providers {
-    equinix = {
-      source="equinix/equinix"
-    }
-  }
-}
-
-
-# A-Side can be:
-# 1. DOT1Q
-# 2. QINQ
-# Can be single connection, or redundant connection
-# Both ports do not have have to have the same encapsulation. We can have any combination.
-
-# Z-Side connection types
-# 1. Port
-# 2. Service Profile
-
 data "equinix_fabric_ports" "aside_port" {
   filters {
     name = var.aside_port_name

@@ -1,10 +1,3 @@
-terraform {
-  required_providers {
-    equinix = {
-      source  = "equinix/equinix"
-    }
-  }
-}
 data "equinix_fabric_service_profiles" "zside" {
     count = var.zside_ap_type == "SP" ? 1 : 0
   filter {
