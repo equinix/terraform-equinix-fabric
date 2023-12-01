@@ -3,7 +3,7 @@
 [![License](https://img.shields.io/github/license/equinix/terraform-equinix-fabric?style=flat-square)](LICENSE)
 [![Release](https://img.shields.io/github/v/release/equinix/terraform-equinix-fabric?style=flat-square)](https://github.com/equinix/terraform-equinix-fabric/releases)
 [![Terraform version](https://img.shields.io/badge/terraform-%3E%3D1.5.4-623CE4.svg?style=flat-square&logo=terraform)](https://github.com/hashicorp/terraform)
-[![Terraform registry](https://img.shields.io/badge/terraform-registry-623CE4.svg?style=flat-square&logo=terraform)](https://registry.terraform.io/modules/equinix/terraform-equinix-fabric)
+[![Terraform registry](https://img.shields.io/badge/terraform-registry-623CE4.svg?style=flat-square&logo=terraform)](https://registry.terraform.io/modules/equinix/fabric/equinix/latest)
 
 > This is a empty module that houses multiple submodules for Equinix Fabric Terraform usage.
 
