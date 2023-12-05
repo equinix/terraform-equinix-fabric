@@ -7,7 +7,13 @@
 
 > This is a empty module that houses multiple submodules for Equinix Fabric Terraform usage.
 
-### Modules
+## Equinix Fabric Developer Documentation
+
+To see the documentation for the APIs that the Fabric Terraform Provider is built on
+and to learn how to procure your own Client_Id and Client_Secret follow the link below:
+[Equinix Fabric Developer Portal](https://developer.equinix.com/docs?page=/dev-docs/fabric/overview)
+
+## Modules
 
 This repository consists in a collection of modules that will accelerate your adoption of Equinix Terraform for Fabric use cases.
 Each module is fully independent and it is dedicated to be used as its own module. They are placed here for organization of
@@ -19,7 +25,7 @@ Each module has:
 * Terraform source code to be used as a module
 * README.md file containing instructions and specific notes to work with the module
 
-### Examples
+## Examples
 
 Each example is a specific use case in Equinix Fabric that the specific sub-module can be used for. Each example has the following:
 
