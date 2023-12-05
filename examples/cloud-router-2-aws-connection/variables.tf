@@ -16,13 +16,14 @@ variable "connection_type" {
   type        = string
 }
 variable "notifications_type" {
-  description = "Notification Type - ALL,CONNECTION_APPROVAL,SALES_REP_NOTIFICATIONS, NOTIFICATIONS"
+  description = "Notification Type - ALL is the only type currently supported"
   type        = string
-
+  default     = "ALL"
 }
 variable "notifications_emails" {
   description = "Array of contact emails"
   type        = list(string)
+  default     = []
 }
 variable "bandwidth" {
   description = "Connection bandwidth in Mbps"
@@ -31,6 +32,7 @@ variable "bandwidth" {
 variable "purchase_order_number" {
   description = "Purchase order number"
   type        = string
+  default     = ""
 }
 variable "aside_ap_type" {
   description = "Access point type - COLO, VD, VG, SP, IGW, SUBNET, GW"
@@ -69,16 +71,6 @@ variable "zside_seller_region" {
   description = "Access point seller region"
   type        = string
   default     = ""
-}
-variable "aws_access_key" {
-  description = "AWS Access Key from the AWS Console"
-  type        = string
-  default     = null
-}
-variable "aws_secret_key" {
-  description = "AWS Secret Key from the AWS Console"
-  type        = string
-  default     = null
 }
 
 variable "additional_info" {

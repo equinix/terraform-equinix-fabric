@@ -11,8 +11,12 @@ aside_port_name             = "sit-001-200009-CX-TY4-NL-Qinq-STD-10G-PRI-JP-252"
 aside_vlan_tag              = "2019"
 aside_vlan_inner_tag        = "2112"
 zside_ap_type               = "SP"
-zside_ap_authentication_key = "357848976964"
+zside_ap_authentication_key = "<AWS_ACCOUNT_ID>"
 zside_ap_profile_type       = "L2_PROFILE"
 zside_location              = "SV"
 zside_seller_region         = "us-west-1"
 zside_sp_name               = "AWS Direct Connect"
+additional_info = [
+  { key = "accessKey", value = "<aws_access_key>" },
+  { key = "secretKey", value = "<aws_secret_key>" }
+]

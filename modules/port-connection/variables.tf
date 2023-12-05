@@ -15,13 +15,14 @@ variable "connection_type" {
 }
 
 variable "notifications_type" {
-  description = "Notification Type - ALL,CONNECTION_APPROVAL,SALES_REP_NOTIFICATIONS, NOTIFICATIONS"
+  description = "Notification Type - ALL is the only type currently supported"
   type        = string
+  default     = "ALL"
 }
-
 variable "notifications_emails" {
   description = "Array of contact emails"
   type        = list(string)
+  default     = []
 }
 
 variable "bandwidth" {
@@ -38,6 +39,7 @@ variable "secondary_bandwidth" {
 variable "purchase_order_number" {
   description = "Purchase order number"
   type        = string
+  default     = ""
 }
 
 variable "aside_port_name" {
@@ -114,13 +116,7 @@ variable "zside_peering_type" {
   default     = ""
 }
 
-variable "primary_additional_info" {
-  description = "Additional info parameters. It's a list of maps containing 'key' and 'value' keys with their corresponding values."
-  type        = list(object({ key = string, value = string }))
-  default     = []
-}
-
-variable "secondary_additional_info" {
+variable "additional_info" {
   description = "Additional info parameters. It's a list of maps containing 'key' and 'value' keys with their corresponding values."
   type        = list(object({ key = string, value = string }))
   default     = []

@@ -10,7 +10,7 @@ module "cloud_router_aws_connection" {
   connection_type       = var.connection_type
   notifications_type    = var.notifications_type
   notifications_emails  = var.notifications_emails
-  additional_info       = [{ key = "accessKey", value = var.aws_access_key }, { key = "secretKey", value = var.aws_secret_key }]
+  additional_info       = var.additional_info
   bandwidth             = var.bandwidth
   purchase_order_number = var.purchase_order_number
 

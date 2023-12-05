@@ -16,13 +16,14 @@ variable "connection_type" {
   type        = string
 }
 variable "notifications_type" {
-  description = "Notification Type - ALL,CONNECTION_APPROVAL,SALES_REP_NOTIFICATIONS, NOTIFICATIONS"
+  description = "Notification Type - ALL is the only type currently supported"
   type        = string
-
+  default     = "ALL"
 }
 variable "notifications_emails" {
   description = "Array of contact emails"
   type        = list(string)
+  default     = []
 }
 variable "bandwidth" {
   description = "Connection bandwidth in Mbps"
@@ -31,6 +32,7 @@ variable "bandwidth" {
 variable "purchase_order_number" {
   description = "Purchase order number"
   type        = string
+  default     = ""
 }
 
 variable "aside_port_name" {
