@@ -42,6 +42,7 @@ module "create_port_2_aws_connection" {
   notifications_emails  = var.notifications_emails
   bandwidth             = var.bandwidth
   purchase_order_number = var.purchase_order_number
+  additional_info       = var.additional_info
 
   # A-side
   aside_port_name      = var.aside_port_name
