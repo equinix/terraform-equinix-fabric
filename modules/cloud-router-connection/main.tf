@@ -18,8 +18,8 @@ resource "equinix_fabric_connection" "primary_cloud_router_connection" {
   name = var.connection_name
   type = var.connection_type
   notifications {
-    type   = var.notifications_emails != [] ? var.notifications_type : null
-    emails = var.notifications_emails != [] ? var.notifications_emails : null
+    type   = var.notifications_emails
+    emails = var.notifications_emails
   }
   additional_info = var.additional_info != [] ? var.additional_info : null
   bandwidth       = var.bandwidth
@@ -94,8 +94,8 @@ resource "equinix_fabric_connection" "secondary_cloud_router_connection" {
   name  = var.secondary_connection_name
   type  = var.connection_type
   notifications {
-    type   = var.notifications_emails != [] ? var.notifications_type : null
-    emails = var.notifications_emails != [] ? var.notifications_emails : null
+    type   = var.notifications_emails
+    emails = var.notifications_emails
   }
   additional_info = var.additional_info != [] ? var.additional_info : null
   bandwidth       = var.secondary_bandwidth

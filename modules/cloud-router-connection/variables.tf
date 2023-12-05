@@ -15,7 +15,6 @@ variable "notifications_type" {
 variable "notifications_emails" {
   description = "Array of contact emails"
   type        = list(string)
-  default     = []
 }
 variable "bandwidth" {
   description = "Connection bandwidth in Mbps"
