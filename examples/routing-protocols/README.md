@@ -23,8 +23,115 @@ terraform init
 terraform apply
 ```
 
-To use this example of the module in your own terraform configuration include the following
-(You must also have variables/values defined and have the contents of versions.tf somewhere in your config):
+To use this example of the module in your own terraform configuration include the following:
+
+*NOTE: terraform.tfvars must be a separate file, but all other content can be placed together in main.tf if you prefer*
+
+terraform.tfvars (Replace these values with your own):
+ ```hcl
+equinix_client_id     = "<MyEquinixClientId>"
+equinix_client_secret = "<MyEquinixSecret>"
+
+connection_uuid        = "<Equinix_Connection_UUID>"
+
+direct_rp_name         = "DIRECT_RP"
+direct_equinix_ipv4_ip = "190.1.1.1/30"
+direct_equinix_ipv6_ip = "190::1:1/126"
+
+bgp_rp_name            = "BGP_RP"
+bgp_customer_peer_ipv4 = "190.1.1.2"
+bgp_customer_peer_ipv6 = "190::1:2"
+bgp_enabled_ipv4       = true
+bgp_enabled_ipv6       = true
+bgp_customer_asn       = "100"
+
+```
+versions.tf:
+ ```hcl
+terraform {
+  required_version = ">= 1.5.4"
+  required_providers {
+    equinix = {
+      source  = "equinix/equinix"
+      version = ">= 1.20.0"
+    }
+  }
+}
+
+```
+variables.tf:
+ ```hcl
+variable "equinix_client_id" {
+  description = "Equinix client ID (consumer key), obtained after registering app in the developer platform"
+  type        = string
+}
+variable "equinix_client_secret" {
+  description = "Equinix client secret ID (consumer secret), obtained after registering app in the developer platform"
+  type        = string
+}
+
+variable "connection_uuid" {
+  description = "Equinix Connection UUID to Apply the Routing Protocols to"
+  type        = string
+}
+variable "direct_rp_name" {
+  description = "Name of the Direct Routing Protocol"
+  type        = string
+}
+variable "direct_equinix_ipv4_ip" {
+  description = "IPv4 Address for Direct Routing Protocol"
+  type        = string
+}
+variable "direct_equinix_ipv6_ip" {
+  description = "IPv6 Address for Direct Routing Protocol"
+  type        = string
+}
+
+
+variable "bgp_rp_name" {
+  description = "Name of the BGP Routing Protocol"
+  type        = string
+  default     = ""
+}
+variable "bgp_customer_peer_ipv4" {
+  description = "Customer Peering IPv4 Address for BGP Routing Protocol"
+  type        = string
+  default     = ""
+}
+variable "bgp_customer_peer_ipv6" {
+  description = "Customer Peering IPv6 Address for BGP Routing Protocol"
+  type        = string
+  default     = ""
+}
+variable "bgp_enabled_ipv4" {
+  description = "Boolean Enable Flag for IPv4 Peering on BGP Routing Protocol"
+  type        = bool
+  default     = true
+}
+variable "bgp_enabled_ipv6" {
+  description = "Boolean Enable Flag for IPv6 Peering on BGP Routing Protocol"
+  type        = bool
+  default     = true
+}
+variable "bgp_customer_asn" {
+  description = "Customer ASN for BGP Routing Protocol"
+  type        = string
+  default     = ""
+}
+
+```
+outputs.tf:
+ ```hcl
+output "direct_rp_id" {
+  value = module.routing_protocols.direct_routing_protocol_id
+}
+
+output "bgp_rp_id" {
+  value = module.routing_protocols.bgp_routing_protocol_id
+}
+
+```
+main.tf:
 
 ```hcl
 

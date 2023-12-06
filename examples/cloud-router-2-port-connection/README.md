@@ -23,8 +23,116 @@ terraform init
 terraform apply
 ```
 
-To use this example of the module in your own terraform configuration include the following
-(You must also have variables/values defined and have the contents of versions.tf somewhere in your config):
+To use this example of the module in your own terraform configuration include the following:
+
+*NOTE: terraform.tfvars must be a separate file, but all other content can be placed together in main.tf if you prefer*
+
+terraform.tfvars (Replace these values with your own):
+ ```hcl
+equinix_client_id      = "<MyEquinixClientId>"
+equinix_client_secret  = "<MyEquinixSecret>"
+        
+notifications_type       = "ALL"
+notifications_emails     = ["example@equinix.com","test1@equinix.com"]
+purchase_order_number    = "1-323292"
+aside_fcr_uuid           = "<Fabric Cloud Router UUID>"
+connection_name          = "fcr_2_port"
+connection_type          = "IP_VC"
+bandwidth                = 50
+aside_ap_type            = "CLOUD_ROUTER"
+zside_ap_type            = "COLO"
+zside_vlan_outer_tag     = "2711"
+zside_location           = "SV"
+zside_port_name          = "<Equinix Port Name>"
+
+```
+versions.tf:
+ ```hcl
+terraform {
+  required_version = ">= 1.5.4"
+  required_providers {
+    equinix = {
+      source  = "equinix/equinix"
+      version = ">= 1.20.0"
+    }
+  }
+}
+
+```
+variables.tf:
+ ```hcl
+variable "equinix_client_id" {
+  description = "Equinix client ID (consumer key), obtained after registering app in the developer platform"
+  type        = string
+}
+variable "equinix_client_secret" {
+  description = "Equinix client secret ID (consumer secret), obtained after registering app in the developer platform"
+  type        = string
+}
+variable "connection_name" {
+  description = "Connection name. An alpha-numeric 24 characters string which can include only hyphens and underscores"
+  type        = string
+}
+variable "connection_type" {
+  description = "Defines the connection type like VG_VC, EVPL_VC, EPL_VC, EC_VC, IP_VC, ACCESS_EPL_VC"
+  type        = string
+  default     = ""
+}
+variable "notifications_type" {
+  description = "Notification Type - ALL is the only type currently supported"
+  type        = string
+  default     = "ALL"
+}
+variable "notifications_emails" {
+  description = "Array of contact emails"
+  type        = list(string)
+}
+variable "bandwidth" {
+  description = "Connection bandwidth in Mbps"
+  type        = number
+}
+variable "purchase_order_number" {
+  description = "Purchase order number"
+  type        = string
+  default     = ""
+}
+variable "aside_ap_type" {
+  description = "Access point type - COLO, VD, VG, SP, IGW, SUBNET, GW"
+  type        = string
+}
+variable "aside_fcr_uuid" {
+  description = "Equinix-assigned Fabric Cloud Router identifier"
+  type        = string
+}
+variable "zside_port_name" {
+  description = "Equinix Zside Port Name"
+  type        = string
+}
+variable "zside_ap_type" {
+  description = "Access point type - COLO, VD, VG, SP, IGW, SUBNET, GW"
+  type        = string
+  default     = "SP"
+}
+variable "zside_vlan_outer_tag" {
+  description = "Access point protocol Vlan tag number for DOT1Q or QINQ connections"
+  default     = ""
+}
+variable "zside_location" {
+  description = "Access point metro code"
+  type        = string
+  default     = "SP"
+}
+
+
+```
+outputs.tf:
+ ```hcl
+output "module_output" {
+  value = module.cloud_router_port_connection.primary_connection_id
+}
+
+```
+main.tf:
 
 ```hcl
 

@@ -23,8 +23,131 @@ terraform init
 terraform apply
 ```
 
-To use this example of the module in your own terraform configuration include the following
-(You must also have variables/values defined and have the contents of versions.tf somewhere in your config):
+To use this example of the module in your own terraform configuration include the following:
+
+*NOTE: terraform.tfvars must be a separate file, but all other content can be placed together in main.tf if you prefer*
+
+terraform.tfvars (Replace these values with your own):
+ ```hcl
+equinix_client_id      = "MyEquinixClientId"
+equinix_client_secret  = "MyEquinixSecret"
+
+connection_name             = "Port2Oracle"
+connection_type             = "EVPL_VC"
+notifications_type          = "ALL"
+notifications_emails        = ["example@equinix.com"]
+bandwidth                   = 1000
+purchase_order_number       = "1-323292"
+aside_port_name             = "sit-tb1-dc-e5.tlab,10GSMF,A,001,201257, 21951980"
+aside_vlan_tag              = "2019"
+aside_vlan_inner_tag        = "2020"
+zside_ap_type               = "SP"
+zside_ap_authentication_key = "<Oracle Auth Key>"
+zside_ap_profile_type       = "L2_PROFILE"
+zside_location              = "DC"
+zside_sp_name               = "Oracle Cloud Infrastructure -OCI- FastConnect"
+zside_seller_region         = "us-ashburn-1"
+
+```
+versions.tf:
+ ```hcl
+terraform {
+  required_version = ">= 1.5.4"
+  required_providers {
+    equinix = {
+      source  = "equinix/equinix"
+      version = ">= 1.20.0"
+    }
+  }
+}
+
+```
+variables.tf:
+ ```hcl
+variable "equinix_client_id" {
+  description = "Equinix client ID (consumer key), obtained after registering app in the developer platform"
+  type        = string
+}
+variable "equinix_client_secret" {
+  description = "Equinix client secret ID (consumer secret), obtained after registering app in the developer platform"
+  type        = string
+}
+
+variable "connection_name" {
+  description = "Connection name. An alpha-numeric 24 characters string which can include only hyphens and underscores"
+  type        = string
+}
+variable "connection_type" {
+  description = "Defines the connection type like VG_VC, EVPL_VC, EPL_VC, EC_VC, IP_VC, ACCESS_EPL_VC"
+  type        = string
+}
+variable "notifications_type" {
+  description = "Notification Type - ALL is the only type currently supported"
+  type        = string
+  default     = "ALL"
+}
+variable "notifications_emails" {
+  description = "Array of contact emails"
+  type        = list(string)
+}
+variable "bandwidth" {
+  description = "Connection bandwidth in Mbps"
+  type        = number
+}
+variable "purchase_order_number" {
+  description = "Purchase order number"
+  type        = string
+  default     = ""
+}
+
+variable "aside_port_name" {
+  description = "Equinix A-Side Port Name"
+  type        = string
+}
+
+variable "aside_vlan_tag" {
+  description = "Vlan Tag information, outer vlanSTag for QINQ connections"
+  type        = string
+}
+variable "aside_vlan_inner_tag" {
+  description = "Vlan Inner Tag information, inner vlanCTag for QINQ connections"
+  type        = string
+  default     = ""
+}
+variable "zside_ap_type" {
+  description = "Access point type - COLO, VD, VG, SP, IGW, SUBNET, GW"
+  type        = string
+}
+variable "zside_ap_authentication_key" {
+  description = "Authentication key for provider based connections"
+  type        = string
+}
+variable "zside_ap_profile_type" {
+  description = "Service profile type - L2_PROFILE, L3_PROFILE, ECIA_PROFILE, ECMC_PROFILE"
+  type        = string
+}
+variable "zside_location" {
+  description = "Access point metro code"
+  type        = string
+}
+variable "zside_sp_name" {
+  description = "Equinix Service Profile Name"
+  type        = string
+}
+variable "zside_seller_region" {
+  description = "Access point seller region"
+  type        = string
+}
+
+```
+outputs.tf:
+ ```hcl
+output "oracle_connection_id" {
+  value = module.create_port_2_oracle_connection.primary_connection_id
+}
+
+```
+main.tf:
 
 ```hcl
 
