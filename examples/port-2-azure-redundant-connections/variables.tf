@@ -6,12 +6,10 @@ variable "equinix_client_secret" {
   description = "Equinix client secret ID (consumer secret), obtained after registering app in the developer platform"
   type        = string
 }
-
 variable "connection_name" {
   description = "Connection name. An alpha-numeric 24 characters string which can include only hyphens and underscores"
   type        = string
 }
-
 variable "secondary_connection_name" {
   description = "Secondary Connection name. An alpha-numeric 24 characters string which can include only hyphens and underscores"
   type        = string
@@ -33,7 +31,6 @@ variable "bandwidth" {
   description = "Connection bandwidth in Mbps"
   type        = number
 }
-
 variable "secondary_bandwidth" {
   description = "Secondary Connection bandwidth in Mbps"
   type        = number
@@ -43,18 +40,14 @@ variable "purchase_order_number" {
   type        = string
   default     = ""
 }
-
 variable "aside_port_name" {
   description = "Equinix A-Side Port Name"
   type        = string
 }
-
-
 variable "aside_secondary_port_name" {
   description = "Secondary Equinix A-Side Port Name"
   type        = string
 }
-
 variable "aside_vlan_tag" {
   description = "Vlan Tag information, outer vlanSTag for QINQ connections"
   type        = string
@@ -66,10 +59,6 @@ variable "aside_vlan_inner_tag" {
 }
 variable "zside_ap_type" {
   description = "Access point type - COLO, VD, VG, SP, IGW, SUBNET, GW"
-  type        = string
-}
-variable "zside_ap_authentication_key" {
-  description = "Authentication key for provider based connections"
   type        = string
 }
 variable "zside_ap_profile_type" {
@@ -84,3 +73,57 @@ variable "zside_sp_name" {
   description = "Equinix Service Profile Name"
   type        = string
 }
+variable "zside_peering_type" {
+  description = "Zside Access Point Peering type. Available values; PRIVATE, MICROSOFT, PUBLIC, MANUAL"
+  type        = string
+}
+variable "azure_client_id" {
+  description = "Azure Client id"
+  type        = string
+}
+variable "azure_client_secret" {
+  description = "Azure Secret value"
+  type        = string
+}
+variable "azure_tenant_id" {
+  description = "Azure Tenant id"
+  type        = string
+}
+variable "azure_subscription_id" {
+  description = "Azure Subscription id"
+  type        = string
+}
+variable "azure_resource_name" {
+  description = "The name of Azure Resource"
+  type        = string
+}
+variable "azure_location" {
+  description = "The location of Azure service provider(resource)"
+  type        = string
+}
+variable "azure_service_key_name" {
+  description = "Azure Service Key"
+  type        = string
+}
+variable "azure_service_provider_name" {
+  description = "The name of Azure Service Provider"
+  type        = string
+  default     = ""
+}
+variable "azure_peering_location" {
+  description = "The name of the peering location (not the Azure resource location)"
+  type        = string
+  default     = ""
+}
+variable "azure_tier" {
+  description = "The Service tier. Possible values are Basic, Local, Standard or Premium"
+  type        = string
+}
+variable "azure_family" {
+  description = "The billing mode for bandwidth. Possible values are MeteredData or UnlimitedData"
+  type        = string
+}
+variable "azure_environment" {
+  description = "The Cloud environment which should be used for Service Key"
+}
+
