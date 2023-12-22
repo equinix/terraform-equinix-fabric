@@ -1,0 +1,26 @@
+equinix_client_id      = "MyEquinixClientId"
+equinix_client_secret  = "MyEquinixSecret"
+
+metal_auth_token = "<Metal Auth API Token>"
+metal_connection_speed_unit = "MB"
+metal_connection_metro = "SV"
+metal_project_id = "<Metal Project ID>"
+metal_connection_description = "Connect from Equinix Metal to Service provider using a-side token"
+
+connection_speed = 50
+connection_name = "metal-2-fabric"
+connection_type = "EVPL_VC"
+notifications_type = "ALL"
+notifications_emails = ["example@equinix.com"]
+bandwidth = 50
+purchase_order_number = "1-323292"
+zside_ap_type = "SP"
+zside_ap_authentication_key = "<AWS_ACCOUNT_ID>"
+zside_ap_profile_type = "L2_PROFILE"
+zside_location = "SV"
+zside_sp_name = "AWS Direct Connect"
+zside_seller_region = "us-west-1"
+additional_info = [
+  { key = "accessKey", value = "<aws_access_key>" },
+  { key = "secretKey", value = "<aws_secret_key>" }
+]
