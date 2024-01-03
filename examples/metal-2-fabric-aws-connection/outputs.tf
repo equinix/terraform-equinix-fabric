@@ -1,5 +1,5 @@
 output "metal-connection" {
-  value = equinix_metal_connection.metal-connection.id     // changed to equinix metal
+  value = equinix_metal_connection.metal-connection.id
 }
 
 output "fabric-connection" {
