@@ -62,6 +62,7 @@ variable "purchase_order_number" {
 variable "zside_ap_type" {
   description = "Access point type - COLO, VD, VG, SP, IGW, SUBNET, GW"
   type        = string
+  default     = ""
 }
 variable "zside_ap_authentication_key" {
   description = "Authentication key for provider based connections"
@@ -74,6 +75,7 @@ variable "zside_ap_profile_type" {
 variable "zside_location" {
   description = "Access point metro code"
   type        = string
+  default     = ""
 }
 variable "zside_sp_name" {
   description = "Equinix Service Profile Name"

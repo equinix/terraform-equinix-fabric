@@ -45,18 +45,15 @@ variable "aside_port_name" {
   description = "Equinix A-Side Port Name; your tagging must match the encapsulation type of the port (DOT1Q or QINQ)"
   type        = string
 }
-
 variable "aside_secondary_port_name" {
   description = "Equinix A-Side Port Name; your tagging must match the encapsulation type of the port (DOT1Q or QINQ)"
   type        = string
   default     = ""
 }
-
 variable "aside_vlan_tag" {
   description = "VLan Tag information for DOT1Q connections, and the outer VLan tag for QINQ connections)"
   type        = string
 }
-
 variable "aside_vlan_inner_tag" {
   description = "VLan Tag information for DOT1Q connections"
   type        = string
@@ -96,7 +93,6 @@ variable "zside_seller_region" {
   type        = string
   default     = ""
 }
-
 variable "zside_vlan_tag" {
   description = "VLan Tag information for DOT1Q connections, and the outer VLan tag for QINQ connections"
   type        = string
@@ -108,13 +104,11 @@ variable "zside_vlan_inner_tag" {
   type        = string
   default     = ""
 }
-
 variable "zside_peering_type" {
   description = "Zside Access Point Peering type. Available values; PRIVATE, MICROSOFT, PUBLIC, MANUAL"
   type        = string
   default     = ""
 }
-
 variable "additional_info" {
   description = "Additional info parameters. It's a list of maps containing 'key' and 'value' keys with their corresponding values."
   type        = list(object({ key = string, value = string }))

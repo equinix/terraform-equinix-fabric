@@ -76,7 +76,7 @@ resource "equinix_fabric_connection" "service_token_connection" {
   }
 
   dynamic "z_side" {
-    for_each = var.zside_ap_type == "ServiceToken" ? [1] : []
+    for_each = var.zside_service_token_uuid != "" ? [1] : []
     content {
       service_token {
         uuid = var.zside_service_token_uuid

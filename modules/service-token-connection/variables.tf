@@ -6,7 +6,6 @@ variable "connection_type" {
   description = "Defines the connection type like VG_VC, EVPL_VC, EPL_VC, EC_VC, IP_VC, ACCESS_EPL_VC"
   type        = string
 }
-
 variable "notifications_type" {
   description = "Notification Type - ALL is the only type currently supported"
   type        = string
@@ -16,7 +15,6 @@ variable "notifications_emails" {
   description = "Array of contact emails"
   type        = list(string)
 }
-
 variable "bandwidth" {
   description = "Connection bandwidth in Mbps"
   type        = number
@@ -34,6 +32,7 @@ variable "aside_service_token_uuid" {
 variable "zside_ap_type" {
   description = "Access point type - VD, SP, COLO, CLOUD_ROUTER, NETWORK"
   type        = string
+  default     = ""
 }
 variable "zside_ap_authentication_key" {
   description = "Authentication key for provider based connections"
@@ -48,6 +47,7 @@ variable "zside_ap_profile_type" {
 variable "zside_location" {
   description = "Access point metro code"
   type        = string
+  default     = ""
 }
 variable "zside_sp_name" {
   description = "Equinix Service Profile Name"
