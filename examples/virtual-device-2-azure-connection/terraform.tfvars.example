@@ -1,0 +1,60 @@
+equinix_client_id      = "MyEquinixClientId"
+equinix_client_secret  = "MyEquinixSecret"
+
+#NE Acl Template
+template_name           = "test-wan-acl-template"
+template_description    = "WAN ACL template"
+template_subnet         = "172.16.25.0/24"
+template_protocol       = "TCP"
+template_src_port       = "any"
+template_dst_port       = "22"
+
+#Network Edge
+ne_name                 = "Terra_Test_router"
+ne_metro_code           = "SV"
+ne_type_code            = "C8000V"
+ne_package_code         = "network-essentials"
+ne_notifications        = ["test@eq.com"]
+ne_hostname             = "C8KV"
+ne_account_number       = "182390403"
+ne_version              = "17.11.01a"
+ne_core_count           = 2
+ne_term_length          = 1
+
+ne_ssh_key_username     = "<SSH_Key_Username>"
+ne_ssh_key_name         = "<SSH_Key_Name"
+
+#network_ssh_key
+network_public_key_name = "<Public_SSH_Key_Name>"
+network_public_key      = "<Public_SSH_Key>"
+
+#Azure Provider
+azure_client_id             = "<Azure Client Id>"
+azure_client_secret         = "<Azure Client Secret Value>"
+azure_tenant_id             = "<Azure Tenant Id>"
+azure_subscription_id       = "<Azure Subscription Id>"
+azure_resource_name         = "Azure-Test"
+azure_location              = "West US 2"
+
+azure_service_key_name      = "Test_Azure_Key"
+azure_service_provider_name = "<Service Provider Name>"
+azure_peering_location      = "Silicon Valley Test"
+azure_tier                  = "Standard"
+azure_family                = "UnlimitedData"
+azure_environment           = "UAT"
+
+#VD_2_Azure_Connection
+connection_name             = "VD2Azure"
+secondary_connection_name   = "VD2Azure Sec"
+connection_type             = "EVPL_VC"
+notifications_type          = "ALL"
+notifications_emails        = ["example@equinix.com"]
+purchase_order_number       = "1-323292"
+
+aside_ap_type               = "VD"
+aside_vd_type               = "EDGE"
+zside_ap_type               = "SP"
+zside_ap_profile_type       = "L2_PROFILE"
+zside_location              = "SV"
+zside_sp_name               = "Azure ExpressRoute"
+zside_peering_type          = "PRIVATE"
