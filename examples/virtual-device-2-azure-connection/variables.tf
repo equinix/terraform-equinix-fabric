@@ -6,6 +6,10 @@ variable "equinix_client_secret" {
   description = "Equinix client secret ID (consumer secret), obtained after registering app in the developer platform"
   type        = string
 }
+variable "equinix_endpoint" {
+  description = "Equinix endpoint URL"
+  type        = string
+}
 ##NE Acl Template
 variable "template_name" {
   description = "ACL Template Name"
@@ -174,11 +178,6 @@ variable "bandwidth" {
 }
 variable "purchase_order_number" {
   description = "Purchase order number"
-  type        = string
-  default     = ""
-}
-variable "aside_ap_type" {
-  description = "Access Point type - VD, VG, SP, IGW, COLO, SUBNET, CLOUD_ROUTER, NETWORK"
   type        = string
   default     = ""
 }

@@ -1,5 +1,6 @@
 equinix_client_id      = "MyEquinixClientId"
 equinix_client_secret  = "MyEquinixSecret"
+equinix_endpoint       = "endpointURL"
 
 #NE Acl Template
 template_name           = "test-wan-acl-template"
@@ -51,7 +52,6 @@ notifications_type          = "ALL"
 notifications_emails        = ["example@equinix.com"]
 purchase_order_number       = "1-323292"
 
-aside_ap_type               = "VD"
 aside_vd_type               = "EDGE"
 zside_ap_type               = "SP"
 zside_ap_profile_type       = "L2_PROFILE"

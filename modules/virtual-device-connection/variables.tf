@@ -34,11 +34,6 @@ variable "purchase_order_number" {
   type        = string
   default     = ""
 }
-variable "aside_ap_type" {
-  description = "Access Point type - VD, VG, SP, IGW, COLO, SUBNET, CLOUD_ROUTER, NETWORK"
-  type        = string
-  default     = ""
-}
 variable "aside_vd_type" {
   description = "Virtual Device type - EDGE"
   type        = string

@@ -1,7 +1,7 @@
 provider "equinix" {
   client_id     = var.equinix_client_id
   client_secret = var.equinix_client_secret
-  endpoint      = "https://uatapi.equinix.com"
+  endpoint      = var.equinix_endpoint
 }
 provider "azurerm" {
   features {}
@@ -85,7 +85,6 @@ module "create_virtual_device_2_azure_connection" {
   purchase_order_number = var.purchase_order_number
 
   # A-side
-  aside_ap_type = var.aside_ap_type
   aside_vd_type = var.aside_vd_type
   aside_vd_uuid = equinix_network_device.C8KV-SV.id
 
