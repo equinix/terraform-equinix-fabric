@@ -34,7 +34,7 @@ resource "equinix_fabric_connection" "virtual_device_connection" {
         uuid = var.aside_vd_uuid
       }
       interface {
-        type = var.aside_interface_type != "" ? data.equinix_fabric_connection.aside_interface_type : null
+        type = var.aside_interface_type != "" ? var.aside_interface_type : null
         id   = var.aside_interface_id != "" ? var.aside_interface_id : null
       }
     }
