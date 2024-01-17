@@ -2,6 +2,12 @@ provider "equinix" {
   client_id     = var.equinix_client_id
   client_secret = var.equinix_client_secret
   auth_token    = var.metal_auth_token // added
+  endpoint      = var.equinix_endpoint
+}
+provider "aws" {
+  access_key = var.additional_info[0]["value"]
+  secret_key = var.additional_info[1]["value"]
+  region     = var.zside_seller_region
 }
 resource "random_string" "random" {
   length  = 3
@@ -68,3 +74,41 @@ module "metal-2-fabric-connection" {
   zside_seller_region         = var.zside_seller_region
   zside_sp_name               = var.zside_sp_name
 }
+data "aws_dx_connection" "connection_id" {
+  depends_on = [
+    module.metal-2-fabric-connection
+  ]
+  name = var.connection_name
+}
+
+resource "aws_vpc" "example" {
+  depends_on = [
+    module.metal-2-fabric-connection
+  ]
+  cidr_block = var.aws_vpc_cidr_block
+}
+
+resource "aws_vpn_gateway" "example" {
+  depends_on = [
+    module.metal-2-fabric-connection
+  ]
+  vpc_id = aws_vpc.example.id
+}
+
+resource "aws_dx_private_virtual_interface" "example" {
+  depends_on = [
+    module.metal-2-fabric-connection,
+    aws_vpn_gateway.example,
+    aws_vpc.example
+  ]
+  connection_id    = data.aws_dx_connection.connection_id.id
+  name             = var.aws_vif_name
+  vlan             = var.aws_vif_vlan
+  address_family   = var.aws_vif_address_family
+  bgp_asn          = var.aws_vif_bgp_asn
+  amazon_address   = var.aws_vif_amazon_address
+  customer_address = var.aws_vif_customer_address
+  bgp_auth_key     = var.aws_vif_bgp_auth_key
+  vpn_gateway_id   = aws_vpn_gateway.example.id
+}
+

@@ -6,6 +6,10 @@ variable "equinix_client_secret" {
   description = "Equinix client secret ID (consumer secret), obtained after registering app in the developer platform"
   type        = string
 }
+variable "equinix_endpoint" {
+  description = "Equinix endpoint URL"
+  type        = string
+}
 variable "metal_auth_token" {
   description = "Equinix Metal Authentication API Token"
   type        = string
@@ -90,3 +94,39 @@ variable "additional_info" {
   type        = list(object({ key = string, value = string }))
   default     = []
 }
+variable "aws_vpc_cidr_block" {
+  description = "The IPv4 CIDR block for the VPC"
+  type        = string
+}
+variable "aws_vif_name" {
+  description = "The name for the virtual interface"
+  type        = string
+}
+variable "aws_vif_vlan" {
+  description = " The VLAN ID"
+  type        = string
+}
+variable "aws_vif_address_family" {
+  description = "The address family for the BGP peer. ipv4 or ipv6"
+  type        = string
+}
+variable "aws_vif_bgp_asn" {
+  description = "The autonomous system (AS) number for Border Gateway Protocol (BGP) configuration"
+  type        = number
+}
+variable "aws_vif_amazon_address" {
+  description = "The IPv4 CIDR address to use to send traffic to Amazon. Required for IPv4 BGP peers"
+  type        = string
+  default     = ""
+}
+variable "aws_vif_customer_address" {
+  description = "The IPv4 CIDR destination address to which Amazon should send traffic. Required for IPv4 BGP peers"
+  type        = string
+  default     = ""
+}
+variable "aws_vif_bgp_auth_key" {
+  description = "The authentication key for BGP configuration"
+  type        =  string
+  default     = ""
+}
+

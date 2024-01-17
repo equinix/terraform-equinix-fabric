@@ -1,5 +1,6 @@
 equinix_client_id      = "MyEquinixClientId"
 equinix_client_secret  = "MyEquinixSecret"
+equinix_endpoint       = "endpoint_URL"
 
 connection_name             = "Port_2_aws"
 connection_type             = "EVPL_VC"
@@ -20,3 +21,12 @@ additional_info = [
   { key = "accessKey", value = "<aws_access_key>" },
   { key = "secretKey", value = "<aws_secret_key>" }
 ]
+
+aws_vpc_cidr_block       = "10.255.255.0/28"
+aws_vif_name             = "port2aws"
+aws_vif_vlan             = "320"
+aws_vif_address_family   = "ipv4"
+aws_vif_bgp_asn          = 64999
+aws_vif_amazon_address   = "169.254.0.1/30"
+aws_vif_customer_address = "169.254.0.2/30"
+aws_vif_bgp_auth_key     = "secret"
