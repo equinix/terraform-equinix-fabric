@@ -5,7 +5,8 @@
 [![Terraform version](https://img.shields.io/badge/terraform-%3E%3D1.5.4-623CE4.svg?style=flat-square&logo=terraform)](https://github.com/hashicorp/terraform)
 [![Terraform registry](https://img.shields.io/badge/terraform-registry-623CE4.svg?style=flat-square&logo=terraform)](https://registry.terraform.io/modules/equinix/fabric/equinix/latest)
 
-> This is a empty module that houses multiple submodules for Equinix Fabric Terraform usage.
+> This is a empty module that houses multiple submodules for Equinix Fabric Terraform usage. Please view the Submodules
+> and the Examples in this module's registry to view details on what they are and how to leverage them.
 
 ## Equinix Fabric Developer Documentation
 
