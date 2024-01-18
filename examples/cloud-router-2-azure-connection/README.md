@@ -1,3 +1,15 @@
+# Fabric Cloud Router to Azure Service Profile Connection
+
+This example shows how to leverage the [Fabric Cloud Router Connection Module](../../modules/cloud-router-connection/README.md)
+to create a Fabric Connection from a Fabric Cloud Router to Azure Service Profile.
+
+It leverages the Equinix Terraform Provider, the Azure Terraform Provider, and the Fabric Cloud Router Connection
+Module to setup the connection based on the parameters you have provided to this example; or based on the pattern
+you see used in this example it will allow you to create a more specific use case for your own needs.
+
+See example usage below for details on how to use this example.
+
+<!-- Begin Example Usage (Do not edit contents) -->
 ## Equinix Fabric Developer Documentation
 
 To see the documentation for the APIs that the Fabric Terraform Provider is built on
@@ -28,7 +40,8 @@ To use this example of the module in your own terraform configuration include th
 *NOTE: terraform.tfvars must be a separate file, but all other content can be placed together in main.tf if you prefer*
 
 terraform.tfvars (Replace these values with your own):
- ```hcl
+```hcl
+
 equinix_client_id      = "<MyEquinixClientId>"
 equinix_client_secret  = "<MyEquinixSecret>"
 
@@ -46,10 +59,21 @@ zside_ap_profile_type           = "L2_PROFILE"
 zside_location                  = "SV"
 zside_peering_type              = "PRIVATE"
 zside_fabric_sp_name            = "Azure ExpressRoute"
-
+azure_client_id                 = "<Azure Client Id>"
+azure_client_secret             = "<Azure Client Secret Value>"
+azure_tenant_id                 = "<Azure Tenant Id>"
+azure_subscription_id           = "<Azure Subscription Id>"
+azure_location                  = "West US 2"
+azure_service_key_name          = "Test_Azure_Key"
+azure_service_provider_name     = "<Service Provider Name>"
+azure_peering_location          = "Silicon Valley Test"
+azure_tier                      = "Standard"
+azure_family                    = "UnlimitedData"
+azure_environment               = "PROD"
 ```
 versions.tf:
- ```hcl
+```hcl
+
 terraform {
   required_version = ">= 1.5.4"
   required_providers {
@@ -57,12 +81,16 @@ terraform {
       source  = "equinix/equinix"
       version = ">= 1.20.0"
     }
+    azurerm = {
+      source = "hashicorp/azurerm"
+      version = "3.84.0"
+    }
   }
 }
-
 ```
 variables.tf:
- ```hcl
+```hcl
+
 variable "equinix_client_id" {
   description = "Equinix client ID (consumer key), obtained after registering app in the developer platform"
   type        = string
@@ -106,12 +134,6 @@ variable "aside_fcr_uuid" {
   description = "Equinix-assigned Fabric Cloud Router identifier"
   type        = string
 }
-
-variable "zside_ap_authentication_key" {
-  description = "Authentication key for provider based connections"
-  type        = string
-  default     = ""
-}
 variable "zside_ap_type" {
   description = "Access point type - COLO, VD, VG, SP, IGW, SUBNET, GW"
   type        = string
@@ -137,24 +159,100 @@ variable "zside_fabric_sp_name" {
   type        = string
   default     = ""
 }
-
+variable "azure_client_id" {
+  description = "Azure Client id"
+  type        = string
+}
+variable "azure_client_secret" {
+  description = "Azure Secret value"
+  type        = string
+}
+variable "azure_tenant_id" {
+  description = "Azure Tenant id"
+  type        = string
+}
+variable "azure_subscription_id" {
+  description = "Azure Subscription id"
+  type        = string
+}
+variable "azure_resource_name" {
+  description = "The name of Azure Resource"
+  type        = string
+}
+variable "azure_location" {
+  description = "The Location of Azure service provider(resource)"
+  type        = string
+}
+variable "azure_service_key_name" {
+  description = "Azure Service Key Name"
+  type        = string
+}
+variable "azure_service_provider_name" {
+  description = "The name of Azure Service Provider"
+  type        = string
+  default     = ""
+}
+variable "azure_peering_location" {
+  description = "The name of the peering location (not the Azure resource location)"
+  type        = string
+  default     = ""
+}
+variable "azure_tier" {
+  description = "The Service tier. Possible values are Basic, Local, Standard or Premium"
+  type        = string
+}
+variable "azure_family" {
+  description = "The billing mode for bandwidth. Possible values are MeteredData or UnlimitedData"
+  type        = string
+}
+variable "azure_environment" {
+  description = "The Cloud environment which should be used for Service Key"
+  type        = string
+}
 ```
 outputs.tf:
- ```hcl
+```hcl
+
 output "module_output" {
   value = module.cloud_router_azure_connection.primary_connection_id
 }
-
 ```
 main.tf:
-
 ```hcl
 
 provider "equinix" {
   client_id     = var.equinix_client_id
   client_secret = var.equinix_client_secret
 }
+provider "azurerm" {
+  features {}
+  client_id       = var.azure_client_id
+  client_secret   = var.azure_client_secret
+  tenant_id       = var.azure_tenant_id
+  subscription_id = var.azure_subscription_id
 
+  skip_provider_registration = true
+}
+resource "azurerm_resource_group" "fcr2azure" {
+  name     = var.azure_resource_name
+  location = var.azure_location
+}
+resource "azurerm_express_route_circuit" "fcr2azure" {
+  name                  = var.azure_service_key_name
+  resource_group_name   = azurerm_resource_group.fcr2azure.name
+  location              = azurerm_resource_group.fcr2azure.location
+  service_provider_name = var.azure_service_provider_name
+  peering_location      = var.azure_peering_location
+  bandwidth_in_mbps     = var.bandwidth
+  sku {
+    tier   = var.azure_tier
+    family = var.azure_family
+  }
+  allow_classic_operations = false
+  tags = {
+    environment = var.azure_environment
+  }
+}
 module "cloud_router_azure_connection" {
   source = "equinix/fabric/equinix//modules/cloud-router-connection"
 
@@ -162,7 +260,7 @@ module "cloud_router_azure_connection" {
   connection_type       = var.connection_type
   notifications_type    = var.notifications_type
   notifications_emails  = var.notifications_emails
-  bandwidth             = var.bandwidth
+  bandwidth             = azurerm_express_route_circuit.fcr2azure.bandwidth_in_mbps
   purchase_order_number = var.purchase_order_number
 
   #Aside
@@ -171,14 +269,14 @@ module "cloud_router_azure_connection" {
 
   #Zside
   zside_ap_type               = var.zside_ap_type
-  zside_ap_authentication_key = var.zside_ap_authentication_key
+  zside_ap_authentication_key = azurerm_express_route_circuit.fcr2azure.service_key
   zside_ap_profile_type       = var.zside_ap_profile_type
   zside_location              = var.zside_location
   zside_peering_type          = var.zside_peering_type
   zside_fabric_sp_name        = var.zside_fabric_sp_name
 }
 ```
-
+<!-- End Example Usage -->
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
 
