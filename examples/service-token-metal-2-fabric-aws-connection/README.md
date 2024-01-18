@@ -1,4 +1,4 @@
-# Equinix Metal to Fabric AWS Service Profile Connection
+# Fabric Service Token - Equinix Metal to Fabric AWS Service Profile Connection
 
 This example shows how to leverage the [Fabric Service Token Connection Module](../../modules/service-token-connection/README.md)
 to create a Fabric Connection from Equinix Metal to Fabric AWS Service Profile.
@@ -30,7 +30,7 @@ you should clone the github repository for this module and run terraform within 
 
 ```bash
 git clone https://github.com/equinix/terraform-equinix-fabric.git
-cd terraform-equinix-fabric/examples/metal-2-fabric-aws-connection
+cd terraform-equinix-fabric/examples/service-token-metal-2-fabric-aws-connection
 terraform init
 terraform apply
 ```
