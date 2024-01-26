@@ -125,4 +125,3 @@ variable "aws_vif_bgp_auth_key" {
   type        =  string
   default     = ""
 }
-

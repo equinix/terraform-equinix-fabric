@@ -13,4 +13,3 @@ output "aws_vpn_gateway_id" {
 output "aws_interface_id" {
   value = aws_dx_private_virtual_interface.example.id
 }
-

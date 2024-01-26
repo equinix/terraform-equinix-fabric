@@ -1,3 +1,15 @@
+# Fabric Routing Protocols Addition to Fabric Connection
+
+This example shows how to leverage the [Fabric Routing Protocols Module](../../modules/routing-protocols/README.md)
+to create Routing Protocols for a Fabric Connection.
+
+It leverages the Equinix Terraform Provider, and the Fabric Routing Protocols
+Module to setup the connection based on the parameters you have provided to this example; or based on the pattern
+you see used in this example it will allow you to create a more specific use case for your own needs.
+
+See example usage below for details on how to use this example.
+
+<!-- Begin Example Usage (Do not edit contents) -->
 ## Equinix Fabric Developer Documentation
 
 To see the documentation for the APIs that the Fabric Terraform Provider is built on
@@ -28,7 +40,8 @@ To use this example of the module in your own terraform configuration include th
 *NOTE: terraform.tfvars must be a separate file, but all other content can be placed together in main.tf if you prefer*
 
 terraform.tfvars (Replace these values with your own):
- ```hcl
+```hcl
+
 equinix_client_id     = "<MyEquinixClientId>"
 equinix_client_secret = "<MyEquinixSecret>"
 
@@ -44,10 +57,10 @@ bgp_customer_peer_ipv6 = "190::1:2"
 bgp_enabled_ipv4       = true
 bgp_enabled_ipv6       = true
 bgp_customer_asn       = "100"
-
 ```
 versions.tf:
- ```hcl
+```hcl
+
 terraform {
   required_version = ">= 1.5.4"
   required_providers {
@@ -57,10 +70,10 @@ terraform {
     }
   }
 }
-
 ```
 variables.tf:
- ```hcl
+```hcl
+
 variable "equinix_client_id" {
   description = "Equinix client ID (consumer key), obtained after registering app in the developer platform"
   type        = string
@@ -118,10 +131,10 @@ variable "bgp_customer_asn" {
   type        = string
   default     = ""
 }
-
 ```
 outputs.tf:
- ```hcl
+```hcl
+
 output "direct_rp_id" {
   value = module.routing_protocols.direct_routing_protocol_id
 }
@@ -129,10 +142,8 @@ output "direct_rp_id" {
 output "bgp_rp_id" {
   value = module.routing_protocols.bgp_routing_protocol_id
 }
-
 ```
 main.tf:
-
 ```hcl
 
 provider "equinix" {
@@ -159,7 +170,7 @@ module "routing_protocols" {
   bgp_enabled_ipv6       = var.bgp_enabled_ipv6
 }
 ```
-
+<!-- End Example Usage -->
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
 

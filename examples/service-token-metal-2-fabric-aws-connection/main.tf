@@ -110,4 +110,3 @@ resource "aws_dx_private_virtual_interface" "example" {
   bgp_auth_key     = var.aws_vif_bgp_auth_key
   vpn_gateway_id   = aws_vpn_gateway.example.id
 }
-

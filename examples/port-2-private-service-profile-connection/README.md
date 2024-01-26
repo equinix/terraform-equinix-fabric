@@ -1,3 +1,15 @@
+# Fabric Port to Fabric Private Service Profile Connection
+
+This example shows how to leverage the [Fabric Port Connection Module](../../modules/port-connection/README.md)
+to create a Fabric Connection from a Fabric Port to Fabric Private Service Profile.
+
+It leverages the Equinix Terraform Provider, and the Fabric Port Connection
+Module to setup the connection based on the parameters you have provided to this example; or based on the pattern
+you see used in this example it will allow you to create a more specific use case for your own needs.
+
+See example usage below for details on how to use this example.
+
+<!-- Begin Example Usage (Do not edit contents) -->
 ## Equinix Fabric Developer Documentation
 
 To see the documentation for the APIs that the Fabric Terraform Provider is built on
@@ -28,7 +40,8 @@ To use this example of the module in your own terraform configuration include th
 *NOTE: terraform.tfvars must be a separate file, but all other content can be placed together in main.tf if you prefer*
 
 terraform.tfvars (Replace these values with your own):
- ```hcl
+```hcl
+
 equinix_client_id      = "MyEquinixClientId"
 equinix_client_secret  = "MyEquinixSecret"
 
@@ -44,10 +57,10 @@ zside_ap_type         = "SP"
 zside_ap_profile_type = "L2_PROFILE"
 zside_location        = "DA"
 zside_sp_name         = "Equinix Direct Connect - Private"
-
 ```
 versions.tf:
- ```hcl
+```hcl
+
 terraform {
   required_version = ">= 1.5.4"
   required_providers {
@@ -57,10 +70,10 @@ terraform {
     }
   }
 }
-
 ```
 variables.tf:
- ```hcl
+```hcl
+
 variable "equinix_client_id" {
   description = "Equinix client ID (consumer key), obtained after registering app in the developer platform"
   type        = string
@@ -127,17 +140,15 @@ variable "zside_sp_name" {
   description = "Equinix Service Profile Name"
   type        = string
 }
-
 ```
 outputs.tf:
- ```hcl
+```hcl
+
 output "private_sp_connection_id" {
   value = module.create_port_2_private_sp_connection.primary_connection_id
 }
-
 ```
 main.tf:
-
 ```hcl
 
 provider "equinix" {
@@ -166,7 +177,7 @@ module "create_port_2_private_sp_connection" {
   zside_sp_name         = var.zside_sp_name
 }
 ```
-
+<!-- End Example Usage -->
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
 

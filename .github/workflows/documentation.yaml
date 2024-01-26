@@ -20,7 +20,7 @@ jobs:
         with:
           ref: main
 
-      - name: Render terraform docs inside the main and the modules README.md files and push changes back to PR branch
+      - name: Render terraform docs inside the main, modules, and examples README.md files and push changes back to PR branch
         id: terraform-docs
         uses: terraform-docs/gh-actions@v1.0.0
         with:

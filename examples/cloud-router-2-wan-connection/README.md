@@ -1,3 +1,15 @@
+# Fabric Cloud Router to Fabric Network Connection
+
+This example shows how to leverage the [Fabric Cloud Router Connection Module](../../modules/cloud-router-connection/README.md)
+to create a Fabric Connection from a Fabric Cloud Router to Fabric Network.
+
+It leverages the Equinix Terraform Provider, and the Fabric Cloud Router Connection
+Module to setup the connection based on the parameters you have provided to this example; or based on the pattern
+you see used in this example it will allow you to create a more specific use case for your own needs.
+
+See example usage below for details on how to use this example.
+
+<!-- Begin Example Usage (Do not edit contents) -->
 ## Equinix Fabric Developer Documentation
 
 To see the documentation for the APIs that the Fabric Terraform Provider is built on
@@ -28,7 +40,8 @@ To use this example of the module in your own terraform configuration include th
 *NOTE: terraform.tfvars must be a separate file, but all other content can be placed together in main.tf if you prefer*
 
 terraform.tfvars (Replace these values with your own):
- ```hcl
+```hcl
+
 equinix_client_id      = "<MyEquinixClientId>"
 equinix_client_secret  = "<MyEquinixSecret>"
 
@@ -42,10 +55,10 @@ aside_ap_type                   = "CLOUD_ROUTER"
 aside_fcr_uuid                  = "<Primary Fabric Cloud router UUID>"
 zside_ap_type                   = "NETWORK"
 zside_network_uuid              = "<Network UUID>"
-
 ```
 versions.tf:
- ```hcl
+```hcl
+
 terraform {
   required_version = ">= 1.5.4"
   required_providers {
@@ -55,10 +68,10 @@ terraform {
     }
   }
 }
-
 ```
 variables.tf:
- ```hcl
+```hcl
+
 variable "equinix_client_id" {
   description = "Equinix client ID (consumer key), obtained after registering app in the developer platform"
   type        = string
@@ -111,17 +124,15 @@ variable "zside_network_uuid" {
   description = "Network UUID"
   default     = ""
 }
-
 ```
 outputs.tf:
- ```hcl
+```hcl
+
 output "module_output" {
   value = module.cloud_router_wan_connection.primary_connection_id
 }
-
 ```
 main.tf:
-
 ```hcl
 
 provider "equinix" {
@@ -148,7 +159,7 @@ module "cloud_router_wan_connection" {
   zside_network_uuid = var.zside_network_uuid
 }
 ```
-
+<!-- End Example Usage -->
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
 

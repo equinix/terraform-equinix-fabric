@@ -33,4 +33,3 @@ aws_vif_bgp_asn          = 64999
 aws_vif_amazon_address   = "169.254.0.1/30"
 aws_vif_customer_address = "169.254.0.2/30"
 aws_vif_bgp_auth_key     = "secret"
-
