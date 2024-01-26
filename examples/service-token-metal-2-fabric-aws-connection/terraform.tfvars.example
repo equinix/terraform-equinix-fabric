@@ -1,6 +1,5 @@
 equinix_client_id      = "MyEquinixClientId"
 equinix_client_secret  = "MyEquinixSecret"
-equinix_endpoint       = "endpoint_URL"
 
 metal_auth_token = "<Metal Auth API Token>"
 metal_connection_speed_unit = "MB"

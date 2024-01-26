@@ -4,7 +4,7 @@ output "metal-connection" {
 output "fabric-connection" {
   value = module.metal-2-fabric-connection.primary_connection_id
 }
-output "asw_vpc_id" {
+output "aws_vpc_id" {
   value = aws_vpc.example.id
 }
 output "aws_vpn_gateway_id" {

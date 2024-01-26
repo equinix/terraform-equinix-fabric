@@ -1,7 +1,6 @@
 provider "equinix" {
   client_id     = var.equinix_client_id
   client_secret = var.equinix_client_secret
-  endpoint      = var.equinix_endpoint
 }
 provider "aws" {
   access_key = var.additional_info[0]["value"]
@@ -48,7 +47,6 @@ resource "aws_vpc" "example" {
 
 resource "aws_vpn_gateway" "example" {
   depends_on = [
-#    aws_vpc.example,
     module.port_2_aws_connection
   ]
   vpc_id = aws_vpc.example.id

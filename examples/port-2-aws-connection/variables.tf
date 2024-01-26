@@ -6,10 +6,6 @@ variable "equinix_client_secret" {
   description = "Equinix client secret ID (consumer secret), obtained after registering app in the developer platform"
   type        = string
 }
-variable "equinix_endpoint" {
-  description = "Equinix endpoint URL"
-  type        = string
-}
 variable "connection_name" {
   description = "Connection name. An alpha-numeric 24 characters string which can include only hyphens and underscores"
   type        = string

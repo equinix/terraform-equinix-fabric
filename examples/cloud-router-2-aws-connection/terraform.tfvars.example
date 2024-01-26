@@ -1,6 +1,5 @@
 equinix_client_id      = "<MyEquinixClientId>"
 equinix_client_secret  = "<MyEquinixSecret>"
-equinix_endpoint       = "endpoint_URL"
 
 notifications_type          = "ALL"
 notifications_emails        = ["example@equinix.com","test1@equinix.com"]

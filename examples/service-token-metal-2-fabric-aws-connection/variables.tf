@@ -6,10 +6,6 @@ variable "equinix_client_secret" {
   description = "Equinix client secret ID (consumer secret), obtained after registering app in the developer platform"
   type        = string
 }
-variable "equinix_endpoint" {
-  description = "Equinix endpoint URL"
-  type        = string
-}
 variable "metal_auth_token" {
   description = "Equinix Metal Authentication API Token"
   type        = string

@@ -1,8 +1,7 @@
 provider "equinix" {
   client_id     = var.equinix_client_id
   client_secret = var.equinix_client_secret
-  auth_token    = var.metal_auth_token // added
-  endpoint      = var.equinix_endpoint
+  auth_token    = var.metal_auth_token
 }
 provider "aws" {
   access_key = var.additional_info[0]["value"]
