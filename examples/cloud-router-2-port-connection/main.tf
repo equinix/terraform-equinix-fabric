@@ -21,5 +21,5 @@ module "cloud_router_port_connection" {
   zside_ap_type   = var.zside_ap_type
   zside_location  = var.zside_location
   zside_port_name = var.zside_port_name
-  zside_vlan_tag  = var.zside_vlan_outer_tag
+  zside_vlan_outer_tag  = var.zside_vlan_outer_tag
 }
