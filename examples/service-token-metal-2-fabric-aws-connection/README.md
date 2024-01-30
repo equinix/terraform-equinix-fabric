@@ -270,13 +270,15 @@ module "metal-2-fabric-connection" {
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.5.2 |
-| <a name="requirement_equinix"></a> [equinix](#requirement\_equinix) | >= 1.20.0 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 5.0 |
+| <a name="requirement_equinix"></a> [equinix](#requirement\_equinix) | >= 1.25.1 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_equinix"></a> [equinix](#provider\_equinix) | >= 1.20.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | ~> 5.0 |
+| <a name="provider_equinix"></a> [equinix](#provider\_equinix) | >= 1.25.1 |
 | <a name="provider_random"></a> [random](#provider\_random) | n/a |
 
 ## Modules
@@ -289,17 +291,26 @@ module "metal-2-fabric-connection" {
 
 | Name | Type |
 |------|------|
+| [aws_dx_private_virtual_interface.example](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/dx_private_virtual_interface) | resource |
+| [aws_vpc.example](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc) | resource |
+| [aws_vpn_gateway.example](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpn_gateway) | resource |
 | [equinix_metal_connection.metal-connection](https://registry.terraform.io/providers/equinix/equinix/latest/docs/resources/metal_connection) | resource |
 | [equinix_metal_device.s1](https://registry.terraform.io/providers/equinix/equinix/latest/docs/resources/metal_device) | resource |
 | [equinix_metal_device_network_type.s1-network-type](https://registry.terraform.io/providers/equinix/equinix/latest/docs/resources/metal_device_network_type) | resource |
 | [equinix_metal_port_vlan_attachment.s1-attachment](https://registry.terraform.io/providers/equinix/equinix/latest/docs/resources/metal_port_vlan_attachment) | resource |
 | [equinix_metal_vlan.vlan-server-1](https://registry.terraform.io/providers/equinix/equinix/latest/docs/resources/metal_vlan) | resource |
 | [random_string.random](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/string) | resource |
+| [aws_dx_connection.connection_id](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/dx_connection) | data source |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_aws_vif_address_family"></a> [aws\_vif\_address\_family](#input\_aws\_vif\_address\_family) | The address family for the BGP peer. ipv4 or ipv6 | `string` | n/a | yes |
+| <a name="input_aws_vif_bgp_asn"></a> [aws\_vif\_bgp\_asn](#input\_aws\_vif\_bgp\_asn) | The autonomous system (AS) number for Border Gateway Protocol (BGP) configuration | `number` | n/a | yes |
+| <a name="input_aws_vif_name"></a> [aws\_vif\_name](#input\_aws\_vif\_name) | The name for the virtual interface | `string` | n/a | yes |
+| <a name="input_aws_vif_vlan"></a> [aws\_vif\_vlan](#input\_aws\_vif\_vlan) | The VLAN ID | `string` | n/a | yes |
+| <a name="input_aws_vpc_cidr_block"></a> [aws\_vpc\_cidr\_block](#input\_aws\_vpc\_cidr\_block) | The IPv4 CIDR block for the VPC | `string` | n/a | yes |
 | <a name="input_bandwidth"></a> [bandwidth](#input\_bandwidth) | Connection bandwidth in Mbps | `number` | n/a | yes |
 | <a name="input_connection_name"></a> [connection\_name](#input\_connection\_name) | Connection name. An alpha-numeric 24 characters string which can include only hyphens and underscores | `string` | n/a | yes |
 | <a name="input_connection_type"></a> [connection\_type](#input\_connection\_type) | Defines the connection type like VG\_VC, EVPL\_VC, EPL\_VC, EC\_VC, IP\_VC, ACCESS\_EPL\_VC | `string` | n/a | yes |
@@ -314,6 +325,9 @@ module "metal-2-fabric-connection" {
 | <a name="input_zside_seller_region"></a> [zside\_seller\_region](#input\_zside\_seller\_region) | Access point seller region | `string` | n/a | yes |
 | <a name="input_zside_sp_name"></a> [zside\_sp\_name](#input\_zside\_sp\_name) | Equinix Service Profile Name | `string` | n/a | yes |
 | <a name="input_additional_info"></a> [additional\_info](#input\_additional\_info) | Additional info parameters. It's a list of maps containing 'key' and 'value' keys with their corresponding values. | `list(object({ key = string, value = string }))` | `[]` | no |
+| <a name="input_aws_vif_amazon_address"></a> [aws\_vif\_amazon\_address](#input\_aws\_vif\_amazon\_address) | The IPv4 CIDR address to use to send traffic to Amazon. Required for IPv4 BGP peers | `string` | `""` | no |
+| <a name="input_aws_vif_bgp_auth_key"></a> [aws\_vif\_bgp\_auth\_key](#input\_aws\_vif\_bgp\_auth\_key) | The authentication key for BGP configuration | `string` | `""` | no |
+| <a name="input_aws_vif_customer_address"></a> [aws\_vif\_customer\_address](#input\_aws\_vif\_customer\_address) | The IPv4 CIDR destination address to which Amazon should send traffic. Required for IPv4 BGP peers | `string` | `""` | no |
 | <a name="input_connection_speed"></a> [connection\_speed](#input\_connection\_speed) | Speed/Bandwidth to be allocated to the connection - (MB or GB) | `number` | `50` | no |
 | <a name="input_metal_connection_description"></a> [metal\_connection\_description](#input\_metal\_connection\_description) | Description for the connection resource | `string` | `"Connect from Equinix Metal to Service provider using a-side token"` | no |
 | <a name="input_metal_connection_speed_unit"></a> [metal\_connection\_speed\_unit](#input\_metal\_connection\_speed\_unit) | Unit of the speed/bandwidth to be allocated to the connection | `string` | `"MB"` | no |
@@ -326,6 +340,9 @@ module "metal-2-fabric-connection" {
 
 | Name | Description |
 |------|-------------|
+| <a name="output_aws_interface_id"></a> [aws\_interface\_id](#output\_aws\_interface\_id) | n/a |
+| <a name="output_aws_vpc_id"></a> [aws\_vpc\_id](#output\_aws\_vpc\_id) | n/a |
+| <a name="output_aws_vpn_gateway_id"></a> [aws\_vpn\_gateway\_id](#output\_aws\_vpn\_gateway\_id) | n/a |
 | <a name="output_fabric-connection"></a> [fabric-connection](#output\_fabric-connection) | n/a |
 | <a name="output_metal-connection"></a> [metal-connection](#output\_metal-connection) | n/a |
 <!-- END_TF_DOCS -->
