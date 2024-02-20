@@ -477,11 +477,10 @@ module "create_virtual_device_2_azure_connection" {
 
 | Name | Type |
 |------|------|
-| [azurerm_express_route_circuit.port2azure](https://registry.terraform.io/providers/hashicorp/azurerm/3.84.0/docs/resources/express_route_circuit) | resource |
-| [azurerm_resource_group.port2azure](https://registry.terraform.io/providers/hashicorp/azurerm/3.84.0/docs/resources/resource_group) | resource |
+| [azurerm_express_route_circuit.vd2azure](https://registry.terraform.io/providers/hashicorp/azurerm/3.84.0/docs/resources/express_route_circuit) | resource |
+| [azurerm_resource_group.vd2azure](https://registry.terraform.io/providers/hashicorp/azurerm/3.84.0/docs/resources/resource_group) | resource |
 | [equinix_network_acl_template.wan-acl-template](https://registry.terraform.io/providers/equinix/equinix/latest/docs/resources/network_acl_template) | resource |
 | [equinix_network_device.C8KV-SV](https://registry.terraform.io/providers/equinix/equinix/latest/docs/resources/network_device) | resource |
-| [equinix_network_ssh_key.suneeth-ssh](https://registry.terraform.io/providers/equinix/equinix/latest/docs/resources/network_ssh_key) | resource |
 
 ## Inputs
 
