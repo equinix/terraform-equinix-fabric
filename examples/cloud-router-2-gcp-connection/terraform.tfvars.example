@@ -1,6 +1,19 @@
 equinix_client_id      = "<MyEquinixClientId>"
 equinix_client_secret  = "<MyEquinixSecret>"
 
+gcp_project_id                            = "<GCP Project ID>"
+gcp_region                                = "us-west1"
+gcp_zone                                  = "us-west1-a"
+gcp_credentials_path                      = "<GCP KEY FILE NAME>"
+gcp_network_name                          = "tf-test-router"
+gcp_network_mtu                           = "1460"
+gcp_network_auto_create_subnetwork        = true
+gcp_router_name                           = "tf-test-router"
+gcp_router_bgp_asn                        = "16550"
+gcp_interconnect_name                     = "tf-test-interconnect"
+gcp_interconnect_type                     = "PARTNER"
+gcp_interconnect_edge_availability_domain = "AVAILABILITY_DOMAIN_1"
+
 connection_name                 = "fcr_2_gcp"
 connection_type                 = "IP_VC"
 notifications_type              = "ALL"
