@@ -6,7 +6,6 @@ variable "equinix_client_secret" {
   description = "Equinix client secret ID (consumer secret), obtained after registering app in the developer platform"
   type        = string
 }
-
 #Google Provider
 variable "gcp_region" {
   description = "The Google region to manage resources in"
@@ -14,14 +13,15 @@ variable "gcp_region" {
 }
 variable "gcp_project_id" {
   description = "The default Google Project Id to manage resources in"
-  type = string
+  type        = string
 }
 variable "gcp_zone" {
   description = "The default Google Zone to manage resources in"
-  type = string
+  type        = string
 }
 variable "gcp_credentials_path" {
   description = "Path to the contents of a service account key file in JSON format"
+  type        = string
 }
 variable "gcp_network_name" {
   description = "The Google Network Name"
@@ -82,12 +82,10 @@ variable "purchase_order_number" {
   type        = string
   default     = ""
 }
-
 variable "aside_port_name" {
   description = "Equinix A-Side Port Name"
   type        = string
 }
-
 variable "aside_vlan_tag" {
   description = "Vlan Tag information, outer vlanSTag for QINQ connections"
   type        = string

@@ -2,20 +2,21 @@ provider "equinix" {
   client_id     = var.equinix_client_id
   client_secret = var.equinix_client_secret
 }
+
 provider "google" {
   region      = var.gcp_region
   project     = var.gcp_project_id
   zone        = var.gcp_zone
   credentials = var.gcp_credentials_path
-
 }
+
 resource "google_compute_network" "port-gcp" {
   project                 = var.gcp_project_id
   name                    = var.gcp_network_name
   mtu                     = var.gcp_network_mtu
   auto_create_subnetworks = var.gcp_network_auto_create_subnetwork
-
 }
+
 resource "google_compute_router" "port-gcp" {
   name    = var.gcp_router_name
   network = google_compute_network.port-gcp.name

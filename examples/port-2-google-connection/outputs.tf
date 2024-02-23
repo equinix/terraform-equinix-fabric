@@ -4,7 +4,7 @@ output "GCP_Network_Id" {
 output "GCP_Router_Id" {
   value = google_compute_router.port-gcp.id
 }
-output "GCP_interconnect_Id" {
+output "GCP_Interconnect_Id" {
   value = google_compute_interconnect_attachment.port-gcp.id
 }
 output "google_connection_id" {

@@ -6,7 +6,6 @@ variable "equinix_client_secret" {
   description = "Equinix client secret ID (consumer secret), obtained after registering app in the developer platform"
   type        = string
 }
-
 #Google Provider
 variable "gcp_region" {
   description = "The Google region to manage resources in"
@@ -14,14 +13,15 @@ variable "gcp_region" {
 }
 variable "gcp_project_id" {
   description = "The default Google Project Id to manage resources in"
-  type = string
+  type        = string
 }
 variable "gcp_zone" {
   description = "The default Google Zone to manage resources in"
-  type = string
+  type        = string
 }
 variable "gcp_credentials_path" {
   description = "Path to the contents of a service account key file in JSON format"
+  type        = string
 }
 variable "gcp_network_name" {
   description = "The Google Network Name"
@@ -55,7 +55,6 @@ variable "gcp_interconnect_edge_availability_domain" {
   description = "The Google Interconnect Edge Availability Domain"
   type        = string
 }
-
 #Fabric Connection
 variable "connection_name" {
   description = "Connection name. An alpha-numeric 24 characters string which can include only hyphens and underscores"
