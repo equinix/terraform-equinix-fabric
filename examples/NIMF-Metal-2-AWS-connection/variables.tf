@@ -37,10 +37,12 @@ variable "project_id" {
   type = string
 }
 variable "aside_ap_authentication_key" {
+  description = "Metal Authentication Key"
   type = string
 }
 variable "aside_ap_type" {
-  type = string
+  description = "Access point type - COLO, VD, VG, SP, IGW, SUBNET, GW"
+  type        = string
 }
 variable "zside_ap_type" {
   description = "Access point type - COLO, VD, VG, SP, IGW, SUBNET, GW"
