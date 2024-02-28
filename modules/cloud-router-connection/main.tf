@@ -87,6 +87,23 @@ resource "equinix_fabric_connection" "primary_cloud_router_connection" {
       }
     }
   }
+  dynamic "z_side" {
+    #VD Z_Side Type
+    for_each = var.zside_ap_type == "VD" ? [1] : []
+    content {
+      access_point {
+        type = "VD"
+        virtual_device {
+          type = var.zside_vd_type
+          uuid = var.zside_vd_uuid
+        }
+        interface {
+          type = var.zside_interface_type != "" ? var.zside_interface_type : null
+          id   = var.zside_interface_id != "" ? var.zside_interface_id : null
+        }
+      }
+    }
+  }
 }
 
 resource "equinix_fabric_connection" "secondary_cloud_router_connection" {
@@ -164,6 +181,23 @@ resource "equinix_fabric_connection" "secondary_cloud_router_connection" {
         type = var.zside_ap_type
         network {
           uuid = var.zside_network_uuid
+        }
+      }
+    }
+  }
+
+  dynamic "z_side" {
+    for_each = var.zside_ap_type == "VD" ? [1] : []
+    content {
+      access_point {
+        type = "VD"
+        virtual_device {
+          type = var.zside_vd_type
+          uuid = var.zside_vd_uuid
+        }
+        interface {
+          type = var.zside_interface_type != "" ? var.zside_interface_type : null
+          id   = var.zside_interface_id != "" ? var.zside_interface_id : null
         }
       }
     }

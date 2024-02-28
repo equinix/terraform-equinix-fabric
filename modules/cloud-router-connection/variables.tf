@@ -74,6 +74,26 @@ variable "zside_network_uuid" {
   description = "Network UUID"
   default     = ""
 }
+variable "zside_vd_type" {
+  description = "Virtual Device type - EDGE"
+  type        = string
+  default     = ""
+}
+variable "zside_vd_uuid" {
+  description = "Virtual Device UUID"
+  type        = string
+  default     = ""
+}
+variable "zside_interface_type" {
+  description = "Virtual Device Interface type - CLOUD, NETWORK"
+  type        = string
+  default     = ""
+}
+variable "zside_interface_id" {
+  description = "Interface Id"
+  type        = number
+  default     = null
+}
 variable "zside_fabric_sp_name" {
   description = "Equinix Service Profile Name"
   type        = string
