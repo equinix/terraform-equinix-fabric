@@ -7,51 +7,51 @@ variable "equinix_client_secret" {
   type        = string
 }
 #Google Provider
-variable "gcp_region" {
+variable "google_region" {
   description = "The Google region to manage resources in"
   type        = string
 }
-variable "gcp_project_id" {
+variable "google_project_id" {
   description = "The default Google Project Id to manage resources in"
   type        = string
 }
-variable "gcp_zone" {
+variable "google_zone" {
   description = "The default Google Zone to manage resources in"
   type        = string
 }
-variable "gcp_credentials_path" {
+variable "google_credentials_path" {
   description = "Path to the contents of a service account key file in JSON format"
   type        = string
 }
-variable "gcp_network_name" {
+variable "google_network_name" {
   description = "The Google Network Name"
   type        = string
 }
-variable "gcp_network_mtu" {
+variable "google_network_mtu" {
   description = "The Google Network Maximum Transmission Unit in bytes"
   type        = string
 }
-variable "gcp_network_auto_create_subnetwork" {
+variable "google_network_auto_create_subnetwork" {
   description = "When set to true, the network is created in auto subnet mode"
   type        = bool
 }
-variable "gcp_router_name" {
+variable "google_router_name" {
   description = "The Google Router Name"
   type        = string
 }
-variable "gcp_router_bgp_asn" {
+variable "google_router_bgp_asn" {
   description = "The Google Router Local BGP Autonomous System Number (ASN)"
   type        = string
 }
-variable "gcp_interconnect_name" {
+variable "google_interconnect_name" {
   description = "The Google Interconnect Name"
   type        = string
 }
-variable "gcp_interconnect_type" {
+variable "google_interconnect_type" {
   description = "The Google Interconnect Type"
   type        = string
 }
-variable "gcp_interconnect_edge_availability_domain" {
+variable "google_interconnect_edge_availability_domain" {
   description = "The Google Interconnect Edge Availability Domain"
   type        = string
 }
