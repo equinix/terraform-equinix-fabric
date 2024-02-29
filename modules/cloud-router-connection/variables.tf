@@ -109,12 +109,12 @@ variable "secondary_connection_name" {
   default     = ""
 }
 variable "secondary_bandwidth" {
-  description = "Connection bandwidth in Mbps"
+  description = "Secondary Connection bandwidth in Mbps"
   type        = number
   default     = 50
 }
 variable "zside_vd_sec_uuid" {
-  description = "Virtual Device UUID"
+  description = "Secondary Virtual Device UUID"
   type        = string
 }
 variable "additional_info" {
