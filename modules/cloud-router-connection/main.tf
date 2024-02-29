@@ -126,9 +126,8 @@ resource "equinix_fabric_connection" "secondary_cloud_router_connection" {
   a_side {
     access_point {
       type = var.aside_ap_type
-
       router {
-        uuid = var.aside_sec_fcr_uuid
+        uuid = var.aside_fcr_uuid
       }
     }
   }
@@ -193,7 +192,7 @@ resource "equinix_fabric_connection" "secondary_cloud_router_connection" {
         type = "VD"
         virtual_device {
           type = var.zside_vd_type
-          uuid = var.zside_vd_uuid
+          uuid = var.zside_vd_sec_uuid
         }
         interface {
           type = var.zside_interface_type != "" ? var.zside_interface_type : null

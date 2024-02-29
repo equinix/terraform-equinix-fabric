@@ -5,7 +5,6 @@ variable "connection_name" {
 variable "connection_type" {
   description = "Defines the connection type like VG_VC, EVPL_VC, EPL_VC, EC_VC, IP_VC, ACCESS_EPL_VC"
   type        = string
-  default     = ""
 }
 variable "notifications_type" {
   description = "Notification Type - ALL is the only type currently supported"
@@ -114,10 +113,9 @@ variable "secondary_bandwidth" {
   type        = number
   default     = 50
 }
-variable "aside_sec_fcr_uuid" {
-  description = "Equinix-assigned Fabric Cloud Router identifier for Secondary Connection"
+variable "zside_vd_sec_uuid" {
+  description = "Virtual Device UUID"
   type        = string
-  default     = ""
 }
 variable "additional_info" {
   description = "Additional parameters required for some service profiles. It should be a list of maps containing 'key' and 'value  e.g. `[{ key='asn' value = '65000'}, { key='ip' value = '192.168.0.1'}]`"

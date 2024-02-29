@@ -63,3 +63,16 @@ variable "zside_interface_id" {
   type        = number
   default     = null
 }
+variable "secondary_connection_name" {
+  description = "Secondary Connection name"
+  type        = string
+}
+variable "secondary_bandwidth" {
+  description = "Connection bandwidth in Mbps"
+  type        = number
+  default     = 50
+}
+variable "zside_vd_sec_uuid" {
+  description = "Virtual Device UUID"
+  type        = string
+}
