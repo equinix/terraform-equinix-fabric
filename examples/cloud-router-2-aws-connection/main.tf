@@ -59,6 +59,6 @@ resource "aws_dx_private_virtual_interface" "aws_virtual_interface" {
   amazon_address   = var.aws_vif_amazon_address
   customer_address = var.aws_vif_customer_address
   bgp_auth_key     = var.aws_vif_bgp_auth_key
-  dx_gateway_id   = aws_dx_gateway.aws_gateway.id
+  dx_gateway_id    = aws_dx_gateway.aws_gateway.id
 }
 
