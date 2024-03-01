@@ -21,7 +21,6 @@ module "port_2_aws_connection" {
   # A-side
   aside_port_name      = var.aside_port_name
   aside_vlan_tag       = var.aside_vlan_tag
-  aside_vlan_inner_tag = var.aside_vlan_inner_tag
 
   # Z-side
   zside_ap_type               = var.zside_ap_type
@@ -32,40 +31,33 @@ module "port_2_aws_connection" {
   zside_sp_name               = var.zside_sp_name
 }
 
-data "aws_dx_connection" "connection_id" {
+data "aws_dx_connection" "aws_connection" {
   depends_on = [
     module.port_2_aws_connection
   ]
   name = var.connection_name
 }
-resource "aws_vpc" "example" {
+
+resource "aws_dx_gateway" "aws_gateway" {
   depends_on = [
     module.port_2_aws_connection
   ]
-  cidr_block = var.aws_vpc_cidr_block
+  name            = var.aws_gateway_name
+  amazon_side_asn = var.aws_gateway_asn
 }
 
-resource "aws_vpn_gateway" "example" {
-  depends_on = [
-    module.port_2_aws_connection
-  ]
-  vpc_id = aws_vpc.example.id
-}
-
-resource "aws_dx_private_virtual_interface" "example" {
+resource "aws_dx_private_virtual_interface" "aws_virtual_interface" {
   depends_on = [
     module.port_2_aws_connection,
-    aws_vpn_gateway.example,
-    aws_vpc.example
+    aws_dx_gateway.aws_gateway
   ]
-
-  connection_id    = data.aws_dx_connection.connection_id.id
+  connection_id    = data.aws_dx_connection.aws_connection.id
   name             = var.aws_vif_name
-  vlan             = var.aws_vif_vlan
+  vlan             = data.aws_dx_connection.aws_connection.vlan_id
   address_family   = var.aws_vif_address_family
   bgp_asn          = var.aws_vif_bgp_asn
   amazon_address   = var.aws_vif_amazon_address
   customer_address = var.aws_vif_customer_address
   bgp_auth_key     = var.aws_vif_bgp_auth_key
-  vpn_gateway_id   = aws_vpn_gateway.example.id
+  dx_gateway_id    = aws_dx_gateway.aws_gateway.id
 }
