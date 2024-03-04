@@ -1,0 +1,58 @@
+name: terratests-uat-suite
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  setup-tests:
+    name: Setup UAT Tests
+    runs-on: ubuntu-latest
+    env:
+      EQUINIX_API_ENDPOINT: "https://uatapi.equinix.com"
+    steps:
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
+        id: actions-checkout
+        with:
+          ref: main
+
+      - name: Check out code into the Go module directory
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.ref }}
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: './go.mod'
+        id: go
+
+      - name: Get dependencies
+        run: |
+              go mod download
+
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: ${{ matrix.terraform }}
+          terraform_wrapper: false
+
+      - name: Setup Variables Files
+        run:
+          # Parse secret content
+          secret_content=${{ steps.read_secret.outputs.secret_content }}
+          
+          # Use conditional logic to map secret content to test directories
+          if [[ "$secret_content" == *"port-connection-port-zside"* ]]; then
+          echo "$secret_content" > examples/port-2-port-connection/terraform.tfvars.json
+          fi
+
+      - name: Run Go Tests
+        run:
+          go test ./tests/uat -v -coverprofile coverage_uat_modules.txt -covermode=atomic -count 1 -parallel 8 -timeout 180m
+
+      - name: Upload test coverage to Codecov
+        if: ${{ always() }}
+        uses: codecov/codecov-action@v3
+        with:
+            token: ${{ secrets.CODECOV_TOKEN }}
+            files: ./coverage_uat_modules.txt
