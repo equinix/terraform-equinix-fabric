@@ -1,6 +1,6 @@
 module github.com/equinix/terraform-equinix-fabric
 
-go 1.22
+go 1.21
 
 require (
 	github.com/gruntwork-io/terratest v0.43.0
