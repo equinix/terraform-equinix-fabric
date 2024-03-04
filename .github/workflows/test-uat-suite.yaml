@@ -37,12 +37,12 @@ jobs:
           terraform_wrapper: false
 
       - name: Setup Variables Files
-        run:
+        run: |
           # Parse secret content
           secret_content=${{ steps.read_secret.outputs.secret_content }}
           
           # Use conditional logic to map secret content to test directories
-          if [[ "$secret_content" == *"port-connection-port-zside"* ]]; then
+          if [[ "$secret_content" == *"port_connection_port_zside"* ]]; then
           echo "$secret_content" > examples/port-2-port-connection/terraform.tfvars.json
           fi
 
