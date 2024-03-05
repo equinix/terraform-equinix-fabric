@@ -38,20 +38,14 @@ jobs:
 
       - name: Setup Variables Files
         run: |
-          pwd
           secret_names=$(gh api repos/equinix/terraform-equinix-fabric/actions/secrets | \
                          jq -r '.secrets[].name | select(startswith("TEST_DATA_UAT"))')
           echo "::GITHUB_OUTPUT name=secret_names::$secret_names"
           
-          pwd
-          
           for secret_name in $secret_names; do
              if [[ "$secret_name" == *"PORT_CONNECTION_PORT_ZSIDE"* ]]; then
-               secret_value=$(gh api \
-                                -H "Accept: application/vnd.github+json" \
-                                -H "X-GitHub-Api-Version: 2022-11-28" \
-                                /repos/equinix/terraform-equinix-fabric/actions/secrets/$secret_name)
-               echo "$secret_value" > ./examples/port-2-port-connection/terraform.tfvars.json
+                echo "${{ secrets.$secret_name }}" > ../../examples/port-2-port-connection/terraform.tfvars.json
+                echo "Variable Files Transferred"
              fi
           done
         env:
