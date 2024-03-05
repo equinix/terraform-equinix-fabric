@@ -46,7 +46,6 @@ jobs:
           pwd
           echo "$secret_content" > ./examples/port-2-port-connection/terraform.tfvars.json
           fi
-         done
       - name: Run Go Tests
         run:
           go test ./tests/uat -v -coverprofile coverage_uat_modules.txt -covermode=atomic -count 1 -parallel 8 -timeout 180m
