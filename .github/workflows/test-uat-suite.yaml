@@ -37,17 +37,24 @@ jobs:
           terraform_wrapper: false
 
       - name: Setup Variables Files
-        run: |   
-         for secret_content in $(env | grep 'TEST_DATA_UAT_' | cut -d '=' -f1); do 
-          pwd
-          if [[ -z "$secret_content" ]];then
-            echo "Variable is empty"
-          fi
-          if [[ "$secret_content" == *"PORT_CONNECTION_PORT_ZSIDE"* ]]; then
-            pwd
-            echo "$secret_content" > ./examples/port-2-port-connection/terraform.tfvars.json
-          fi
-         done
+        run: |
+          secret_names=$(gh api repos/equinix/terraform-equinix-fabric/actions/secrets | \
+                         jq -r '.secrets[].name | select(startswith("TEST_DATA_UAT"))')
+          echo "::set-output name=secret_names::$secret_names"
+          
+          for secret_name in $secret_names; do
+             if [[ "$secret_name" == *"PORT_CONNECTION_PORT_ZSIDE"* ]]; then
+               secret_value=$(gh api \
+                                -H "Accept: application/vnd.github+json" \
+                                -H "X-GitHub-Api-Version: 2022-11-28" \
+                                /repos/equinix/terraform-equinix-fabric/actions/secrets/$secret_name)
+               echo "$secret_value" > ./examples/port-2-port-connection/terraform.tfvars.json
+               # Use the fetched secret_value as needed
+             fi
+          done
+        env:
+          GH_TOKEN: ${{ secrets.SECRET_TOKEN }}
+
       - name: Run Go Tests
         run:
           go test ./tests/uat -v -coverprofile coverage_uat_modules.txt -covermode=atomic -count 1 -parallel 8 -timeout 180m
