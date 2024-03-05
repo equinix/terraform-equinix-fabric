@@ -38,9 +38,12 @@ jobs:
 
       - name: Setup Variables Files
         run: |
+          pwd
           secret_names=$(gh api repos/equinix/terraform-equinix-fabric/actions/secrets | \
                          jq -r '.secrets[].name | select(startswith("TEST_DATA_UAT"))')
-          echo "::set-output name=secret_names::$secret_names"
+          echo "::GITHUB_OUTPUT name=secret_names::$secret_names"
+          
+          pwd
           
           for secret_name in $secret_names; do
              if [[ "$secret_name" == *"PORT_CONNECTION_PORT_ZSIDE"* ]]; then
