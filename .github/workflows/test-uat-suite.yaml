@@ -41,11 +41,12 @@ jobs:
          for secret_content in $(env | grep 'TEST_DATA_UAT_' | cut -d '=' -f1); do 
           pwd
           if [[ -z "$secret_content" ]];then
-            echo "Variable is empty"
+          echo "Variable is empty"
           if [[ "$secret_content" == *"PORT_CONNECTION_PORT_ZSIDE"* ]]; then
           pwd
           echo "$secret_content" > ./examples/port-2-port-connection/terraform.tfvars.json
           fi
+         done
       - name: Run Go Tests
         run:
           go test ./tests/uat -v -coverprofile coverage_uat_modules.txt -covermode=atomic -count 1 -parallel 8 -timeout 180m
