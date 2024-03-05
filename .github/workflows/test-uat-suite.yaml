@@ -38,7 +38,7 @@ jobs:
 
       - name: Setup Variables Files
         run: |   
-         for secret_content in $(env | grep 'TEST_DATA_UAT_' | cut -d=f1); do 
+         for secret_content in $(env | grep 'TEST_DATA_UAT_' | cut -d '=' -f1); do 
           if [[ "$secret_content" == *"PORT_CONNECTION_PORT_ZSIDE"* ]]; then
           echo "$secret_content" > ./examples/port-2-port-connection/terraform.tfvars.json
           fi
