@@ -45,10 +45,10 @@ jobs:
           for secret_name in $secret_names; do
              if [[ "$secret_name" == *"PORT_CONNECTION_PORT_ZSIDE"* ]]; then
                 secret_value=$(gh api repos/equinix/terraform-equinix-fabric/actions/secrets/$secret_name)
-                parsed_secret_name=$(echo "$secret_value" | jq -r '.value')
+                parsed_secret_name=$(echo "$secret_value" | jq -r '.name')
                 parsed_secret_value="${{ secrets.$parsed_secret_name }}"
-                        echo "$parsed_secret_value" > ./examples/port-2-port-connection/terraform.tfvars.json
-                        echo "Variable Files Transferred"
+                echo "{$parsed_secret_value}" > ./examples/port-2-port-connection/terraform.tfvars.json
+                echo "Variable Files Transferred"
              fi
           done
         env:
