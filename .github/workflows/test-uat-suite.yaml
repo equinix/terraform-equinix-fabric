@@ -44,13 +44,14 @@ jobs:
           
           for secret_name in $secret_names; do
              if [[ "$secret_name" == *"PORT_CONNECTION_PORT_ZSIDE"* ]]; then
-                secret_value=$(gh api repos/equinix/terraform-equinix-fabric/actions/secrets/$secret_name)
-                echo "${{ secrets.secret_value }}" >> ./examples/port-2-port-connection/terraform.tfvars.json
-                echo "Variable Files Transferred"
+                secret_value=$(gh api repos/equinix/terraform-equinix-fabric/actions/secrets/$secret_name)          
              fi
           done
+          echo "${{ secrets.secret_value }}" >> ./examples/port-2-port-connection/terraform.tfvars.json
+          echo "Variable Files Transferred"
         env:
           GH_TOKEN: ${{ secrets.SECRET_TOKEN }}
+          $secret_value : ${{ secrets.$secret_value }}
 
       - name: Run Go Tests
         run:
