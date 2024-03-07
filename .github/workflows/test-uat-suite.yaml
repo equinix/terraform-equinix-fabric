@@ -45,7 +45,7 @@ jobs:
                 secret_n=$(gh api repos/equinix/terraform-equinix-fabric/actions/secrets/$secret_name)
                 secret_name=$(echo "$secret_n" | jq -r '.name')
                 echo "secret_name = $secret_name"
-                SECRET_VALUE=${{ secrets[secret_name] }}
+                SECRET_VALUE=${{ secrets[env.secret_name] }}
                 echo "SECRET_VALUE = $SECRET_VALUE"
                 echo "$SECRET_VALUE" >> ./examples/port-2-port-connection/terraform.tfvars.json
                 echo "Variable Files Transferred"
