@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       EQUINIX_API_ENDPOINT: "https://uatapi.equinix.com"
-      TEST_DATA_UAT_PORT_2_CONNECTION: ${{secrets.TEST_DATA_UAT_PORT_2_CONNECTION}}
+      TEST_DATA_UAT_PORT_2_CONNECTION: ${{secrets.TEST_DATA_UAT_PORT_CONNECTION_PORT_ZSIDE}}
 
     steps:
       - name: Check out code into the Go module directory
