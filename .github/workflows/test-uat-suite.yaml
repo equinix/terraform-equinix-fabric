@@ -35,7 +35,7 @@ jobs:
 
       - name: Setup Variables Files
         run: |
-          for list in ../../examples/*; do
+          for list in ./examples/*; do
               if [[ "$list" == *"port-2-port-connection"* ]]; then
                    echo $TEST_DATA_UAT_PORT_2_PORT_CONNECTION >> "$list/terraform.tfvars.json"
               fi
