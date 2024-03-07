@@ -42,7 +42,8 @@ jobs:
           for list in ../../tests/uat/*; do
               if [[ "$list" == *"port-2-port-connection"* ]]; then
                    directory_name=$(basename "$list")
-                   echo $TEST_DATA_UAT_PORT_2_CONNECTION >> list/terraform.tfvars.json
+                   echo $list
+                   echo $TEST_DATA_UAT_PORT_2_CONNECTION >> $list/terraform.tfvars.json
               fi
           done
 
