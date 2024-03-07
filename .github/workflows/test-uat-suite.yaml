@@ -38,6 +38,7 @@ jobs:
           for list in ./examples/*; do
               if [[ "$list" == *"port-2-port-connection"* ]]; then
                    directory_name=$(basename "$list")
+                   echo $format('TEST_DATA_UAT_{0}','$directory_name')
                    echo ${{ secrets[format('TEST_DATA_UAT_{0}','$directory_name')] }} 
                    echo ${{ secrets[format('TEST_DATA_UAT_{0}','$directory_name')] }} >> "$list/terraform.tfvars.json"
               fi
