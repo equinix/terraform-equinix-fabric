@@ -36,21 +36,16 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.SECRET_TOKEN }}
         run: |
-          secret_names=$(gh api repos/equinix/terraform-equinix-fabric/actions/secrets | \
-                         jq -r '.secrets[].name | select(startswith("TEST_DATA_UAT"))')
-          echo "::GITHUB_OUTPUT name=secret_names::$secret_names"
+          DirectoryList=("port-2-port-connection: ./examples/port-2-port-connection")
 
-          for secret_name in $secret_names; do
-             if [[ "$secret_name" == *"PORT_CONNECTION_PORT_ZSIDE"* ]]; then
-                secret_n=$(gh api repos/equinix/terraform-equinix-fabric/actions/secrets/$secret_name)
-                secret_name=$(echo "$secret_n" | jq -r '.name')
-                echo "secret_name = ${{ env.secret_name }}"
-                SECRET_VALUE=${{ secrets[env.secret_name] }}
-                echo "SECRET_VALUE = $SECRET_VALUE"
-                echo "$SECRET_VALUE" >> ./examples/port-2-port-connection/terraform.tfvars.json
-                echo "Variable Files Transferred"
-             fi
+          for list in ../../tests/uat/*; do
+              if [[ "$list" == *"port-2-aws"* ]]; then
+                   directory_name=$(basename "$list")
+                   echo ${{ secrets[format('TEST_DATA_UAT_{0}',directory_name)] }} >> list/terraform.tfvars.json 
+              fi
           done
+
+          printf '%s\n' "${DirectoryList[@]}"
 
       - name: Run Go Tests
         run:
