@@ -41,7 +41,9 @@ jobs:
           for list in ../../tests/uat/*; do
               if [[ "$list" == *"port-2-aws"* ]]; then
                    directory_name=$(basename "$list")
-                   echo ${{ secrets[format('TEST_DATA_UAT_{0}',directory_name)] }} >> list/terraform.tfvars.json 
+                   secret_name="TEST_DATA_UAT_$directory_name"
+                   secret_value="${{ secrets[secret_name] }}"
+                   echo "$secret_value" >> list/terraform.tfvars.json
               fi
           done
 
