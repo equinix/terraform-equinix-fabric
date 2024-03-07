@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       EQUINIX_API_ENDPOINT: "https://uatapi.equinix.com"
-      TEST_DATA_UAT_PORT_2_CONNECTION: ${{secrets.TEST_DATA_UAT_PORT_CONNECTION_PORT_ZSIDE}}
+      TEST_DATA_UAT_PORT_2_PORT_CONNECTION: ${{secrets.TEST_DATA_UAT_PORT_2_PORT_CONNECTION}}
 
     steps:
       - name: Check out code into the Go module directory
@@ -34,14 +34,10 @@ jobs:
           terraform_wrapper: false
 
       - name: Setup Variables Files
-        env:
-          GH_TOKEN: ${{ secrets.SECRET_TOKEN }}
         run: |
-          DirectoryList=("port-2-port-connection: ./examples/port-2-port-connection")
-
           for list in ../../examples/*; do
               if [[ "$list" == *"port-2-port-connection"* ]]; then
-                   echo $TEST_DATA_UAT_PORT_2_CONNECTION >> "$list/terraform.tfvars.json"
+                   echo $TEST_DATA_UAT_PORT_2_PORT_CONNECTION >> "$list/terraform.tfvars.json"
               fi
           done
 
