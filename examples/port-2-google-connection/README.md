@@ -202,7 +202,9 @@ module "create_port_2_google_connection" {
 
 ## Providers
 
-No providers.
+| Name | Version |
+|------|---------|
+| <a name="provider_google"></a> [google](#provider\_google) | n/a |
 
 ## Modules
 
@@ -212,7 +214,11 @@ No providers.
 
 ## Resources
 
-No resources.
+| Name | Type |
+|------|------|
+| [google_compute_interconnect_attachment.port-google](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_interconnect_attachment) | resource |
+| [google_compute_network.port-google](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_network) | resource |
+| [google_compute_router.port-google](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_router) | resource |
 
 ## Inputs
 
@@ -225,12 +231,22 @@ No resources.
 | <a name="input_connection_type"></a> [connection\_type](#input\_connection\_type) | Defines the connection type like VG\_VC, EVPL\_VC, EPL\_VC, EC\_VC, IP\_VC, ACCESS\_EPL\_VC | `string` | n/a | yes |
 | <a name="input_equinix_client_id"></a> [equinix\_client\_id](#input\_equinix\_client\_id) | Equinix client ID (consumer key), obtained after registering app in the developer platform | `string` | n/a | yes |
 | <a name="input_equinix_client_secret"></a> [equinix\_client\_secret](#input\_equinix\_client\_secret) | Equinix client secret ID (consumer secret), obtained after registering app in the developer platform | `string` | n/a | yes |
+| <a name="input_google_credentials_path"></a> [google\_credentials\_path](#input\_google\_credentials\_path) | Path to the contents of a service account key file in JSON format | `string` | n/a | yes |
+| <a name="input_google_interconnect_edge_availability_domain"></a> [google\_interconnect\_edge\_availability\_domain](#input\_google\_interconnect\_edge\_availability\_domain) | The Google Interconnect Edge Availability Domain | `string` | n/a | yes |
+| <a name="input_google_interconnect_name"></a> [google\_interconnect\_name](#input\_google\_interconnect\_name) | The Google Interconnect Name | `string` | n/a | yes |
+| <a name="input_google_interconnect_type"></a> [google\_interconnect\_type](#input\_google\_interconnect\_type) | The Google Interconnect Type | `string` | n/a | yes |
+| <a name="input_google_network_auto_create_subnetwork"></a> [google\_network\_auto\_create\_subnetwork](#input\_google\_network\_auto\_create\_subnetwork) | When set to true, the network is created in auto subnet mode | `bool` | n/a | yes |
+| <a name="input_google_network_mtu"></a> [google\_network\_mtu](#input\_google\_network\_mtu) | The Google Network Maximum Transmission Unit in bytes | `string` | n/a | yes |
+| <a name="input_google_network_name"></a> [google\_network\_name](#input\_google\_network\_name) | The Google Network Name | `string` | n/a | yes |
+| <a name="input_google_project_id"></a> [google\_project\_id](#input\_google\_project\_id) | The default Google Project Id to manage resources in | `string` | n/a | yes |
+| <a name="input_google_region"></a> [google\_region](#input\_google\_region) | The Google region to manage resources in | `string` | n/a | yes |
+| <a name="input_google_router_bgp_asn"></a> [google\_router\_bgp\_asn](#input\_google\_router\_bgp\_asn) | The Google Router Local BGP Autonomous System Number (ASN) | `string` | n/a | yes |
+| <a name="input_google_router_name"></a> [google\_router\_name](#input\_google\_router\_name) | The Google Router Name | `string` | n/a | yes |
+| <a name="input_google_zone"></a> [google\_zone](#input\_google\_zone) | The default Google Zone to manage resources in | `string` | n/a | yes |
 | <a name="input_notifications_emails"></a> [notifications\_emails](#input\_notifications\_emails) | Array of contact emails | `list(string)` | n/a | yes |
-| <a name="input_zside_ap_authentication_key"></a> [zside\_ap\_authentication\_key](#input\_zside\_ap\_authentication\_key) | Authentication key for provider based connections | `string` | n/a | yes |
 | <a name="input_zside_ap_profile_type"></a> [zside\_ap\_profile\_type](#input\_zside\_ap\_profile\_type) | Service profile type - L2\_PROFILE, L3\_PROFILE, ECIA\_PROFILE, ECMC\_PROFILE | `string` | n/a | yes |
 | <a name="input_zside_ap_type"></a> [zside\_ap\_type](#input\_zside\_ap\_type) | Access point type - COLO, VD, VG, SP, IGW, SUBNET, GW | `string` | n/a | yes |
 | <a name="input_zside_location"></a> [zside\_location](#input\_zside\_location) | Access point metro code | `string` | n/a | yes |
-| <a name="input_zside_seller_region"></a> [zside\_seller\_region](#input\_zside\_seller\_region) | Access point seller region | `string` | n/a | yes |
 | <a name="input_zside_sp_name"></a> [zside\_sp\_name](#input\_zside\_sp\_name) | Equinix Service Profile Name | `string` | n/a | yes |
 | <a name="input_aside_vlan_inner_tag"></a> [aside\_vlan\_inner\_tag](#input\_aside\_vlan\_inner\_tag) | Vlan Inner Tag information, inner vlanCTag for QINQ connections | `string` | `""` | no |
 | <a name="input_notifications_type"></a> [notifications\_type](#input\_notifications\_type) | Notification Type - ALL is the only type currently supported | `string` | `"ALL"` | no |
@@ -240,5 +256,8 @@ No resources.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_google_connection_id"></a> [google\_connection\_id](#output\_google\_connection\_id) | n/a |
+| <a name="output_GCP_Interconnect_Id"></a> [GCP\_Interconnect\_Id](#output\_GCP\_Interconnect\_Id) | n/a |
+| <a name="output_GCP_Network_Id"></a> [GCP\_Network\_Id](#output\_GCP\_Network\_Id) | n/a |
+| <a name="output_GCP_Router_Id"></a> [GCP\_Router\_Id](#output\_GCP\_Router\_Id) | n/a |
+| <a name="output_Google_connection_id"></a> [Google\_connection\_id](#output\_Google\_connection\_id) | n/a |
 <!-- END_TF_DOCS -->
