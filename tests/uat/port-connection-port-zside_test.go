@@ -16,6 +16,6 @@ func TestPort2PortCreateConnection(t *testing.T) {
 	defer terraform.Destroy(t, terraformOptions)
 
 	terraform.InitAndApply(t, terraformOptions)
-	output := terraform.Output(t, terraformOptions, "connection_result")
+	output := terraform.Output(t, terraformOptions, "port_connection_id")
 	assert.NotNil(t, output)
 }
