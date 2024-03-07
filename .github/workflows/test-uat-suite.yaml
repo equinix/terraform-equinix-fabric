@@ -10,7 +10,6 @@ jobs:
     runs-on: ubuntu-latest
     env:
       EQUINIX_API_ENDPOINT: "https://uatapi.equinix.com"
-      TEST_DATA_UAT_PORT_2_PORT_CONNECTION: ${{secrets.TEST_DATA_UAT_PORT_2_PORT_CONNECTION}}
 
     steps:
       - name: Check out code into the Go module directory
@@ -39,6 +38,7 @@ jobs:
           for list in ./examples/*; do
               if [[ "$list" == *"port-2-port-connection"* ]]; then
                    directory_name=$(basename "$list")
+                   echo ${{ secrets[format('TEST_DATA_UAT_{0}','$directory_name')] }} 
                    echo ${{ secrets[format('TEST_DATA_UAT_{0}','$directory_name')] }} >> "$list/terraform.tfvars.json"
               fi
           done
