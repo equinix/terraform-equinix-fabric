@@ -39,11 +39,9 @@ jobs:
         run: |
           DirectoryList=("port-2-port-connection: ./examples/port-2-port-connection")
 
-          for list in ../../tests/uat/*; do
+          for list in ../../examples/*; do
               if [[ "$list" == *"port-2-port-connection"* ]]; then
-                   directory_name=$(basename "$list")
-                   echo $list
-                   echo $TEST_DATA_UAT_PORT_2_CONNECTION >> $list/terraform.tfvars.json
+                   echo $TEST_DATA_UAT_PORT_2_CONNECTION >> "$list/terraform.tfvars.json"
               fi
           done
 
