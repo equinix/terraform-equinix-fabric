@@ -8,7 +8,6 @@ variable "equinix_client_secret" {
   type        = string
   sensitive   = true
 }
-
 variable "connection_name" {
   description = "Connection name. An alpha-numeric 24 characters string which can include only hyphens and underscores"
   type        = string
@@ -35,12 +34,10 @@ variable "purchase_order_number" {
   type        = string
   default     = ""
 }
-
 variable "aside_port_name" {
   description = "Equinix A-Side Port Name"
   type        = string
 }
-
 variable "aside_vlan_tag" {
   description = "Vlan Tag information, outer vlanSTag for QINQ connections"
   type        = string
@@ -54,15 +51,24 @@ variable "zside_ap_type" {
   description = "Access point type - COLO, VD, VG, SP, IGW, SUBNET, GW"
   type        = string
 }
+variable "zside_ap_profile_type" {
+  description = "Service profile type - L2_PROFILE, L3_PROFILE, ECIA_PROFILE, ECMC_PROFILE"
+  type        = string
+}
 variable "zside_location" {
   description = "Access point metro code"
   type        = string
 }
-variable "zside_port_name" {
-  description = "Equinix Port Name"
+variable "zside_sp_name" {
+  description = "Equinix Service Profile Name"
   type        = string
 }
-variable "zside_vlan_tag" {
-  description = "Vlan Tag information, outer vlanSTag for QINQ connections"
+variable "zside_ap_authentication_key" {
+  description = "Authentication key for provider based connections"
+  type        = string
+  default     = ""
+}
+variable "zside_peering_type" {
+  description = "Zside Access Point Peering type. Available values; PRIVATE, MICROSOFT, PUBLIC, MANUAL"
   type        = string
 }
