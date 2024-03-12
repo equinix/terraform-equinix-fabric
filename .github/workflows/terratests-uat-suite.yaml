@@ -44,16 +44,12 @@ jobs:
           for list in ./examples/*; do
               if [[ "$list" == *"port-2-port-connection"* ]]; then
                   echo $TEST_DATA_UAT_PORT_2_PORT_CONNECTION >> "$list/terraform.tfvars.json"
-              fi
               elif [[ "$list" == *"port-2-ibm2-connection"* ]]; then
                   echo $TEST_DATA_UAT_PORT_2_IBM2_CONNECTION >> "$list/terraform.tfvars.json"
-              fi
               elif [[ "$list" == *"port-2-alibaba-connection"* ]]; then
                   echo $TEST_DATA_UAT_PORT_2_ALIBABA_CONNECTION >> "$list/terraform.tfvars.json"
-              fi
               elif [[ "$list" == *"port-2-public-service-profile-connection"* ]]; then
                   echo $TEST_DATA_UAT_PORT_2_PUBLIC_SERVICE_PROFILE_CONNECTION >> "$list/terraform.tfvars.json"
-              fi
               elif [[ "$list" == *"port-2-private-service-profile-connection"* ]]; then
                   echo $TEST_DATA_UAT_PORT_2_PRIVATE_SERVICE_PROFILE_CONNECTION >> "$list/terraform.tfvars.json"
               fi     
