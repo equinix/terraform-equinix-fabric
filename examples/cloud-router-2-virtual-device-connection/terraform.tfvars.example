@@ -14,3 +14,5 @@ aside_ap_type         = "CLOUD_ROUTER"
 zside_ap_type         = "VD"
 zside_vd_type         = "EDGE"
 zside_vd_uuid         = "<Virtual Device UUID>"
+zside_interface_type  = "NETWORK"
+zside_interface_id    = 5

@@ -21,6 +21,6 @@ module "cloud_router_virtual_device_connection" {
   zside_ap_type         = var.zside_ap_type
   zside_vd_type         = var.zside_vd_type
   zside_vd_uuid         = var.zside_vd_uuid
-  zside_interface_id    = var.zside_interface_id
   zside_interface_type  = var.zside_interface_type
+  zside_interface_id    = var.zside_interface_id
 }

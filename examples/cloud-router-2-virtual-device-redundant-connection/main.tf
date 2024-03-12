@@ -21,11 +21,13 @@ module "cloud_router_virtual_device_redundant_connection" {
   zside_ap_type        = var.zside_ap_type
   zside_vd_type        = var.zside_vd_type
   zside_vd_uuid        = var.zside_vd_uuid
-  zside_interface_id   = var.zside_interface_id
   zside_interface_type = var.zside_interface_type
+  zside_interface_id   = var.zside_interface_id
 
   #Secondary-Connection
   secondary_connection_name = var.secondary_connection_name
   secondary_bandwidth       = var.secondary_bandwidth
-  zside_vd_sec_uuid         = var.zside_vd_sec_uuid
+  zside_sec_vd_uuid         = var.zside_sec_vd_uuid
+  zside_sec_interface_type  = var.zside_sec_interface_type
+  zside_sec_interface_id    = var.zside_sec_interface_id
 }

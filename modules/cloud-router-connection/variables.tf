@@ -113,9 +113,20 @@ variable "secondary_bandwidth" {
   type        = number
   default     = 50
 }
-variable "zside_vd_sec_uuid" {
+variable "zside_sec_vd_uuid" {
   description = "Secondary Virtual Device UUID"
   type        = string
+  default     = ""
+}
+variable "zside_sec_interface_type" {
+  description = "Secondary Virtual Device Interface type - CLOUD, NETWORK"
+  type        = string
+  default     = ""
+}
+variable "zside_sec_interface_id" {
+  description = "Secondary Interface Id"
+  type        = number
+  default     = null
 }
 variable "additional_info" {
   description = "Additional parameters required for some service profiles. It should be a list of maps containing 'key' and 'value  e.g. `[{ key='asn' value = '65000'}, { key='ip' value = '192.168.0.1'}]`"

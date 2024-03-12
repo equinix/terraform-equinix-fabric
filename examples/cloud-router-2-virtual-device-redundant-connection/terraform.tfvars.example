@@ -13,7 +13,11 @@ aside_ap_type               = "CLOUD_ROUTER"
 zside_ap_type               = "VD"
 zside_vd_type               = "EDGE"
 zside_vd_uuid               = "<Primary Virtual Device UUID>"
+zside_interface_type        = "NETWORK"
+zside_interface_id          = 5
 
 secondary_connection_name   = "FCR_2_VD_sec"
 secondary_bandwidth         = 50
 zside_vd_sec_uuid           = "<Secondary Virtual Device UUID>"
+zside_sec_interface_type    = "NETWORK"
+zside_sec_interface_id      = 2
