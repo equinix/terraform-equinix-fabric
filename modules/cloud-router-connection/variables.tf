@@ -89,10 +89,6 @@ variable "secondary_connection_name" {
   type        = string
   default     = ""
 }
-variable "aside_fcr_uuid_sec" {
-  description = "Equinix-assigned Fabric Cloud Router identifier"
-  type        = string
-}
 variable "secondary_bandwidth" {
   description = "Connection bandwidth in Mbps"
   type        = number
@@ -102,15 +98,6 @@ variable "aside_sec_fcr_uuid" {
   description = "Equinix-assigned Fabric Cloud Router identifier for Secondary Connection"
   type        = string
   default     = ""
-}
-variable "zside_interface_type_sec" {
-  description = "Virtual Device Interface type - CLOUD, NETWORK"
-  type        = string
-  default     = ""
-}
-variable "zside_interface_id_sec" {
-  description = "Interface Id"
-  type        = number
 }
 variable "additional_info" {
   description = "Additional parameters required for some service profiles. It should be a list of maps containing 'key' and 'value  e.g. `[{ key='asn' value = '65000'}, { key='ip' value = '192.168.0.1'}]`"
