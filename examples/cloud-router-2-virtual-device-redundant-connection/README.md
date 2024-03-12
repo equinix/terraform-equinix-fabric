@@ -71,4 +71,3 @@ module "cloud_router_oracle_connection" {
   zside_sec_interface_id    = var.zside_sec_interface_id
 }
 ```
-
