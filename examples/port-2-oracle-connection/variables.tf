@@ -8,7 +8,6 @@ variable "equinix_client_secret" {
   type        = string
   sensitive = true
 }
-
 variable "connection_name" {
   description = "Connection name. An alpha-numeric 24 characters string which can include only hyphens and underscores"
   type        = string

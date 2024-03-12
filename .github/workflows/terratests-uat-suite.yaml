@@ -13,7 +13,11 @@ jobs:
       TEST_DATA_UAT_PORT_2_PORT_CONNECTION: ${{secrets.TEST_DATA_UAT_PORT_2_PORT_CONNECTION}}
       TEST_DATA_UAT_PORT_2_AZURE_CONNECTION: ${{secrets.TEST_DATA_UAT_PORT_2_AZURE_CONNECTION}}
       TEST_DATA_UAT_PORT_2_AWS_CONNECTION: ${{secrets.TEST_DATA_UAT_PORT_2_AWS_CONNECTION}}
-      TEST_DATA_UAT_GOOGLE_SERVICE_KEYS: ${{secrets.TEST_DATA_UAT_GOOGLE_SERVICE_KEYS}}
+      TEST_DATA_UAT_PORT_2_IBM2_CONNECTION: ${{secrets.TEST_DATA_UAT_PORT_2_IBM2_CONNECTION}}
+      TEST_DATA_UAT_PORT_2_ALIBABA_CONNECTION: ${{secrets.TEST_DATA_UAT_PORT_2_ALIBABA_CONNECTION}}
+      TEST_DATA_UAT_CLOUD_ROUTER_2_PORT_CONNECTION: ${{secrets.TEST_DATA_UAT_CLOUD_ROUTER_2_PORT_CONNECTION}}
+      TEST_DATA_UAT_PORT_2_PUBLIC_SERVICE_PROFILE_CONNECTION: ${{secrets.TEST_DATA_UAT_PORT_2_PUBLIC_SERVICE_PROFILE_CONNECTION}}
+      TEST_DATA_UAT_PORT_2_PRIVATE_SERVICE_PROFILE_CONNECTION: ${{secrets.TEST_DATA_UAT_PORT_2_PRIVATE_SERVICE_PROFILE_CONNECTION}}
 
     steps:
       - name: Check out code into the Go module directory
@@ -41,6 +45,18 @@ jobs:
               if [[ "$list" == *"port-2-port-connection"* ]]; then
                   echo $TEST_DATA_UAT_PORT_2_PORT_CONNECTION >> "$list/terraform.tfvars.json"
               fi
+              elif [[ "$list" == *"port-2-ibm2-connection"* ]]; then
+                  echo $TEST_DATA_UAT_PORT_2_IBM2_CONNECTION >> "$list/terraform.tfvars.json"
+              fi
+              elif [[ "$list" == *"port-2-alibaba-connection"* ]]; then
+                  echo $TEST_DATA_UAT_PORT_2_ALIBABA_CONNECTION >> "$list/terraform.tfvars.json"
+              fi
+              elif [[ "$list" == *"port-2-public-service-profile-connection"* ]]; then
+                  echo $TEST_DATA_UAT_PORT_2_PUBLIC_SERVICE_PROFILE_CONNECTION >> "$list/terraform.tfvars.json"
+              fi
+              elif [[ "$list" == *"port-2-private-service-profile-connection"* ]]; then
+                  echo $TEST_DATA_UAT_PORT_2_PRIVATE_SERVICE_PROFILE_CONNECTION >> "$list/terraform.tfvars.json"
+              fi     
           done
           for list in ./tests/uat/*; do
               if [[ "$list" == *"port-2-azure-connection"* ]]; then
