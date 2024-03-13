@@ -42,7 +42,7 @@ provider "equinix" {
   client_id     = var.equinix_client_id
   client_secret = var.equinix_client_secret
 }
-module "cloud_router_oracle_connection" {
+module "cloud_router_virtual_device_connection" {
   source = "equinix/fabric/equinix//modules/cloud-router-connection"
 
   connection_name       = var.connection_name
@@ -65,3 +65,4 @@ module "cloud_router_oracle_connection" {
   
 }
 ```
+<!-- End Example Usage -->
