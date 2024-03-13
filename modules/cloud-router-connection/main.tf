@@ -46,8 +46,8 @@ resource "equinix_fabric_connection" "primary_cloud_router_connection" {
         }
         link_protocol {
           type       = one(data.equinix_fabric_ports.zside[0].data[0].encapsulation).type
-          vlan_tag   = one(data.equinix_fabric_ports.zside[0].data[0].encapsulation).type == "DOT1Q" ? var.zside_vlan_outer_tag : null
-          vlan_s_tag = one(data.equinix_fabric_ports.zside[0].data[0].encapsulation).type == "QINQ" ? var.zside_vlan_outer_tag : null
+          vlan_tag   = one(data.equinix_fabric_ports.zside[0].data[0].encapsulation).type == "DOT1Q" ? var.zside_vlan_tag : null
+          vlan_s_tag = one(data.equinix_fabric_ports.zside[0].data[0].encapsulation).type == "QINQ" ? var.zside_vlan_tag : null
           vlan_c_tag = one(data.equinix_fabric_ports.zside[0].data[0].encapsulation).type == "QINQ" ? var.zside_vlan_inner_tag : null
         }
         location {
@@ -142,8 +142,8 @@ resource "equinix_fabric_connection" "secondary_cloud_router_connection" {
         }
         link_protocol {
           type       = one(data.equinix_fabric_ports.zside[0].data[0].encapsulation).type
-          vlan_tag   = one(data.equinix_fabric_ports.zside[0].data[0].encapsulation).type == "DOT1Q" ? var.zside_vlan_outer_tag : null
-          vlan_s_tag = one(data.equinix_fabric_ports.zside[0].data[0].encapsulation).type == "QINQ" ? var.zside_vlan_outer_tag : null
+          vlan_tag   = one(data.equinix_fabric_ports.zside[0].data[0].encapsulation).type == "DOT1Q" ? var.zside_vlan_tag : null
+          vlan_s_tag = one(data.equinix_fabric_ports.zside[0].data[0].encapsulation).type == "QINQ" ? var.zside_vlan_tag : null
           vlan_c_tag = one(data.equinix_fabric_ports.zside[0].data[0].encapsulation).type == "QINQ" ? var.zside_vlan_inner_tag : null
         }
         location {
@@ -192,7 +192,7 @@ resource "equinix_fabric_connection" "secondary_cloud_router_connection" {
         type = "VD"
         virtual_device {
           type = var.zside_vd_type
-          uuid = var.zside_vd_sec_uuid
+          uuid = var.zside_vd_uuid
         }
         interface {
           type = var.zside_interface_type != "" ? var.zside_interface_type : null
