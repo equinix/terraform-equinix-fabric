@@ -192,11 +192,11 @@ resource "equinix_fabric_connection" "secondary_cloud_router_connection" {
         type = "VD"
         virtual_device {
           type = var.zside_vd_type
-          uuid = var.zside_vd_uuid
+          uuid = var.zside_sec_vd_uuid
         }
         interface {
-          type = var.zside_interface_type != "" ? var.zside_interface_type : null
-          id   = var.zside_interface_id != "" ? var.zside_interface_id : null
+          type = var.zside_sec_interface_type != "" ? var.zside_sec_interface_type : null
+          id   = var.zside_sec_interface_id != "" ? var.zside_sec_interface_id : null
         }
       }
     }
