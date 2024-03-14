@@ -1,7 +1,6 @@
 provider "equinix" {
   client_id     = var.equinix_client_id
   client_secret = var.equinix_client_secret
-  endpoint = "https://uatapi.equinix.com"
 }
 
 module "port_2_aws_connection" {
