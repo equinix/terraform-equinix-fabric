@@ -33,13 +33,13 @@ jobs:
 
       - name: Setup Variables Files
         run: |
-          echo "${{secrets.TEST_DATA_UAT_PORT_2_ALIBABA_CONNECTION}}" >> "./examples/port-2-alibaba-connection/terraform.tfvars.json"
-          echo "${{secrets.TEST_DATA_UAT_PORT_2_AWS_CONNECTION}}" >> "./tests/uat/port-2-aws-connection/terraform.tfvars.json"
-          echo "${{secrets.TEST_DATA_UAT_PORT_2_AZURE_CONNECTION}}" >> "./tests/uat/port-2-azure-connection/terraform.tfvars.json"
-          echo "${{secrets.TEST_DATA_UAT_PORT_2_IBM2_CONNECTION}}" >> "./examples/port-2-ibm2-connection/terraform.tfvars.json"
-          echo "${{secrets.TEST_DATA_UAT_PORT_2_PORT_CONNECTION}}" >> "./examples/port-2-port-connection/terraform.tfvars.json"
-          echo "${{secrets.TEST_DATA_UAT_PORT_2_PRIVATE_SERVICE_PROFILE_CONNECTION}}" >> "./examples/port-2-private-service-profile-connection/terraform.tfvars.json"
-          echo "${{secrets.TEST_DATA_UAT_PORT_2_PUBLIC_SERVICE_PROFILE_CONNECTION}}" >> "./examples/port-2-public-service-profile-connection/terraform.tfvars.json"   
+          echo "${{ secrets.TEST_DATA_UAT_PORT_2_ALIBABA_CONNECTION }}" >> "./examples/port-2-alibaba-connection/terraform.tfvars.json"
+          echo "${{ secrets.TEST_DATA_UAT_PORT_2_AWS_CONNECTION }}" >> "./tests/uat/port-2-aws-connection/terraform.tfvars.json"
+          echo "${{ secrets.TEST_DATA_UAT_PORT_2_AZURE_CONNECTION }}" >> "./tests/uat/port-2-azure-connection/terraform.tfvars.json"
+          echo "${{ secrets.TEST_DATA_UAT_PORT_2_IBM2_CONNECTION }}" >> "./examples/port-2-ibm2-connection/terraform.tfvars.json"
+          echo "${{ secrets.TEST_DATA_UAT_PORT_2_PORT_CONNECTION }}" >> "./examples/port-2-port-connection/terraform.tfvars.json"
+          echo "${{ secrets.TEST_DATA_UAT_PORT_2_PRIVATE_SERVICE_PROFILE_CONNECTION }}" >> "./examples/port-2-private-service-profile-connection/terraform.tfvars.json"
+          echo "${{ secrets.TEST_DATA_UAT_PORT_2_PUBLIC_SERVICE_PROFILE_CONNECTION }}" >> "./examples/port-2-public-service-profile-connection/terraform.tfvars.json"   
 
       - name: Run Go Tests
         run:
