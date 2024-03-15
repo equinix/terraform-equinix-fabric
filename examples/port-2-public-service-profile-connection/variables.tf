@@ -8,7 +8,6 @@ variable "equinix_client_secret" {
   type        = string
   sensitive = true
 }
-
 variable "connection_name" {
   description = "Connection name. An alpha-numeric 24 characters string which can include only hyphens and underscores"
   type        = string
@@ -35,12 +34,10 @@ variable "purchase_order_number" {
   type        = string
   default     = ""
 }
-
 variable "aside_port_name" {
   description = "Equinix A-Side Port Name"
   type        = string
 }
-
 variable "aside_vlan_tag" {
   description = "Vlan Tag information, outer vlanSTag for QINQ connections"
   type        = string

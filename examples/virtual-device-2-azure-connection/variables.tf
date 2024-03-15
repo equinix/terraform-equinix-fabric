@@ -1,10 +1,12 @@
 variable "equinix_client_id" {
   description = "Equinix client ID (consumer key), obtained after registering app in the developer platform"
   type        = string
+  sensitive = true
 }
 variable "equinix_client_secret" {
   description = "Equinix client secret ID (consumer secret), obtained after registering app in the developer platform"
   type        = string
+  sensitive = true
 }
 variable "equinix_endpoint" {
   description = "Equinix endpoint URL"
@@ -22,7 +24,6 @@ variable "template_description" {
 variable "template_subnet" {
   description = "Inbound traffic source IP subnets in CIDR format"
   type        = string
-
 }
 variable "template_protocol" {
   description = "Inbound traffic protocol"
@@ -84,7 +85,6 @@ variable "ne_ssh_key_username" {
   description = "username for ssh key"
   type        = string
 }
-
 variable "ne_ssh_key_name" {
   description = "ssh key name for device"
   type        = string
@@ -96,23 +96,28 @@ variable "network_public_key_name" {
 variable "network_public_key" {
   description = "The SSH public key"
   type        = string
+  sensitive = true
 }
 #Azure Provider
 variable "azure_client_id" {
   description = "Azure Client id"
   type        = string
+  sensitive = true
 }
 variable "azure_client_secret" {
   description = "Azure Secret value"
   type        = string
+  sensitive = true
 }
 variable "azure_tenant_id" {
   description = "Azure Tenant id"
   type        = string
+  sensitive = true
 }
 variable "azure_subscription_id" {
   description = "Azure Subscription id"
   type        = string
+  sensitive = true
 }
 variable "azure_resource_name" {
   description = "The name of Azure Resource"

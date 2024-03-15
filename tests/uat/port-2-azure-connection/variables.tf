@@ -66,7 +66,7 @@ variable "zside_sp_name" {
 variable "zside_ap_authentication_key" {
   description = "Authentication key for provider based connections"
   type        = string
-  default     = ""
+  sensitive = true
 }
 variable "zside_peering_type" {
   description = "Zside Access Point Peering type. Available values; PRIVATE, MICROSOFT, PUBLIC, MANUAL"
