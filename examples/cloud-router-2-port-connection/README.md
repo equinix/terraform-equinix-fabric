@@ -213,7 +213,7 @@ No resources.
 | <a name="input_purchase_order_number"></a> [purchase\_order\_number](#input\_purchase\_order\_number) | Purchase order number | `string` | `""` | no |
 | <a name="input_zside_ap_type"></a> [zside\_ap\_type](#input\_zside\_ap\_type) | Access point type - COLO, VD, VG, SP, IGW, SUBNET, GW | `string` | `"SP"` | no |
 | <a name="input_zside_location"></a> [zside\_location](#input\_zside\_location) | Access point metro code | `string` | `"SP"` | no |
-| <a name="input_zside_vlan_outer_tag"></a> [zside\_vlan\_outer\_tag](#input\_zside\_vlan\_outer\_tag) | Access point protocol Vlan tag number for DOT1Q or QINQ connections | `string` | `""` | no |
+| <a name="input_zside_vlan_tag"></a> [zside\_vlan\_tag](#input\_zside\_vlan\_tag) | Access point protocol Vlan tag number for DOT1Q or QINQ connections | `string` | `""` | no |
 
 ## Outputs
 
