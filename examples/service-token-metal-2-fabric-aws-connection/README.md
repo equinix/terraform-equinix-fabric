@@ -379,26 +379,25 @@ resource "aws_dx_private_virtual_interface" "aws_virtual_interface" {
 
 | Name | Type |
 |------|------|
-| [aws_dx_private_virtual_interface.example](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/dx_private_virtual_interface) | resource |
-| [aws_vpc.example](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc) | resource |
-| [aws_vpn_gateway.example](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpn_gateway) | resource |
+| [aws_dx_gateway.aws_gateway](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/dx_gateway) | resource |
+| [aws_dx_private_virtual_interface.aws_virtual_interface](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/dx_private_virtual_interface) | resource |
 | [equinix_metal_connection.metal-connection](https://registry.terraform.io/providers/equinix/equinix/latest/docs/resources/metal_connection) | resource |
 | [equinix_metal_device.s1](https://registry.terraform.io/providers/equinix/equinix/latest/docs/resources/metal_device) | resource |
 | [equinix_metal_device_network_type.s1-network-type](https://registry.terraform.io/providers/equinix/equinix/latest/docs/resources/metal_device_network_type) | resource |
 | [equinix_metal_port_vlan_attachment.s1-attachment](https://registry.terraform.io/providers/equinix/equinix/latest/docs/resources/metal_port_vlan_attachment) | resource |
 | [equinix_metal_vlan.vlan-server-1](https://registry.terraform.io/providers/equinix/equinix/latest/docs/resources/metal_vlan) | resource |
 | [random_string.random](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/string) | resource |
-| [aws_dx_connection.connection_id](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/dx_connection) | data source |
+| [aws_dx_connection.aws_connection](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/dx_connection) | data source |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_aws_gateway_asn"></a> [aws\_gateway\_asn](#input\_aws\_gateway\_asn) | The ASN to be configured on the Amazon side of the connection. The ASN must be in the private range of 64,512 to 65,534 or 4,200,000,000 to 4,294,967,294 | `number` | n/a | yes |
+| <a name="input_aws_gateway_name"></a> [aws\_gateway\_name](#input\_aws\_gateway\_name) | The name of the Gateway | `string` | n/a | yes |
 | <a name="input_aws_vif_address_family"></a> [aws\_vif\_address\_family](#input\_aws\_vif\_address\_family) | The address family for the BGP peer. ipv4 or ipv6 | `string` | n/a | yes |
 | <a name="input_aws_vif_bgp_asn"></a> [aws\_vif\_bgp\_asn](#input\_aws\_vif\_bgp\_asn) | The autonomous system (AS) number for Border Gateway Protocol (BGP) configuration | `number` | n/a | yes |
 | <a name="input_aws_vif_name"></a> [aws\_vif\_name](#input\_aws\_vif\_name) | The name for the virtual interface | `string` | n/a | yes |
-| <a name="input_aws_vif_vlan"></a> [aws\_vif\_vlan](#input\_aws\_vif\_vlan) | The VLAN ID | `string` | n/a | yes |
-| <a name="input_aws_vpc_cidr_block"></a> [aws\_vpc\_cidr\_block](#input\_aws\_vpc\_cidr\_block) | The IPv4 CIDR block for the VPC | `string` | n/a | yes |
 | <a name="input_bandwidth"></a> [bandwidth](#input\_bandwidth) | Connection bandwidth in Mbps | `number` | n/a | yes |
 | <a name="input_connection_name"></a> [connection\_name](#input\_connection\_name) | Connection name. An alpha-numeric 24 characters string which can include only hyphens and underscores | `string` | n/a | yes |
 | <a name="input_connection_type"></a> [connection\_type](#input\_connection\_type) | Defines the connection type like VG\_VC, EVPL\_VC, EPL\_VC, EC\_VC, IP\_VC, ACCESS\_EPL\_VC | `string` | n/a | yes |
@@ -428,9 +427,8 @@ resource "aws_dx_private_virtual_interface" "aws_virtual_interface" {
 
 | Name | Description |
 |------|-------------|
+| <a name="output_aws_dx_gateway_id"></a> [aws\_dx\_gateway\_id](#output\_aws\_dx\_gateway\_id) | n/a |
 | <a name="output_aws_interface_id"></a> [aws\_interface\_id](#output\_aws\_interface\_id) | n/a |
-| <a name="output_aws_vpc_id"></a> [aws\_vpc\_id](#output\_aws\_vpc\_id) | n/a |
-| <a name="output_aws_vpn_gateway_id"></a> [aws\_vpn\_gateway\_id](#output\_aws\_vpn\_gateway\_id) | n/a |
 | <a name="output_fabric-connection"></a> [fabric-connection](#output\_fabric-connection) | n/a |
 | <a name="output_metal-connection"></a> [metal-connection](#output\_metal-connection) | n/a |
 <!-- END_TF_DOCS -->
