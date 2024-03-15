@@ -54,7 +54,7 @@ connection_type          = "IP_VC"
 bandwidth                = 50
 aside_ap_type            = "CLOUD_ROUTER"
 zside_ap_type            = "COLO"
-zside_vlan_outer_tag     = "2711"
+zside_vlan_tag           = "2711"
 zside_location           = "SV"
 zside_port_name          = "<Equinix Port Name>"
 ```
@@ -126,7 +126,7 @@ variable "zside_ap_type" {
   type        = string
   default     = "SP"
 }
-variable "zside_vlan_outer_tag" {
+variable "zside_vlan_tag" {
   description = "Access point protocol Vlan tag number for DOT1Q or QINQ connections"
   default     = ""
 }
@@ -170,7 +170,7 @@ module "cloud_router_port_connection" {
   zside_ap_type   = var.zside_ap_type
   zside_location  = var.zside_location
   zside_port_name = var.zside_port_name
-  zside_vlan_tag  = var.zside_vlan_outer_tag
+  zside_vlan_tag  = var.zside_vlan_tag
 }
 ```
 <!-- End Example Usage -->

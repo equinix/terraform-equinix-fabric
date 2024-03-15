@@ -45,6 +45,19 @@ terraform.tfvars (Replace these values with your own):
 equinix_client_id      = "<MyEquinixClientId>"
 equinix_client_secret  = "<MyEquinixSecret>"
 
+google_project_id                            = "<GCP Project ID>"
+google_region                                = "us-west1"
+google_zone                                  = "us-west1-a"
+google_credentials_path                      = "<GCP KEY FILE NAME>"
+google_network_name                          = "tf-test-network"
+google_network_mtu                           = "1460"
+google_network_auto_create_subnetwork        = true
+google_router_name                           = "tf-test-router"
+google_router_bgp_asn                        = "16550"
+google_interconnect_name                     = "tf-test-interconnect"
+google_interconnect_type                     = "PARTNER"
+google_interconnect_edge_availability_domain = "AVAILABILITY_DOMAIN_1"
+
 connection_name                 = "fcr_2_gcp"
 connection_type                 = "IP_VC"
 notifications_type              = "ALL"
@@ -70,6 +83,11 @@ terraform {
       source  = "equinix/equinix"
       version = ">= 1.20.0"
     }
+    google = {
+      source = "hashicorp/google"
+      version = "5.17.0"
+    }
+
   }
 }
 ```
@@ -84,6 +102,56 @@ variable "equinix_client_secret" {
   description = "Equinix client secret ID (consumer secret), obtained after registering app in the developer platform"
   type        = string
 }
+#Google Provider
+variable "google_region" {
+  description = "The Google region to manage resources in"
+  type        = string
+}
+variable "google_project_id" {
+  description = "The default Google Project Id to manage resources in"
+  type        = string
+}
+variable "google_zone" {
+  description = "The default Google Zone to manage resources in"
+  type        = string
+}
+variable "google_credentials_path" {
+  description = "Path to the contents of a service account key file in JSON format"
+  type        = string
+}
+variable "google_network_name" {
+  description = "The Google Network Name"
+  type        = string
+}
+variable "google_network_mtu" {
+  description = "The Google Network Maximum Transmission Unit in bytes"
+  type        = string
+}
+variable "google_network_auto_create_subnetwork" {
+  description = "When set to true, the network is created in auto subnet mode"
+  type        = bool
+}
+variable "google_router_name" {
+  description = "The Google Router Name"
+  type        = string
+}
+variable "google_router_bgp_asn" {
+  description = "The Google Router Local BGP Autonomous System Number (ASN)"
+  type        = string
+}
+variable "google_interconnect_name" {
+  description = "The Google Interconnect Name"
+  type        = string
+}
+variable "google_interconnect_type" {
+  description = "The Google Interconnect Type"
+  type        = string
+}
+variable "google_interconnect_edge_availability_domain" {
+  description = "The Google Interconnect Edge Availability Domain"
+  type        = string
+}
+#Fabric Connection
 variable "connection_name" {
   description = "Connection name. An alpha-numeric 24 characters string which can include only hyphens and underscores"
   type        = string
@@ -119,12 +187,6 @@ variable "aside_fcr_uuid" {
   description = "Equinix-assigned Fabric Cloud Router identifier"
   type        = string
 }
-
-variable "zside_ap_authentication_key" {
-  description = "Authentication key for provider based connections"
-  type        = string
-  default     = ""
-}
 variable "zside_ap_type" {
   description = "Access point type - COLO, VD, VG, SP, IGW, SUBNET, GW"
   type        = string
@@ -145,17 +207,21 @@ variable "zside_fabric_sp_name" {
   type        = string
   default     = ""
 }
-variable "zside_seller_region" {
-  description = "Access point seller region"
-  type        = string
-  default     = ""
-}
 ```
 outputs.tf:
 ```hcl
 
-output "module_output" {
-  value = module.cloud_router_gcp_connection.primary_connection_id
+output "GCP_Network_Id" {
+  value = google_compute_network.cloud-router-google.id
+}
+output "GCP_Router_Id" {
+  value = google_compute_router.cloud-router-google.id
+}
+output "GCP_Interconnect_Id" {
+  value = google_compute_interconnect_attachment.cloud-router-google.id
+}
+output "Google_Connection_Id" {
+  value = module.cloud_router_google_connection.primary_connection_id
 }
 ```
 main.tf:
@@ -166,7 +232,37 @@ provider "equinix" {
   client_secret = var.equinix_client_secret
 }
 
-module "cloud_router_gcp_connection" {
+provider "google" {
+  region      = var.google_region
+  project     = var.google_project_id
+  zone        = var.google_zone
+  credentials = var.google_credentials_path
+}
+
+resource "google_compute_network" "cloud-router-google" {
+  project                 = var.google_project_id
+  name                    = var.google_network_name
+  mtu                     = var.google_network_mtu
+  auto_create_subnetworks = var.google_network_auto_create_subnetwork
+}
+
+resource "google_compute_router" "cloud-router-google" {
+  name    = var.google_router_name
+  network = google_compute_network.cloud-router-google.name
+  bgp {
+    asn = var.google_router_bgp_asn
+  }
+}
+
+resource "google_compute_interconnect_attachment" "cloud-router-google" {
+  name                     = var.google_interconnect_name
+  type                     = var.google_interconnect_type
+  router                   = google_compute_router.cloud-router-google.id
+  region                   = var.google_region
+  edge_availability_domain = var.google_interconnect_edge_availability_domain
+}
+
+module "cloud_router_google_connection" {
   source = "equinix/fabric/equinix//modules/cloud-router-connection"
 
   connection_name       = var.connection_name
@@ -182,10 +278,10 @@ module "cloud_router_gcp_connection" {
 
   #Zside
   zside_ap_type               = var.zside_ap_type
-  zside_ap_authentication_key = var.zside_ap_authentication_key
+  zside_ap_authentication_key = google_compute_interconnect_attachment.cloud-router-google.pairing_key
   zside_ap_profile_type       = var.zside_ap_profile_type
   zside_location              = var.zside_location
-  zside_seller_region         = var.zside_seller_region
+  zside_seller_region         = var.google_region
   zside_fabric_sp_name        = var.zside_fabric_sp_name
 }
 ```
