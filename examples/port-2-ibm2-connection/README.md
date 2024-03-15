@@ -195,7 +195,7 @@ module "create_port_2_ibm2_connection" {
   zside_location              = var.zside_location
   zside_seller_region         = var.zside_seller_region
   zside_sp_name               = var.zside_sp_name
-  primary_additional_info     = var.additional_info
+  additional_info     = var.additional_info
 }
 ```
 <!-- End Example Usage -->

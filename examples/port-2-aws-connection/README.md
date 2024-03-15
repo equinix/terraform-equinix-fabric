@@ -68,7 +68,6 @@ additional_info = [
 aws_gateway_name         = "aws_gateway"
 aws_gateway_asn          = 64518
 aws_vif_name             = "port2aws"
-aws_vif_vlan             = "320"
 aws_vif_address_family   = "ipv4"
 aws_vif_bgp_asn          = 64999
 aws_vif_amazon_address   = "169.254.0.1/30"
@@ -172,10 +171,6 @@ variable "additional_info" {
 }
 variable "aws_vif_name" {
   description = "The name for the virtual interface"
-  type        = string
-}
-variable "aws_vif_vlan" {
-  description = " The VLAN ID"
   type        = string
 }
 variable "aws_vif_address_family" {
