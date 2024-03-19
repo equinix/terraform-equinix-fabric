@@ -1,14 +1,13 @@
 variable "equinix_client_id" {
   description = "Equinix client ID (consumer key), obtained after registering app in the developer platform"
   type        = string
-  sensitive = true
+  sensitive   = true
 }
 variable "equinix_client_secret" {
   description = "Equinix client secret ID (consumer secret), obtained after registering app in the developer platform"
   type        = string
-  sensitive = true
+  sensitive   = true
 }
-
 variable "connection_name" {
   description = "Connection name. An alpha-numeric 24 characters string which can include only hyphens and underscores"
   type        = string
@@ -35,12 +34,10 @@ variable "purchase_order_number" {
   type        = string
   default     = ""
 }
-
 variable "aside_port_name" {
   description = "Equinix A-Side Port Name"
   type        = string
 }
-
 variable "aside_vlan_tag" {
   description = "Vlan Tag information, outer vlanSTag for QINQ connections"
   type        = string
@@ -57,6 +54,7 @@ variable "zside_ap_type" {
 variable "zside_ap_authentication_key" {
   description = "Authentication key for provider based connections"
   type        = string
+  sensitive   = true
 }
 variable "zside_ap_profile_type" {
   description = "Service profile type - L2_PROFILE, L3_PROFILE, ECIA_PROFILE, ECMC_PROFILE"

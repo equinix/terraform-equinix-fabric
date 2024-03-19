@@ -34,7 +34,12 @@ resource "equinix_fabric_connection" "primary_port_connection" {
     type   = var.notifications_type
     emails = var.notifications_emails
   }
-
+  dynamic "project" {
+    for_each = var.project_id != "" ? [1] : []
+    content {
+      project_id = var.project_id
+    }
+  }
   bandwidth = var.bandwidth
   redundancy { priority = "PRIMARY" }
   order {
@@ -110,6 +115,12 @@ resource "equinix_fabric_connection" "secondary_port_connection" {
   notifications {
     type   = var.notifications_type
     emails = var.notifications_emails
+  }
+  dynamic "project" {
+    for_each = var.project_id != "" ? [1] : []
+    content {
+      project_id = var.project_id
+    }
   }
   bandwidth = var.secondary_bandwidth
   redundancy {
