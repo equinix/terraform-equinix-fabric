@@ -21,6 +21,12 @@ resource "equinix_fabric_connection" "primary_cloud_router_connection" {
     type   = var.notifications_type
     emails = var.notifications_emails
   }
+  dynamic "project" {
+    for_each = var.project_id != "" ? [1] : []
+    content {
+      project_id = var.project_id
+    }
+  }
   additional_info = var.additional_info != [] ? var.additional_info : null
   bandwidth       = var.bandwidth
   redundancy { priority = "PRIMARY" }
@@ -96,6 +102,12 @@ resource "equinix_fabric_connection" "secondary_cloud_router_connection" {
   notifications {
     type   = var.notifications_type
     emails = var.notifications_emails
+  }
+  dynamic "project" {
+    for_each = var.project_id != "" ? [1] : []
+    content {
+      project_id = var.project_id
+    }
   }
   additional_info = var.additional_info != [] ? var.additional_info : null
   bandwidth       = var.secondary_bandwidth
