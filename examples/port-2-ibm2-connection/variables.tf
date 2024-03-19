@@ -25,6 +25,11 @@ variable "notifications_emails" {
   description = "Array of contact emails"
   type        = list(string)
 }
+variable "project_id" {
+  description = "Subscriber-assigned project ID"
+  type        = string
+  default     = ""
+}
 variable "bandwidth" {
   description = "Connection bandwidth in Mbps"
   type        = number
