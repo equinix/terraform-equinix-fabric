@@ -10,6 +10,6 @@ connection_type          = "IP_VC"
 bandwidth                = 50
 aside_ap_type            = "CLOUD_ROUTER"
 zside_ap_type            = "COLO"
-zside_vlan_outer_tag     = "2711"
+zside_vlan_tag           = "2711"
 zside_location           = "SV"
 zside_port_name          = "<Equinix Port Name>"

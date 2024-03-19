@@ -83,10 +83,6 @@ variable "aws_vif_name" {
   description = "The name for the virtual interface"
   type        = string
 }
-variable "aws_vif_vlan" {
-  description = " The VLAN ID"
-  type        = string
-}
 variable "aws_vif_address_family" {
   description = "The address family for the BGP peer. ipv4 or ipv6"
   type        = string
