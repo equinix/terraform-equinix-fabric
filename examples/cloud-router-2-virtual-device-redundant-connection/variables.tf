@@ -15,7 +15,6 @@ variable "connection_name" {
 variable "connection_type" {
   description = "Defines the connection type like VG_VC, EVPL_VC, EPL_VC, EC_VC, IP_VC, ACCESS_EPL_VC"
   type        = string
-  default     = ""
 }
 variable "notifications_type" {
   description = "Notification Type - ALL is the only type currently supported"
@@ -43,22 +42,49 @@ variable "aside_fcr_uuid" {
   description = "Equinix-assigned Fabric Cloud Router identifier"
   type        = string
 }
-variable "zside_port_name" {
-  description = "Equinix Zside Port Name"
-  type        = string
-}
 variable "zside_ap_type" {
   description = "Access point type - COLO, VD, VG, SP, IGW, SUBNET, GW"
   type        = string
-  default     = "SP"
+  default     = "VD"
 }
-variable "zside_vlan_tag" {
-  description = "Access point protocol Vlan tag number for DOT1Q or QINQ connections"
+variable "zside_vd_type" {
+  description = "Virtual Device type - EDGE"
+  type        = string
+}
+variable "zside_vd_uuid" {
+  description = "Virtual Device UUID"
+  type        = string
+}
+variable "zside_interface_type" {
+  description = "Virtual Device Interface type - CLOUD, NETWORK"
+  type        = string
   default     = ""
 }
-variable "zside_location" {
-  description = "Access point metro code"
-  type        = string
-  default     = "SP"
+variable "zside_interface_id" {
+  description = "Interface Id"
+  type        = number
+  default     = null
 }
-
+variable "secondary_connection_name" {
+  description = "Secondary Connection name"
+  type        = string
+}
+variable "secondary_bandwidth" {
+  description = "Secondary Connection bandwidth in Mbps"
+  type        = number
+  default     = 50
+}
+variable "zside_sec_vd_uuid" {
+  description = "Secondary Virtual Device UUID"
+  type        = string
+}
+variable "zside_sec_interface_type" {
+  description = "Secondary Virtual Device Interface type - CLOUD, NETWORK"
+  type        = string
+  default     = ""
+}
+variable "zside_sec_interface_id" {
+  description = "Secondary Interface Id"
+  type        = number
+  default     = null
+}

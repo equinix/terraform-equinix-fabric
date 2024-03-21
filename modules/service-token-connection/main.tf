@@ -19,6 +19,12 @@ resource "equinix_fabric_connection" "service_token_connection" {
     type   = var.notifications_type
     emails = var.notifications_emails
   }
+  dynamic "project" {
+    for_each = var.project_id != "" ? [1] : []
+    content {
+      project_id = var.project_id
+    }
+  }
   bandwidth = var.bandwidth
   redundancy { priority = "PRIMARY" }
   order {

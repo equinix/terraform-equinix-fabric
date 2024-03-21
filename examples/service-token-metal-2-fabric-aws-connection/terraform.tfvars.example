@@ -25,9 +25,9 @@ additional_info = [
   { key = "secretKey", value = "<aws_secret_key>" }
 ]
 
-aws_vpc_cidr_block       = "10.255.255.0/28"
+aws_gateway_name         = "aws_gateway"
+aws_gateway_asn          = 64518
 aws_vif_name             = "port2aws"
-aws_vif_vlan             = "320"
 aws_vif_address_family   = "ipv4"
 aws_vif_bgp_asn          = 64999
 aws_vif_amazon_address   = "169.254.0.1/30"

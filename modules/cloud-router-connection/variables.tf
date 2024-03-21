@@ -5,7 +5,6 @@ variable "connection_name" {
 variable "connection_type" {
   description = "Defines the connection type like VG_VC, EVPL_VC, EPL_VC, EC_VC, IP_VC, ACCESS_EPL_VC"
   type        = string
-  default     = ""
 }
 variable "notifications_type" {
   description = "Notification Type - ALL is the only type currently supported"
@@ -15,6 +14,11 @@ variable "notifications_type" {
 variable "notifications_emails" {
   description = "Array of contact emails"
   type        = list(string)
+}
+variable "project_id" {
+  description = "Subscriber-assigned project ID"
+  type        = string
+  default     = ""
 }
 variable "bandwidth" {
   description = "Connection bandwidth in Mbps"
@@ -58,7 +62,7 @@ variable "zside_location" {
   type        = string
   default     = "SP"
 }
-variable "zside_vlan_outer_tag" {
+variable "zside_vlan_tag" {
   description = "Access point protocol Vlan tag number for DOT1Q or QINQ connections"
   default     = ""
 }
@@ -73,6 +77,26 @@ variable "zside_peering_type" {
 variable "zside_network_uuid" {
   description = "Network UUID"
   default     = ""
+}
+variable "zside_vd_type" {
+  description = "Virtual Device type - EDGE"
+  type        = string
+  default     = ""
+}
+variable "zside_vd_uuid" {
+  description = "Virtual Device UUID"
+  type        = string
+  default     = ""
+}
+variable "zside_interface_type" {
+  description = "Virtual Device Interface type - CLOUD, NETWORK"
+  type        = string
+  default     = ""
+}
+variable "zside_interface_id" {
+  description = "Interface Id"
+  type        = number
+  default     = null
 }
 variable "zside_fabric_sp_name" {
   description = "Equinix Service Profile Name"
@@ -90,14 +114,24 @@ variable "secondary_connection_name" {
   default     = ""
 }
 variable "secondary_bandwidth" {
-  description = "Connection bandwidth in Mbps"
+  description = "Secondary Connection bandwidth in Mbps"
   type        = number
   default     = 50
 }
-variable "aside_sec_fcr_uuid" {
-  description = "Equinix-assigned Fabric Cloud Router identifier for Secondary Connection"
+variable "zside_sec_vd_uuid" {
+  description = "Secondary Virtual Device UUID"
   type        = string
   default     = ""
+}
+variable "zside_sec_interface_type" {
+  description = "Secondary Virtual Device Interface type - CLOUD, NETWORK"
+  type        = string
+  default     = ""
+}
+variable "zside_sec_interface_id" {
+  description = "Secondary Interface Id"
+  type        = number
+  default     = null
 }
 variable "additional_info" {
   description = "Additional parameters required for some service profiles. It should be a list of maps containing 'key' and 'value  e.g. `[{ key='asn' value = '65000'}, { key='ip' value = '192.168.0.1'}]`"

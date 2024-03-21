@@ -1,12 +1,12 @@
 variable "equinix_client_id" {
   description = "Equinix client ID (consumer key), obtained after registering app in the developer platform"
   type        = string
-  sensitive = true
+  sensitive   = true
 }
 variable "equinix_client_secret" {
   description = "Equinix client secret ID (consumer secret), obtained after registering app in the developer platform"
   type        = string
-  sensitive = true
+  sensitive   = true
 }
 variable "connection_name" {
   description = "Connection name. An alpha-numeric 24 characters string which can include only hyphens and underscores"
@@ -54,7 +54,7 @@ variable "zside_ap_type" {
 variable "zside_ap_authentication_key" {
   description = "Authentication key for provider based connections"
   type        = string
-  sensitive = true
+  sensitive   = true
 }
 variable "zside_ap_profile_type" {
   description = "Service profile type - L2_PROFILE, L3_PROFILE, ECIA_PROFILE, ECMC_PROFILE"
@@ -76,14 +76,10 @@ variable "additional_info" {
   description = "Additional info parameters. It's a list of maps containing 'key' and 'value' keys with their corresponding values."
   type        = list(object({ key = string, value = string }))
   default     = []
-  sensitive = true
+  sensitive   = true
 }
 variable "aws_vif_name" {
   description = "The name for the virtual interface"
-  type        = string
-}
-variable "aws_vif_vlan" {
-  description = " The VLAN ID"
   type        = string
 }
 variable "aws_vif_address_family" {

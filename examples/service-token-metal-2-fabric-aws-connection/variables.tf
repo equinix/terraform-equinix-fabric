@@ -1,17 +1,17 @@
 variable "equinix_client_id" {
   description = "Equinix client ID (consumer key), obtained after registering app in the developer platform"
   type        = string
-  sensitive = true
+  sensitive   = true
 }
 variable "equinix_client_secret" {
   description = "Equinix client secret ID (consumer secret), obtained after registering app in the developer platform"
   type        = string
-  sensitive = true
+  sensitive   = true
 }
 variable "metal_auth_token" {
   description = "Equinix Metal Authentication API Token"
   type        = string
-  sensitive = true
+  sensitive   = true
 }
 variable "metal_connection_speed_unit" {
   description = "Unit of the speed/bandwidth to be allocated to the connection"
@@ -70,7 +70,7 @@ variable "zside_ap_type" {
 variable "zside_ap_authentication_key" {
   description = "Authentication key for provider based connections"
   type        = string
-  sensitive = true
+  sensitive   = true
 }
 variable "zside_ap_profile_type" {
   description = "Service profile type - L2_PROFILE, L3_PROFILE, ECIA_PROFILE, ECMC_PROFILE"
@@ -93,18 +93,18 @@ variable "additional_info" {
   description = "Additional info parameters. It's a list of maps containing 'key' and 'value' keys with their corresponding values."
   type        = list(object({ key = string, value = string }))
   default     = []
-  sensitive = true
+  sensitive   = true
 }
-variable "aws_vpc_cidr_block" {
-  description = "The IPv4 CIDR block for the VPC"
+variable "aws_gateway_name" {
+  description = "The name of the Gateway"
   type        = string
+}
+variable "aws_gateway_asn" {
+  description = "The ASN to be configured on the Amazon side of the connection. The ASN must be in the private range of 64,512 to 65,534 or 4,200,000,000 to 4,294,967,294"
+  type        = number
 }
 variable "aws_vif_name" {
   description = "The name for the virtual interface"
-  type        = string
-}
-variable "aws_vif_vlan" {
-  description = " The VLAN ID"
   type        = string
 }
 variable "aws_vif_address_family" {
@@ -129,5 +129,5 @@ variable "aws_vif_bgp_auth_key" {
   description = "The authentication key for BGP configuration"
   type        =  string
   default     = ""
-  sensitive = true
+  sensitive   = true
 }

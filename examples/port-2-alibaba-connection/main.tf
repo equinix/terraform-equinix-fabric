@@ -12,6 +12,7 @@ module "create_port_2_alibaba_connection" {
   notifications_emails  = var.notifications_emails
   bandwidth             = var.bandwidth
   purchase_order_number = var.purchase_order_number
+  project_id            = var.project_id
 
   # A-side
   aside_port_name = var.aside_port_name

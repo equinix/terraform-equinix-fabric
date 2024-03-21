@@ -2,18 +2,15 @@ variable "connection_name" {
   description = "Connection name. An alpha-numeric 24 characters string which can include only hyphens and underscores"
   type        = string
 }
-
 variable "secondary_connection_name" {
   description = "Secondary Connection name. An alpha-numeric 24 characters string which can include only hyphens and underscores"
   type        = string
   default     = ""
 }
-
 variable "connection_type" {
   description = "Defines the connection type like VG_VC, EVPL_VC, EPL_VC, EC_VC, IP_VC, ACCESS_EPL_VC"
   type        = string
 }
-
 variable "notifications_type" {
   description = "Notification Type - ALL is the only type currently supported"
   type        = string
@@ -23,24 +20,25 @@ variable "notifications_emails" {
   description = "Array of contact emails"
   type        = list(string)
 }
-
+variable "project_id" {
+  description = "Subscriber-assigned project ID"
+  type        = string
+  default     = ""
+}
 variable "bandwidth" {
   description = "Connection bandwidth in Mbps"
   type        = number
 }
-
 variable "secondary_bandwidth" {
   description = "Connection bandwidth in Mbps for the secondary connection"
   type        = number
   default     = 0
 }
-
 variable "purchase_order_number" {
   description = "Purchase order number"
   type        = string
   default     = ""
 }
-
 variable "aside_port_name" {
   description = "Equinix A-Side Port Name; your tagging must match the encapsulation type of the port (DOT1Q or QINQ)"
   type        = string
@@ -59,7 +57,6 @@ variable "aside_vlan_inner_tag" {
   type        = string
   default     = ""
 }
-
 variable "zside_ap_type" {
   description = "Access point type - VD, SP, COLO, CLOUD_ROUTER, NETWORK"
   type        = string
@@ -98,7 +95,6 @@ variable "zside_vlan_tag" {
   type        = string
   default     = ""
 }
-
 variable "zside_vlan_inner_tag" {
   description = "Inner VLan tag for QINQ connections"
   type        = string
