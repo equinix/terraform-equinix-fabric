@@ -53,7 +53,7 @@ jobs:
           go test ./tests/uat -v -coverprofile coverage_uat_modules.txt -covermode=atomic -count 1 -parallel 8 -timeout 180m
 
       - name: Setup Node.js 20.11.1
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v4
         with:
             node-version: 20.11.1
 
