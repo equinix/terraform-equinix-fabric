@@ -22,7 +22,7 @@ func TestPort2AlibabaCreateConnection(t *testing.T) {
 func TestPort2AwsCreateConnection(t *testing.T) {
 
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
-		TerraformDir: "../../tests/uat/port-2-aws-connection",
+		TerraformDir: "../../tests/uat/port-2-port-connection",
 	})
 
 	defer terraform.Destroy(t, terraformOptions)
