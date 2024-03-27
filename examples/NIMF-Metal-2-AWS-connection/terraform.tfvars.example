@@ -1,5 +1,14 @@
 equinix_client_id      = "<MyEquinixClientId>"
 equinix_client_secret  = "<MyEquinixSecret>"
+metal_auth_token       = "<Metal_Auth_Token>"
+
+metal_connection_metro      = "TY"
+metal_project_id            = "<Metal_Project_ID>"
+metal_connection_name       = "Metal-NIMF-connection"
+metal_connection_redundancy = "primary"
+metal_connection_speed      = "50Mbps"
+metal_connection_type       = "shared_port_vlan"
+metal_contact_email         = "tfacc@example.com"
 
 connection_name             = "Metal_2_AWS"
 connection_type             = "EVPL_VC"

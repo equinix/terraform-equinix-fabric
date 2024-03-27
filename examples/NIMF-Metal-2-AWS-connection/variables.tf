@@ -6,6 +6,38 @@ variable "equinix_client_secret" {
   description = "Equinix client secret ID (consumer secret), obtained after registering app in the developer platform"
   type        = string
 }
+variable "metal_auth_token" {
+  description = "Equinix Metal Authentication API Token"
+  type        = string
+}
+variable "metal_connection_metro" {
+  description = "Metro where the connection will be created"
+  type        = string
+}
+variable "metal_project_id" {
+  description = "Metal Project Name"
+  type        = string
+}
+variable "metal_connection_name" {
+  description = "Metal Connection Name"
+  type        = string
+}
+variable "metal_connection_redundancy" {
+  description = "Metal Connection redundancy - redundant or primary"
+  type        = string
+}
+variable "metal_connection_speed" {
+  description = "Metal Connection speed - one of 50Mbps, 200Mbps, 500Mbps, 1Gbps, 2Gbps, 5Gbps, 10Gbps"
+  type        = string
+}
+variable "metal_connection_type" {
+  description = "Metal Connection type - dedicated , shared or shared_port_vlan"
+  type        = string
+}
+variable "metal_contact_email" {
+  description = "Preferred email used for communication"
+  type        = string
+}
 variable "connection_name" {
   description = "Connection name. An alpha-numeric 24 characters string which can include only hyphens and underscores"
   type        = string
@@ -33,12 +65,8 @@ variable "purchase_order_number" {
   default     = ""
 }
 variable "project_id" {
-  description = "Project Id"
-  type = string
-}
-variable "aside_ap_authentication_key" {
-  description = "Metal Authentication Key"
-  type = string
+  description = "Equinix Fabric Project Id"
+  type        = string
 }
 variable "aside_ap_type" {
   description = "Access point type - COLO, VD, VG, SP, IGW, SUBNET, GW"
@@ -66,7 +94,7 @@ variable "zside_seller_region" {
 }
 variable "zside_location" {
   description = ""
-  type = string
+  type        = string
 }
 variable "additional_info" {
   description = "Additional info parameters. It's a list of maps containing 'key' and 'value' keys with their corresponding values."
