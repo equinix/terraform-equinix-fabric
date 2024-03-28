@@ -2,7 +2,7 @@ equinix_client_id      = "<MyEquinixClientId>"
 equinix_client_secret  = "<MyEquinixSecret>"
 metal_auth_token       = "<Metal_Auth_Token>"
 
-metal_connection_metro      = "TY"
+metal_connection_metro      = "ty"
 metal_project_id            = "<Metal_Project_ID>"
 metal_connection_name       = "Metal-NIMF-connection"
 metal_connection_redundancy = "primary"
@@ -29,3 +29,12 @@ additional_info = [
   { key = "accessKey", value = "<aws_access_key>" },
   { key = "secretKey", value = "<aws_secret_key>" }
 ]
+
+aws_gateway_name         = "aws_gateway"
+aws_gateway_asn          = 64518
+aws_vif_name             = "port2aws"
+aws_vif_address_family   = "ipv4"
+aws_vif_bgp_asn          = 64999
+aws_vif_amazon_address   = "169.254.0.1/30"
+aws_vif_customer_address = "169.254.0.2/30"
+aws_vif_bgp_auth_key     = "secret"
