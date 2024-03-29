@@ -27,7 +27,7 @@ resource "equinix_fabric_connection" "primary_metal_connection" {
   }
   a_side {
     access_point {
-      type               = var.aside_ap_type
+      type               = "METAL_NETWORK"
       authentication_key = var.aside_ap_authentication_key
     }
   }

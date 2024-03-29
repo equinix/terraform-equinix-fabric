@@ -1,7 +1,7 @@
 # Metal to AWS Connection Example
 
 This example shows how to leverage the [Metal Connection Module](../../modules/metalconnection/README.md)
-to create a Fabric Connection from a Metal to AWS.
+to create a Fabric Connection from Equinix Metal to AWS.
 
 It leverages the Equinix Terraform Provider and the Metal Connection
 Module to setup the connection based on the parameters you have provided to this example; or based on the pattern

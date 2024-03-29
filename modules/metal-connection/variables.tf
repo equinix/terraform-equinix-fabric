@@ -30,10 +30,6 @@ variable "purchase_order_number" {
   type        = string
   default     = ""
 }
-variable "aside_ap_type" {
-  description = "Access point type - COLO, VD, VG, SP, IGW, SUBNET, GW"
-  type        = string
-}
 variable "aside_ap_authentication_key" {
   description = "Authentication key for metal based connections"
   type        = string
@@ -77,4 +73,5 @@ variable "additional_info" {
   description = "Additional parameters required for some service profiles. It should be a list of maps containing 'key' and 'value  e.g. `[{ key='asn' value = '65000'}, { key='ip' value = '192.168.0.1'}]`"
   type        = list(object({ key = string, value = string }))
   default     = []
+  sensitive   = true
 }
