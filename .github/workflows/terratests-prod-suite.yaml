@@ -9,14 +9,12 @@ jobs:
     name: Setup PROD Tests
     runs-on: ubuntu-latest
     env:
-#      EQUINIX_API_ENDPOINT: "https://uatapi.equinix.com"
-##      TEST_DATA_UAT_PORT_2_ALIBABA_CONNECTION: ${{ secrets.TEST_DATA_UAT_PORT_2_ALIBABA_CONNECTION }}
-#      TEST_DATA_UAT_PORT_2_AWS_CONNECTION: ${{ secrets.TEST_DATA_UAT_PORT_2_AWS_CONNECTION }}
-#      TEST_DATA_UAT_PORT_2_AZURE_CONNECTION: ${{ secrets.TEST_DATA_UAT_PORT_2_AZURE_CONNECTION }}
-#      TEST_DATA_UAT_PORT_2_IBM2_CONNECTION: ${{ secrets.TEST_DATA_UAT_PORT_2_IBM2_CONNECTION }}
-      TEST_DATA_UAT_PORT_2_PORT_CONNECTION: ${{ secrets.TEST_DATA_UAT_PORT_2_PORT_CONNECTION }}
-#      TEST_DATA_UAT_PORT_2_PUBLIC_SERVICE_PROFILE_CONNECTION: ${{ secrets.TEST_DATA_UAT_PORT_2_PUBLIC_SERVICE_PROFILE_CONNECTION }}
-#      TEST_DATA_UAT_PORT_2_PRIVATE_SERVICE_PROFILE_CONNECTION: ${{ secrets.TEST_DATA_UAT_PORT_2_PRIVATE_SERVICE_PROFILE_CONNECTION }}
+      TEST_DATA_PROD_PORT_2_ALIBABA_CONNECTION: ${{ secrets.TEST_DATA_PROD_PORT_2_ALIBABA_CONNECTION }}
+      TEST_DATA_PROD_PORT_2_AWS_CONNECTION: ${{ secrets.TEST_DATA_PROD_PORT_2_AWS_CONNECTION }}
+      TEST_DATA_PROD_PORT_2_AZURE_CONNECTION: ${{ secrets.TEST_DATA_PROD_PORT_2_AZURE_CONNECTION }}
+      TEST_DATA_PROD_PORT_2_IBM2_CONNECTION: ${{ secrets.TEST_DATA_PROD_PORT_2_IBM2_CONNECTION }}
+      TEST_DATA_PROD_PORT_2_PORT_CONNECTION: ${{ secrets.TEST_DATA_PROD_PORT_2_PORT_CONNECTION }}
+      TEST_DATA_PROD_PORT_2_PRIVATE_SERVICE_PROFILE_CONNECTION: ${{ secrets.TEST_DATA_PROD_PORT_2_PRIVATE_SERVICE_PROFILE_CONNECTION }}
 
     steps:
       - name: Check out code into the Go module directory
@@ -40,17 +38,16 @@ jobs:
 
       - name: Setup Variables Files
         run: |
-#          echo $TEST_DATA_UAT_PORT_2_ALIBABA_CONNECTION >> "./examples/port-2-alibaba-connection/terraform.tfvars.json"
-#          echo $TEST_DATA_UAT_PORT_2_AWS_CONNECTION >> "./tests/uat/port-2-port-connection/terraform.tfvars.json"
-#          echo $TEST_DATA_UAT_PORT_2_AZURE_CONNECTION >> "./tests/uat/port-2-azure-connection/terraform.tfvars.json"
-#          echo $TEST_DATA_UAT_PORT_2_IBM2_CONNECTION >> "./examples/port-2-ibm2-connection/terraform.tfvars.json"
-          echo $TEST_DATA_UAT_PORT_2_PORT_CONNECTION >> "./examples/port-2-port-connection/terraform.tfvars.json"
-#          echo $TEST_DATA_UAT_PORT_2_PRIVATE_SERVICE_PROFILE_CONNECTION >> "./examples/port-2-private-service-profile-connection/terraform.tfvars.json"
-#          echo $TEST_DATA_UAT_PORT_2_PUBLIC_SERVICE_PROFILE_CONNECTION >> "./examples/port-2-public-service-profile-connection/terraform.tfvars.json"
+          echo $TEST_DATA_PROD_PORT_2_ALIBABA_CONNECTION >> "./examples/port-2-alibaba-connection/terraform.tfvars.json"
+          echo $TEST_DATA_PROD_PORT_2_AWS_CONNECTION >> "./tests/prod/port-2-port-connection/terraform.tfvars.json"
+          echo $TEST_DATA_PROD_PORT_2_AZURE_CONNECTION >> "./tests/prod/port-2-azure-connection/terraform.tfvars.json"
+          echo $TEST_DATA_PROD_PORT_2_IBM2_CONNECTION >> "./examples/port-2-ibm2-connection/terraform.tfvars.json"
+          echo $TEST_DATA_PROD_PORT_2_PORT_CONNECTION >> "./examples/port-2-port-connection/terraform.tfvars.json"
+          echo $TEST_DATA_PROD_PORT_2_PRIVATE_SERVICE_PROFILE_CONNECTION >> "./examples/port-2-private-service-profile-connection/terraform.tfvars.json"
 
       - name: Run Go Tests
         run:
-          go test ./tests/uat -v -coverprofile coverage_uat_modules.txt -covermode=atomic -count 1 -parallel 8 -timeout 180m
+          go test ./tests/prod -v -coverprofile coverage_prod_modules.txt -covermode=atomic -count 1 -parallel 8 -timeout 180m
 
       - name: Setup Node.js 20.11.1
         uses: actions/setup-node@v2
@@ -62,4 +59,4 @@ jobs:
         uses: codecov/codecov-action@v3
         with:
             token: ${{ secrets.CODECOV_TOKEN }}
-            files: ./coverage_uat_modules.txt
+            files: ./coverage_prod_modules.txt
