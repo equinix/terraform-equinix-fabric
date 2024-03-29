@@ -17,6 +17,8 @@ jobs:
       TEST_DATA_UAT_PORT_2_PORT_CONNECTION: ${{ secrets.TEST_DATA_UAT_PORT_2_PORT_CONNECTION }}
       TEST_DATA_UAT_PORT_2_PRIVATE_SERVICE_PROFILE_CONNECTION: ${{ secrets.TEST_DATA_UAT_PORT_2_PRIVATE_SERVICE_PROFILE_CONNECTION }}
       TEST_DATA_UAT_PORT_2_PUBLIC_SERVICE_PROFILE_CONNECTION: ${{ secrets.TEST_DATA_UAT_PORT_2_PUBLIC_SERVICE_PROFILE_CONNECTION }}
+      TEST_DATA_UAT_VIRTUAL_DEVICE_2_PORT_CONNECTION: ${{ secrets.TEST_DATA_UAT_VIRTUAL_DEVICE_2_PORT_CONNECTION  }}
+      TEST_DATA_UAT_VIRTUAL_DEVICE_2_AZURE_CONNECTION: ${{ secrets.TEST_DATA_UAT_VIRTUAL_DEVICE_2_AZURE_CONNECTION  }}
 
     steps:
       - name: Check out code into the Go module directory
@@ -46,7 +48,9 @@ jobs:
           echo $TEST_DATA_UAT_PORT_2_IBM2_CONNECTION >> "./examples/port-2-ibm2-connection/terraform.tfvars.json"
           echo $TEST_DATA_UAT_PORT_2_PORT_CONNECTION >> "./examples/port-2-port-connection/terraform.tfvars.json"
           echo $TEST_DATA_UAT_PORT_2_PRIVATE_SERVICE_PROFILE_CONNECTION >> "./examples/port-2-private-service-profile-connection/terraform.tfvars.json"
-          echo $TEST_DATA_UAT_PORT_2_PUBLIC_SERVICE_PROFILE_CONNECTION >> "./examples/port-2-public-service-profile-connection/terraform.tfvars.json"   
+          echo $TEST_DATA_UAT_PORT_2_PUBLIC_SERVICE_PROFILE_CONNECTION >> "./examples/port-2-public-service-profile-connection/terraform.tfvars.json"
+          echo $TEST_DATA_UAT_VIRTUAL_DEVICE_2_PORT_CONNECTION >> "./tests/uat/virtual-device-2-port-connection/terraform.tfvars.json" 
+          echo $TEST_DATA_UAT_VIRTUAL_DEVICE_2_AZURE_CONNECTION >> "./tests/uat/virtual-device-2-azure-connection/terraform.tfvars.json" 
 
       - name: Run Go Tests
         run:

@@ -68,6 +68,7 @@ variable "zside_ap_authentication_key" {
   description = "Authentication key for provider based connections"
   type        = string
   default     = ""
+  sensitive   = true
 }
 variable "zside_ap_profile_type" {
   description = "Service profile type - L2_PROFILE, L3_PROFILE, ECIA_PROFILE, ECMC_PROFILE"
@@ -118,4 +119,5 @@ variable "additional_info" {
   description = "Additional info parameters. It's a list of maps containing 'key' and 'value' keys with their corresponding values."
   type        = list(object({ key = string, value = string }))
   default     = []
+  sensitive   = true
 }
