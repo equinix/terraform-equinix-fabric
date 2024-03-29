@@ -96,3 +96,27 @@ func TestPort2PublicServiceProfileCreateConnection(t *testing.T) {
 	output := terraform.Output(t, terraformOptions, "public_sp_connection_id")
 	assert.NotNil(t, output)
 }
+func TestVirtualDevice2AzureCreateConnection(t *testing.T) {
+
+	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
+		TerraformDir: "../../tests/uat/virtual-device-2-azure-connection",
+	})
+
+	defer terraform.Destroy(t, terraformOptions)
+
+	terraform.InitAndApply(t, terraformOptions)
+	output := terraform.Output(t, terraformOptions, "azure_connection_id")
+	assert.NotNil(t, output)
+}
+func TestVirtualDevice2PortCreateConnection(t *testing.T) {
+
+	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
+		TerraformDir: "../../tests/uat/virtual-device-2-azure-connection",
+	})
+
+	defer terraform.Destroy(t, terraformOptions)
+
+	terraform.InitAndApply(t, terraformOptions)
+	output := terraform.Output(t, terraformOptions, "port_connection_id")
+	assert.NotNil(t, output)
+}
