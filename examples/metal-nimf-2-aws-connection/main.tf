@@ -36,7 +36,6 @@ module "metal_2_aws_connection" {
   bandwidth             = var.bandwidth
   purchase_order_number = var.purchase_order_number
 
-  aside_ap_type               = var.aside_ap_type
   aside_ap_authentication_key = equinix_metal_connection.metal-connection.authorization_code
 
   zside_ap_type               = var.zside_ap_type
