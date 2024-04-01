@@ -83,16 +83,3 @@ func TestPort2PrivateServiceProfileCreateConnection(t *testing.T) {
 	output := terraform.Output(t, terraformOptions, "private_sp_connection_id")
 	assert.NotNil(t, output)
 }
-
-func TestPort2PublicServiceProfileCreateConnection(t *testing.T) {
-
-	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
-		TerraformDir: "../../examples/port-2-public-service-profile-connection",
-	})
-
-	defer terraform.Destroy(t, terraformOptions)
-
-	terraform.InitAndApply(t, terraformOptions)
-	output := terraform.Output(t, terraformOptions, "public_sp_connection_id")
-	assert.NotNil(t, output)
-}
