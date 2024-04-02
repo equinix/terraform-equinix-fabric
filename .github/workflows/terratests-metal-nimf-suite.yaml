@@ -1,0 +1,52 @@
+name: terratests-metal-nimf-suite
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  setup-tests:
+    name: Setup NIMF Tests
+    runs-on: ubuntu-latest
+    env:
+      TEST_DATA_PROD_METAL_NIMF_2_AWS_CONNECTION: ${{ secrets.TEST_DATA_PROD_METAL_NIMF_2_AWS_CONNECTION }}
+
+    steps:
+      - name: Check out code into the Go module directory
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.ref }}
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: './go.mod'
+        id: go
+
+      - name: Get dependencies
+        run: |
+          go mod download
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: ${{ matrix.terraform }}
+          terraform_wrapper: false
+
+      - name: Setup Variables Files
+        run: |
+          echo $TEST_DATA_PROD_METAL_NIMF_2_AWS_CONNECTION >> "./examples/metal-nimf-2-aws-connection/terraform.tfvars.json"
+
+      - name: Run Go Tests
+        run:
+          go test ./tests/uat -v -coverprofile coverage_uat_modules.txt -covermode=atomic -count 1 -parallel 8 -timeout 180m
+
+      - name: Setup Node.js 20.11.1
+        uses: actions/setup-node@v2
+        with:
+          node-version: 20.11.1
+
+      - name: Upload test coverage to Codecov
+        if: ${{ always() }}
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./coverage_uat_modules.txt
