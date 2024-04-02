@@ -1,7 +1,6 @@
 name: terratests-metal-nimf-suite
 
 on:
-  pull_request:
   workflow_dispatch:
 
 jobs:
@@ -9,6 +8,9 @@ jobs:
     name: Setup NIMF Tests
     runs-on: ubuntu-latest
     env:
+      EQUINIX_CLIENT_ID: ${{ secrets.EQUINIX_CLIENT_ID }}
+      EQUINIX_CLIENT_SECRET: ${{ secrets.EQUINIX_CLIENT_SECRET }}
+      METAL_AUTH_TOKEN: ${{ secrets.METAL_AUTH_TOKEN }}
       TEST_DATA_PROD_METAL_NIMF_2_AWS_CONNECTION: ${{ secrets.TEST_DATA_PROD_METAL_NIMF_2_AWS_CONNECTION }}
 
     steps:

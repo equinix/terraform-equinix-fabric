@@ -9,7 +9,7 @@ import (
 func TestMetalNIMF2AWSCreateConnection(t *testing.T) {
 
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
-		TerraformDir: "../../examples/metal-nimf-2-aws-connection",
+		TerraformDir: "../../../examples/metal-nimf-2-aws-connection",
 	})
 
 	defer terraform.Destroy(t, terraformOptions)
