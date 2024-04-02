@@ -9,6 +9,7 @@ jobs:
     name: Setup NIMF Tests
     runs-on: ubuntu-latest
     env:
+      TF_VAR_connection_name: "metal_sanity$(date +'%Y%m%d%H%M')"
       TF_VAR_equinix_client_id: ${{ secrets.EQUINIX_CLIENT_ID }}
       TF_VAR_equinix_client_secret: ${{ secrets.EQUINIX_CLIENT_SECRET }}
       TF_VAR_metal_auth_token: ${{ secrets.METAL_AUTH_TOKEN }}
@@ -40,7 +41,7 @@ jobs:
 
       - name: Run Go Tests
         run:
-          go test ./tests/prod/metal-nimf -v -coverprofile coverage_uat_modules.txt -covermode=atomic -count 1 -parallel 8 -timeout 180m
+          go test ./tests/prod/metal-nimf -v -coverprofile coverage_metal_nimf_modules.txt -covermode=atomic -count 1 -parallel 8 -timeout 180m
 
       - name: Setup Node.js 20.11.1
         uses: actions/setup-node@v2
@@ -52,4 +53,4 @@ jobs:
         uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          files: ./coverage_uat_modules.txt
+          files: ./coverage_metal-nimf_modules.txt
