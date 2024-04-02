@@ -9,9 +9,9 @@ jobs:
     name: Setup NIMF Tests
     runs-on: ubuntu-latest
     env:
-      EQUINIX_CLIENT_ID: ${{ secrets.EQUINIX_CLIENT_ID }}
-      EQUINIX_CLIENT_SECRET: ${{ secrets.EQUINIX_CLIENT_SECRET }}
-      METAL_AUTH_TOKEN: ${{ secrets.METAL_AUTH_TOKEN }}
+      TF_VAR_equinix_client_id: ${{ secrets.EQUINIX_CLIENT_ID }}
+      TF_VAR_equinix_client_secret: ${{ secrets.EQUINIX_CLIENT_SECRET }}
+      TF_VAR_metal_auth_token: ${{ secrets.METAL_AUTH_TOKEN }}
       TEST_DATA_PROD_METAL_NIMF_2_AWS_CONNECTION: ${{ secrets.TEST_DATA_PROD_METAL_NIMF_2_AWS_CONNECTION }}
 
     steps:
