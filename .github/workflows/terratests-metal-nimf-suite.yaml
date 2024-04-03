@@ -35,7 +35,7 @@ jobs:
           terraform_wrapper: false
 
       - name: Set Connection Name variable
-        run: echo "TF_VAR_connection_name=metal_$(date +'%Y%m%d%H%M')" >> $GITHUB_ENV
+        run: echo "TF_VAR_connection_name=nimf_$(date +'%Y%m%d%H%M%S%N')" >> $GITHUB_ENV
 
       - name: Set TF_VAR_connection_name secret
         run: |
