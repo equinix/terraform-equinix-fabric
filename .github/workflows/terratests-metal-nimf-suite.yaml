@@ -9,7 +9,6 @@ jobs:
     name: Setup NIMF Tests
     runs-on: ubuntu-latest
     env:
-      TF_VAR_connection_name: "metal_sanity"
       TF_VAR_equinix_client_id: ${{ secrets.EQUINIX_CLIENT_ID }}
       TF_VAR_equinix_client_secret: ${{ secrets.EQUINIX_CLIENT_SECRET }}
       TF_VAR_metal_auth_token: ${{ secrets.METAL_AUTH_TOKEN }}
@@ -35,10 +34,12 @@ jobs:
           terraform_version: ${{ matrix.terraform }}
           terraform_wrapper: false
 
-      - name: Set ConnectionName variable
-        run: echo "::set-output name=date::$(date +'%Y%m%d%H%M')"
+      - name: Set ConnectionName secret
+        run:
+          echo "TF_VAR_connection_name=metal_$(date +'%Y%m%d%H%M')" >> $GITHUB_ENV
+          echo "${{ env.TF_VAR_connection_name }}" >> ${{ github.workspace }}/.env
         env:
-          TF_VAR_connection_name: ${{ format('metal_sanity{0}', steps.set-date.outputs.date) }}
+          TF_VAR_connection_name: ${{ secrets.TF_VAR_connection_name }}
 
       - name: Setup Variables Files
         run: |
