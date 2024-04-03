@@ -13,6 +13,7 @@ func TestPort2AlibabaCreateConnection(t *testing.T) {
 	})
 
 	defer terraform.Destroy(t, terraformOptions)
+	t.Parallel()
 
 	terraform.InitAndApply(t, terraformOptions)
 	output := terraform.Output(t, terraformOptions, "alibaba_connection_id")
@@ -26,6 +27,7 @@ func TestPort2AwsCreateConnection(t *testing.T) {
 	})
 
 	defer terraform.Destroy(t, terraformOptions)
+	t.Parallel()
 
 	terraform.InitAndApply(t, terraformOptions)
 	output := terraform.Output(t, terraformOptions, "aws_connection_id")
@@ -39,6 +41,7 @@ func TestPort2AzureCreateConnection(t *testing.T) {
 	})
 
 	defer terraform.Destroy(t, terraformOptions)
+	t.Parallel()
 
 	terraform.InitAndApply(t, terraformOptions)
 	output := terraform.Output(t, terraformOptions, "azure_connection_id")
@@ -52,6 +55,7 @@ func TestPort2Ibm2CreateConnection(t *testing.T) {
 	})
 
 	defer terraform.Destroy(t, terraformOptions)
+	t.Parallel()
 
 	terraform.InitAndApply(t, terraformOptions)
 	output := terraform.Output(t, terraformOptions, "ibm2_connection_id")
@@ -65,6 +69,7 @@ func TestPort2PortCreateConnection(t *testing.T) {
 	})
 
 	defer terraform.Destroy(t, terraformOptions)
+	t.Parallel()
 
 	terraform.InitAndApply(t, terraformOptions)
 	output := terraform.Output(t, terraformOptions, "port_connection_id")
@@ -78,6 +83,7 @@ func TestPort2PrivateServiceProfileCreateConnection(t *testing.T) {
 	})
 
 	defer terraform.Destroy(t, terraformOptions)
+	t.Parallel()
 
 	terraform.InitAndApply(t, terraformOptions)
 	output := terraform.Output(t, terraformOptions, "private_sp_connection_id")
