@@ -13,6 +13,7 @@ func TestPort2AlibabaCreateConnection(t *testing.T) {
 	})
 
 	defer terraform.Destroy(t, terraformOptions)
+	t.Parallel()
 
 	terraform.InitAndApply(t, terraformOptions)
 	output := terraform.Output(t, terraformOptions, "alibaba_connection_id")
@@ -22,10 +23,11 @@ func TestPort2AlibabaCreateConnection(t *testing.T) {
 func TestPort2AwsCreateConnection(t *testing.T) {
 
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
-		TerraformDir: "../../tests/uat/port-2-aws-connection",
+		TerraformDir: "../../tests/examples-without-external-providers/port-2-aws-connection",
 	})
 
 	defer terraform.Destroy(t, terraformOptions)
+	t.Parallel()
 
 	terraform.InitAndApply(t, terraformOptions)
 	output := terraform.Output(t, terraformOptions, "aws_connection_id")
@@ -35,10 +37,11 @@ func TestPort2AwsCreateConnection(t *testing.T) {
 func TestPort2AzureCreateConnection(t *testing.T) {
 
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
-		TerraformDir: "../../tests/uat/port-2-azure-connection",
+		TerraformDir: "../../tests/examples-without-external-providers/port-2-azure-connection",
 	})
 
 	defer terraform.Destroy(t, terraformOptions)
+	t.Parallel()
 
 	terraform.InitAndApply(t, terraformOptions)
 	output := terraform.Output(t, terraformOptions, "azure_connection_id")
@@ -52,6 +55,7 @@ func TestPort2Ibm2CreateConnection(t *testing.T) {
 	})
 
 	defer terraform.Destroy(t, terraformOptions)
+	t.Parallel()
 
 	terraform.InitAndApply(t, terraformOptions)
 	output := terraform.Output(t, terraformOptions, "ibm2_connection_id")
@@ -65,6 +69,7 @@ func TestPort2PortCreateConnection(t *testing.T) {
 	})
 
 	defer terraform.Destroy(t, terraformOptions)
+	t.Parallel()
 
 	terraform.InitAndApply(t, terraformOptions)
 	output := terraform.Output(t, terraformOptions, "port_connection_id")
@@ -78,6 +83,7 @@ func TestPort2PrivateServiceProfileCreateConnection(t *testing.T) {
 	})
 
 	defer terraform.Destroy(t, terraformOptions)
+	t.Parallel()
 
 	terraform.InitAndApply(t, terraformOptions)
 	output := terraform.Output(t, terraformOptions, "private_sp_connection_id")
@@ -91,6 +97,7 @@ func TestPort2PublicServiceProfileCreateConnection(t *testing.T) {
 	})
 
 	defer terraform.Destroy(t, terraformOptions)
+	t.Parallel()
 
 	terraform.InitAndApply(t, terraformOptions)
 	output := terraform.Output(t, terraformOptions, "public_sp_connection_id")
@@ -100,10 +107,11 @@ func TestPort2PublicServiceProfileCreateConnection(t *testing.T) {
 func TestCloudRouter2AwsCreateConnection(t *testing.T) {
 
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
-		TerraformDir: "../../tests/uat/cloud-router-2-aws-connection",
+		TerraformDir: "../../tests/examples-without-external-providers/cloud-router-2-aws-connection",
 	})
 
 	defer terraform.Destroy(t, terraformOptions)
+	t.Parallel()
 
 	terraform.InitAndApply(t, terraformOptions)
 	output := terraform.Output(t, terraformOptions, "aws_connection_id")
@@ -113,10 +121,11 @@ func TestCloudRouter2AwsCreateConnection(t *testing.T) {
 func TestCloudRouter2AzureCreateConnection(t *testing.T) {
 
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
-		TerraformDir: "../../tests/uat/cloud-router-2-azure-connection",
+		TerraformDir: "../../tests/examples-without-external-providers/cloud-router-2-azure-connection",
 	})
 
 	defer terraform.Destroy(t, terraformOptions)
+	t.Parallel()
 
 	terraform.InitAndApply(t, terraformOptions)
 	output := terraform.Output(t, terraformOptions, "azure_connection_id")
@@ -126,10 +135,11 @@ func TestCloudRouter2AzureCreateConnection(t *testing.T) {
 func TestCloudRouter2PortRoutingProtocolCreateConnection(t *testing.T) {
 
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
-		TerraformDir: "../../tests/uat/cloud-router-2-port-routing-protocol-connection",
+		TerraformDir: "../../tests/examples-without-external-providers/cloud-router-2-port-routing-protocol-connection",
 	})
 
 	defer terraform.Destroy(t, terraformOptions)
+	t.Parallel()
 
 	terraform.InitAndApply(t, terraformOptions)
 	output := terraform.Output(t, terraformOptions, "port_connection_id")
@@ -143,6 +153,7 @@ func TestCloudRouter2ServiceProfileCreateConnection(t *testing.T) {
 	})
 
 	defer terraform.Destroy(t, terraformOptions)
+	t.Parallel()
 
 	terraform.InitAndApply(t, terraformOptions)
 	output := terraform.Output(t, terraformOptions, "service_profile_connection_id")
@@ -156,6 +167,7 @@ func TestCloudRouter2WanCreateConnection(t *testing.T) {
 	})
 
 	defer terraform.Destroy(t, terraformOptions)
+	t.Parallel()
 
 	terraform.InitAndApply(t, terraformOptions)
 	output := terraform.Output(t, terraformOptions, "wan_connection_id")
