@@ -6,7 +6,7 @@ on:
 
 jobs:
   test-PNFV:
-    name: Setup UAT Tests
+    name: Setup UAT PNFV Tests
     runs-on: ubuntu-latest
     env:
       TF_VAR_equinix_client_id: ${{ secrets.EQUINIX_CLIENT_ID_PNFV }}
@@ -40,7 +40,7 @@ jobs:
 
       - name: Run Go Tests
         run:
-          go test ./tests/uat -v -coverprofile coverage_uat_modules.txt -covermode=atomic -count 1 -parallel 8 -timeout 180m
+          go test ./tests/uat -v -coverprofile coverage_uat_modules.txt -covermode=atomic -count 1 -parallel 8 -run "(PNFV)" -timeout 180m
 
       - name: Setup Node.js 20.11.1
         uses: actions/setup-node@v2
@@ -55,7 +55,7 @@ jobs:
             files: ./coverage_uat_modules.txt
 
   test-PFCR:
-    name: Setup UAT Tests
+    name: Setup UAT PFCR Tests
     runs-on: ubuntu-latest
     env:
       TF_VAR_equinix_client_id: ${{ secrets.EQUINIX_CLIENT_ID_PFCR }}
@@ -110,7 +110,7 @@ jobs:
 
       - name: Run Go Tests
         run:
-          go test ./tests/uat -v -coverprofile coverage_uat_modules.txt -covermode=atomic -count 1 -parallel 8 -timeout 180m
+          go test ./tests/uat -v -coverprofile coverage_uat_modules.txt -covermode=atomic -count 1 -parallel 8 -run "(PFCR)" -timeout 180m
 
       - name: Setup Node.js 20.11.1
         uses: actions/setup-node@v2

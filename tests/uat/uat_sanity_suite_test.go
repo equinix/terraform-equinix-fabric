@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-func TestPort2AlibabaCreateConnection(t *testing.T) {
+func TestPort2AlibabaCreateConnection_PNFV(t *testing.T) {
 
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
 		TerraformDir: "../../examples/port-2-alibaba-connection",
@@ -20,7 +20,7 @@ func TestPort2AlibabaCreateConnection(t *testing.T) {
 	assert.NotNil(t, output)
 }
 
-func TestPort2AwsCreateConnection(t *testing.T) {
+func TestPort2AwsCreateConnection_PFCR(t *testing.T) {
 
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
 		TerraformDir: "../../tests/examples-without-external-providers/port-2-aws-connection",
@@ -34,7 +34,7 @@ func TestPort2AwsCreateConnection(t *testing.T) {
 	assert.NotNil(t, output)
 }
 
-func TestPort2AzureCreateConnection(t *testing.T) {
+func TestPort2AzureCreateConnection_PFCR(t *testing.T) {
 
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
 		TerraformDir: "../../tests/examples-without-external-providers/port-2-azure-connection",
@@ -48,7 +48,7 @@ func TestPort2AzureCreateConnection(t *testing.T) {
 	assert.NotNil(t, output)
 }
 
-func TestPort2Ibm2CreateConnection(t *testing.T) {
+func TestPort2Ibm2CreateConnection_PFCR(t *testing.T) {
 
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
 		TerraformDir: "../../examples/port-2-ibm2-connection",
@@ -62,7 +62,7 @@ func TestPort2Ibm2CreateConnection(t *testing.T) {
 	assert.NotNil(t, output)
 }
 
-func TestPort2PortCreateConnection(t *testing.T) {
+func TestPort2PortCreateConnection_PFCR(t *testing.T) {
 
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
 		TerraformDir: "../../examples/port-2-port-connection",
@@ -76,7 +76,7 @@ func TestPort2PortCreateConnection(t *testing.T) {
 	assert.NotNil(t, output)
 }
 
-func TestPort2PrivateServiceProfileCreateConnection(t *testing.T) {
+func TestPort2PrivateServiceProfileCreateConnection_PFCR(t *testing.T) {
 
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
 		TerraformDir: "../../examples/port-2-private-service-profile-connection",
@@ -90,7 +90,7 @@ func TestPort2PrivateServiceProfileCreateConnection(t *testing.T) {
 	assert.NotNil(t, output)
 }
 
-func TestPort2PublicServiceProfileCreateConnection(t *testing.T) {
+func TestPort2PublicServiceProfileCreateConnection_PFCR(t *testing.T) {
 
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
 		TerraformDir: "../../examples/port-2-public-service-profile-connection",
@@ -104,7 +104,7 @@ func TestPort2PublicServiceProfileCreateConnection(t *testing.T) {
 	assert.NotNil(t, output)
 }
 
-func TestCloudRouter2AwsCreateConnection(t *testing.T) {
+func TestCloudRouter2AwsCreateConnection_PFCR(t *testing.T) {
 
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
 		TerraformDir: "../../tests/examples-without-external-providers/cloud-router-2-aws-connection",
@@ -118,7 +118,7 @@ func TestCloudRouter2AwsCreateConnection(t *testing.T) {
 	assert.NotNil(t, output)
 }
 
-func TestCloudRouter2AzureCreateConnection(t *testing.T) {
+func TestCloudRouter2AzureCreateConnection_PFCR(t *testing.T) {
 
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
 		TerraformDir: "../../tests/examples-without-external-providers/cloud-router-2-azure-connection",
@@ -132,7 +132,7 @@ func TestCloudRouter2AzureCreateConnection(t *testing.T) {
 	assert.NotNil(t, output)
 }
 
-func TestCloudRouter2PortRoutingProtocolCreateConnection(t *testing.T) {
+func TestCloudRouter2PortRoutingProtocolCreateConnection_PFCR(t *testing.T) {
 
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
 		TerraformDir: "../../tests/examples-without-external-providers/cloud-router-2-port-routing-protocol-connection",
@@ -146,7 +146,7 @@ func TestCloudRouter2PortRoutingProtocolCreateConnection(t *testing.T) {
 	assert.NotNil(t, output)
 }
 
-func TestCloudRouter2ServiceProfileCreateConnection(t *testing.T) {
+func TestCloudRouter2ServiceProfileCreateConnection_PFCR(t *testing.T) {
 
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
 		TerraformDir: "../../examples/cloud-router-2-service-profile-connection",
@@ -160,7 +160,7 @@ func TestCloudRouter2ServiceProfileCreateConnection(t *testing.T) {
 	assert.NotNil(t, output)
 }
 
-func TestCloudRouter2WanCreateConnection(t *testing.T) {
+func TestCloudRouter2WanCreateConnection_PFCR(t *testing.T) {
 
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
 		TerraformDir: "../../examples/cloud-router-2-wan-connection",
