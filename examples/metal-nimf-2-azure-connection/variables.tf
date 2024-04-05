@@ -94,18 +94,22 @@ variable "zside_location" {
 variable "azure_client_id" {
   description = "Azure Client id"
   type        = string
+  sensitive   = true
 }
 variable "azure_client_secret" {
   description = "Azure Secret value"
   type        = string
+  sensitive   = true
 }
 variable "azure_tenant_id" {
   description = "Azure Tenant id"
   type        = string
+  sensitive   = true
 }
 variable "azure_subscription_id" {
   description = "Azure Subscription id"
   type        = string
+  sensitive   = true
 }
 variable "azure_resource_name" {
   description = "The name of Azure Resource"
