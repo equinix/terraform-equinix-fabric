@@ -12,6 +12,8 @@ jobs:
       TF_VAR_equinix_client_secret: ${{ secrets.EQUINIX_CLIENT_SECRET }}
       TF_VAR_metal_auth_token: ${{ secrets.METAL_AUTH_TOKEN }}
       TEST_DATA_PROD_METAL_NIMF_2_AWS_CONNECTION: ${{ secrets.TEST_DATA_PROD_METAL_NIMF_2_AWS_CONNECTION }}
+      TEST_DATA_PROD_METAL_NIMF_2_AZURE_CONNECTION: ${{ secrets.TEST_DATA_PROD_METAL_NIMF_2_AZURE_CONNECTION }}
+      TEST_DATA_PROD_METAL_NIMF_2_ORACLE_CONNECTION: ${{ secrets.TEST_DATA_PROD_METAL_NIMF_2_ORACLE_CONNECTION }}
 
     steps:
       - name: Check out code into the Go module directory
@@ -37,7 +39,9 @@ jobs:
 
       - name: Setup Variables Files
         run: |
+          echo $TEST_DATA_PROD_METAL_NIMF_2_AZURE_CONNECTION >> "./examples/metal-nimf-2-azure-connection/terraform.tfvars.json"
           echo $TEST_DATA_PROD_METAL_NIMF_2_AWS_CONNECTION >> "./examples/metal-nimf-2-aws-connection/terraform.tfvars.json"
+          echo $TEST_DATA_PROD_METAL_NIMF_2_ORACLE_CONNECTION >> "./examples/metal-nimf-2-oracle-connection/terraform.tfvars.json"
 
       - name: Run Go Tests
         run:
