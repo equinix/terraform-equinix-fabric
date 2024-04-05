@@ -203,5 +203,5 @@ No resources.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_module_output"></a> [module\_output](#output\_module\_output) | n/a |
+| <a name="output_wan_connection_id"></a> [wan\_connection\_id](#output\_wan\_connection\_id) | n/a |
 <!-- END_TF_DOCS -->
