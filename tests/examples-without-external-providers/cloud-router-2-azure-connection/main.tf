@@ -3,8 +3,8 @@ provider "equinix" {
   client_secret = var.equinix_client_secret
 }
 
-module "create_port_2_ibm1_connection" {
-  source = "../../modules/port-connection"
+module "cloud_router_azure_connection" {
+  source = "equinix/fabric/equinix//modules/cloud-router-connection"
 
   connection_name       = var.connection_name
   connection_type       = var.connection_type
@@ -13,17 +13,15 @@ module "create_port_2_ibm1_connection" {
   bandwidth             = var.bandwidth
   purchase_order_number = var.purchase_order_number
 
-  # A-side
-  aside_port_name      = var.aside_port_name
-  aside_vlan_tag       = var.aside_vlan_tag
-  aside_vlan_inner_tag = var.aside_vlan_inner_tag
+  #Aside
+  aside_ap_type  = var.aside_ap_type
+  aside_fcr_uuid = var.aside_fcr_uuid
 
-  # Z-side
+  #Zside
   zside_ap_type               = var.zside_ap_type
   zside_ap_authentication_key = var.zside_ap_authentication_key
   zside_ap_profile_type       = var.zside_ap_profile_type
   zside_location              = var.zside_location
-  zside_seller_region         = var.zside_seller_region
-  zside_sp_name               = var.zside_sp_name
-  additional_info             = var.additional_info
+  zside_peering_type          = var.zside_peering_type
+  zside_fabric_sp_name        = var.zside_fabric_sp_name
 }

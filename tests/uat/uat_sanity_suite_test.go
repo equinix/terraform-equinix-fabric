@@ -6,91 +6,98 @@ import (
 	"testing"
 )
 
-func TestPort2AlibabaCreateConnection(t *testing.T) {
+func TestPort2AlibabaCreateConnection_PNFV(t *testing.T) {
 
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
 		TerraformDir: "../../examples/port-2-alibaba-connection",
 	})
 
 	defer terraform.Destroy(t, terraformOptions)
+	t.Parallel()
 
 	terraform.InitAndApply(t, terraformOptions)
 	output := terraform.Output(t, terraformOptions, "alibaba_connection_id")
 	assert.NotNil(t, output)
 }
 
-func TestPort2AwsCreateConnection(t *testing.T) {
+func TestPort2AwsCreateConnection_PFCR(t *testing.T) {
 
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
-		TerraformDir: "../../tests/uat/port-2-aws-connection",
+		TerraformDir: "../../tests/examples-without-external-providers/port-2-aws-connection",
 	})
 
 	defer terraform.Destroy(t, terraformOptions)
+	t.Parallel()
 
 	terraform.InitAndApply(t, terraformOptions)
 	output := terraform.Output(t, terraformOptions, "aws_connection_id")
 	assert.NotNil(t, output)
 }
 
-func TestPort2AzureCreateConnection(t *testing.T) {
+func TestPort2AzureCreateConnection_PFCR(t *testing.T) {
 
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
-		TerraformDir: "../../tests/uat/port-2-azure-connection",
+		TerraformDir: "../../tests/examples-without-external-providers/port-2-azure-connection",
 	})
 
 	defer terraform.Destroy(t, terraformOptions)
+	t.Parallel()
 
 	terraform.InitAndApply(t, terraformOptions)
 	output := terraform.Output(t, terraformOptions, "azure_connection_id")
 	assert.NotNil(t, output)
 }
 
-func TestPort2Ibm2CreateConnection(t *testing.T) {
+func TestPort2Ibm2CreateConnection_PFCR(t *testing.T) {
 
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
 		TerraformDir: "../../examples/port-2-ibm2-connection",
 	})
 
 	defer terraform.Destroy(t, terraformOptions)
+	t.Parallel()
 
 	terraform.InitAndApply(t, terraformOptions)
 	output := terraform.Output(t, terraformOptions, "ibm2_connection_id")
 	assert.NotNil(t, output)
 }
 
-func TestPort2PortCreateConnection(t *testing.T) {
+func TestPort2PortCreateConnection_PFCR(t *testing.T) {
 
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
 		TerraformDir: "../../examples/port-2-port-connection",
 	})
 
 	defer terraform.Destroy(t, terraformOptions)
+	t.Parallel()
 
 	terraform.InitAndApply(t, terraformOptions)
 	output := terraform.Output(t, terraformOptions, "port_connection_id")
 	assert.NotNil(t, output)
 }
 
-func TestPort2PrivateServiceProfileCreateConnection(t *testing.T) {
+func TestPort2PrivateServiceProfileCreateConnection_PFCR(t *testing.T) {
 
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
 		TerraformDir: "../../examples/port-2-private-service-profile-connection",
 	})
 
 	defer terraform.Destroy(t, terraformOptions)
+	t.Parallel()
 
 	terraform.InitAndApply(t, terraformOptions)
 	output := terraform.Output(t, terraformOptions, "private_sp_connection_id")
 	assert.NotNil(t, output)
 }
 
-func TestPort2PublicServiceProfileCreateConnection(t *testing.T) {
+func TestPort2PublicServiceProfileCreateConnection_PFCR(t *testing.T) {
 
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
 		TerraformDir: "../../examples/port-2-public-service-profile-connection",
 	})
 
 	defer terraform.Destroy(t, terraformOptions)
+	t.Parallel()
 
 	terraform.InitAndApply(t, terraformOptions)
 	output := terraform.Output(t, terraformOptions, "public_sp_connection_id")
@@ -118,5 +125,75 @@ func TestVirtualDevice2PortCreateConnection(t *testing.T) {
 
 	terraform.InitAndApply(t, terraformOptions)
 	output := terraform.Output(t, terraformOptions, "port_connection_id")
+	assert.NotNil(t, output)
+}
+
+func TestCloudRouter2AwsCreateConnection_PFCR(t *testing.T) {
+
+	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
+		TerraformDir: "../../tests/examples-without-external-providers/cloud-router-2-aws-connection",
+	})
+
+	defer terraform.Destroy(t, terraformOptions)
+	t.Parallel()
+
+	terraform.InitAndApply(t, terraformOptions)
+	output := terraform.Output(t, terraformOptions, "aws_connection_id")
+	assert.NotNil(t, output)
+}
+
+func TestCloudRouter2AzureCreateConnection_PFCR(t *testing.T) {
+
+	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
+		TerraformDir: "../../tests/examples-without-external-providers/cloud-router-2-azure-connection",
+	})
+
+	defer terraform.Destroy(t, terraformOptions)
+	t.Parallel()
+
+	terraform.InitAndApply(t, terraformOptions)
+	output := terraform.Output(t, terraformOptions, "azure_connection_id")
+	assert.NotNil(t, output)
+}
+
+func TestCloudRouter2PortRoutingProtocolCreateConnection_PFCR(t *testing.T) {
+
+	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
+		TerraformDir: "../../tests/examples-without-external-providers/cloud-router-2-port-routing-protocol-connection",
+	})
+
+	defer terraform.Destroy(t, terraformOptions)
+	t.Parallel()
+
+	terraform.InitAndApply(t, terraformOptions)
+	output := terraform.Output(t, terraformOptions, "port_connection_id")
+	assert.NotNil(t, output)
+}
+
+func TestCloudRouter2ServiceProfileCreateConnection_PFCR(t *testing.T) {
+
+	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
+		TerraformDir: "../../examples/cloud-router-2-service-profile-connection",
+	})
+
+	defer terraform.Destroy(t, terraformOptions)
+	t.Parallel()
+
+	terraform.InitAndApply(t, terraformOptions)
+	output := terraform.Output(t, terraformOptions, "service_profile_connection_id")
+	assert.NotNil(t, output)
+}
+
+func TestCloudRouter2WanCreateConnection_PFCR(t *testing.T) {
+
+	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
+		TerraformDir: "../../examples/cloud-router-2-wan-connection",
+	})
+
+	defer terraform.Destroy(t, terraformOptions)
+	t.Parallel()
+
+	terraform.InitAndApply(t, terraformOptions)
+	output := terraform.Output(t, terraformOptions, "wan_connection_id")
 	assert.NotNil(t, output)
 }

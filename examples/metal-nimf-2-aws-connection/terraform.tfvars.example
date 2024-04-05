@@ -1,0 +1,38 @@
+equinix_client_id      = "<MyEquinixClientId>"
+equinix_client_secret  = "<MyEquinixSecret>"
+metal_auth_token       = "<Metal_Auth_Token>"
+
+metal_connection_metro      = "ty"
+metal_project_id            = "<Metal_Project_ID>"
+metal_connection_name       = "Metal-NIMF-connection"
+metal_connection_redundancy = "primary"
+metal_connection_speed      = "50Mbps"
+metal_connection_type       = "shared_port_vlan"
+metal_contact_email         = "tfacc@example.com"
+
+connection_name             = "Metal_2_AWS"
+connection_type             = "EVPL_VC"
+notifications_type          = "ALL"
+notifications_emails        = ["example@equinix.com"]
+bandwidth                   = 50
+purchase_order_number       = "1-323292"
+project_id                  = "<Project_ID>"
+zside_ap_type               = "SP"
+zside_ap_authentication_key = "<AWS Account Id>"
+zside_ap_profile_type       = "L2_PROFILE"
+zside_seller_region         = "us-west-1"
+zside_location              = "SV"
+zside_sp_name               = "AWS Direct Connect"
+additional_info = [
+  { key = "accessKey", value = "<aws_access_key>" },
+  { key = "secretKey", value = "<aws_secret_key>" }
+]
+
+aws_gateway_name         = "aws_gateway"
+aws_gateway_asn          = 64518
+aws_vif_name             = "aws_vif"
+aws_vif_address_family   = "ipv4"
+aws_vif_bgp_asn          = 64999
+aws_vif_amazon_address   = "169.254.0.1/30"
+aws_vif_customer_address = "169.254.0.2/30"
+aws_vif_bgp_auth_key     = "secret"
