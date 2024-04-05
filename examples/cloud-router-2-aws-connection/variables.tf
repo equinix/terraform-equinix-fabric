@@ -46,7 +46,7 @@ variable "aside_fcr_uuid" {
 variable "zside_ap_authentication_key" {
   description = "Authentication key for provider based connections"
   type        = string
-  default     = ""
+  sensitive   = true
 }
 variable "zside_ap_type" {
   description = "Access point type - COLO, VD, VG, SP, IGW, SUBNET, GW"

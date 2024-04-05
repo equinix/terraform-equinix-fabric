@@ -1,4 +1,4 @@
-name: terratests-examples-without-external-providers-suite
+name: terratests-uat-suite
 
 on:
   pull_request:
@@ -29,6 +29,7 @@ jobs:
       - name: Get dependencies
         run: |
               go mod download
+
       - uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: ${{ matrix.terraform }}
@@ -41,11 +42,6 @@ jobs:
       - name: Run Go Tests
         run:
           go test ./tests/uat -v -coverprofile coverage_uat_modules.txt -covermode=atomic -count 1 -parallel 8 -run "(PNFV)" -timeout 180m
-
-      - name: Setup Node.js 20.11.1
-        uses: actions/setup-node@v2
-        with:
-            node-version: 20.11.1
 
       - name: Upload test coverage to Codecov
         if: ${{ always() }}
@@ -88,6 +84,7 @@ jobs:
       - name: Get dependencies
         run: |
           go mod download
+
       - uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: ${{ matrix.terraform }}
@@ -111,11 +108,6 @@ jobs:
       - name: Run Go Tests
         run:
           go test ./tests/uat -v -coverprofile coverage_uat_modules.txt -covermode=atomic -count 1 -parallel 8 -run "(PFCR)" -timeout 180m
-
-      - name: Setup Node.js 20.11.1
-        uses: actions/setup-node@v2
-        with:
-          node-version: 20.11.1
 
       - name: Upload test coverage to Codecov
         if: ${{ always() }}
