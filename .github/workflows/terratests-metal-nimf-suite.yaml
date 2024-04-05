@@ -1,7 +1,6 @@
 name: terratests-metal-nimf-suite
 
 on:
-  pull_request:
   workflow_dispatch:
 
 jobs:
