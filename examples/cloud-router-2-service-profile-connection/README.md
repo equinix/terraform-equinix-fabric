@@ -220,5 +220,5 @@ No resources.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_module_output"></a> [module\_output](#output\_module\_output) | n/a |
+| <a name="output_service_profile_connection_id"></a> [service\_profile\_connection\_id](#output\_service\_profile\_connection\_id) | n/a |
 <!-- END_TF_DOCS -->
