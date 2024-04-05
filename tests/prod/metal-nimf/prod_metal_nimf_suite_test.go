@@ -19,3 +19,31 @@ func TestMetalNIMF2AWSCreateConnection(t *testing.T) {
 	output := terraform.Output(t, terraformOptions, "metal_aws_connection_id")
 	assert.NotNil(t, output)
 }
+
+func TestMetalNIMF2AzureCreateConnection(t *testing.T) {
+
+	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
+		TerraformDir: "../../../examples/metal-nimf-2-azure-connection",
+	})
+
+	defer terraform.Destroy(t, terraformOptions)
+	t.Parallel()
+
+	terraform.InitAndApply(t, terraformOptions)
+	output := terraform.Output(t, terraformOptions, "metal_azure_connection_id")
+	assert.NotNil(t, output)
+}
+
+func TestMetalNIMF2OracleCreateConnection(t *testing.T) {
+
+	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
+		TerraformDir: "../../../examples/metal-nimf-2-oracle-connection",
+	})
+
+	defer terraform.Destroy(t, terraformOptions)
+	t.Parallel()
+
+	terraform.InitAndApply(t, terraformOptions)
+	output := terraform.Output(t, terraformOptions, "metal_oracle_connection_id")
+	assert.NotNil(t, output)
+}
