@@ -6,9 +6,11 @@ on:
 
 jobs:
   setup-tests:
-    name: Setup PROD Tests
+    name: Setup PROD DIGP Tests
     runs-on: ubuntu-latest
     env:
+      TF_VAR_equinix_client_id: ${{ secrets.EQUINIX_CLIENT_ID }}
+      TF_VAR_equinix_client_secret: ${{ secrets.EQUINIX_CLIENT_SECRET }}
       TEST_DATA_PROD_PORT_2_ALIBABA_CONNECTION: ${{ secrets.TEST_DATA_PROD_PORT_2_ALIBABA_CONNECTION }}
       TEST_DATA_PROD_PORT_2_AWS_CONNECTION: ${{ secrets.TEST_DATA_PROD_PORT_2_AWS_CONNECTION }}
       TEST_DATA_PROD_PORT_2_AZURE_CONNECTION: ${{ secrets.TEST_DATA_PROD_PORT_2_AZURE_CONNECTION }}
@@ -38,16 +40,10 @@ jobs:
 
       - name: Setup Variables Files
         run: |
-          echo $TEST_DATA_PROD_PORT_2_ALIBABA_CONNECTION >> "./examples/port-2-alibaba-connection/terraform.tfvars.json"
-          echo $TEST_DATA_PROD_PORT_2_AWS_CONNECTION >> "./tests/prod/port-2-aws-connection/terraform.tfvars.json"
-          echo $TEST_DATA_PROD_PORT_2_AZURE_CONNECTION >> "./tests/prod/port-2-azure-connection/terraform.tfvars.json"
-          echo $TEST_DATA_PROD_PORT_2_IBM2_CONNECTION >> "./examples/port-2-ibm2-connection/terraform.tfvars.json"
-          echo $TEST_DATA_PROD_PORT_2_PORT_CONNECTION >> "./examples/port-2-port-connection/terraform.tfvars.json"
-          echo $TEST_DATA_PROD_PORT_2_PRIVATE_SERVICE_PROFILE_CONNECTION >> "./examples/port-2-private-service-profile-connection/terraform.tfvars.json"
 
       - name: Run Go Tests
         run:
-          go test ./tests/prod -v -coverprofile coverage_prod_modules.txt -covermode=atomic -count 1 -parallel 8 -timeout 180m
+          go test ./tests/prod -v -coverprofile coverage_prod_modules.txt -covermode=atomic -count 1 -parallel 8 -run "(DIGP)" -timeout 180m
 
       - name: Setup Node.js 20.11.1
         uses: actions/setup-node@v2

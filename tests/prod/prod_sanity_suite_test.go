@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-func TestPort2AlibabaCreateConnection(t *testing.T) {
+func TestPort2AlibabaCreateConnection_DIGP(t *testing.T) {
 
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
 		TerraformDir: "../../examples/port-2-alibaba-connection",
@@ -20,7 +20,7 @@ func TestPort2AlibabaCreateConnection(t *testing.T) {
 	assert.NotNil(t, output)
 }
 
-func TestPort2AwsCreateConnection(t *testing.T) {
+func TestPort2AwsCreateConnection_DIGP(t *testing.T) {
 
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
 		TerraformDir: "../../tests/prod/port-2-aws-connection",
@@ -34,7 +34,7 @@ func TestPort2AwsCreateConnection(t *testing.T) {
 	assert.NotNil(t, output)
 }
 
-func TestPort2AzureCreateConnection(t *testing.T) {
+func TestPort2AzureCreateConnection_DIGP(t *testing.T) {
 
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
 		TerraformDir: "../../tests/prod/port-2-azure-connection",
@@ -48,7 +48,7 @@ func TestPort2AzureCreateConnection(t *testing.T) {
 	assert.NotNil(t, output)
 }
 
-func TestPort2Ibm2CreateConnection(t *testing.T) {
+func TestPort2Ibm2CreateConnection_DIGP(t *testing.T) {
 
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
 		TerraformDir: "../../examples/port-2-ibm2-connection",
@@ -62,7 +62,7 @@ func TestPort2Ibm2CreateConnection(t *testing.T) {
 	assert.NotNil(t, output)
 }
 
-func TestPort2PortCreateConnection(t *testing.T) {
+func TestPort2PortCreateConnection_DIGP(t *testing.T) {
 
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
 		TerraformDir: "../../examples/port-2-port-connection",
@@ -76,7 +76,7 @@ func TestPort2PortCreateConnection(t *testing.T) {
 	assert.NotNil(t, output)
 }
 
-func TestPort2PrivateServiceProfileCreateConnection(t *testing.T) {
+func TestPort2PrivateServiceProfileCreateConnection_DIGP(t *testing.T) {
 
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
 		TerraformDir: "../../examples/port-2-private-service-profile-connection",
