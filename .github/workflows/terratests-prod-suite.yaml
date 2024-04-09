@@ -33,6 +33,7 @@ jobs:
       - name: Get dependencies
         run: |
               go mod download
+
       - uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: ${{ matrix.terraform }}
@@ -50,11 +51,6 @@ jobs:
       - name: Run Go Tests
         run:
           go test ./tests/prod -v -coverprofile coverage_prod_modules.txt -covermode=atomic -count 1 -parallel 8 -run "(DIGP)" -timeout 180m
-
-      - name: Setup Node.js 20.11.1
-        uses: actions/setup-node@v2
-        with:
-            node-version: 20.11.1
 
       - name: Upload test coverage to Codecov
         if: ${{ always() }}
