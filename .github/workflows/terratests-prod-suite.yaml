@@ -1,7 +1,6 @@
 name: terratests-prod-suite
 
 on:
-  pull_request:
   workflow_dispatch:
 
 jobs:
@@ -21,8 +20,6 @@ jobs:
     steps:
       - name: Check out code into the Go module directory
         uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.pull_request.head.sha || github.ref }}
 
       - name: Set up Go
         uses: actions/setup-go@v5
