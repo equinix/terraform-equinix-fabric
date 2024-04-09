@@ -82,3 +82,73 @@ func TestPort2PrivateServiceProfileCreateConnection_DIGP(t *testing.T) {
 	output := terraform.Output(t, terraformOptions, "private_sp_connection_id")
 	assert.NotNil(t, output)
 }
+
+func TestCloudRouter2AwsCreateConnection_DIGP(t *testing.T) {
+
+	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
+		TerraformDir: "../../tests/examples-without-external-providers/cloud-router-2-aws-connection",
+	})
+
+	defer terraform.Destroy(t, terraformOptions)
+	t.Parallel()
+
+	terraform.InitAndApply(t, terraformOptions)
+	output := terraform.Output(t, terraformOptions, "aws_connection_id")
+	assert.NotNil(t, output)
+}
+
+func TestCloudRouter2AzureCreateConnection_DIGP(t *testing.T) {
+
+	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
+		TerraformDir: "../../tests/examples-without-external-providers/cloud-router-2-azure-connection",
+	})
+
+	defer terraform.Destroy(t, terraformOptions)
+	t.Parallel()
+
+	terraform.InitAndApply(t, terraformOptions)
+	output := terraform.Output(t, terraformOptions, "azure_connection_id")
+	assert.NotNil(t, output)
+}
+
+func TestCloudRouter2PortRoutingProtocolCreateConnection_DIGP(t *testing.T) {
+
+	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
+		TerraformDir: "../../tests/examples-without-external-providers/cloud-router-2-port-routing-protocol-connection",
+	})
+
+	defer terraform.Destroy(t, terraformOptions)
+	t.Parallel()
+
+	terraform.InitAndApply(t, terraformOptions)
+	output := terraform.Output(t, terraformOptions, "port_connection_id")
+	assert.NotNil(t, output)
+}
+
+func TestCloudRouter2ServiceProfileCreateConnection_DIGP(t *testing.T) {
+
+	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
+		TerraformDir: "../../examples/cloud-router-2-service-profile-connection",
+	})
+
+	defer terraform.Destroy(t, terraformOptions)
+	t.Parallel()
+
+	terraform.InitAndApply(t, terraformOptions)
+	output := terraform.Output(t, terraformOptions, "service_profile_connection_id")
+	assert.NotNil(t, output)
+}
+
+func TestCloudRouter2WanCreateConnection_DIGP(t *testing.T) {
+
+	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
+		TerraformDir: "../../examples/cloud-router-2-wan-connection",
+	})
+
+	defer terraform.Destroy(t, terraformOptions)
+	t.Parallel()
+
+	terraform.InitAndApply(t, terraformOptions)
+	output := terraform.Output(t, terraformOptions, "wan_connection_id")
+	assert.NotNil(t, output)
+}
