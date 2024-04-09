@@ -13,6 +13,7 @@ func TestPort2AlibabaCreateConnection_DIGP(t *testing.T) {
 	})
 
 	defer terraform.Destroy(t, terraformOptions)
+	t.Parallel()
 
 	terraform.InitAndApply(t, terraformOptions)
 	output := terraform.Output(t, terraformOptions, "alibaba_connection_id")
@@ -26,6 +27,7 @@ func TestPort2AwsCreateConnection_DIGP(t *testing.T) {
 	})
 
 	defer terraform.Destroy(t, terraformOptions)
+	t.Parallel()
 
 	terraform.InitAndApply(t, terraformOptions)
 	output := terraform.Output(t, terraformOptions, "aws_connection_id")
@@ -39,6 +41,8 @@ func TestPort2AzureCreateConnection_DIGP(t *testing.T) {
 	})
 
 	defer terraform.Destroy(t, terraformOptions)
+	t.Parallel()
+
 	terraform.InitAndApply(t, terraformOptions)
 	output := terraform.Output(t, terraformOptions, "azure_connection_id")
 	assert.NotNil(t, output)
@@ -51,6 +55,7 @@ func TestPort2Ibm2CreateConnection_DIGP(t *testing.T) {
 	})
 
 	defer terraform.Destroy(t, terraformOptions)
+	t.Parallel()
 
 	terraform.InitAndApply(t, terraformOptions)
 	output := terraform.Output(t, terraformOptions, "ibm2_connection_id")
@@ -64,6 +69,7 @@ func TestPort2PortCreateConnection_DIGP(t *testing.T) {
 	})
 
 	defer terraform.Destroy(t, terraformOptions)
+	t.Parallel()
 
 	terraform.InitAndApply(t, terraformOptions)
 	output := terraform.Output(t, terraformOptions, "port_connection_id")
@@ -77,6 +83,7 @@ func TestPort2PrivateServiceProfileCreateConnection_DIGP(t *testing.T) {
 	})
 
 	defer terraform.Destroy(t, terraformOptions)
+	t.Parallel()
 
 	terraform.InitAndApply(t, terraformOptions)
 	output := terraform.Output(t, terraformOptions, "private_sp_connection_id")
