@@ -1,6 +1,5 @@
 equinix_client_id      = "MyEquinixClientId"
 equinix_client_secret  = "MyEquinixSecret"
-equinix_endpoint       = "endpointURL"
 
 #NE Acl Template
 template_name           = "test-wan-acl-template"
@@ -46,7 +45,6 @@ azure_environment           = "UAT"
 
 #VD_2_Azure_Connection
 connection_name             = "VD2Azure"
-secondary_connection_name   = "VD2Azure Sec"
 connection_type             = "EVPL_VC"
 notifications_type          = "ALL"
 notifications_emails        = ["example@equinix.com"]
