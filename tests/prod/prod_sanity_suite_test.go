@@ -159,3 +159,4 @@ func TestCloudRouter2WanCreateConnection_DIGP(t *testing.T) {
 	output := terraform.Output(t, terraformOptions, "wan_connection_id")
 	assert.NotNil(t, output)
 }
+
