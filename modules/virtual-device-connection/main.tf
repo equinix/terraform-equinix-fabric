@@ -97,6 +97,18 @@ resource "equinix_fabric_connection" "virtual_device_connection" {
       }
     }
   }
+
+  dynamic "z_side" {
+    for_each = var.zside_ap_type == "NETWORK" ? [1] : []
+    content {
+      access_point {
+        type = var.zside_ap_type
+        network {
+          uuid = var.zside_network_uuid
+        }
+      }
+    }
+  }
 }
 
 resource "equinix_fabric_connection" "secondary_virtual_device_connection" {
@@ -186,4 +198,15 @@ resource "equinix_fabric_connection" "secondary_virtual_device_connection" {
     }
   }
 
+  dynamic "z_side" {
+    for_each = var.zside_ap_type == "NETWORK" ? [1] : []
+    content {
+      access_point {
+        type = var.zside_ap_type
+        network {
+          uuid = var.zside_network_uuid
+        }
+      }
+    }
+  }
 }

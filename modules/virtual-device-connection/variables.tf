@@ -8,7 +8,7 @@ variable "secondary_connection_name" {
   default     = ""
 }
 variable "connection_type" {
-  description = "Defines the connection type like VG_VC, EVPL_VC, EPL_VC, EC_VC, IP_VC, ACCESS_EPL_VC"
+  description = "Defines the connection type like VG_VC, EVPL_VC, EPL_VC, EC_VC, IP_VC, ACCESS_EPL_VC, EVPLAN_VC"
   type        = string
 }
 variable "notifications_type" {
@@ -113,6 +113,10 @@ variable "zside_peering_type" {
 variable "zside_service_token_uuid" {
   description = "Service Token UUID"
   type        = string
+  default     = ""
+}
+variable "zside_network_uuid" {
+  description = "Equinix Network UUID"
   default     = ""
 }
 variable "additional_info" {
