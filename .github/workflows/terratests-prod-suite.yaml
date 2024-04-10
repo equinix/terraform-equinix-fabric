@@ -22,7 +22,6 @@ jobs:
       TEST_DATA_PROD_CLOUD_ROUTER_2_SERVICE_PROFILE_CONNECTION: ${{secrets.TEST_DATA_PROD_CLOUD_ROUTER_2_SERVICE_PROFILE_CONNECTION}}
       TEST_DATA_PROD_CLOUD_ROUTER_2_WAN_CONNECTION: ${{secrets.TEST_DATA_PROD_CLOUD_ROUTER_2_WAN_CONNECTION}}
 
-
     steps:
       - name: Check out code into the Go module directory
         uses: actions/checkout@v4
@@ -49,14 +48,12 @@ jobs:
           echo $TEST_DATA_PROD_PORT_2_AZURE_CONNECTION >> "./tests/examples-without-external-providers/port-2-azure-connection/terraform.tfvars.json"
           echo $TEST_DATA_PROD_PORT_2_IBM2_CONNECTION >> "./examples/port-2-ibm2-connection/terraform.tfvars.json"
           echo $TEST_DATA_PROD_PORT_2_PORT_CONNECTION >> "./examples/port-2-port-connection/terraform.tfvars.json"
-          echo $TEST_DATA_PROD_PORT_2_PRIVATE_SERVICE_PROFILE_CONNECTION >> "./examples/port-2-private-service-profile-connection/terraform.tfvars.json"
-          
+          echo $TEST_DATA_PROD_PORT_2_PRIVATE_SERVICE_PROFILE_CONNECTION >> "./examples/port-2-private-service-profile-connection/terraform.tfvars.json"   
           echo $TEST_DATA_PROD_CLOUD_ROUTER_2_AWS_CONNECTION >> "./tests/examples-without-external-providers/cloud-router-2-aws-connection/terraform.tfvars.json"
           echo $TEST_DATA_PROD_CLOUD_ROUTER_2_AZURE_CONNECTION >> "./tests/examples-without-external-providers/cloud-router-2-azure-connection/terraform.tfvars.json"
           echo $TEST_DATA_PROD_CLOUD_ROUTER_2_PORT_ROUTING_PROTOCOL_CONNECTION >> "./tests/examples-without-external-providers/cloud-router-2-port-routing-protocol-connection/terraform.tfvars.json"
           echo $TEST_DATA_PROD_CLOUD_ROUTER_2_SERVICE_PROFILE_CONNECTION >> "./examples/cloud-router-2-service-profile-connection/terraform.tfvars.json"
           echo $TEST_DATA_PROD_CLOUD_ROUTER_2_WAN_CONNECTION >> "./examples/cloud-router-2-wan-connection/terraform.tfvars.json"
-
 
       - name: Run Go Tests
         run:
