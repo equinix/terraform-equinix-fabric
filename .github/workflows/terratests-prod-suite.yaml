@@ -69,7 +69,6 @@ jobs:
           echo $TEST_DATA_PROD_VIRTUAL_DEVICE_2_AZURE_CONNECTION >> "./tests/examples-without-external-providers/virtual-device-2-azure-connection/terraform.tfvars.json"
           echo $TEST_DATA_PROD_VIRTUAL_DEVICE_2_PORT_CONNECTION >> "./tests/examples-without-external-providers/virtual-device-2-port-connection/terraform.tfvars.json"
 
-
       - name: Run Go Tests
         run:
           go test ./tests/prod -v -coverprofile coverage_prod_modules.txt -covermode=atomic -count 1 -parallel 8 -run "(DIGP)" -timeout 180m
