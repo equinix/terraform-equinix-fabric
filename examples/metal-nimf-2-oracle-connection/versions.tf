@@ -5,5 +5,9 @@ terraform {
       source  = "equinix/equinix"
       version = ">= 1.34.0"
     }
+    oci = {
+      source = "oracle/oci"
+      version = "5.36.0"
+    }
   }
 }
