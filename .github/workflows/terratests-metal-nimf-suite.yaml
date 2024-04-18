@@ -42,7 +42,7 @@ jobs:
         run: |
           echo $TEST_DATA_PROD_METAL_NIMF_2_AZURE_CONNECTION >> "./examples/metal-nimf-2-azure-connection/terraform.tfvars.json"
           echo $TEST_DATA_PROD_METAL_NIMF_2_AWS_CONNECTION >> "./examples/metal-nimf-2-aws-connection/terraform.tfvars.json"
-          echo $ORACLE_SERVICE_KEYS >> "./examples/metal-nimf-2-oracle-connection/oci_api_key.pem"
+          echo $ORACLE_SERVICE_KEYS > "./examples/metal-nimf-2-oracle-connection/oci_api_key.pem"
           echo $TEST_DATA_PROD_METAL_NIMF_2_ORACLE_CONNECTION >> "./examples/metal-nimf-2-oracle-connection/terraform.tfvars.json"
 
       - name: Run Go Tests
@@ -54,4 +54,4 @@ jobs:
         uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          files: ./coverage_metal-nimf_modules.txt
+          files: ./coverage_metal_nimf_modules.txt
