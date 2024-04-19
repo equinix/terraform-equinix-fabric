@@ -2,7 +2,7 @@ equinix_client_id     = "<MyEquinixClientId>"
 equinix_client_secret = "<MyEquinixSecret>"
 
 connection_name             = "VD_2_EIA"
-connection_type             = "EVPL_VC"
+connection_type             = "IA_VC"
 notifications_type          = "ALL"
 notifications_emails        = ["example@equinix.com"]
 purchase_order_number       = "1-323292"

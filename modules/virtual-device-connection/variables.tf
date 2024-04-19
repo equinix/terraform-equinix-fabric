@@ -42,12 +42,10 @@ variable "purchase_order_number" {
 variable "aside_vd_type" {
   description = "Virtual Device type - EDGE"
   type        = string
-  default     = ""
 }
 variable "aside_vd_uuid" {
   description = "Virtual Device UUID"
   type        = string
-  default     = ""
 }
 variable "aside_interface_type" {
   description = "Virtual Device Interface type - CLOUD, NETWORK"
