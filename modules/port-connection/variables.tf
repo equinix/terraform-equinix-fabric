@@ -8,7 +8,7 @@ variable "secondary_connection_name" {
   default     = ""
 }
 variable "connection_type" {
-  description = "Defines the connection type like VG_VC, EVPL_VC, EPL_VC, EC_VC, IP_VC, ACCESS_EPL_VC"
+  description = "Defines the connection type like VG_VC, EVPL_VC, EPL_VC, EC_VC, IP_VC, ACCESS_EPL_VC, EVPLAN_VC, EPLAN_VC"
   type        = string
 }
 variable "notifications_type" {
@@ -74,6 +74,7 @@ variable "zside_ap_profile_type" {
 variable "zside_location" {
   description = "Access point metro code"
   type        = string
+  default     = ""
 }
 variable "zside_sp_name" {
   description = "Equinix Service Profile Name"
@@ -103,6 +104,10 @@ variable "zside_vlan_inner_tag" {
 variable "zside_peering_type" {
   description = "Zside Access Point Peering type. Available values; PRIVATE, MICROSOFT, PUBLIC, MANUAL"
   type        = string
+  default     = ""
+}
+variable "zside_network_uuid" {
+  description = "Equinix Network UUID"
   default     = ""
 }
 variable "additional_info" {

@@ -106,6 +106,19 @@ resource "equinix_fabric_connection" "primary_port_connection" {
       }
     }
   }
+
+  dynamic "z_side" {
+    #Network Z_Side Type
+    for_each = var.zside_ap_type == "NETWORK" ? [1] : []
+    content {
+      access_point {
+        type = var.zside_ap_type
+        network {
+          uuid = var.zside_network_uuid
+        }
+      }
+    }
+  }
 }
 
 resource "equinix_fabric_connection" "secondary_port_connection" {
@@ -187,6 +200,19 @@ resource "equinix_fabric_connection" "secondary_port_connection" {
         }
         location {
           metro_code = var.zside_location
+        }
+      }
+    }
+  }
+
+  dynamic "z_side" {
+    #Network Z_Side Type
+    for_each = var.zside_ap_type == "NETWORK" ? [1] : []
+    content {
+      access_point {
+        type = var.zside_ap_type
+        network {
+          uuid = var.zside_network_uuid
         }
       }
     }
