@@ -1,7 +1,8 @@
-name: terratests-metal-nimf-suite
+name: test-oracle-metal-nimf
 
 on:
   workflow_dispatch:
+  pull_request:
 
 jobs:
   setup-tests:
