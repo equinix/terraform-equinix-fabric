@@ -42,7 +42,7 @@ jobs:
 
       - name: Run Go Tests
         run:
-          go test ./tests/prod/metal-nimf -v -coverprofile coverage_metal_nimf_modules.txt -covermode=atomic -count 1 -parallel 8 -timeout 180m -run "(TestPort2OracleCreateConnection_DIGP)"
+          go test ./tests/prod/ -v -coverprofile coverage_metal_nimf_modules.txt -covermode=atomic -count 1 -parallel 8 -timeout 180m -run "(TestPort2OracleCreateConnection_DIGP)"
 
       - name: Upload test coverage to Codecov
         if: ${{ always() }}
