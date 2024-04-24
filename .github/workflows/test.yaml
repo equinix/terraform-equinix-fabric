@@ -12,7 +12,7 @@ jobs:
       TF_VAR_equinix_client_id: ${{ secrets.EQUINIX_CLIENT_ID }}
       TF_VAR_equinix_client_secret: ${{ secrets.EQUINIX_CLIENT_SECRET }}
       ORACLE_SERVICE_KEYS: ${{ secrets.ORACLE_SERVICE_KEYS }}
-      TEST_DATA_PROD_PORT_2_ORACLE_CONNECTION: ${{ secrets.TEST_DATA_PROD_METAL_NIMF_2_ORACLE_CONNECTION }}
+      TEST_DATA_PROD_PORT_2_ORACLE_CONNECTION: ${{ secrets.TEST_DATA_PROD_PORT_2_ORACLE_CONNECTION }}
 
     steps:
       - name: Check out code into the Go module directory
