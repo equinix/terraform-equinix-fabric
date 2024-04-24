@@ -35,10 +35,10 @@ jobs:
 
       - name: Setup Variables Files
         run: |
-          echo $ORACLE_SERVICE_KEYS > "./examples/metal-nimf-2-oracle-connection/oci_api_key.pem"
-          ls -lrt ./examples/metal-nimf-2-oracle-connection/
-          cat ./examples/metal-nimf-2-oracle-connection/oci_api_key.pem
-          echo $TEST_DATA_PROD_PORT_2_ORACLE_CONNECTION >> "./examples/metal-nimf-2-oracle-connection/terraform.tfvars.json"
+          echo $ORACLE_SERVICE_KEYS > "./examples/port-2-oracle-connection/oci_api_key.pem"
+          ls -lrt ./examples/port-2-oracle-connection/
+          cat ./examples/port-2-oracle-connection/oci_api_key.pem
+          echo $TEST_DATA_PROD_PORT_2_ORACLE_CONNECTION >> "./examples/port-2-oracle-connection/terraform.tfvars.json"
 
       - name: Run Go Tests
         run:
