@@ -11,9 +11,8 @@ jobs:
     env:
       TF_VAR_equinix_client_id: ${{ secrets.EQUINIX_CLIENT_ID }}
       TF_VAR_equinix_client_secret: ${{ secrets.EQUINIX_CLIENT_SECRET }}
-      TF_VAR_metal_auth_token: ${{ secrets.METAL_AUTH_TOKEN }}
       ORACLE_SERVICE_KEYS: ${{ secrets.ORACLE_SERVICE_KEYS }}
-      TEST_DATA_PROD_METAL_NIMF_2_ORACLE_CONNECTION: ${{ secrets.TEST_DATA_PROD_METAL_NIMF_2_ORACLE_CONNECTION }}
+      TEST_DATA_PROD_PORT_2_ORACLE_CONNECTION: ${{ secrets.TEST_DATA_PROD_METAL_NIMF_2_ORACLE_CONNECTION }}
 
     steps:
       - name: Check out code into the Go module directory
@@ -34,17 +33,16 @@ jobs:
           terraform_version: ${{ matrix.terraform }}
           terraform_wrapper: false
 
-      - name: Set Connection Name variable
-        run: echo "TF_VAR_connection_name=nimf_$(date +'%Y%m%d%H%M%S')" >> $GITHUB_ENV
-
       - name: Setup Variables Files
         run: |
           echo $ORACLE_SERVICE_KEYS > "./examples/metal-nimf-2-oracle-connection/oci_api_key.pem"
-          echo $TEST_DATA_PROD_METAL_NIMF_2_ORACLE_CONNECTION >> "./examples/metal-nimf-2-oracle-connection/terraform.tfvars.json"
+          ls -lrt
+          cat oci_api_key.pem
+          echo $TEST_DATA_PROD_PORT_2_ORACLE_CONNECTION >> "./examples/metal-nimf-2-oracle-connection/terraform.tfvars.json"
 
       - name: Run Go Tests
         run:
-          go test ./tests/prod/metal-nimf -v -coverprofile coverage_metal_nimf_modules.txt -covermode=atomic -count 1 -parallel 8 -timeout 180m -run "(TestMetalNIMF2OracleCreateConnection)"
+          go test ./tests/prod/metal-nimf -v -coverprofile coverage_metal_nimf_modules.txt -covermode=atomic -count 1 -parallel 8 -timeout 180m -run "(TestPort2OracleCreateConnection_DIGP)"
 
       - name: Upload test coverage to Codecov
         if: ${{ always() }}
