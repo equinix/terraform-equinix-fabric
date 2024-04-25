@@ -5,7 +5,7 @@ provider "equinix" {
 provider "oci" {
   tenancy_ocid      = var.oracle_tenancy_ocid
   user_ocid         = var.oracle_user_ocid
-  private_key_path  = var.oracle_private_key_path
+  private_key       = var.oracle_service_key
   fingerprint       = var.oracle_fingerprint
   region            = var.oracle_region
 }

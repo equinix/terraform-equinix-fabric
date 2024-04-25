@@ -73,8 +73,8 @@ variable "oracle_user_ocid" {
   type        = string
   sensitive   = true
 }
-variable "oracle_private_key_path" {
-  description = "The path of the private key stored on your computer"
+variable "oracle_service_key" {
+  description = "The Oracle private key"
   type        = string
 }
 variable "oracle_fingerprint" {
