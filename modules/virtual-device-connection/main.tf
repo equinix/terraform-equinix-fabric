@@ -39,9 +39,12 @@ resource "equinix_fabric_connection" "virtual_device_connection" {
         type = var.aside_vd_type
         uuid = var.aside_vd_uuid
       }
-      interface {
-        type = var.aside_interface_type != "" ? var.aside_interface_type : null
-        id   = var.aside_interface_id != "" ? var.aside_interface_id : null
+      dynamic "interface" {
+        for_each = var.aside_interface_type != "" ? [1] : []
+        content {
+          type = var.aside_interface_type != "" ? var.aside_interface_type : null
+          id   = var.aside_interface_id != "" ? var.aside_interface_id : null
+        }
       }
     }
   }
@@ -140,9 +143,12 @@ resource "equinix_fabric_connection" "secondary_virtual_device_connection" {
         type = var.aside_vd_type
         uuid = var.aside_vd_uuid
       }
-      interface {
-        type = var.aside_interface_type != "" ? var.aside_interface_type : null
-        id   = var.aside_interface_id != "" ? var.aside_interface_id : null
+      dynamic "interface" {
+        for_each = var.aside_interface_type != "" ? [1] : []
+        content {
+          type = var.aside_interface_type != "" ? var.aside_interface_type : null
+          id   = var.aside_interface_id != "" ? var.aside_interface_id : null
+        }
       }
     }
   }

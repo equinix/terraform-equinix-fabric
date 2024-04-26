@@ -8,10 +8,6 @@ variable "equinix_client_secret" {
   type        = string
   sensitive   = true
 }
-variable "equinix_endpoint" {
-  description = "Equinix endpoint URL"
-  type        = string
-}
 ##NE Acl Template
 variable "template_name" {
   description = "ACL Template Name"
@@ -157,11 +153,6 @@ variable "azure_environment" {
 variable "connection_name" {
   description = "Connection name. An alpha-numeric 24 characters string which can include only hyphens and underscores"
   type        = string
-}
-variable "secondary_connection_name" {
-  description = "Secondary Connection name. An alpha-numeric 24 characters string which can include only hyphens and underscores"
-  type        = string
-  default     = ""
 }
 variable "connection_type" {
   description = "Defines the connection type like VG_VC, EVPL_VC, EPL_VC, EC_VC, IP_VC, ACCESS_EPL_VC"

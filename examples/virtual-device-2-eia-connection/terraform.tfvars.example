@@ -1,0 +1,15 @@
+equinix_client_id     = "<MyEquinixClientId>"
+equinix_client_secret = "<MyEquinixSecret>"
+
+connection_name             = "VD_2_EIA"
+connection_type             = "IA_VC"
+notifications_type          = "ALL"
+notifications_emails        = ["example@equinix.com"]
+purchase_order_number       = "1-323292"
+
+aside_vd_type               = "EDGE"
+aside_vd_uuid               = "<Virtua_Device_UUID>"
+zside_ap_type               = "SP"
+zside_ap_profile_type       = "IA_PROFILE"
+zside_location              = "SY"
+zside_sp_name               = "Equinix Internet Access"

@@ -8,7 +8,7 @@ variable "secondary_connection_name" {
   default     = ""
 }
 variable "connection_type" {
-  description = "Defines the connection type like VG_VC, EVPL_VC, EPL_VC, EC_VC, IP_VC, ACCESS_EPL_VC, EVPLAN_VC"
+  description = "Defines the connection type like VG_VC, EVPL_VC, EPL_VC, EC_VC, IP_VC, ACCESS_EPL_VC, EVPLAN_VC, IA_VC"
   type        = string
 }
 variable "notifications_type" {
@@ -42,12 +42,10 @@ variable "purchase_order_number" {
 variable "aside_vd_type" {
   description = "Virtual Device type - EDGE"
   type        = string
-  default     = ""
 }
 variable "aside_vd_uuid" {
   description = "Virtual Device UUID"
   type        = string
-  default     = ""
 }
 variable "aside_interface_type" {
   description = "Virtual Device Interface type - CLOUD, NETWORK"
@@ -71,7 +69,7 @@ variable "zside_ap_authentication_key" {
   sensitive   = true
 }
 variable "zside_ap_profile_type" {
-  description = "Service profile type - L2_PROFILE, L3_PROFILE, ECIA_PROFILE, ECMC_PROFILE"
+  description = "Service profile type - L2_PROFILE, L3_PROFILE, ECIA_PROFILE, ECMC_PROFILE, IA_PROFILE"
   type        = string
   default     = ""
 }
