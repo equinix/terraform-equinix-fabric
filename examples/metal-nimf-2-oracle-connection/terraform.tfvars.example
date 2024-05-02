@@ -24,7 +24,7 @@ zside_fabric_sp_name        = "Oracle Cloud Infrastructure FastConnect"
 
 oracle_tenancy_ocid             = "<Oracle Tenancy OCID>"
 oracle_user_ocid                = "<Oracle User OCID>"
-oracle_private_key_path         = "oci_api_key.pem"
+oracle_private_key              = "<Oracle Private Key>"
 oracle_fingerprint              = "<Oracle Fingerprint>"
 oracle_region                   = "us-sanjose-1"
 oracle_compartment_id           = "<Oracle Compartment ID>",

@@ -6,7 +6,7 @@ provider "equinix" {
 provider "oci" {
   tenancy_ocid      = var.oracle_tenancy_ocid
   user_ocid         = var.oracle_user_ocid
-  private_key_path  = var.oracle_private_key_path
+  private_key       = var.oracle_private_key
   fingerprint       = var.oracle_fingerprint
   region            = var.oracle_region
 }
@@ -67,8 +67,10 @@ module "metal_2_oracle_connection" {
   bandwidth             = var.bandwidth
   purchase_order_number = var.purchase_order_number
 
+  #A-side
   aside_ap_authentication_key = equinix_metal_connection.metal-connection.authorization_code
 
+  #Z-side
   zside_ap_type               = var.zside_ap_type
   zside_ap_authentication_key = oci_core_virtual_circuit.test_virtual_circuit.id
   zside_ap_profile_type       = var.zside_ap_profile_type

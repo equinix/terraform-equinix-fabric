@@ -73,8 +73,8 @@ variable "oracle_user_ocid" {
   type        = string
   sensitive   = true
 }
-variable "oracle_service_key" {
-  description = "The Oracle private key"
+variable "oracle_private_key" {
+  description = "Oracle Private key"
   type        = string
 }
 variable "oracle_fingerprint" {
