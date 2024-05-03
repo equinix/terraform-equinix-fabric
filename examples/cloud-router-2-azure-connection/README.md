@@ -341,5 +341,7 @@ module "cloud_router_azure_connection" {
 
 | Name | Description |
 |------|-------------|
-| <a name="output_module_output"></a> [module\_output](#output\_module\_output) | n/a |
+| <a name="output_azure_connection_id"></a> [azure\_connection\_id](#output\_azure\_connection\_id) | n/a |
+| <a name="output_azurerm_express_route_circuit"></a> [azurerm\_express\_route\_circuit](#output\_azurerm\_express\_route\_circuit) | n/a |
+| <a name="output_azurerm_resource_group_id"></a> [azurerm\_resource\_group\_id](#output\_azurerm\_resource\_group\_id) | n/a |
 <!-- END_TF_DOCS -->
