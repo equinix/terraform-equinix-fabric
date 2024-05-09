@@ -75,11 +75,6 @@ variable "zside_ap_type" {
   description = "Access point type - COLO, VD, VG, SP, IGW, SUBNET, GW"
   type        = string
 }
-variable "zside_ap_authentication_key" {
-  description = "Authentication key for provider based connections"
-  type        = string
-  sensitive   = true
-}
 variable "zside_ap_profile_type" {
   description = "Service profile type - L2_PROFILE, L3_PROFILE, ECIA_PROFILE, ECMC_PROFILE"
   type        = string
@@ -88,11 +83,67 @@ variable "zside_location" {
   description = "Access point metro code"
   type        = string
 }
-variable "zside_seller_region" {
-  description = "Access point seller region"
-  type        = string
-}
 variable "zside_fabric_sp_name" {
   description = "Equinix Service Profile Name"
+  type        = string
+}
+variable "oracle_tenancy_ocid" {
+  description = "Tenancy OCID"
+  type        = string
+  sensitive   = true
+}
+variable "oracle_user_ocid" {
+  description = "User OCID"
+  type        = string
+  sensitive   = true
+}
+variable "oracle_private_key" {
+  description = "Oracle Private Key"
+  type        = string
+}
+variable "oracle_fingerprint" {
+  description = "Fingerprint for the key pair being used"
+  type        = string
+  sensitive   = true
+}
+variable "oracle_region" {
+  description = "OCI region"
+  type        = string
+}
+variable "oracle_compartment_id" {
+  description = "The OCID of the compartment"
+  type        = string
+  sensitive   = true
+}
+variable "oracle_fastconnect_provider" {
+  description = "Fast Connect Provider Name"
+  type        = string
+}
+variable "oracle_vc_display_name" {
+  description = "OCI Virtual Circuit Name"
+  type        = string
+}
+variable "oracle_vc_type" {
+  description = "The type of IP addresses used in this virtual circuit - PRIVATE"
+  type        = string
+}
+variable "oracle_bandwidth" {
+  description = "The provisioned connection bandwidth"
+  type        = string
+}
+variable "oracle_customer_bgp_peering_ip" {
+  description = "The BGP IPv4 address for the router on the other end of the BGP session from Oracle"
+  type        = string
+}
+variable "oracle_bgp_peering_ip" {
+  description = "The BGP IPv6 address for the router on the other end of the BGP session from Oracle"
+  type        = string
+}
+variable "oracle_customer_asn" {
+  description = "Oracle BGP ASN"
+  type        = string
+}
+variable "oracle_gateway_id" {
+  description = "The OCID of the dynamic routing gateway (DRG) that virtual circuit uses"
   type        = string
 }
