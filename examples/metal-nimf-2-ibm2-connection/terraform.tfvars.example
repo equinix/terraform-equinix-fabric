@@ -1,0 +1,26 @@
+equinix_client_id      = "<MyEquinixClientId>"
+equinix_client_secret  = "<MyEquinixSecret>"
+metal_auth_token       = "<Metal_Auth_Token>"
+
+metal_connection_metro      = "sv"
+metal_project_id            = "<Metal_Project_ID>"
+metal_connection_name       = "Metal-NIMF-connection"
+metal_connection_redundancy = "primary"
+metal_connection_speed      = "50Mbps"
+metal_connection_type       = "shared_port_vlan"
+metal_contact_email         = "tfacc@example.com"
+
+connection_name             = "Metal_2_IBM2"
+connection_type             = "EVPL_VC"
+notifications_type          = "ALL"
+notifications_emails        = ["example@equinix.com"]
+bandwidth                   = 50
+purchase_order_number       = "1-323292"
+project_id                  = "<Project_ID>"
+zside_ap_type               = "SP"
+zside_ap_authentication_key = "<IBM2 Service Key>",
+zside_ap_profile_type       = "L2_PROFILE"
+zside_location              = "SV"
+zside_fabric_sp_name        = "IBM Cloud Direct Link 2"
+zside_seller_region         = "San Jose 2"
+additional_info             = [ {"key" : "ASN", "value": 1234 }]

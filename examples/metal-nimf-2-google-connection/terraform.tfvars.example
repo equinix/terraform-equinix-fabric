@@ -1,0 +1,37 @@
+equinix_client_id      = "<MyEquinixClientId>"
+equinix_client_secret  = "<MyEquinixSecret>"
+metal_auth_token       = "<Metal_Auth_Token>"
+
+metal_connection_metro      = "sv"
+metal_project_id            = "<Metal_Project_ID>"
+metal_connection_name       = "Metal-NIMF-connection"
+metal_connection_redundancy = "primary"
+metal_connection_speed      = "50Mbps"
+metal_connection_type       = "shared_port_vlan"
+metal_contact_email         = "tfacc@example.com"
+
+connection_name             = "Metal_2_Google"
+connection_type             = "EVPL_VC"
+notifications_type          = "ALL"
+notifications_emails        = ["example@equinix.com"]
+bandwidth                   = 50
+purchase_order_number       = "1-323292"
+project_id                  = "<Project_ID>"
+zside_ap_type               = "SP"
+zside_peering_type          = "PRIVATE"
+zside_ap_profile_type       = "L2_PROFILE"
+zside_location              = "SV"
+zside_fabric_sp_name        = "Google Cloud Partner Interconnect Zone 1"
+
+google_project_id                            = "<GCP Project ID>"
+google_region                                = "us-west1"
+google_zone                                  = "us-west1-a"
+google_credentials_path                      = "<GCP KEY FILE NAME>"
+google_network_name                          = "tf-test-network"
+google_network_mtu                           = "1460"
+google_network_auto_create_subnetwork        = true
+google_router_name                           = "tf-test-router"
+google_router_bgp_asn                        = "16550"
+google_interconnect_name                     = "tf-test-interconnect"
+google_interconnect_type                     = "PARTNER"
+google_interconnect_edge_availability_domain = "AVAILABILITY_DOMAIN_1"
