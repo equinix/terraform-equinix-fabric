@@ -44,6 +44,7 @@ variable "zside_ap_authentication_key" {
   description = "Authentication key for provider based connections"
   type        = string
   sensitive   = true
+  default     = ""
 }
 variable "zside_seller_region" {
   description = "Access point seller region"
@@ -66,6 +67,21 @@ variable "zside_location" {
 }
 variable "zside_fabric_sp_name" {
   description = "Equinix Service Profile Name"
+  type        = string
+  default     = ""
+}
+variable "zside_port_name" {
+  description = "Equinix Z-Side Port Name"
+  type        = string
+  default     = ""
+}
+variable "zside_vlan_tag" {
+  description = "VLan Tag information for DOT1Q connections, and the outer VLan tag for QINQ connections"
+  type        = string
+  default     = ""
+}
+variable "zside_vlan_inner_tag" {
+  description = "Inner VLan tag for QINQ connections"
   type        = string
   default     = ""
 }

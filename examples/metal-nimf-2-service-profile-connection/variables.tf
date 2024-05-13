@@ -88,7 +88,7 @@ variable "zside_seller_region" {
   type        = string
 }
 variable "zside_location" {
-  description = ""
+  description = "Access point metro code"
   type        = string
 }
 variable "additional_info" {

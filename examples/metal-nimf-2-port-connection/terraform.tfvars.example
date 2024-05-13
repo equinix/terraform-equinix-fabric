@@ -21,5 +21,3 @@ zside_ap_type               = "COLO"
 zside_port_name             = "ops-user100-CX-SV1-NL-Qinq-STD-1G-PRI-NK-349"
 zside_vlan_tag              = "3711"
 zside_location              = "SV"
-
-

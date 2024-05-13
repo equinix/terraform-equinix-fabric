@@ -6,7 +6,12 @@ data "equinix_fabric_service_profiles" "zside" {
     values   = [var.zside_fabric_sp_name]
   }
 }
-
+data "equinix_fabric_ports" "zside_port" {
+  count = var.zside_ap_type == "COLO" ? 1 : 0
+  filters {
+    name = var.zside_port_name
+  }
+}
 resource "equinix_fabric_connection" "primary_metal_connection" {
   name = var.connection_name
   type = var.connection_type
@@ -43,6 +48,27 @@ resource "equinix_fabric_connection" "primary_metal_connection" {
         profile {
           type = var.zside_ap_profile_type
           uuid = data.equinix_fabric_service_profiles.zside[0].id
+        }
+        location {
+          metro_code = var.zside_location
+        }
+      }
+    }
+  }
+  dynamic "z_side" {
+    # Port Z_Side Type
+    for_each = var.zside_ap_type == "COLO" ? [1] : []
+    content {
+      access_point {
+        type = var.zside_ap_type
+        port {
+          uuid = data.equinix_fabric_ports.zside_port[0].data.0.uuid
+        }
+        link_protocol {
+          type       = one(data.equinix_fabric_ports.zside_port[0].data.0.encapsulation).type
+          vlan_tag   = one(data.equinix_fabric_ports.zside_port[0].data.0.encapsulation).type == "DOT1Q" ? var.zside_vlan_tag : null
+          vlan_s_tag = one(data.equinix_fabric_ports.zside_port[0].data.0.encapsulation).type == "QINQ" ? var.zside_vlan_tag : null
+          vlan_c_tag = one(data.equinix_fabric_ports.zside_port[0].data[0].encapsulation).type == "QINQ" ? var.zside_vlan_inner_tag : null
         }
         location {
           metro_code = var.zside_location

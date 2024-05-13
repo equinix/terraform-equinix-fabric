@@ -38,4 +38,3 @@ module "metal_2_service_profile" {
   zside_location        = var.zside_location
   zside_fabric_sp_name  = var.zside_fabric_sp_name
 }
-
