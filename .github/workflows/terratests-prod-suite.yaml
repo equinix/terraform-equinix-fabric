@@ -82,7 +82,7 @@ jobs:
 
       - name: Upload test results
         if: success() || failure()
-        uses: actions/upload-artifact@v4
+        uses: codecov/upload-artifact@v4
         with:
             name: test-results
             path: tests/results/*.xml
