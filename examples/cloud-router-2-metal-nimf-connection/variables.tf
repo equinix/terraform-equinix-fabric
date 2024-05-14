@@ -8,6 +8,40 @@ variable "equinix_client_secret" {
   type        = string
   sensitive   = true
 }
+variable "metal_auth_token" {
+  description = "Equinix Metal Authentication API Token"
+  type        = string
+  sensitive   = true
+}
+variable "metal_connection_metro" {
+  description = "Metro where the connection will be created"
+  type        = string
+}
+variable "metal_project_id" {
+  description = "Metal Project Name"
+  type        = string
+}
+variable "metal_connection_name" {
+  description = "Metal Connection Name"
+  type        = string
+}
+variable "metal_connection_redundancy" {
+  description = "Metal Connection redundancy - redundant or primary"
+  type        = string
+}
+variable "metal_connection_speed" {
+  description = "Metal Connection speed - one of 50Mbps, 200Mbps, 500Mbps, 1Gbps, 2Gbps, 5Gbps, 10Gbps"
+  type        = string
+}
+variable "metal_connection_type" {
+  description = "Metal Connection type - dedicated , shared or shared_port_vlan"
+  type        = string
+}
+variable "metal_contact_email" {
+  description = "Preferred email used for communication"
+  type        = string
+}
+#Fabric Connection
 variable "connection_name" {
   description = "Connection name. An alpha-numeric 24 characters string which can include only hyphens and underscores"
   type        = string
@@ -35,6 +69,10 @@ variable "purchase_order_number" {
   type        = string
   default     = ""
 }
+variable "project_id" {
+  description = "Equinix Fabric Project Id"
+  type        = string
+}
 variable "aside_fcr_uuid" {
   description = "Equinix-assigned Fabric Cloud Router identifier"
   type        = string
@@ -43,8 +81,4 @@ variable "zside_ap_type" {
   description = "Access point type - COLO, VD, VG, SP, IGW, SUBNET, GW"
   type        = string
   default     = "SP"
-}
-variable "zside_network_uuid" {
-  description = "Network UUID"
-  default     = ""
 }

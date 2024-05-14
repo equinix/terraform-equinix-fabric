@@ -51,7 +51,6 @@ module "cloud_router_oracle_connection" {
   purchase_order_number = var.purchase_order_number
 
   #A-side
-  aside_ap_type  = var.aside_ap_type
   aside_fcr_uuid = var.aside_fcr_uuid
 
   #Z-side

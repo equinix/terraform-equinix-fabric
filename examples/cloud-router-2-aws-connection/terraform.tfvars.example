@@ -8,7 +8,6 @@ aside_fcr_uuid              = "<Fabric Cloud Router UUID>"
 connection_name             = "fcr_2_aws"
 connection_type             = "IP_VC"
 bandwidth                   = 50
-aside_ap_type               = "CLOUD_ROUTER"
 zside_ap_type               = "SP"
 zside_ap_authentication_key = "<AWS Account Id>"
 zside_ap_profile_type       = "L2_PROFILE"

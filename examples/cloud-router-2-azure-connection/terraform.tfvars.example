@@ -7,7 +7,6 @@ notifications_type              = "ALL"
 notifications_emails            = ["example@equinix.com","test1@equinix.com"]
 purchase_order_number           = "1-323292"
 bandwidth                       = 50
-aside_ap_type                   = "CLOUD_ROUTER"
 aside_fcr_uuid                  = "<Primary Fabric Cloud router UUID>"
 zside_ap_type                   = "SP"
 zside_ap_authentication_key     = "<Azure Service Key>"

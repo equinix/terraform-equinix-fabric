@@ -8,7 +8,6 @@ aside_fcr_uuid              = "<Fabric Cloud Router UUID>"
 connection_name             = "FCR_2_VD_Pri"
 connection_type             = "IP_VC"
 bandwidth                   = 50
-aside_ap_type               = "CLOUD_ROUTER"
 
 zside_ap_type               = "VD"
 zside_vd_type               = "EDGE"

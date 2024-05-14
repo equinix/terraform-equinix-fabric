@@ -1,0 +1,21 @@
+equinix_client_id      = "<MyEquinixClientId>"
+equinix_client_secret  = "<MyEquinixSecret>"
+metal_auth_token       = "<Metal_Auth_Token>"
+
+metal_connection_metro      = "ty"
+metal_project_id            = "<Metal_Project_ID>"
+metal_connection_name       = "Metal-NIMF-connection"
+metal_connection_redundancy = "primary"
+metal_connection_speed      = "50Mbps"
+metal_connection_type       = "shared_port_vlan"
+metal_contact_email         = "tfacc@example.com"
+
+connection_name                 = "fcr_2_metal"
+connection_type                 = "IP_VC"
+notifications_type              = "ALL"
+notifications_emails            = ["example@equinix.com","test1@equinix.com"]
+purchase_order_number           = "1-323292"
+bandwidth                       = 50
+project_id                      = "<Fabric_Project_ID>"
+aside_fcr_uuid                  = "<Primary Fabric Cloud router UUID>"
+zside_ap_type                   = "METAL_NETWORK"

@@ -9,7 +9,6 @@ purchase_order_number           = "1-323292"
 connection_type                 = "IP_VC"
 bandwidth                       = 50
 secondary_bandwidth             = 50
-aside_ap_type                   = "CLOUD_ROUTER"
 aside_fcr_uuid                  = "<Primary Fabric Cloud router UUID>"
 aside_sec_fcr_uuid              = "<Secondary Fabric Cloud router UUID>"
 zside_ap_type                   = "SP"

@@ -35,7 +35,7 @@ resource "equinix_fabric_connection" "primary_cloud_router_connection" {
   }
   a_side {
     access_point {
-      type = var.aside_ap_type
+      type = "CLOUD_ROUTER"
       router {
         uuid = var.aside_fcr_uuid
       }
@@ -110,6 +110,15 @@ resource "equinix_fabric_connection" "primary_cloud_router_connection" {
       }
     }
   }
+  dynamic "z_side" {
+    for_each = var.zside_ap_type == "METAL_NETWORK" ? [1] : []
+    content {
+      access_point {
+        type                = "METAL_NETWORK"
+        authentication_key  = var.zside_ap_authentication_key
+      }
+    }
+  }
 }
 
 resource "equinix_fabric_connection" "secondary_cloud_router_connection" {
@@ -137,7 +146,7 @@ resource "equinix_fabric_connection" "secondary_cloud_router_connection" {
   }
   a_side {
     access_point {
-      type = var.aside_ap_type
+      type = "CLOUD_ROUTER"
       router {
         uuid = var.aside_fcr_uuid
       }
@@ -210,6 +219,16 @@ resource "equinix_fabric_connection" "secondary_cloud_router_connection" {
           type = var.zside_sec_interface_type != "" ? var.zside_sec_interface_type : null
           id   = var.zside_sec_interface_id != "" ? var.zside_sec_interface_id : null
         }
+      }
+    }
+  }
+
+  dynamic "z_side" {
+    for_each = var.zside_ap_type == "METAL_NETWORK" ? [1] : []
+    content {
+      access_point {
+        type                = "METAL_NETWORK"
+        authentication_key  = var.zside_ap_authentication_key
       }
     }
   }

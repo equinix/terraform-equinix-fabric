@@ -14,7 +14,6 @@ module "cloud_router_port_connection" {
   purchase_order_number = var.purchase_order_number
 
   #Aside
-  aside_ap_type  = var.aside_ap_type
   aside_fcr_uuid = var.aside_fcr_uuid
 
   #Zside
