@@ -375,6 +375,8 @@ module "cloud_router_azure_redundant_connection" {
 
 | Name | Description |
 |------|-------------|
-| <a name="output_module_output"></a> [module\_output](#output\_module\_output) | n/a |
-| <a name="output_secondary_connection_result"></a> [secondary\_connection\_result](#output\_secondary\_connection\_result) | n/a |
+| <a name="output_azure_primary_connection_id"></a> [azure\_primary\_connection\_id](#output\_azure\_primary\_connection\_id) | n/a |
+| <a name="output_azure_secondary_connection_id"></a> [azure\_secondary\_connection\_id](#output\_azure\_secondary\_connection\_id) | n/a |
+| <a name="output_azurerm_express_route_circuit"></a> [azurerm\_express\_route\_circuit](#output\_azurerm\_express\_route\_circuit) | n/a |
+| <a name="output_azurerm_resource_group_id"></a> [azurerm\_resource\_group\_id](#output\_azurerm\_resource\_group\_id) | n/a |
 <!-- END_TF_DOCS -->
