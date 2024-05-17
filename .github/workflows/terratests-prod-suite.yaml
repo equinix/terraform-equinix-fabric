@@ -79,27 +79,3 @@ jobs:
         with:
             token: ${{ secrets.CODECOV_TOKEN }}
             files: ./coverage_prod_modules.txt
-
-      - name: Upload test results
-        if: success() || failure()
-        uses: codecov/upload-artifact@v4
-        with:
-            name: test-results
-            path: tests/results/*.xml
-
-      - name: Create test report
-        uses: ./
-        with:
-            artifact: test-results
-            name: Workflow Report
-            path: '*.xml'
-            reporter: jest-junit
-
-      - name: Create mochawesome report
-        uses: ./
-        if: success() || failure()
-        with:
-            name: Mochawesome Tests
-            path: tests/fixtures/mochawesome-json.json
-            reporter: mochawesome-json
-            fail-on-error: false
