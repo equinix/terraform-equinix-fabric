@@ -495,7 +495,6 @@ module "create_virtual_device_2_azure_connection" {
 | <a name="input_connection_type"></a> [connection\_type](#input\_connection\_type) | Defines the connection type like VG\_VC, EVPL\_VC, EPL\_VC, EC\_VC, IP\_VC, ACCESS\_EPL\_VC | `string` | n/a | yes |
 | <a name="input_equinix_client_id"></a> [equinix\_client\_id](#input\_equinix\_client\_id) | Equinix client ID (consumer key), obtained after registering app in the developer platform | `string` | n/a | yes |
 | <a name="input_equinix_client_secret"></a> [equinix\_client\_secret](#input\_equinix\_client\_secret) | Equinix client secret ID (consumer secret), obtained after registering app in the developer platform | `string` | n/a | yes |
-| <a name="input_equinix_endpoint"></a> [equinix\_endpoint](#input\_equinix\_endpoint) | Equinix endpoint URL | `string` | n/a | yes |
 | <a name="input_ne_core_count"></a> [ne\_core\_count](#input\_ne\_core\_count) | Core count number | `number` | n/a | yes |
 | <a name="input_ne_hostname"></a> [ne\_hostname](#input\_ne\_hostname) | Device hostname prefix | `string` | n/a | yes |
 | <a name="input_ne_metro_code"></a> [ne\_metro\_code](#input\_ne\_metro\_code) | Device location metro code | `string` | n/a | yes |
@@ -529,7 +528,6 @@ module "create_virtual_device_2_azure_connection" {
 | <a name="input_ne_version"></a> [ne\_version](#input\_ne\_version) | Device software version | `string` | `null` | no |
 | <a name="input_notifications_type"></a> [notifications\_type](#input\_notifications\_type) | Notification Type - ALL is the only type currently supported | `string` | `"ALL"` | no |
 | <a name="input_purchase_order_number"></a> [purchase\_order\_number](#input\_purchase\_order\_number) | Purchase order number | `string` | `""` | no |
-| <a name="input_secondary_connection_name"></a> [secondary\_connection\_name](#input\_secondary\_connection\_name) | Secondary Connection name. An alpha-numeric 24 characters string which can include only hyphens and underscores | `string` | `""` | no |
 
 ## Outputs
 
