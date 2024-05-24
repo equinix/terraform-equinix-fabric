@@ -48,6 +48,16 @@ jobs:
           terraform_version: ${{ matrix.terraform }}
           terraform_wrapper: false
 
+      - name: Install jq
+        run: | 
+              sudo apt-get install jq
+
+      - name: Update tfvars with timestamp
+        run: |
+          TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+          jq --arg ts "$TIMESTAMP" '.connection_name = $ts' terraform.tfvars.json > tmp.tfvars.json
+          mv tmp.tfvars.json terraform.tfvars.json
+
       - name: Setup Variables Files
         run: |
           echo $TEST_DATA_PROD_PORT_2_ALIBABA_CONNECTION >> "./examples/port-2-alibaba-connection/terraform.tfvars.json"
