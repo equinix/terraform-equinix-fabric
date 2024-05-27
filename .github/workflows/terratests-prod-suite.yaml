@@ -55,10 +55,10 @@ jobs:
       - name: Setup Variables Files
         run: |
           TIMESTAMP=$(date +"%Y-%m-%d %T")
-          jq --arg timestamp "$TIMESTAMP" '.connection_name += $timestamp' ./examples/port-2-alibaba-connection/terraform.tfvars.json > ./examples/port-2-alibaba-connection/terraform.tfvars.json.tmp && mv ./examples/port-2-alibaba-connection/terraform.tfvars.json.tmp ./examples/port-2-alibaba-connection/terraform.tfvars.json
-          echo $TEST_DATA_PROD_PORT_2_ALIBABA_CONNECTION >> "./examples/port-2-alibaba-connection/terraform.tfvars.json"
-          jq --arg timestamp "$TIMESTAMP" '.connection_name += $timestamp' ./tests/examples-without-external-providers/port-2-aws-connection/terraform.tfvars.json > ./tests/examples-without-external-providers/port-2-aws-connection/terraform.tfvars.json.tmp && mv ./tests/examples-without-external-providers/port-2-aws-connection/terraform.tfvars.json.tmp ./tests/examples-without-external-providers/port-2-aws-connection/terraform.tfvars.json
-          echo $TEST_DATA_PROD_PORT_2_AWS_CONNECTION >> "./tests/examples-without-external-providers/port-2-aws-connection/terraform.tfvars.json"
+          alibaba_Conn = jq --arg timestamp "$TIMESTAMP" '.connection_name += " " + $timestamp' ./examples/port-2-alibaba-connection/terraform.tfvars.json > ./examples/port-2-alibaba-connection/terraform.tfvars.json.tmp && mv ./examples/port-2-alibaba-connection/terraform.tfvars.json.tmp ./examples/port-2-alibaba-connection/terraform.tfvars.json
+          echo $TEST_DATA_PROD_PORT_2_ALIBABA_CONNECTION >> alibaba_Conn
+          aws_conn = jq --arg timestamp "$TIMESTAMP" '.connection_name += $timestamp' ./tests/examples-without-external-providers/port-2-aws-connection/terraform.tfvars.json > ./tests/examples-without-external-providers/port-2-aws-connection/terraform.tfvars.json.tmp && mv ./tests/examples-without-external-providers/port-2-aws-connection/terraform.tfvars.json.tmp ./tests/examples-without-external-providers/port-2-aws-connection/terraform.tfvars.json
+          echo $TEST_DATA_PROD_PORT_2_AWS_CONNECTION >> aws_conn
           echo $TEST_DATA_PROD_PORT_2_AZURE_CONNECTION >> "./tests/examples-without-external-providers/port-2-azure-connection/terraform.tfvars.json"
           echo $GOOGLE_SERVICE_KEYS >> "./examples/port-2-google-connection/keys.json"
           echo $TEST_DATA_PROD_PORT_2_GOOGLE_CONNECTION >> "./examples/port-2-google-connection/terraform.tfvars.json"
