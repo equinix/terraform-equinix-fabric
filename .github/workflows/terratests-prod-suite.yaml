@@ -60,9 +60,12 @@ jobs:
           echo $TEST_DATA_PROD_PORT_2_AWS_CONNECTION >> "./tests/examples-without-external-providers/port-2-aws-connection/terraform.tfvars.json"
           jq --arg timestamp "$TIMESTAMP" '.connection_name += " " + $timestamp' ./tests/examples-without-external-providers/port-2-aws-connection/terraform.tfvars.json > ./tests/examples-without-external-providers/port-2-aws-connection/tmp.test.json && mv ./tests/examples-without-external-providers/port-2-aws-connection/tmp.test.json ./tests/examples-without-external-providers/port-2-aws-connection/terraform.tfvars.json
           echo $TEST_DATA_PROD_PORT_2_AZURE_CONNECTION >> "./tests/examples-without-external-providers/port-2-azure-connection/terraform.tfvars.json"
+          jq --arg timestamp "$TIMESTAMP" '.connection_name += " " + $timestamp' ./tests/examples-without-external-providers/port-2-azure-connection/terraform.tfvars.json > ./tests/examples-without-external-providers/port-2-azure-connection/tmp.test.json && mv ./tests/examples-without-external-providers/port-2-azure-connection/tmp.test.json ./tests/examples-without-external-providers/port-2-azure-connection/terraform.tfvars.json
           echo $GOOGLE_SERVICE_KEYS >> "./examples/port-2-google-connection/keys.json"
           echo $TEST_DATA_PROD_PORT_2_GOOGLE_CONNECTION >> "./examples/port-2-google-connection/terraform.tfvars.json"
+          jq --arg timestamp "$TIMESTAMP" '.connection_name += " " + $timestamp' ./examples/port-2-google-connection/terraform.tfvars.json > ./examples/port-2-google-connection/tmp.test.json && mv ./examples/port-2-google-connection/tmp.test.json ./examples/port-2-google-connection/terraform.tfvars.json
           echo $TEST_DATA_PROD_PORT_2_IBM2_CONNECTION >> "./examples/port-2-ibm2-connection/terraform.tfvars.json"
+          jq --arg timestamp "$TIMESTAMP" '.connection_name += " " + $timestamp' ./examples/port-2-ibm2-connection/terraform.tfvars.json > ./examples/port-2-ibm2-connection/tmp.test.json && mv ./examples/port-2-ibm2-connection/tmp.test.json ./examples/port-2-ibm2-connection/terraform.tfvars.json
           echo $TEST_DATA_PROD_PORT_2_PORT_CONNECTION >> "./examples/port-2-port-connection/terraform.tfvars.json"
           echo $TEST_DATA_PROD_PORT_2_PRIVATE_SERVICE_PROFILE_CONNECTION >> "./examples/port-2-private-service-profile-connection/terraform.tfvars.json"
           echo $TEST_DATA_PROD_PORT_2_WAN_CONNECTION >> "./tests/examples-without-external-providers/port-2-wan-connection/terraform.tfvars.json"
