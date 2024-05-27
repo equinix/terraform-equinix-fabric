@@ -75,11 +75,6 @@ jobs:
           echo $TEST_DATA_PROD_VIRTUAL_DEVICE_2_WAN_CONNECTION >> "./tests/examples-without-external-providers/virtual-device-2-wan-connection/terraform.tfvars.json"
           echo $TEST_DATA_PROD_VIRTUAL_DEVICE_2_AZURE_CONNECTION >> "./tests/examples-without-external-providers/virtual-device-2-azure-connection/terraform.tfvars.json"
           echo $TEST_DATA_PROD_VIRTUAL_DEVICE_2_PORT_CONNECTION >> "./tests/examples-without-external-providers/virtual-device-2-port-connection/terraform.tfvars.json"
-          
-          for FILE in "${JSON_FILES[@]}"; do
-            jq --arg ts "$TIMESTAMP" '.connection_name |= $ts' "$FILE" > tmp.json
-            mv tmp.json "$FILE"
-          done
 
       - name: Run Go Tests
         run:
