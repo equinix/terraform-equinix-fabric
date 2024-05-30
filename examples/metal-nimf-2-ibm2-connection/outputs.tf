@@ -5,5 +5,5 @@ output "metal_connection_id" {
   value = equinix_metal_connection.metal-connection.id
 }
 output "Metal_IBM2_Connection_Id" {
-  value = module.metal_2_google_connection.primary_connection_id
+  value = module.metal_2_ibm2_connection.primary_connection_id
 }

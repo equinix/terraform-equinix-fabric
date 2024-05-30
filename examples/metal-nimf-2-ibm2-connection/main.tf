@@ -21,7 +21,7 @@ resource "equinix_metal_connection" "metal-connection" {
   contact_email = var.metal_contact_email
 }
 
-module "metal_2_google_connection" {
+module "metal_2_ibm2_connection" {
   source = "../../modules/metal-connection"
 
   connection_name       = var.connection_name
