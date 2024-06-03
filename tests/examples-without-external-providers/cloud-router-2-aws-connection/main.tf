@@ -16,6 +16,7 @@ module "cloud_router_aws_connection" {
 
   #Aside
   aside_fcr_uuid = var.aside_fcr_uuid
+  aside_ap_type = var.aside_ap_type
 
   #Zside
   zside_ap_type               = var.zside_ap_type

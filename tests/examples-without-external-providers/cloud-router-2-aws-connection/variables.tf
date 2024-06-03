@@ -44,6 +44,10 @@ variable "zside_ap_authentication_key" {
   type        = string
   sensitive   = true
 }
+variable "aside_ap_type" {
+  description = "Access point type - COLO, VD, VG, SP, IGW, SUBNET, GW"
+  type        = string
+}
 variable "zside_ap_type" {
   description = "Access point type - COLO, VD, VG, SP, IGW, SUBNET, GW"
   type        = string
