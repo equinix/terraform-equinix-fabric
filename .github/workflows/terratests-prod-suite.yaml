@@ -42,9 +42,6 @@ jobs:
       - name: Get dependencies
         run: |
               go mod download
-              go get -u github.com/gruntwork-io/terratest/modules/...
-              go get -u github.com/gruntwork-io/terratest/modules/logger/terratest_log_parser
-              go mod tidy
 
       - uses: hashicorp/setup-terraform@v3
         with:
@@ -96,9 +93,8 @@ jobs:
           jq --arg timestamp "$TIMESTAMP" '.connection_name = ($timestamp + "_" + .connection_name)' ./tests/examples-without-external-providers/virtual-device-2-port-connection/terraform.tfvars.json > ./tests/examples-without-external-providers/virtual-device-2-port-connection/tmp.test.json && mv ./tests/examples-without-external-providers/virtual-device-2-port-connection/tmp.test.json ./tests/examples-without-external-providers/virtual-device-2-port-connection/terraform.tfvars.json
 
       - name: Run Go Tests
-        run: |
-          mkdir -p test-results
-          go test ./tests/prod -v -coverprofile coverage_prod_modules.txt -covermode=atomic -count 1 -parallel 8 -run "(DIGP)" -timeout 180m | tee test-results/terratest.log
+        run:
+          go test ./tests/prod -v -coverprofile coverage_prod_modules.txt -covermode=atomic -count 1 -parallel 8 -run "(DIGP)" -timeout 180m
 
       - name: Upload test coverage to Codecov
         if: ${{ always() }}
@@ -106,20 +102,3 @@ jobs:
         with:
             token: ${{ secrets.CODECOV_TOKEN }}
             files: ./coverage_prod_modules.txt
-
-      - name: Parse Terratest Logs
-        run: |
-          terratest_log_parser -output test-results/terratest-report.html test-results/terratest.log
-
-      - name: Upload test report
-        uses: actions/upload-artifact@v3
-        with:
-          name: terratest-report
-          path: test-results/terratest-report.html
-
-      - name: Publish test results
-        uses: dorny/test-reporter@v1
-        with:
-          name: Terratest Results
-          path: test-results/terratest-report.html
-          reporter: junit
