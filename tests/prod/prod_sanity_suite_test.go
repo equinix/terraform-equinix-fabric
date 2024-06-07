@@ -46,6 +46,15 @@ func TestPort2AzureCreateConnection_DIGP(t *testing.T) {
 	terraform.InitAndApply(t, terraformOptions)
 	output := terraform.Output(t, terraformOptions, "azure_connection_id")
 	assert.NotNil(t, output)
+	terraform.Apply(t, terraformOptions)
+
+	terraformOptions = terraform.WithDefaultRetryableErrors(t, &terraform.Options{
+		Vars: map[string]interface{}{
+			"connection_name": "P2Azure_Name_Update",
+		},
+		TerraformDir: "../../tests/examples-without-external-providers/port-2-azure-connection",
+	})
+	terraform.Apply(t, terraformOptions)
 }
 
 func TestPort2GoogleCreateConnection_DIGP(t *testing.T) {
@@ -60,6 +69,16 @@ func TestPort2GoogleCreateConnection_DIGP(t *testing.T) {
 	terraform.InitAndApply(t, terraformOptions)
 	output := terraform.Output(t, terraformOptions, "google_connection_id")
 	assert.NotNil(t, output)
+
+	terraform.Apply(t, terraformOptions)
+
+	terraformOptions = terraform.WithDefaultRetryableErrors(t, &terraform.Options{
+		Vars: map[string]interface{}{
+			"bandwidth": 100,
+		},
+		TerraformDir: "../../examples/port-2-google-connection",
+	})
+	terraform.Apply(t, terraformOptions)
 }
 
 func TestPort2Ibm2CreateConnection_DIGP(t *testing.T) {
@@ -88,6 +107,17 @@ func TestPort2PortCreateConnection_DIGP(t *testing.T) {
 	terraform.InitAndApply(t, terraformOptions)
 	output := terraform.Output(t, terraformOptions, "port_connection_id")
 	assert.NotNil(t, output)
+
+	terraform.Apply(t, terraformOptions)
+
+	terraformOptions = terraform.WithDefaultRetryableErrors(t, &terraform.Options{
+		Vars: map[string]interface{}{
+			"connection_name": "P2Port_Name_Update",
+			"bandwidth":       100,
+		},
+		TerraformDir: "../../examples/port-2-port-connection",
+	})
+	terraform.Apply(t, terraformOptions)
 }
 
 func TestPort2PrivateServiceProfileCreateConnection_DIGP(t *testing.T) {
@@ -116,6 +146,16 @@ func TestCloudRouterCreate_DIGP(t *testing.T) {
 	terraform.InitAndApply(t, terraformOptions)
 	output := terraform.Output(t, terraformOptions, "cloud_router_id")
 	assert.NotNil(t, output)
+
+	terraform.Apply(t, terraformOptions)
+
+	terraformOptions = terraform.WithDefaultRetryableErrors(t, &terraform.Options{
+		Vars: map[string]interface{}{
+			"fcr_name": "FCR_Name_Update",
+		},
+		TerraformDir: "../../tests/examples-without-external-providers/cloud-router",
+	})
+	terraform.Apply(t, terraformOptions)
 }
 
 func TestCloudRouter2AwsCreateConnection_DIGP(t *testing.T) {
@@ -186,6 +226,16 @@ func TestCloudRouter2WanCreateConnection_DIGP(t *testing.T) {
 	terraform.InitAndApply(t, terraformOptions)
 	output := terraform.Output(t, terraformOptions, "wan_connection_id")
 	assert.NotNil(t, output)
+	terraform.Apply(t, terraformOptions)
+
+	terraformOptions = terraform.WithDefaultRetryableErrors(t, &terraform.Options{
+		Vars: map[string]interface{}{
+			"connection_name": "FCR2WAN_Name_Update",
+			"bandwidth":       50,
+		},
+		TerraformDir: "../../examples/cloud-router-2-wan-connection",
+	})
+	terraform.Apply(t, terraformOptions)
 }
 
 func TestPort2WanCreateConnection_DIGP(t *testing.T) {
@@ -200,6 +250,17 @@ func TestPort2WanCreateConnection_DIGP(t *testing.T) {
 	terraform.InitAndApply(t, terraformOptions)
 	output := terraform.Output(t, terraformOptions, "wan_connection_id")
 	assert.NotNil(t, output)
+
+	terraform.Apply(t, terraformOptions)
+
+	terraformOptions = terraform.WithDefaultRetryableErrors(t, &terraform.Options{
+		Vars: map[string]interface{}{
+			"connection_name": "P2WAN_Name_Update",
+			"bandwidth":       50,
+		},
+		TerraformDir: "../../tests/examples-without-external-providers/port-2-wan-connection",
+	})
+	terraform.Apply(t, terraformOptions)
 }
 
 func TestVirtualDevice2WanCreateConnection_DIGP(t *testing.T) {
@@ -242,4 +303,15 @@ func TestVirtualDevice2PortCreateConnection_DIGP(t *testing.T) {
 	terraform.InitAndApply(t, terraformOptions)
 	output := terraform.Output(t, terraformOptions, "port_connection_id")
 	assert.NotNil(t, output)
+
+	terraform.Apply(t, terraformOptions)
+
+	terraformOptions = terraform.WithDefaultRetryableErrors(t, &terraform.Options{
+		Vars: map[string]interface{}{
+			"connection_name": "VD2Port_Name_Update",
+			"bandwidth":       10,
+		},
+		TerraformDir: "../../tests/examples-without-external-providers/virtual-device-2-port-connection",
+	})
+	terraform.Apply(t, terraformOptions)
 }
