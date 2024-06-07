@@ -25,7 +25,7 @@ in the upper right of this page and be sure to include at a minimum the required
 
 *Note:* This example creates resources which cost money. Run 'terraform destroy' when you don't need these resources.
 
-To provision this example directly, 
+To provision this example directly,
 you should clone the github repository for this module and run terraform within this directory:
 
 ```bash
