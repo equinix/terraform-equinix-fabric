@@ -55,6 +55,7 @@ jobs:
       - name: Setup Variables Files
         run: |
           TIMESTAMP=$(date +"%m%d%M%S")
+          SUFFIX="_DIGP"
           echo $TEST_DATA_PROD_PORT_2_ALIBABA_CONNECTION >> "./examples/port-2-alibaba-connection/terraform.tfvars.json"
           jq --arg timestamp "$TIMESTAMP" '.connection_name = ($timestamp + "_" + .connection_name)' ./examples/port-2-alibaba-connection/terraform.tfvars.json > ./examples/port-2-alibaba-connection/tmp.test.json && mv ./examples/port-2-alibaba-connection/tmp.test.json ./examples/port-2-alibaba-connection/terraform.tfvars.json
           echo $TEST_DATA_PROD_PORT_2_AWS_CONNECTION >> "./tests/examples-without-external-providers/port-2-aws-connection/terraform.tfvars.json"
@@ -65,7 +66,7 @@ jobs:
           echo $TEST_DATA_PROD_PORT_2_GOOGLE_CONNECTION >> "./examples/port-2-google-connection/terraform.tfvars.json"
           jq --arg timestamp "$TIMESTAMP" '.connection_name = ($timestamp + "_" + .connection_name)' ./examples/port-2-google-connection/terraform.tfvars.json > ./examples/port-2-google-connection/tmp.test.json && mv ./examples/port-2-google-connection/tmp.test.json ./examples/port-2-google-connection/terraform.tfvars.json
           echo $TEST_DATA_PROD_PORT_2_IBM2_CONNECTION >> "./examples/port-2-ibm2-connection/terraform.tfvars.json"
-          jq --arg timestamp "$TIMESTAMP" '.connection_name = ($timestamp + "_" + .connection_name)' ./examples/port-2-ibm2-connection/terraform.tfvars.json > ./examples/port-2-ibm2-connection/tmp.test.json && mv ./examples/port-2-ibm2-connection/tmp.test.json ./examples/port-2-ibm2-connection/terraform.tfvars.json
+          jq --arg timestamp "$TIMESTAMP$SUFFIX" '.connection_name += "" + $timestamp' ./examples/port-2-ibm2-connection/terraform.tfvars.json > ./examples/port-2-ibm2-connection/tmp.test.json && mv ./examples/port-2-ibm2-connection/tmp.test.json ./examples/port-2-ibm2-connection/terraform.tfvars.json
           echo $TEST_DATA_PROD_PORT_2_PORT_CONNECTION >> "./examples/port-2-port-connection/terraform.tfvars.json"
           jq --arg timestamp "$TIMESTAMP" '.connection_name = ($timestamp + "_" + .connection_name)' ./examples/port-2-port-connection/terraform.tfvars.json > ./examples/port-2-port-connection/tmp.test.json && mv ./examples/port-2-port-connection/tmp.test.json ./examples/port-2-port-connection/terraform.tfvars.json
           echo $TEST_DATA_PROD_PORT_2_PRIVATE_SERVICE_PROFILE_CONNECTION >> "./examples/port-2-private-service-profile-connection/terraform.tfvars.json"
