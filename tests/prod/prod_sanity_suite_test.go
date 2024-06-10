@@ -46,7 +46,6 @@ func TestPort2AzureCreateConnection_DIGP(t *testing.T) {
 	terraform.InitAndApply(t, terraformOptions)
 	output := terraform.Output(t, terraformOptions, "azure_connection_id")
 	assert.NotNil(t, output)
-	terraform.Apply(t, terraformOptions)
 
 	terraformOptions = terraform.WithDefaultRetryableErrors(t, &terraform.Options{
 		Vars: map[string]interface{}{
@@ -69,8 +68,6 @@ func TestPort2GoogleCreateConnection_DIGP(t *testing.T) {
 	terraform.InitAndApply(t, terraformOptions)
 	output := terraform.Output(t, terraformOptions, "google_connection_id")
 	assert.NotNil(t, output)
-
-	terraform.Apply(t, terraformOptions)
 
 	terraformOptions = terraform.WithDefaultRetryableErrors(t, &terraform.Options{
 		Vars: map[string]interface{}{
@@ -108,8 +105,6 @@ func TestPort2PortCreateConnection_DIGP(t *testing.T) {
 	output := terraform.Output(t, terraformOptions, "port_connection_id")
 	assert.NotNil(t, output)
 
-	terraform.Apply(t, terraformOptions)
-
 	terraformOptions = terraform.WithDefaultRetryableErrors(t, &terraform.Options{
 		Vars: map[string]interface{}{
 			"connection_name": "P2Port_Name_Update",
@@ -146,8 +141,6 @@ func TestCloudRouterCreate_DIGP(t *testing.T) {
 	terraform.InitAndApply(t, terraformOptions)
 	output := terraform.Output(t, terraformOptions, "cloud_router_id")
 	assert.NotNil(t, output)
-
-	terraform.Apply(t, terraformOptions)
 
 	terraformOptions = terraform.WithDefaultRetryableErrors(t, &terraform.Options{
 		Vars: map[string]interface{}{
@@ -226,7 +219,6 @@ func TestCloudRouter2WanCreateConnection_DIGP(t *testing.T) {
 	terraform.InitAndApply(t, terraformOptions)
 	output := terraform.Output(t, terraformOptions, "wan_connection_id")
 	assert.NotNil(t, output)
-	terraform.Apply(t, terraformOptions)
 
 	terraformOptions = terraform.WithDefaultRetryableErrors(t, &terraform.Options{
 		Vars: map[string]interface{}{
@@ -250,8 +242,6 @@ func TestPort2WanCreateConnection_DIGP(t *testing.T) {
 	terraform.InitAndApply(t, terraformOptions)
 	output := terraform.Output(t, terraformOptions, "wan_connection_id")
 	assert.NotNil(t, output)
-
-	terraform.Apply(t, terraformOptions)
 
 	terraformOptions = terraform.WithDefaultRetryableErrors(t, &terraform.Options{
 		Vars: map[string]interface{}{
@@ -303,8 +293,6 @@ func TestVirtualDevice2PortCreateConnection_DIGP(t *testing.T) {
 	terraform.InitAndApply(t, terraformOptions)
 	output := terraform.Output(t, terraformOptions, "port_connection_id")
 	assert.NotNil(t, output)
-
-	terraform.Apply(t, terraformOptions)
 
 	terraformOptions = terraform.WithDefaultRetryableErrors(t, &terraform.Options{
 		Vars: map[string]interface{}{
