@@ -49,7 +49,7 @@ jobs:
 
       - name: Upload test coverage to Codecov
         if: ${{ always() }}
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v4
         with:
             token: ${{ secrets.CODECOV_TOKEN }}
             files: ./coverage_uat_modules.txt
@@ -115,7 +115,7 @@ jobs:
 
       - name: Upload test coverage to Codecov
         if: ${{ always() }}
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v4
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: ./coverage_uat_modules.txt
