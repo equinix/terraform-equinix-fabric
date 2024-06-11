@@ -44,7 +44,6 @@ terraform.tfvars (Replace these values with your own):
 
 equinix_client_id      = "MyEquinixClientId"
 equinix_client_secret  = "MyEquinixSecret"
-equinix_endpoint       = "endpointURL"
 
 #NE Acl Template
 template_name           = "test-wan-acl-template"
@@ -90,7 +89,6 @@ azure_environment           = "UAT"
 
 #VD_2_Azure_Connection
 connection_name             = "VD2Azure"
-secondary_connection_name   = "VD2Azure Sec"
 connection_type             = "EVPL_VC"
 notifications_type          = "ALL"
 notifications_emails        = ["example@equinix.com"]
@@ -126,14 +124,12 @@ variables.tf:
 variable "equinix_client_id" {
   description = "Equinix client ID (consumer key), obtained after registering app in the developer platform"
   type        = string
+  sensitive   = true
 }
 variable "equinix_client_secret" {
   description = "Equinix client secret ID (consumer secret), obtained after registering app in the developer platform"
   type        = string
-}
-variable "equinix_endpoint" {
-  description = "Equinix endpoint URL"
-  type        = string
+  sensitive   = true
 }
 ##NE Acl Template
 variable "template_name" {
@@ -147,7 +143,6 @@ variable "template_description" {
 variable "template_subnet" {
   description = "Inbound traffic source IP subnets in CIDR format"
   type        = string
-
 }
 variable "template_protocol" {
   description = "Inbound traffic protocol"
@@ -209,35 +204,39 @@ variable "ne_ssh_key_username" {
   description = "username for ssh key"
   type        = string
 }
-
 variable "ne_ssh_key_name" {
   description = "ssh key name for device"
   type        = string
 }
 variable "network_public_key_name" {
   description = "The name of SSH key used for identification."
-  type = string
+  type        = string
 }
 variable "network_public_key" {
   description = "The SSH public key"
   type        = string
+  sensitive   = true
 }
 #Azure Provider
 variable "azure_client_id" {
   description = "Azure Client id"
   type        = string
+  sensitive   = true
 }
 variable "azure_client_secret" {
   description = "Azure Secret value"
   type        = string
+  sensitive   = true
 }
 variable "azure_tenant_id" {
   description = "Azure Tenant id"
   type        = string
+  sensitive   = true
 }
 variable "azure_subscription_id" {
   description = "Azure Subscription id"
   type        = string
+  sensitive   = true
 }
 variable "azure_resource_name" {
   description = "The name of Azure Resource"
@@ -277,11 +276,6 @@ variable "azure_environment" {
 variable "connection_name" {
   description = "Connection name. An alpha-numeric 24 characters string which can include only hyphens and underscores"
   type        = string
-}
-variable "secondary_connection_name" {
-  description = "Secondary Connection name. An alpha-numeric 24 characters string which can include only hyphens and underscores"
-  type        = string
-  default     = ""
 }
 variable "connection_type" {
   description = "Defines the connection type like VG_VC, EVPL_VC, EPL_VC, EC_VC, IP_VC, ACCESS_EPL_VC"
@@ -353,7 +347,6 @@ main.tf:
 provider "equinix" {
   client_id     = var.equinix_client_id
   client_secret = var.equinix_client_secret
-  endpoint      = var.equinix_endpoint
 }
 provider "azurerm" {
   features {}

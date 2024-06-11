@@ -63,6 +63,7 @@ azure_client_id             = "<Azure Client Id>"
 azure_client_secret         = "<Azure Client Secret Value>"
 azure_tenant_id             = "<Azure Tenant Id>"
 azure_subscription_id       = "<Azure Subscription Id>"
+azure_resource_name         = "Azure Test"
 azure_location              = "West US 2"
 azure_service_key_name      = "Test_Azure_Key"
 azure_service_provider_name = "<Service Provider Name>"
@@ -93,10 +94,12 @@ variables.tf:
 variable "equinix_client_id" {
   description = "Equinix client ID (consumer key), obtained after registering app in the developer platform"
   type        = string
+  sensitive   = true
 }
 variable "equinix_client_secret" {
   description = "Equinix client secret ID (consumer secret), obtained after registering app in the developer platform"
   type        = string
+  sensitive   = true
 }
 variable "connection_name" {
   description = "Connection name. An alpha-numeric 24 characters string which can include only hyphens and underscores"
@@ -160,18 +163,22 @@ variable "zside_peering_type" {
 variable "azure_client_id" {
   description = "Azure Client id"
   type        = string
+  sensitive   = true
 }
 variable "azure_client_secret" {
   description = "Azure Secret value"
   type        = string
+  sensitive   = true
 }
 variable "azure_tenant_id" {
   description = "Azure Tenant id"
   type        = string
+  sensitive   = true
 }
 variable "azure_subscription_id" {
   description = "Azure Subscription id"
   type        = string
+  sensitive   = true
 }
 variable "azure_resource_name" {
   description = "The name of Azure Resource"

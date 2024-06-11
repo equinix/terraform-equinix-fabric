@@ -77,12 +77,13 @@ variables.tf:
 variable "equinix_client_id" {
   description = "Equinix client ID (consumer key), obtained after registering app in the developer platform"
   type        = string
+  sensitive = true
 }
 variable "equinix_client_secret" {
   description = "Equinix client secret ID (consumer secret), obtained after registering app in the developer platform"
   type        = string
+  sensitive = true
 }
-
 variable "connection_uuid" {
   description = "Equinix Connection UUID to Apply the Routing Protocols to"
   type        = string

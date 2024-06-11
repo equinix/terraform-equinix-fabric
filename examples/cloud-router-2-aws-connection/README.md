@@ -52,7 +52,6 @@ aside_fcr_uuid              = "<Fabric Cloud Router UUID>"
 connection_name             = "fcr_2_aws"
 connection_type             = "IP_VC"
 bandwidth                   = 50
-aside_ap_type               = "CLOUD_ROUTER"
 zside_ap_type               = "SP"
 zside_ap_authentication_key = "<AWS Account Id>"
 zside_ap_profile_type       = "L2_PROFILE"
@@ -96,10 +95,12 @@ variables.tf:
 variable "equinix_client_id" {
   description = "Equinix client ID (consumer key), obtained after registering app in the developer platform"
   type        = string
+  sensitive   = true
 }
 variable "equinix_client_secret" {
   description = "Equinix client secret ID (consumer secret), obtained after registering app in the developer platform"
   type        = string
+  sensitive   = true
 }
 variable "connection_name" {
   description = "Connection name. An alpha-numeric 24 characters string which can include only hyphens and underscores"
@@ -128,10 +129,6 @@ variable "purchase_order_number" {
   type        = string
   default     = ""
 }
-variable "aside_ap_type" {
-  description = "Access point type - COLO, VD, VG, SP, IGW, SUBNET, GW"
-  type        = string
-}
 variable "aside_fcr_uuid" {
   description = "Equinix-assigned Fabric Cloud Router identifier"
   type        = string
@@ -139,7 +136,7 @@ variable "aside_fcr_uuid" {
 variable "zside_ap_authentication_key" {
   description = "Authentication key for provider based connections"
   type        = string
-  default     = ""
+  sensitive   = true
 }
 variable "zside_ap_type" {
   description = "Access point type - COLO, VD, VG, SP, IGW, SUBNET, GW"
@@ -170,6 +167,7 @@ variable "additional_info" {
   description = "Additional parameters required for some service profiles. It should be a list of maps containing 'key' and 'value  e.g. `[{ key='asn' value = '65000'}, { key='ip' value = '192.168.0.1'}]`"
   type        = list(object({ key = string, value = string }))
   default     = []
+  sensitive   = true
 }
 variable "aws_vif_name" {
   description = "The name for the virtual interface"
@@ -197,6 +195,7 @@ variable "aws_vif_bgp_auth_key" {
   description = "The authentication key for BGP configuration"
   type        =  string
   default     = ""
+  sensitive   = true
 }
 variable "aws_gateway_name" {
   description = "The name of the Gateway"
@@ -246,7 +245,6 @@ module "cloud_router_aws_connection" {
 
   #Aside
   aside_fcr_uuid = var.aside_fcr_uuid
-  aside_ap_type  = var.aside_ap_type
 
   #Zside
   zside_ap_type               = var.zside_ap_type

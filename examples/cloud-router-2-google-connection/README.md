@@ -64,7 +64,6 @@ notifications_type              = "ALL"
 notifications_emails            = ["example@equinix.com","test1@equinix.com"]
 purchase_order_number           = "1-323292"
 bandwidth                       = 50
-aside_ap_type                   = "CLOUD_ROUTER"
 aside_fcr_uuid                  = "<Primary Fabric Cloud router UUID>"
 zside_ap_type                   = "SP"
 zside_ap_authentication_key     = "<GCP Service Key>"
@@ -97,10 +96,12 @@ variables.tf:
 variable "equinix_client_id" {
   description = "Equinix client ID (consumer key), obtained after registering app in the developer platform"
   type        = string
+  sensitive   = true
 }
 variable "equinix_client_secret" {
   description = "Equinix client secret ID (consumer secret), obtained after registering app in the developer platform"
   type        = string
+  sensitive   = true
 }
 #Google Provider
 variable "google_region" {
@@ -178,10 +179,6 @@ variable "purchase_order_number" {
   description = "Purchase order number"
   type        = string
   default     = ""
-}
-variable "aside_ap_type" {
-  description = "Access point type - COLO, VD, VG, SP, IGW, SUBNET, GW"
-  type        = string
 }
 variable "aside_fcr_uuid" {
   description = "Equinix-assigned Fabric Cloud Router identifier"
@@ -273,7 +270,6 @@ module "cloud_router_google_connection" {
   purchase_order_number = var.purchase_order_number
 
   #Aside
-  aside_ap_type  = var.aside_ap_type
   aside_fcr_uuid = var.aside_fcr_uuid
 
   #Zside

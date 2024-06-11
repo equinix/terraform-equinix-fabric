@@ -51,15 +51,27 @@ notifications_type              = "ALL"
 notifications_emails            = ["example@equinix.com","test1@equinix.com"]
 purchase_order_number           = "1-323292"
 bandwidth                       = 1000
-aside_ap_type                   = "CLOUD_ROUTER"
 aside_fcr_uuid                  = "<Primary Fabric Cloud router UUID>"
 zside_ap_type                   = "SP"
-zside_ap_authentication_key     = "<Oracle Authentication Key>"
 zside_ap_profile_type           = "L2_PROFILE"
 zside_location                  = "SV"
 zside_peering_type              = "PRIVATE"
-zside_seller_region             = "us-ashburn-1"
 zside_fabric_sp_name            = "Oracle Cloud Infrastructure -OCI- FastConnect"
+
+oracle_tenancy_ocid             = "<Oracle Tenancy OCID>"
+oracle_user_ocid                = "<Oracle User OCID>"
+oracle_private_key              = "<Oracle Private Key>"
+oracle_fingerprint              = "<Oracle Fingerprint>"
+oracle_region                   = "us-sanjose-1"
+oracle_compartment_id           = "<Oracle Compartment ID>",
+oracle_fastconnect_provider     = "Equinix"
+oracle_vc_display_name          = "FCR2Oracle"
+oracle_vc_type                  = "PRIVATE"
+oracle_bandwidth                = "1 Gbps"
+oracle_customer_bgp_peering_ip  = "10.1.0.50/30"
+oracle_bgp_peering_ip           = "10.1.0.49/30"
+oracle_customer_asn             = "123456"
+oracle_gateway_id               = "<Oracle Gateway ID>"
 ```
 versions.tf:
 ```hcl
@@ -69,7 +81,11 @@ terraform {
   required_providers {
     equinix = {
       source  = "equinix/equinix"
-      version = ">= 1.20.0"
+      version = ">= 1.36.3"
+    }
+    oci = {
+      source = "oracle/oci"
+      version = "5.36.0"
     }
   }
 }
@@ -80,10 +96,12 @@ variables.tf:
 variable "equinix_client_id" {
   description = "Equinix client ID (consumer key), obtained after registering app in the developer platform"
   type        = string
+  sensitive   = true
 }
 variable "equinix_client_secret" {
   description = "Equinix client secret ID (consumer secret), obtained after registering app in the developer platform"
   type        = string
+  sensitive   = true
 }
 variable "connection_name" {
   description = "Connection name. An alpha-numeric 24 characters string which can include only hyphens and underscores"
@@ -103,6 +121,11 @@ variable "notifications_emails" {
   description = "Array of contact emails"
   type        = list(string)
 }
+variable "project_id" {
+  description = "Subscriber-assigned project ID"
+  type        = string
+  default     = ""
+}
 variable "bandwidth" {
   description = "Connection bandwidth in Mbps"
   type        = number
@@ -112,18 +135,9 @@ variable "purchase_order_number" {
   type        = string
   default     = ""
 }
-variable "aside_ap_type" {
-  description = "Access point type - COLO, VD, VG, SP, IGW, SUBNET, GW"
-  type        = string
-}
 variable "aside_fcr_uuid" {
   description = "Equinix-assigned Fabric Cloud Router identifier"
   type        = string
-}
-variable "zside_ap_authentication_key" {
-  description = "Authentication key for provider based connections"
-  type        = string
-  default     = ""
 }
 variable "zside_ap_type" {
   description = "Access point type - COLO, VD, VG, SP, IGW, SUBNET, GW"
@@ -144,21 +158,76 @@ variable "zside_peering_type" {
   description = "Access point peering type - PRIVATE, MICROSOFT, PUBLIC, MANUAL"
   default     = "PRIVATE"
 }
-variable "zside_seller_region" {
-  description = "Access point seller region"
-  type        = string
-  default     = ""
-}
 variable "zside_fabric_sp_name" {
   description = "Equinix Service Profile Name"
   type        = string
   default     = ""
 }
+variable "oracle_tenancy_ocid" {
+  description = "Tenancy OCID"
+  type        = string
+  sensitive   = true
+}
+variable "oracle_user_ocid" {
+  description = "User OCID"
+  type        = string
+  sensitive   = true
+}
+variable "oracle_private_key" {
+  description = "Oracle Private Key"
+  type        = string
+}
+variable "oracle_fingerprint" {
+  description = "Fingerprint for the key pair being used"
+  type        = string
+  sensitive   = true
+}
+variable "oracle_region" {
+  description = "OCI region"
+  type        = string
+}
+variable "oracle_compartment_id" {
+  description = "The OCID of the compartment"
+  type        = string
+  sensitive   = true
+}
+variable "oracle_fastconnect_provider" {
+  description = "Fast Connect Provider Name"
+  type        = string
+}
+variable "oracle_vc_display_name" {
+  description = "OCI Virtual Circuit Name"
+  type        = string
+}
+variable "oracle_vc_type" {
+  description = "The type of IP addresses used in this virtual circuit - PRIVATE"
+  type        = string
+}
+variable "oracle_bandwidth" {
+  description = "The provisioned connection bandwidth"
+  type        = string
+}
+variable "oracle_customer_bgp_peering_ip" {
+  description = "The BGP IPv4 address for the router on the other end of the BGP session from Oracle"
+  type        = string
+}
+variable "oracle_bgp_peering_ip" {
+  description = "The BGP IPv6 address for the router on the other end of the BGP session from Oracle"
+  type        = string
+}
+variable "oracle_customer_asn" {
+  description = "Oracle BGP ASN"
+  type        = string
+}
+variable "oracle_gateway_id" {
+  description = "The OCID of the dynamic routing gateway (DRG) that virtual circuit uses"
+  type        = string
+}
 ```
 outputs.tf:
 ```hcl
 
-output "module_output" {
+output "oracle_connection_id" {
   value = module.cloud_router_oracle_connection.primary_connection_id
 }
 ```
@@ -169,6 +238,42 @@ provider "equinix" {
   client_id     = var.equinix_client_id
   client_secret = var.equinix_client_secret
 }
+provider "oci" {
+  tenancy_ocid      = var.oracle_tenancy_ocid
+  user_ocid         = var.oracle_user_ocid
+  private_key       = var.oracle_private_key
+  fingerprint       = var.oracle_fingerprint
+  region            = var.oracle_region
+}
+
+data "oci_core_fast_connect_provider_services" "fc_provider_services" {
+  compartment_id = var.oracle_compartment_id
+}
+
+locals {
+  fc_provider_services_id = element(
+    data.oci_core_fast_connect_provider_services.fc_provider_services.fast_connect_provider_services,
+    index(
+      data.oci_core_fast_connect_provider_services.fc_provider_services.fast_connect_provider_services.*.provider_name,
+      var.oracle_fastconnect_provider
+    )
+  ).id
+}
+
+resource "oci_core_virtual_circuit" "test_virtual_circuit" {
+  display_name          = var.oracle_vc_display_name
+  compartment_id        = var.oracle_compartment_id
+  type                  = var.oracle_vc_type
+  bandwidth_shape_name  = var.oracle_bandwidth
+  cross_connect_mappings {
+    customer_bgp_peering_ip = var.oracle_customer_bgp_peering_ip
+    oracle_bgp_peering_ip   = var.oracle_bgp_peering_ip
+  }
+  customer_asn        = var.oracle_customer_asn
+  region              = var.oracle_region
+  provider_service_id = local.fc_provider_services_id
+  gateway_id          = var.oracle_gateway_id
+}
 
 module "cloud_router_oracle_connection" {
   source = "equinix/fabric/equinix//modules/cloud-router-connection"
@@ -177,20 +282,20 @@ module "cloud_router_oracle_connection" {
   connection_type       = var.connection_type
   notifications_type    = var.notifications_type
   notifications_emails  = var.notifications_emails
+  project_id            = var.project_id
   bandwidth             = var.bandwidth
   purchase_order_number = var.purchase_order_number
 
-  #Aside
-  aside_ap_type  = var.aside_ap_type
+  #A-side
   aside_fcr_uuid = var.aside_fcr_uuid
 
-  #Zside
+  #Z-side
   zside_ap_type               = var.zside_ap_type
-  zside_ap_authentication_key = var.zside_ap_authentication_key
+  zside_ap_authentication_key = oci_core_virtual_circuit.test_virtual_circuit.id
   zside_ap_profile_type       = var.zside_ap_profile_type
   zside_location              = var.zside_location
   zside_peering_type          = var.zside_peering_type
-  zside_seller_region         = var.zside_seller_region
+  zside_seller_region         = var.oracle_region
   zside_fabric_sp_name        = var.zside_fabric_sp_name
 }
 ```

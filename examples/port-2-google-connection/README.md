@@ -93,10 +93,12 @@ variables.tf:
 variable "equinix_client_id" {
   description = "Equinix client ID (consumer key), obtained after registering app in the developer platform"
   type        = string
+  sensitive   = true
 }
 variable "equinix_client_secret" {
   description = "Equinix client secret ID (consumer secret), obtained after registering app in the developer platform"
   type        = string
+  sensitive   = true
 }
 #Google Provider
 variable "google_region" {
@@ -216,7 +218,7 @@ output "GCP_Router_Id" {
 output "GCP_Interconnect_Id" {
   value = google_compute_interconnect_attachment.port-google.id
 }
-output "Google_connection_id" {
+output "google_connection_id" {
   value = module.create_port_2_google_connection.primary_connection_id
 }
 ```

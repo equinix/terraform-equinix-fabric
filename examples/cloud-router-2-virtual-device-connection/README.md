@@ -53,7 +53,6 @@ connection_type       = "IP_VC"
 bandwidth             = 50
 
 aside_fcr_uuid        = "<Fabric Cloud Router UUID>"
-aside_ap_type         = "CLOUD_ROUTER"
 
 zside_ap_type         = "VD"
 zside_vd_type         = "EDGE"
@@ -113,10 +112,6 @@ variable "purchase_order_number" {
   type        = string
   default     = ""
 }
-variable "aside_ap_type" {
-  description = "Access point type - COLO, VD, VG, SP, IGW, SUBNET, GW"
-  type        = string
-}
 variable "aside_fcr_uuid" {
   description = "Equinix-assigned Fabric Cloud Router identifier"
   type        = string
@@ -171,7 +166,6 @@ module "cloud_router_virtual_device_connection" {
   purchase_order_number = var.purchase_order_number
 
   #Aside
-  aside_ap_type         = var.aside_ap_type
   aside_fcr_uuid        = var.aside_fcr_uuid
 
   #Zside

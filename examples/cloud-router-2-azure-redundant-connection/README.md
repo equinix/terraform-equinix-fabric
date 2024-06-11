@@ -54,7 +54,6 @@ purchase_order_number           = "1-323292"
 connection_type                 = "IP_VC"
 bandwidth                       = 50
 secondary_bandwidth             = 50
-aside_ap_type                   = "CLOUD_ROUTER"
 aside_fcr_uuid                  = "<Primary Fabric Cloud router UUID>"
 aside_sec_fcr_uuid              = "<Secondary Fabric Cloud router UUID>"
 zside_ap_type                   = "SP"
@@ -68,6 +67,7 @@ azure_client_id                 = "<Azure Client Id>"
 azure_client_secret             = "<Azure Client Secret Value>"
 azure_tenant_id                 = "<Azure Tenant Id>"
 azure_subscription_id           = "<Azure Subscription Id>"
+azure_resource_name             = "Azure Test"
 azure_location                  = "West US 2"
 azure_service_key_name          = "Test_Azure_Key"
 azure_service_provider_name     = "<Service Provider Name>"
@@ -99,10 +99,12 @@ variables.tf:
 variable "equinix_client_id" {
   description = "Equinix client ID (consumer key), obtained after registering app in the developer platform"
   type        = string
+  sensitive   = true
 }
 variable "equinix_client_secret" {
   description = "Equinix client secret ID (consumer secret), obtained after registering app in the developer platform"
   type        = string
+  sensitive   = true
 }
 variable "connection_name" {
   description = "Connection name. An alpha-numeric 24 characters string which can include only hyphens and underscores"
@@ -130,11 +132,6 @@ variable "purchase_order_number" {
   description = "Purchase order number"
   type        = string
   default     = ""
-}
-
-variable "aside_ap_type" {
-  description = "Access point type - COLO, VD, VG, SP, IGW, SUBNET, GW"
-  type        = string
 }
 variable "aside_fcr_uuid" {
   description = "Equinix-assigned Fabric Cloud Router identifier"
@@ -182,18 +179,22 @@ variable "secondary_redundancy" {
 variable "azure_client_id" {
   description = "Azure Client id"
   type        = string
+  sensitive   = true
 }
 variable "azure_client_secret" {
   description = "Azure Secret value"
   type        = string
+  sensitive   = true
 }
 variable "azure_tenant_id" {
   description = "Azure Tenant id"
   type        = string
+  sensitive   = true
 }
 variable "azure_subscription_id" {
   description = "Azure Subscription id"
   type        = string
+  sensitive   = true
 }
 variable "azure_resource_name" {
   description = "The name of Azure Resource"
@@ -234,10 +235,16 @@ variable "azure_environment" {
 outputs.tf:
 ```hcl
 
-output "module_output" {
+output "azurerm_resource_group_id" {
+  value = azurerm_resource_group.fcr2azure.id
+}
+output "azurerm_express_route_circuit" {
+  value = azurerm_express_route_circuit.fcr2azure.id
+}
+output "azure_primary_connection_id" {
   value = module.cloud_router_azure_redundant_connection.primary_connection_id
 }
-output "secondary_connection_result" {
+output "azure_secondary_connection_id" {
   value = var.secondary_connection_name != "" ? module.cloud_router_azure_redundant_connection.secondary_connection_id : null
 }
 ```
@@ -289,7 +296,6 @@ module "cloud_router_azure_redundant_connection" {
   purchase_order_number = var.purchase_order_number
 
   #Aside
-  aside_ap_type  = var.aside_ap_type
   aside_fcr_uuid = var.aside_fcr_uuid
 
   #Zside

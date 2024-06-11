@@ -51,7 +51,6 @@ notifications_type              = "ALL"
 notifications_emails            = ["example@equinix.com","test1@equinix.com"]
 purchase_order_number           = "1-323292"
 bandwidth                       = 50
-aside_ap_type                   = "CLOUD_ROUTER"
 aside_fcr_uuid                  = "<Primary Fabric Cloud router UUID>"
 zside_ap_type                   = "NETWORK"
 zside_network_uuid              = "<Network UUID>"
@@ -75,10 +74,12 @@ variables.tf:
 variable "equinix_client_id" {
   description = "Equinix client ID (consumer key), obtained after registering app in the developer platform"
   type        = string
+  sensitive   = true
 }
 variable "equinix_client_secret" {
   description = "Equinix client secret ID (consumer secret), obtained after registering app in the developer platform"
   type        = string
+  sensitive   = true
 }
 variable "connection_name" {
   description = "Connection name. An alpha-numeric 24 characters string which can include only hyphens and underscores"
@@ -107,10 +108,6 @@ variable "purchase_order_number" {
   type        = string
   default     = ""
 }
-variable "aside_ap_type" {
-  description = "Access point type - COLO, VD, VG, SP, IGW, SUBNET, GW"
-  type        = string
-}
 variable "aside_fcr_uuid" {
   description = "Equinix-assigned Fabric Cloud Router identifier"
   type        = string
@@ -128,7 +125,7 @@ variable "zside_network_uuid" {
 outputs.tf:
 ```hcl
 
-output "module_output" {
+output "wan_connection_id" {
   value = module.cloud_router_wan_connection.primary_connection_id
 }
 ```
@@ -151,7 +148,6 @@ module "cloud_router_wan_connection" {
   purchase_order_number = var.purchase_order_number
 
   #Aside
-  aside_ap_type  = var.aside_ap_type
   aside_fcr_uuid = var.aside_fcr_uuid
 
   #Zside
