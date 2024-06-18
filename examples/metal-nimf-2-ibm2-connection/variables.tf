@@ -103,3 +103,36 @@ variable "additional_info" {
   type        = list(object({ key = string, value = string }))
   default     = []
 }
+variable "ibm_cloud_api_key" {
+  description = "The IBM Cloud platform API key"
+  type        = string
+  sensitive   = true
+}
+variable "ibm_classic_username" {
+  description = "The IBM Cloud Classic Infrastructure user name"
+  type        = string
+  sensitive   = true
+}
+variable "ibm_classic_api_key" {
+  description = "The IBM Cloud Classic Infrastructure API key"
+  type        = string
+  sensitive   = true
+}
+variable "ibm_resource_group_name" {
+  description = "The IBM Resource Group Name"
+  type        = string
+}
+variable "ibm_gateway_action" {
+  description = "IBM Approve/reject a pending change request"
+  type        = string
+}
+variable "ibm_gateway_global" {
+  description = "Required-Gateway with global routing as true can connect networks outside your associated region"
+  type        = bool
+  default     = true
+}
+variable "ibm_gateway_metered" {
+  description = "Metered billing option. If set true gateway usage is billed per GB"
+  type        = bool
+  default     = true
+}

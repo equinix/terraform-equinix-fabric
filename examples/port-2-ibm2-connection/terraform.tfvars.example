@@ -17,3 +17,9 @@ zside_location              = "SV"
 zside_sp_name               = "IBM Cloud Direct Link 2"
 zside_seller_region         = "San Jose 2"
 additional_info             = [{ key = "ASN", value = "14353" }]
+
+ibm_cloud_api_key           = "<IBM_Cloud_API_Key",
+ibm_classic_username        = "<IBM_Classic_Username>"
+ibm_classic_api_key         = "<IBM_Classic_API_Key"
+ibm_resource_group_name     = "Equinix"
+ibm_gateway_action          = "create_gateway_approve"

@@ -5,5 +5,9 @@ terraform {
       source  = "equinix/equinix"
       version = ">= 1.20.0"
     }
+    ibm = {
+      source = "IBM-Cloud/ibm"
+      version = ">= 1.12.0"
+    }
   }
 }
