@@ -1,7 +1,7 @@
-# Fabric Virtual Device to Equinix Internet Exchange Service Profile Connection
+# Fabric Virtual Device to Equinix Internet Access Service Profile Connection
 
 This example shows how to leverage the [Fabric Virtual Device Connection Module](../../modules/virtual-device-connection/README.md)
-to create a Fabric Connection from a Fabric Virtual Device to Equinix Internet Exchange Service Profile.
+to create a Fabric Connection from a Fabric Virtual Device to Equinix Internet Access Service Profile.
 
 It leverages the Equinix Terraform Provider and the Fabric Virtual Device Connection
 Module to setup the connection based on the parameters you have provided to this example; or based on the pattern
