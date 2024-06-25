@@ -1,9 +1,9 @@
 # Fabric Routing Protocols Addition to Fabric Connection
 
-This example shows how to leverage the [Fabric Routing Protocols Module](../../modules/routing-protocols/README.md)
+This example shows how to leverage the [Fabric Cloud Router Routing Protocols Module](../../modules/cloud-router-routing-protocols/README.md)
 to create Routing Protocols for a Fabric Connection.
 
-It leverages the Equinix Terraform Provider, and the Fabric Routing Protocols
+It leverages the Equinix Terraform Provider, and the Fabric Cloud Router Routing Protocols
 Module to setup the connection based on the parameters you have provided to this example; or based on the pattern
 you see used in this example it will allow you to create a more specific use case for your own needs.
 
@@ -30,7 +30,7 @@ you should clone the github repository for this module and run terraform within 
 
 ```bash
 git clone https://github.com/equinix/terraform-equinix-fabric.git
-cd terraform-equinix-fabric/examples/routing-protocols
+cd terraform-equinix-fabric/examples/cloud-router-routing-protocols
 terraform init
 terraform apply
 ```
@@ -153,7 +153,7 @@ provider "equinix" {
 }
 
 module "routing_protocols" {
-  source = "equinix/fabric/equinix//modules/routing-protocols"
+  source = "equinix/fabric/equinix//modules/cloud-router-routing-protocols"
 
   connection_uuid = var.connection_uuid
 

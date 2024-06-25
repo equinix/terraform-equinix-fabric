@@ -4,7 +4,7 @@ provider "equinix" {
 }
 
 module "routing_protocols" {
-  source = "../../modules/routing-protocols"
+  source = "../../modules/cloud-router-routing-protocols"
 
   connection_uuid = var.connection_uuid
 
