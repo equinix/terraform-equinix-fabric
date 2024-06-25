@@ -2,6 +2,7 @@ provider "equinix" {
   client_id     = var.equinix_client_id
   client_secret = var.equinix_client_secret
 }
+
 provider "ibm" {
   ibmcloud_api_key      = var.ibm_cloud_api_key
   iaas_classic_username = var.ibm_classic_username
