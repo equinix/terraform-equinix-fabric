@@ -4,7 +4,7 @@ provider "equinix" {
 }
 
 module "cloud_router_aws_connection" {
-  source = "equinix/fabric/equinix//modules/cloud-router-connection"
+  source = "../../../modules/cloud-router-connection"
 
   connection_name       = var.connection_name
   connection_type       = var.connection_type

@@ -3,7 +3,7 @@ provider "equinix" {
   client_secret = var.equinix_client_secret
 }
 module "create_port_2_azure_connection" {
-  source = "equinix/fabric/equinix//modules/port-connection"
+  source = "../../../modules/port-connection"
 
   connection_name       = var.connection_name
   connection_type       = var.connection_type

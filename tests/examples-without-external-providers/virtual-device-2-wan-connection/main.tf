@@ -4,7 +4,7 @@ provider "equinix" {
 }
 
 module "create_virtual_device_2_wan_connection" {
-  source = "equinix/fabric/equinix//modules/virtual-device-connection"
+  source = "../../../modules/virtual-device-connection"
 
   connection_name       = var.connection_name
   connection_type       = var.connection_type
