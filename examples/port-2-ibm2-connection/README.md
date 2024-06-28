@@ -61,6 +61,12 @@ zside_location              = "SV"
 zside_sp_name               = "IBM Cloud Direct Link 2"
 zside_seller_region         = "San Jose 2"
 additional_info             = [{ key = "ASN", value = "14353" }]
+
+ibm_cloud_api_key           = "<IBM_Cloud_API_Key",
+ibm_classic_username        = "<IBM_Classic_Username>"
+ibm_classic_api_key         = "<IBM_Classic_API_Key"
+ibm_resource_group_name     = "Equinix"
+ibm_gateway_action          = "create_gateway_approve"
 ```
 versions.tf:
 ```hcl
@@ -70,7 +76,11 @@ terraform {
   required_providers {
     equinix = {
       source  = "equinix/equinix"
-      version = ">= 1.20.0"
+      version = ">= 1.38.1"
+    }
+    ibm = {
+      source = "IBM-Cloud/ibm"
+      version = ">= 1.12.0"
     }
   }
 }
@@ -162,12 +172,48 @@ variable "additional_info" {
   type        = list(object({ key = string, value = string }))
   default     = []
 }
+variable "ibm_cloud_api_key" {
+  description = "The IBM Cloud platform API key"
+  type        = string
+  sensitive   = true
+}
+variable "ibm_classic_username" {
+  description = "The IBM Cloud Classic Infrastructure user name"
+  type        = string
+  sensitive   = true
+}
+variable "ibm_classic_api_key" {
+  description = "The IBM Cloud Classic Infrastructure API key"
+  type        = string
+  sensitive   = true
+}
+variable "ibm_resource_group_name" {
+  description = "The IBM Resource Group Name"
+  type        = string
+}
+variable "ibm_gateway_action" {
+  description = "IBM Approve/reject a pending change request"
+  type        = string
+}
+variable "ibm_gateway_global" {
+  description = "Required-Gateway with global routing as true can connect networks outside your associated region"
+  type        = bool
+  default     = true
+}
+variable "ibm_gateway_metered" {
+  description = "Metered billing option. If set true gateway usage is billed per GB"
+  type        = bool
+  default     = true
+}
 ```
 outputs.tf:
 ```hcl
 
 output "ibm2_connection_id" {
   value = module.create_port_2_ibm2_connection.primary_connection_id
+}
+output "IBM_Gateway_Action_Id" {
+  value = ibm_dl_gateway_action.test_dl_gateway_action.id
 }
 ```
 main.tf:
@@ -176,6 +222,12 @@ main.tf:
 provider "equinix" {
   client_id     = var.equinix_client_id
   client_secret = var.equinix_client_secret
+}
+
+provider "ibm" {
+  ibmcloud_api_key      = var.ibm_cloud_api_key
+  iaas_classic_username = var.ibm_classic_username
+  iaas_classic_api_key  = var.ibm_classic_api_key
 }
 
 module "create_port_2_ibm2_connection" {
@@ -202,6 +254,27 @@ module "create_port_2_ibm2_connection" {
   zside_seller_region         = var.zside_seller_region
   zside_sp_name               = var.zside_sp_name
   additional_info             = var.additional_info
+}
+
+resource "time_sleep" "wait_dl_connection" {
+  create_duration = "1m"
+}
+
+data "ibm_dl_gateway" "test_ibm_dl_gateway" {
+  name        = var.connection_name
+  depends_on  = [time_sleep.wait_dl_connection]
+}
+
+data "ibm_resource_group" "rg" {
+  name = var.ibm_resource_group_name
+}
+
+resource "ibm_dl_gateway_action" "test_dl_gateway_action" {
+  gateway         = data.ibm_dl_gateway.test_ibm_dl_gateway.id
+  action          = var.ibm_gateway_action
+  global          = var.ibm_gateway_global
+  metered         = var.ibm_gateway_metered
+  resource_group  = data.ibm_resource_group.rg.id
 }
 ```
 <!-- End Example Usage -->
