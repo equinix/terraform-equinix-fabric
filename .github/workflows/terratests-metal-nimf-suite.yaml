@@ -40,20 +40,34 @@ jobs:
           terraform_version: ${{ matrix.terraform }}
           terraform_wrapper: false
 
+      - name: Install jq
+        run: |
+            sudo apt-get install jq
+
       - name: Set Connection Name variable
         run: echo "TF_VAR_connection_name=nimf_$(date +'%Y%m%d%H%M%S')" >> $GITHUB_ENV
 
       - name: Setup Variables Files
         run: |
+          TIMESTAMP=$(date +"%m%d%M%S")
+          SUFFIX="_DIGP" 
           echo $TEST_DATA_PROD_METAL_NIMF_2_AZURE_CONNECTION >> "./examples/metal-nimf-2-azure-connection/terraform.tfvars.json"
+          jq --arg timestamp "$TIMESTAMP" '.connection_name = ($timestamp + "_" + .connection_name)' ./examples/metal-nimf-2-azure-connection/terraform.tfvars.json > ./examples/metal-nimf-2-azure-connection/tmp.test.json && mv ./examples/metal-nimf-2-azure-connection/tmp.test.json ./examples/metal-nimf-2-azure-connection/terraform.tfvars.json
           echo $TEST_DATA_PROD_METAL_NIMF_2_AWS_CONNECTION >> "./examples/metal-nimf-2-aws-connection/terraform.tfvars.json"
+          jq --arg timestamp "$TIMESTAMP" '.connection_name = ($timestamp + "_" + .connection_name)' ./examples/metal-nimf-2-aws-connection/terraform.tfvars.json > ./examples/metal-nimf-2-aws-connection/tmp.test.json && mv ./examples/metal-nimf-2-aws-connection/tmp.test.json ./examples/metal-nimf-2-aws-connection/terraform.tfvars.json
           echo $TEST_DATA_PROD_METAL_NIMF_2_ORACLE_CONNECTION >> "./examples/metal-nimf-2-oracle-connection/terraform.tfvars.json"
+          jq --arg timestamp "$TIMESTAMP" '.connection_name = ($timestamp + "_" + .connection_name)' ./examples/metal-nimf-2-oracle-connection/terraform.tfvars.json > ./examples/metal-nimf-2-oracle-connection/tmp.test.json && mv ./examples/metal-nimf-2-oracle-connection/tmp.test.json ./examples/metal-nimf-2-oracle-connection/terraform.tfvars.json
           echo $TEST_DATA_PROD_CLOUD_ROUTER_2_METAL_NIMF_CONNECTION >> "./examples/cloud-router-2-metal-nimf-connection/terraform.tfvars.json"
+          jq --arg timestamp "$TIMESTAMP" '.connection_name = ($timestamp + "_" + .connection_name)' ./examples/cloud-router-2-metal-nimf-connection/terraform.tfvars.json > ./examples/cloud-router-2-metal-nimf-connection/tmp.test.json && mv ./examples/cloud-router-2-metal-nimf-connection/tmp.test.json ./examples/cloud-router-2-metal-nimf-connection/terraform.tfvars.json
           echo $TEST_DATA_PROD_METAL_NIMF_2_PORT_CONNECTION >> "./examples/metal-nimf-2-port-connection/terraform.tfvars.json"
+          jq --arg timestamp "$TIMESTAMP" '.connection_name = ($timestamp + "_" + .connection_name)' ./examples/metal-nimf-2-port-connection/terraform.tfvars.json > ./examples/metal-nimf-2-port-connection/tmp.test.json && mv ./examples/metal-nimf-2-port-connection/tmp.test.json ./examples/metal-nimf-2-port-connection/terraform.tfvars.json
           echo $TEST_DATA_PROD_METAL_NIMF_2_IBM2_CONNECTION >> "./examples/metal-nimf-2-ibm2-connection/terraform.tfvars.json"
+          jq --arg timestamp "$TIMESTAMP$SUFFIX" '.connection_name += "" + $timestamp' ./examples/metal-nimf-2-ibm2-connection/terraform.tfvars.json > ./examples/metal-nimf-2-ibm2-connection/tmp.test.json && mv ./examples/metal-nimf-2-ibm2-connection/tmp.test.json ./examples/metal-nimf-2-ibm2-connection/terraform.tfvars.json
           echo $TEST_DATA_PROD_METAL_NIMF_2_SERVICE_PROFILE_CONNECTION >> "./examples/metal-nimf-2-service-profile-connection/terraform.tfvars.json"
+          jq --arg timestamp "$TIMESTAMP" '.connection_name = ($timestamp + "_" + .connection_name)' ./examples/metal-nimf-2-service-profile-connection/terraform.tfvars.json > ./examples/metal-nimf-2-service-profile-connection/tmp.test.json && mv ./examples/metal-nimf-2-service-profile-connection/tmp.test.json ./examples/metal-nimf-2-service-profile-connection/terraform.tfvars.json
           echo $GOOGLE_SERVICE_KEYS >> "./examples/metal-nimf-2-google-connection/keys.json"
           echo $TEST_DATA_PROD_METAL_NIMF_2_GOOGLE_CONNECTION >> "./examples/metal-nimf-2-google-connection/terraform.tfvars.json"
+          jq --arg timestamp "$TIMESTAMP" '.connection_name = ($timestamp + "_" + .connection_name)' ./examples/metal-nimf-2-google-connection/terraform.tfvars.json > ./examples/metal-nimf-2-google-connection/tmp.test.json && mv ./examples/metal-nimf-2-google-connection/tmp.test.json ./examples/metal-nimf-2-google-connection/terraform.tfvars.json
 
       - name: Run Go Tests
         run:
