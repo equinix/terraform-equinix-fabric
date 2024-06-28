@@ -262,13 +262,16 @@ module "metal_2_ibm2_connection" {
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.5.4 |
-| <a name="requirement_equinix"></a> [equinix](#requirement\_equinix) | >= 1.34.0 |
+| <a name="requirement_equinix"></a> [equinix](#requirement\_equinix) | >= 1.38.1 |
+| <a name="requirement_ibm"></a> [ibm](#requirement\_ibm) | >= 1.12.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_equinix"></a> [equinix](#provider\_equinix) | >= 1.34.0 |
+| <a name="provider_equinix"></a> [equinix](#provider\_equinix) | >= 1.38.1 |
+| <a name="provider_ibm"></a> [ibm](#provider\_ibm) | >= 1.12.0 |
+| <a name="provider_time"></a> [time](#provider\_time) | n/a |
 
 ## Modules
 
@@ -282,6 +285,10 @@ module "metal_2_ibm2_connection" {
 |------|------|
 | [equinix_metal_connection.metal-connection](https://registry.terraform.io/providers/equinix/equinix/latest/docs/resources/metal_connection) | resource |
 | [equinix_metal_vlan.vlan-server](https://registry.terraform.io/providers/equinix/equinix/latest/docs/resources/metal_vlan) | resource |
+| [ibm_dl_gateway_action.test_dl_gateway_action](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/dl_gateway_action) | resource |
+| [time_sleep.wait_dl_connection](https://registry.terraform.io/providers/hashicorp/time/latest/docs/resources/sleep) | resource |
+| [ibm_dl_gateway.test_ibm_dl_gateway](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/data-sources/dl_gateway) | data source |
+| [ibm_resource_group.rg](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/data-sources/resource_group) | data source |
 
 ## Inputs
 
@@ -292,6 +299,11 @@ module "metal_2_ibm2_connection" {
 | <a name="input_connection_type"></a> [connection\_type](#input\_connection\_type) | Defines the connection type like VG\_VC, EVPL\_VC, EPL\_VC, EC\_VC, IP\_VC, ACCESS\_EPL\_VC | `string` | n/a | yes |
 | <a name="input_equinix_client_id"></a> [equinix\_client\_id](#input\_equinix\_client\_id) | Equinix client ID (consumer key), obtained after registering app in the developer platform | `string` | n/a | yes |
 | <a name="input_equinix_client_secret"></a> [equinix\_client\_secret](#input\_equinix\_client\_secret) | Equinix client secret ID (consumer secret), obtained after registering app in the developer platform | `string` | n/a | yes |
+| <a name="input_ibm_classic_api_key"></a> [ibm\_classic\_api\_key](#input\_ibm\_classic\_api\_key) | The IBM Cloud Classic Infrastructure API key | `string` | n/a | yes |
+| <a name="input_ibm_classic_username"></a> [ibm\_classic\_username](#input\_ibm\_classic\_username) | The IBM Cloud Classic Infrastructure user name | `string` | n/a | yes |
+| <a name="input_ibm_cloud_api_key"></a> [ibm\_cloud\_api\_key](#input\_ibm\_cloud\_api\_key) | The IBM Cloud platform API key | `string` | n/a | yes |
+| <a name="input_ibm_gateway_action"></a> [ibm\_gateway\_action](#input\_ibm\_gateway\_action) | IBM Approve/reject a pending change request | `string` | n/a | yes |
+| <a name="input_ibm_resource_group_name"></a> [ibm\_resource\_group\_name](#input\_ibm\_resource\_group\_name) | The IBM Resource Group Name | `string` | n/a | yes |
 | <a name="input_metal_auth_token"></a> [metal\_auth\_token](#input\_metal\_auth\_token) | Equinix Metal Authentication API Token | `string` | n/a | yes |
 | <a name="input_metal_connection_metro"></a> [metal\_connection\_metro](#input\_metal\_connection\_metro) | Metro where the connection will be created | `string` | n/a | yes |
 | <a name="input_metal_connection_name"></a> [metal\_connection\_name](#input\_metal\_connection\_name) | Metal Connection Name | `string` | n/a | yes |
@@ -309,6 +321,8 @@ module "metal_2_ibm2_connection" {
 | <a name="input_zside_location"></a> [zside\_location](#input\_zside\_location) | Access point metro code | `string` | n/a | yes |
 | <a name="input_zside_seller_region"></a> [zside\_seller\_region](#input\_zside\_seller\_region) | Access point seller region | `string` | n/a | yes |
 | <a name="input_additional_info"></a> [additional\_info](#input\_additional\_info) | Additional info parameters. It's a list of maps containing 'key' and 'value' keys with their corresponding values. | `list(object({ key = string, value = string }))` | `[]` | no |
+| <a name="input_ibm_gateway_global"></a> [ibm\_gateway\_global](#input\_ibm\_gateway\_global) | Required-Gateway with global routing as true can connect networks outside your associated region | `bool` | `true` | no |
+| <a name="input_ibm_gateway_metered"></a> [ibm\_gateway\_metered](#input\_ibm\_gateway\_metered) | Metered billing option. If set true gateway usage is billed per GB | `bool` | `true` | no |
 | <a name="input_notifications_type"></a> [notifications\_type](#input\_notifications\_type) | Notification Type - ALL is the only type currently supported | `string` | `"ALL"` | no |
 | <a name="input_purchase_order_number"></a> [purchase\_order\_number](#input\_purchase\_order\_number) | Purchase order number | `string` | `""` | no |
 
@@ -316,6 +330,7 @@ module "metal_2_ibm2_connection" {
 
 | Name | Description |
 |------|-------------|
+| <a name="output_IBM_Gateway_Action_Id"></a> [IBM\_Gateway\_Action\_Id](#output\_IBM\_Gateway\_Action\_Id) | n/a |
 | <a name="output_Metal_IBM2_Connection_Id"></a> [Metal\_IBM2\_Connection\_Id](#output\_Metal\_IBM2\_Connection\_Id) | n/a |
 | <a name="output_metal_connection_id"></a> [metal\_connection\_id](#output\_metal\_connection\_id) | n/a |
 | <a name="output_metal_vlan_id"></a> [metal\_vlan\_id](#output\_metal\_vlan\_id) | n/a |

@@ -14,7 +14,7 @@ No providers.
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_create_virtual_device_2_port_connection"></a> [create\_virtual\_device\_2\_port\_connection](#module\_create\_virtual\_device\_2\_port\_connection) | equinix/fabric/equinix//modules/virtual-device-connection | n/a |
+| <a name="module_create_virtual_device_2_port_connection"></a> [create\_virtual\_device\_2\_port\_connection](#module\_create\_virtual\_device\_2\_port\_connection) | ../../../modules/virtual-device-connection | n/a |
 
 ## Resources
 

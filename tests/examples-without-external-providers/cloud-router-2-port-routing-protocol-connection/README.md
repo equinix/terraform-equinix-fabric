@@ -14,8 +14,8 @@ No providers.
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_cloud_router_port_connection"></a> [cloud\_router\_port\_connection](#module\_cloud\_router\_port\_connection) | equinix/fabric/equinix//modules/cloud-router-connection | n/a |
-| <a name="module_routing_protocols"></a> [routing\_protocols](#module\_routing\_protocols) | equinix/fabric/equinix//modules/routing-protocols | n/a |
+| <a name="module_cloud_router_port_connection"></a> [cloud\_router\_port\_connection](#module\_cloud\_router\_port\_connection) | ../../../modules/cloud-router-connection | n/a |
+| <a name="module_routing_protocols"></a> [routing\_protocols](#module\_routing\_protocols) | ../../../modules/routing-protocols | n/a |
 
 ## Resources
 
