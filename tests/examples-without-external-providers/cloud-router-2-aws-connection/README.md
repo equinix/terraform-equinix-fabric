@@ -14,7 +14,7 @@ No providers.
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_cloud_router_aws_connection"></a> [cloud\_router\_aws\_connection](#module\_cloud\_router\_aws\_connection) | equinix/fabric/equinix//modules/cloud-router-connection | n/a |
+| <a name="module_cloud_router_aws_connection"></a> [cloud\_router\_aws\_connection](#module\_cloud\_router\_aws\_connection) | ../../../modules/cloud-router-connection | n/a |
 
 ## Resources
 

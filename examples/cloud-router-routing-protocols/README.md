@@ -188,7 +188,7 @@ No providers.
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_routing_protocols"></a> [routing\_protocols](#module\_routing\_protocols) | ../../modules/routing-protocols | n/a |
+| <a name="module_routing_protocols"></a> [routing\_protocols](#module\_routing\_protocols) | ../../modules/cloud-router-routing-protocols | n/a |
 
 ## Resources
 

@@ -14,7 +14,7 @@ No providers.
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_create_port_2_wan_connection"></a> [create\_port\_2\_wan\_connection](#module\_create\_port\_2\_wan\_connection) | equinix/fabric/equinix//modules/port-connection | n/a |
+| <a name="module_create_port_2_wan_connection"></a> [create\_port\_2\_wan\_connection](#module\_create\_port\_2\_wan\_connection) | ../../../modules/port-connection | n/a |
 
 ## Resources
 
