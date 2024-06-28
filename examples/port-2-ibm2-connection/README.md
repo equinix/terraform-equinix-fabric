@@ -211,11 +211,15 @@ module "create_port_2_ibm2_connection" {
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.5.4 |
-| <a name="requirement_equinix"></a> [equinix](#requirement\_equinix) | >= 1.20.0 |
+| <a name="requirement_equinix"></a> [equinix](#requirement\_equinix) | >= 1.38.1 |
+| <a name="requirement_ibm"></a> [ibm](#requirement\_ibm) | >= 1.12.0 |
 
 ## Providers
 
-No providers.
+| Name | Version |
+|------|---------|
+| <a name="provider_ibm"></a> [ibm](#provider\_ibm) | >= 1.12.0 |
+| <a name="provider_time"></a> [time](#provider\_time) | n/a |
 
 ## Modules
 
@@ -225,7 +229,12 @@ No providers.
 
 ## Resources
 
-No resources.
+| Name | Type |
+|------|------|
+| [ibm_dl_gateway_action.test_dl_gateway_action](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/dl_gateway_action) | resource |
+| [time_sleep.wait_dl_connection](https://registry.terraform.io/providers/hashicorp/time/latest/docs/resources/sleep) | resource |
+| [ibm_dl_gateway.test_ibm_dl_gateway](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/data-sources/dl_gateway) | data source |
+| [ibm_resource_group.rg](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/data-sources/resource_group) | data source |
 
 ## Inputs
 
@@ -238,6 +247,11 @@ No resources.
 | <a name="input_connection_type"></a> [connection\_type](#input\_connection\_type) | Defines the connection type like VG\_VC, EVPL\_VC, EPL\_VC, EC\_VC, IP\_VC, ACCESS\_EPL\_VC | `string` | n/a | yes |
 | <a name="input_equinix_client_id"></a> [equinix\_client\_id](#input\_equinix\_client\_id) | Equinix client ID (consumer key), obtained after registering app in the developer platform | `string` | n/a | yes |
 | <a name="input_equinix_client_secret"></a> [equinix\_client\_secret](#input\_equinix\_client\_secret) | Equinix client secret ID (consumer secret), obtained after registering app in the developer platform | `string` | n/a | yes |
+| <a name="input_ibm_classic_api_key"></a> [ibm\_classic\_api\_key](#input\_ibm\_classic\_api\_key) | The IBM Cloud Classic Infrastructure API key | `string` | n/a | yes |
+| <a name="input_ibm_classic_username"></a> [ibm\_classic\_username](#input\_ibm\_classic\_username) | The IBM Cloud Classic Infrastructure user name | `string` | n/a | yes |
+| <a name="input_ibm_cloud_api_key"></a> [ibm\_cloud\_api\_key](#input\_ibm\_cloud\_api\_key) | The IBM Cloud platform API key | `string` | n/a | yes |
+| <a name="input_ibm_gateway_action"></a> [ibm\_gateway\_action](#input\_ibm\_gateway\_action) | IBM Approve/reject a pending change request | `string` | n/a | yes |
+| <a name="input_ibm_resource_group_name"></a> [ibm\_resource\_group\_name](#input\_ibm\_resource\_group\_name) | The IBM Resource Group Name | `string` | n/a | yes |
 | <a name="input_notifications_emails"></a> [notifications\_emails](#input\_notifications\_emails) | Array of contact emails | `list(string)` | n/a | yes |
 | <a name="input_zside_ap_authentication_key"></a> [zside\_ap\_authentication\_key](#input\_zside\_ap\_authentication\_key) | Authentication key for provider based connections | `string` | n/a | yes |
 | <a name="input_zside_ap_profile_type"></a> [zside\_ap\_profile\_type](#input\_zside\_ap\_profile\_type) | Service profile type - L2\_PROFILE, L3\_PROFILE, ECIA\_PROFILE, ECMC\_PROFILE | `string` | n/a | yes |
@@ -247,6 +261,8 @@ No resources.
 | <a name="input_zside_sp_name"></a> [zside\_sp\_name](#input\_zside\_sp\_name) | Equinix Service Profile Name | `string` | n/a | yes |
 | <a name="input_additional_info"></a> [additional\_info](#input\_additional\_info) | Additional info parameters. It's a list of maps containing 'key' and 'value' keys with their corresponding values. | `list(object({ key = string, value = string }))` | `[]` | no |
 | <a name="input_aside_vlan_inner_tag"></a> [aside\_vlan\_inner\_tag](#input\_aside\_vlan\_inner\_tag) | Vlan Inner Tag information, inner vlanCTag for QINQ connections | `string` | `""` | no |
+| <a name="input_ibm_gateway_global"></a> [ibm\_gateway\_global](#input\_ibm\_gateway\_global) | Required-Gateway with global routing as true can connect networks outside your associated region | `bool` | `true` | no |
+| <a name="input_ibm_gateway_metered"></a> [ibm\_gateway\_metered](#input\_ibm\_gateway\_metered) | Metered billing option. If set true gateway usage is billed per GB | `bool` | `true` | no |
 | <a name="input_notifications_type"></a> [notifications\_type](#input\_notifications\_type) | Notification Type - ALL is the only type currently supported | `string` | `"ALL"` | no |
 | <a name="input_project_id"></a> [project\_id](#input\_project\_id) | Subscriber-assigned project ID | `string` | `""` | no |
 | <a name="input_purchase_order_number"></a> [purchase\_order\_number](#input\_purchase\_order\_number) | Purchase order number | `string` | `""` | no |
@@ -255,5 +271,6 @@ No resources.
 
 | Name | Description |
 |------|-------------|
+| <a name="output_IBM_Gateway_Action_Id"></a> [IBM\_Gateway\_Action\_Id](#output\_IBM\_Gateway\_Action\_Id) | n/a |
 | <a name="output_ibm2_connection_id"></a> [ibm2\_connection\_id](#output\_ibm2\_connection\_id) | n/a |
 <!-- END_TF_DOCS -->
