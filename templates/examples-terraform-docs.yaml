@@ -1,0 +1,59 @@
+formatter: "markdown table"
+content: |-
+  ##Equinix Fabric Developer Documentation
+  
+  To see the documentation for the APIs that the Fabric Terraform Provider is built on
+  and to learn how to procure your own Client_Id and Client_Secret follow the link below:
+  [Equinix Fabric Developer Portal](https://developer.equinix.com/docs?page=/dev-docs/fabric/overview)
+  
+  ## Usage of Example as Terraform Module
+  
+  To provision this example directly as a usable module please use the *Provision Instructions* provided by Hashicorp
+  in the upper right of this page and be sure to include at a minimum the required variables.
+  
+  ## Usage of Example Locally or in Your Own Configuration
+  
+  *Note:* This example creates resources which cost money. Run 'terraform destroy' when you don't need these resources.
+  
+  To provision this example directly,
+  you should clone the github repository for this module and run terraform within this directory:
+  
+  ```bash
+  git clone https://github.com/equinix/terraform-equinix-fabric.git
+  cd terraform-equinix-fabric/examples/EXAMPLE_PATH
+  terraform init
+  terraform apply
+  ```
+  
+  #terraform.tfvars.example
+  ```hcl
+  {{ include "terraform.tfvars.example" }}
+  ```
+  
+  #versions.tf
+  ```hcl
+  {{ include "versions.tf" }}
+  ```
+  
+  #variables.tf
+   ```hcl
+  {{ include "variables.tf" }}
+  ```
+  
+   #outputs.tf
+  ```hcl
+  {{ include "outputs.tf" }}
+  ```
+  
+   #main.tf
+  ```hcl
+  {{ include "main.tf" }}
+  ```
+  
+  {{ .Content }}
+output:
+  file: "new-README.md"
+  template: |-
+    <!-- BEGIN_TF_DOCS-->
+    {{ .Content }}
+    <!-- END_OF_DOCS -->

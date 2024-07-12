@@ -20,14 +20,36 @@ jobs:
         with:
           ref: main
 
-      - name: Render terraform docs inside the main, modules, and examples README.md files and push changes back to PR branch
-        id: terraform-docs
+      - name: Render Terraform docs inside the README.md files of examples
+        id: terraform-docs-examples
         uses: terraform-docs/gh-actions@v1.2.0
         with:
-          find-dir: .
+          config-file: templates/example-terraform-docs.yaml
+          working-dir: examples
+          recursive: true
+          output-file: README.md
           args: --sort-by required
           indention: 2
           git-push: "false"
+
+      - name: Render Terraform docs inside the README.md files of modules
+        id: terraform-docs-modules
+        uses: terraform-docs/gh-actions@v1.2.0
+        with:
+          config-file: templates/modules-terraform-docs.yaml
+          working-dir: modules
+          recursive: true
+          output-file: README.md
+          args: --sort-by required
+          indention: 2
+          git-push: "false"
+
+      - name: Replace EXAMPLE_PATH placeholders inside the README.md files of examples
+        run: |
+          find examples -name "README.md" | while read -r file; do
+            dir_name=$(basename "$(dirname "$file")")
+            sed -i "" "s@EXAMPLE_PATH@$dir_name@g" "$file"
+          done
 
       # terraform-docs/gh-actions@v1.0.0 modifies .git files with owner root:root, and the following steps fail with
       # insufficient permission for adding an object to repository database .git/objects

@@ -1,0 +1,37 @@
+formatter: "markdown table"
+content: |-
+  ## Equinix Fabric Developer Documentation
+  
+  To see the documentation for the APIs that the Fabric Terraform Provider is built on
+  and to learn how to procure your own Client_Id and Client_Secret follow the link below:
+  [Equinix Fabric Developer Portal](https://developer.equinix.com/docs?page=/dev-docs/fabric/overview)
+  
+  ## Modules File Content 
+  
+  #versions.tf
+  ```hcl
+  {{ include "versions.tf" }}
+  ```
+  
+  #variables.tf
+   ```hcl
+  {{ include "variables.tf" }}
+  ```
+  
+   #outputs.tf
+  ```hcl
+  {{ include "outputs.tf" }}
+  ```
+  
+   #main.tf
+  ```hcl
+  {{ include "main.tf" }}
+  ```
+  
+  {{ .Content }}
+output:
+  file: "README.md"
+  template: |-
+    <!-- BEGIN_TF_DOCS-->
+    {{ .Content }}
+    <!-- END_OF_DOCS -->
