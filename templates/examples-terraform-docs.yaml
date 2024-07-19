@@ -1,6 +1,6 @@
 formatter: "markdown table"
 content: |-
-  ##Equinix Fabric Developer Documentation
+  ## Equinix Fabric Developer Documentation
   
   To see the documentation for the APIs that the Fabric Terraform Provider is built on
   and to learn how to procure your own Client_Id and Client_Secret follow the link below:
