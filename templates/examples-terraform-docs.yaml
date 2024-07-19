@@ -25,35 +25,35 @@ content: |-
   terraform apply
   ```
   
-  #terraform.tfvars.example
+  terraform.tfvars.example
   ```hcl
   {{ include "terraform.tfvars.example" }}
   ```
   
-  #versions.tf
+  versions.tf
   ```hcl
   {{ include "versions.tf" }}
   ```
   
-  #variables.tf
+  variables.tf
    ```hcl
   {{ include "variables.tf" }}
   ```
   
-   #outputs.tf
+  outputs.tf
   ```hcl
   {{ include "outputs.tf" }}
   ```
   
-   #main.tf
+  main.tf
   ```hcl
   {{ include "main.tf" }}
   ```
   
   {{ .Content }}
 output:
-  file: "new-README.md"
-  template: |-
-    <!-- BEGIN_TF_DOCS-->
-    {{ .Content }}
-    <!-- END_OF_DOCS -->
+  file: "README.md"
+  mode: "inject"
+  inject:
+    begin-comment: "BEGIN_TF_DOCS"
+    end-comment: "END_TF_DOCS"
