@@ -351,6 +351,340 @@ module "metal_2_oracle_connection" {
 <!-- End Example Usage -->
 
 <!-- BEGIN_TF_DOCS -->
+## Equinix Fabric Developer Documentation
+
+To see the documentation for the APIs that the Fabric Terraform Provider is built on
+and to learn how to procure your own Client_Id and Client_Secret follow the link below:
+[Equinix Fabric Developer Portal](https://developer.equinix.com/docs?page=/dev-docs/fabric/overview)
+
+## Usage of Example as Terraform Module
+
+To provision this example directly as a usable module please use the *Provision Instructions* provided by Hashicorp
+in the upper right of this page and be sure to include at a minimum the required variables.
+
+## Usage of Example Locally or in Your Own Configuration
+
+*Note:* This example creates resources which cost money. Run 'terraform destroy' when you don't need these resources.
+
+To provision this example directly,
+you should clone the github repository for this module and run terraform within this directory:
+
+```bash
+git clone https://github.com/equinix/terraform-equinix-fabric.git
+cd terraform-equinix-fabric/examples/metal-nimf-2-oracle-connection
+terraform init
+terraform apply
+```
+
+terraform.tfvars.example
+```hcl
+equinix_client_id      = "<MyEquinixClientId>"
+equinix_client_secret  = "<MyEquinixSecret>"
+metal_auth_token       = "<Metal_Auth_Token>"
+
+metal_connection_metro      = "sv"
+metal_project_id            = "<Metal_Project_ID>"
+metal_connection_name       = "Metal-NIMF-connection"
+metal_connection_redundancy = "primary"
+metal_connection_speed      = "50Mbps"
+metal_connection_type       = "shared_port_vlan"
+metal_contact_email         = "tfacc@example.com"
+
+connection_name             = "Metal_2_Oracle"
+connection_type             = "EVPL_VC"
+notifications_type          = "ALL"
+notifications_emails        = ["example@equinix.com"]
+bandwidth                   = 50
+purchase_order_number       = "1-323292"
+project_id                  = "<Project_ID>"
+zside_ap_type               = "SP"
+zside_ap_profile_type       = "L2_PROFILE"
+zside_location              = "SV"
+zside_fabric_sp_name        = "Oracle Cloud Infrastructure FastConnect"
+
+oracle_tenancy_ocid             = "<Oracle Tenancy OCID>"
+oracle_user_ocid                = "<Oracle User OCID>"
+oracle_private_key              = "<Oracle Private Key>"
+oracle_fingerprint              = "<Oracle Fingerprint>"
+oracle_region                   = "us-sanjose-1"
+oracle_compartment_id           = "<Oracle Compartment ID>",
+oracle_fastconnect_provider     = "Equinix"
+oracle_vc_display_name          = "Metal2Oracle"
+oracle_vc_type                  = "PRIVATE"
+oracle_bandwidth                = "1 Gbps"
+oracle_customer_bgp_peering_ip  = "10.1.0.50/30"
+oracle_bgp_peering_ip           = "10.1.0.49/30"
+oracle_customer_asn             = "123456"
+oracle_gateway_id               = "<Oracle Gateway ID>"
+```
+
+versions.tf
+```hcl
+terraform {
+  required_version = ">= 1.5.4"
+  required_providers {
+    equinix = {
+      source  = "equinix/equinix"
+      version = ">= 1.36.3"
+    }
+    oci = {
+      source = "oracle/oci"
+      version = "5.36.0"
+    }
+  }
+}
+```
+
+variables.tf
+ ```hcl
+variable "equinix_client_id" {
+  description = "Equinix client ID (consumer key), obtained after registering app in the developer platform"
+  type        = string
+  sensitive   = true
+}
+variable "equinix_client_secret" {
+  description = "Equinix client secret ID (consumer secret), obtained after registering app in the developer platform"
+  type        = string
+  sensitive   = true
+}
+variable "metal_auth_token" {
+  description = "Equinix Metal Authentication API Token"
+  type        = string
+  sensitive   = true
+}
+variable "metal_connection_metro" {
+  description = "Metro where the connection will be created"
+  type        = string
+}
+variable "metal_project_id" {
+  description = "Metal Project Name"
+  type        = string
+}
+variable "metal_connection_name" {
+  description = "Metal Connection Name"
+  type        = string
+}
+variable "metal_connection_redundancy" {
+  description = "Metal Connection redundancy - redundant or primary"
+  type        = string
+}
+variable "metal_connection_speed" {
+  description = "Metal Connection speed - one of 50Mbps, 200Mbps, 500Mbps, 1Gbps, 2Gbps, 5Gbps, 10Gbps"
+  type        = string
+}
+variable "metal_connection_type" {
+  description = "Metal Connection type - dedicated , shared or shared_port_vlan"
+  type        = string
+}
+variable "metal_contact_email" {
+  description = "Preferred email used for communication"
+  type        = string
+}
+variable "connection_name" {
+  description = "Connection name. An alpha-numeric 24 characters string which can include only hyphens and underscores"
+  type        = string
+}
+variable "connection_type" {
+  description = "Defines the connection type like VG_VC, EVPL_VC, EPL_VC, EC_VC, IP_VC, ACCESS_EPL_VC"
+  type        = string
+}
+variable "bandwidth" {
+  description = "Connection bandwidth in Mbps"
+  type        = number
+}
+variable "notifications_type" {
+  description = "Notification Type - ALL is the only type currently supported"
+  type        = string
+  default     = "ALL"
+}
+variable "notifications_emails" {
+  description = "Array of contact emails"
+  type        = list(string)
+}
+variable "purchase_order_number" {
+  description = "Purchase order number"
+  type        = string
+  default     = ""
+}
+variable "project_id" {
+  description = "Equinix Fabric Project Id"
+  type        = string
+}
+variable "zside_ap_type" {
+  description = "Access point type - COLO, VD, VG, SP, IGW, SUBNET, GW"
+  type        = string
+}
+variable "zside_ap_profile_type" {
+  description = "Service profile type - L2_PROFILE, L3_PROFILE, ECIA_PROFILE, ECMC_PROFILE"
+  type        = string
+}
+variable "zside_location" {
+  description = "Access point metro code"
+  type        = string
+}
+variable "zside_fabric_sp_name" {
+  description = "Equinix Service Profile Name"
+  type        = string
+}
+variable "oracle_tenancy_ocid" {
+  description = "Tenancy OCID"
+  type        = string
+  sensitive   = true
+}
+variable "oracle_user_ocid" {
+  description = "User OCID"
+  type        = string
+  sensitive   = true
+}
+variable "oracle_private_key" {
+  description = "Oracle Private Key"
+  type        = string
+}
+variable "oracle_fingerprint" {
+  description = "Fingerprint for the key pair being used"
+  type        = string
+  sensitive   = true
+}
+variable "oracle_region" {
+  description = "OCI region"
+  type        = string
+}
+variable "oracle_compartment_id" {
+  description = "The OCID of the compartment"
+  type        = string
+  sensitive   = true
+}
+variable "oracle_fastconnect_provider" {
+  description = "Fast Connect Provider Name"
+  type        = string
+}
+variable "oracle_vc_display_name" {
+  description = "OCI Virtual Circuit Name"
+  type        = string
+}
+variable "oracle_vc_type" {
+  description = "The type of IP addresses used in this virtual circuit - PRIVATE"
+  type        = string
+}
+variable "oracle_bandwidth" {
+  description = "The provisioned connection bandwidth"
+  type        = string
+}
+variable "oracle_customer_bgp_peering_ip" {
+  description = "The BGP IPv4 address for the router on the other end of the BGP session from Oracle"
+  type        = string
+}
+variable "oracle_bgp_peering_ip" {
+  description = "The BGP IPv6 address for the router on the other end of the BGP session from Oracle"
+  type        = string
+}
+variable "oracle_customer_asn" {
+  description = "Oracle BGP ASN"
+  type        = string
+}
+variable "oracle_gateway_id" {
+  description = "The OCID of the dynamic routing gateway (DRG) that virtual circuit uses"
+  type        = string
+}
+```
+
+outputs.tf
+```hcl
+output "metal_vlan_id" {
+  value = equinix_metal_vlan.vlan-server.id
+}
+output "metal_connection_id" {
+  value = equinix_metal_connection.metal-connection.id
+}
+output "metal_oracle_connection_id" {
+  value = module.metal_2_oracle_connection.primary_connection_id
+}
+```
+
+main.tf
+```hcl
+provider "equinix" {
+  client_id     = var.equinix_client_id
+  client_secret = var.equinix_client_secret
+  auth_token    = var.metal_auth_token
+}
+provider "oci" {
+  tenancy_ocid      = var.oracle_tenancy_ocid
+  user_ocid         = var.oracle_user_ocid
+  private_key       = var.oracle_private_key
+  fingerprint       = var.oracle_fingerprint
+  region            = var.oracle_region
+}
+
+resource "equinix_metal_vlan" "vlan-server" {
+  description = "${var.metal_connection_metro} VLAN Server 1 to Cloud"
+  metro       = var.metal_connection_metro
+  project_id  = var.metal_project_id
+}
+resource "equinix_metal_connection" "metal-connection" {
+  name          = var.metal_connection_name
+  redundancy    = var.metal_connection_redundancy
+  speed         = var.metal_connection_speed
+  type          = var.metal_connection_type
+  project_id    = var.metal_project_id
+  metro         = var.metal_connection_metro
+  vlans         = [equinix_metal_vlan.vlan-server.vxlan]
+  contact_email = var.metal_contact_email
+}
+
+data "oci_core_fast_connect_provider_services" "fc_provider_services" {
+  compartment_id = var.oracle_compartment_id
+}
+
+locals {
+  fc_provider_services_id = element(
+    data.oci_core_fast_connect_provider_services.fc_provider_services.fast_connect_provider_services,
+    index(
+      data.oci_core_fast_connect_provider_services.fc_provider_services.fast_connect_provider_services.*.provider_name,
+      var.oracle_fastconnect_provider
+    )
+  ).id
+}
+
+resource "oci_core_virtual_circuit" "test_virtual_circuit" {
+  display_name          = var.oracle_vc_display_name
+  compartment_id        = var.oracle_compartment_id
+  type                  = var.oracle_vc_type
+  bandwidth_shape_name  = var.oracle_bandwidth
+  cross_connect_mappings {
+    customer_bgp_peering_ip = var.oracle_customer_bgp_peering_ip
+    oracle_bgp_peering_ip   = var.oracle_bgp_peering_ip
+  }
+  customer_asn        = var.oracle_customer_asn
+  region              = var.oracle_region
+  provider_service_id = local.fc_provider_services_id
+  gateway_id          = var.oracle_gateway_id
+}
+
+module "metal_2_oracle_connection" {
+  source = "../../modules/metal-connection"
+
+  connection_name       = var.connection_name
+  connection_type       = var.connection_type
+  notifications_type    = var.notifications_type
+  notifications_emails  = var.notifications_emails
+  project_id            = var.project_id
+  bandwidth             = var.bandwidth
+  purchase_order_number = var.purchase_order_number
+
+  #A-side
+  aside_ap_authentication_key = equinix_metal_connection.metal-connection.authorization_code
+
+  #Z-side
+  zside_ap_type               = var.zside_ap_type
+  zside_ap_authentication_key = oci_core_virtual_circuit.test_virtual_circuit.id
+  zside_ap_profile_type       = var.zside_ap_profile_type
+  zside_location              = var.zside_location
+  zside_seller_region         = var.oracle_region
+  zside_fabric_sp_name        = var.zside_fabric_sp_name
+}
+```
+
 ## Requirements
 
 | Name | Version |
@@ -363,7 +697,7 @@ module "metal_2_oracle_connection" {
 
 | Name | Version |
 |------|---------|
-| <a name="provider_equinix"></a> [equinix](#provider\_equinix) | >= 1.36.3 |
+| <a name="provider_equinix"></a> [equinix](#provider\_equinix) | 2.2.0 |
 | <a name="provider_oci"></a> [oci](#provider\_oci) | 5.36.0 |
 
 ## Modules
@@ -399,6 +733,7 @@ module "metal_2_oracle_connection" {
 | <a name="input_metal_contact_email"></a> [metal\_contact\_email](#input\_metal\_contact\_email) | Preferred email used for communication | `string` | n/a | yes |
 | <a name="input_metal_project_id"></a> [metal\_project\_id](#input\_metal\_project\_id) | Metal Project Name | `string` | n/a | yes |
 | <a name="input_notifications_emails"></a> [notifications\_emails](#input\_notifications\_emails) | Array of contact emails | `list(string)` | n/a | yes |
+| <a name="input_notifications_type"></a> [notifications\_type](#input\_notifications\_type) | Notification Type - ALL is the only type currently supported | `string` | `"ALL"` | no |
 | <a name="input_oracle_bandwidth"></a> [oracle\_bandwidth](#input\_oracle\_bandwidth) | The provisioned connection bandwidth | `string` | n/a | yes |
 | <a name="input_oracle_bgp_peering_ip"></a> [oracle\_bgp\_peering\_ip](#input\_oracle\_bgp\_peering\_ip) | The BGP IPv6 address for the router on the other end of the BGP session from Oracle | `string` | n/a | yes |
 | <a name="input_oracle_compartment_id"></a> [oracle\_compartment\_id](#input\_oracle\_compartment\_id) | The OCID of the compartment | `string` | n/a | yes |
@@ -414,12 +749,11 @@ module "metal_2_oracle_connection" {
 | <a name="input_oracle_vc_display_name"></a> [oracle\_vc\_display\_name](#input\_oracle\_vc\_display\_name) | OCI Virtual Circuit Name | `string` | n/a | yes |
 | <a name="input_oracle_vc_type"></a> [oracle\_vc\_type](#input\_oracle\_vc\_type) | The type of IP addresses used in this virtual circuit - PRIVATE | `string` | n/a | yes |
 | <a name="input_project_id"></a> [project\_id](#input\_project\_id) | Equinix Fabric Project Id | `string` | n/a | yes |
+| <a name="input_purchase_order_number"></a> [purchase\_order\_number](#input\_purchase\_order\_number) | Purchase order number | `string` | `""` | no |
 | <a name="input_zside_ap_profile_type"></a> [zside\_ap\_profile\_type](#input\_zside\_ap\_profile\_type) | Service profile type - L2\_PROFILE, L3\_PROFILE, ECIA\_PROFILE, ECMC\_PROFILE | `string` | n/a | yes |
 | <a name="input_zside_ap_type"></a> [zside\_ap\_type](#input\_zside\_ap\_type) | Access point type - COLO, VD, VG, SP, IGW, SUBNET, GW | `string` | n/a | yes |
 | <a name="input_zside_fabric_sp_name"></a> [zside\_fabric\_sp\_name](#input\_zside\_fabric\_sp\_name) | Equinix Service Profile Name | `string` | n/a | yes |
 | <a name="input_zside_location"></a> [zside\_location](#input\_zside\_location) | Access point metro code | `string` | n/a | yes |
-| <a name="input_notifications_type"></a> [notifications\_type](#input\_notifications\_type) | Notification Type - ALL is the only type currently supported | `string` | `"ALL"` | no |
-| <a name="input_purchase_order_number"></a> [purchase\_order\_number](#input\_purchase\_order\_number) | Purchase order number | `string` | `""` | no |
 
 ## Outputs
 

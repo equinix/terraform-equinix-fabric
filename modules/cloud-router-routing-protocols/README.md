@@ -13,6 +13,127 @@ and to learn how to procure your own Client_Id and Client_Secret follow the link
 [Equinix Fabric Developer Portal](https://developer.equinix.com/docs?page=/dev-docs/fabric/overview)
 <!-- End Module Docs -->
 <!-- BEGIN_TF_DOCS -->
+## Equinix Fabric Developer Documentation
+
+To see the documentation for the APIs that the Fabric Terraform Provider is built on
+and to learn how to procure your own Client_Id and Client_Secret follow the link below:
+[Equinix Fabric Developer Portal](https://developer.equinix.com/docs?page=/dev-docs/fabric/overview)
+
+## Modules File Content 
+
+#versions.tf
+```hcl
+terraform {
+  required_version = ">= 1.5.4"
+  required_providers {
+    equinix = {
+      source  = "equinix/equinix"
+      version = ">= 1.20.0"
+    }
+  }
+}
+```
+
+#variables.tf
+ ```hcl
+variable "connection_uuid" {
+  description = "Equinix Connection UUID to Apply the Routing Protocols to"
+  type        = string
+}
+variable "direct_rp_name" {
+  description = "Name of the Direct Routing Protocol"
+  type        = string
+}
+variable "direct_equinix_ipv4_ip" {
+  description = "IPv4 Address for Direct Routing Protocol"
+  type        = string
+}
+variable "direct_equinix_ipv6_ip" {
+  description = "IPv6 Address for Direct Routing Protocol"
+  type        = string
+}
+
+
+variable "bgp_rp_name" {
+  description = "Name of the BGP Routing Protocol"
+  type        = string
+  default     = ""
+}
+variable "bgp_customer_peer_ipv4" {
+  description = "Customer Peering IPv4 Address for BGP Routing Protocol"
+  type        = string
+  default     = ""
+}
+variable "bgp_customer_peer_ipv6" {
+  description = "Customer Peering IPv6 Address for BGP Routing Protocol"
+  type        = string
+  default     = ""
+}
+variable "bgp_enabled_ipv4" {
+  description = "Boolean Enable Flag for IPv4 Peering on BGP Routing Protocol"
+  type        = bool
+  default     = true
+}
+variable "bgp_enabled_ipv6" {
+  description = "Boolean Enable Flag for IPv6 Peering on BGP Routing Protocol"
+  type        = bool
+  default     = true
+}
+variable "bgp_customer_asn" {
+  description = "Customer ASN for BGP Routing Protocol"
+  type        = string
+  default     = ""
+}
+```
+
+ #outputs.tf
+```hcl
+output "direct_routing_protocol_id" {
+  value = equinix_fabric_routing_protocol.direct.id
+}
+
+output "bgp_routing_protocol_id" {
+  value = var.bgp_rp_name != "" ? equinix_fabric_routing_protocol.bgp[0].id : null
+}
+```
+
+ #main.tf
+```hcl
+resource "equinix_fabric_routing_protocol" "direct" {
+  connection_uuid = var.connection_uuid
+  name            = var.direct_rp_name
+  type            = "DIRECT"
+  direct_ipv4 {
+    equinix_iface_ip = var.direct_equinix_ipv4_ip
+  }
+  direct_ipv6 {
+    equinix_iface_ip = var.direct_equinix_ipv6_ip
+  }
+}
+
+resource "equinix_fabric_routing_protocol" "bgp" {
+  count = var.bgp_rp_name != "" ? 1 : 0
+  depends_on = [
+    equinix_fabric_routing_protocol.direct
+  ]
+
+  connection_uuid = var.connection_uuid
+  name            = var.bgp_rp_name
+  type            = "BGP"
+
+  customer_asn = var.bgp_customer_asn
+
+  bgp_ipv4 {
+    enabled          = var.bgp_enabled_ipv4
+    customer_peer_ip = var.bgp_customer_peer_ipv4
+  }
+  bgp_ipv6 {
+    enabled          = var.bgp_enabled_ipv6
+    customer_peer_ip = var.bgp_customer_peer_ipv6
+  }
+}
+```
+
 ## Requirements
 
 | Name | Version |
@@ -41,16 +162,16 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_connection_uuid"></a> [connection\_uuid](#input\_connection\_uuid) | Equinix Connection UUID to Apply the Routing Protocols to | `string` | n/a | yes |
-| <a name="input_direct_equinix_ipv4_ip"></a> [direct\_equinix\_ipv4\_ip](#input\_direct\_equinix\_ipv4\_ip) | IPv4 Address for Direct Routing Protocol | `string` | n/a | yes |
-| <a name="input_direct_equinix_ipv6_ip"></a> [direct\_equinix\_ipv6\_ip](#input\_direct\_equinix\_ipv6\_ip) | IPv6 Address for Direct Routing Protocol | `string` | n/a | yes |
-| <a name="input_direct_rp_name"></a> [direct\_rp\_name](#input\_direct\_rp\_name) | Name of the Direct Routing Protocol | `string` | n/a | yes |
 | <a name="input_bgp_customer_asn"></a> [bgp\_customer\_asn](#input\_bgp\_customer\_asn) | Customer ASN for BGP Routing Protocol | `string` | `""` | no |
 | <a name="input_bgp_customer_peer_ipv4"></a> [bgp\_customer\_peer\_ipv4](#input\_bgp\_customer\_peer\_ipv4) | Customer Peering IPv4 Address for BGP Routing Protocol | `string` | `""` | no |
 | <a name="input_bgp_customer_peer_ipv6"></a> [bgp\_customer\_peer\_ipv6](#input\_bgp\_customer\_peer\_ipv6) | Customer Peering IPv6 Address for BGP Routing Protocol | `string` | `""` | no |
 | <a name="input_bgp_enabled_ipv4"></a> [bgp\_enabled\_ipv4](#input\_bgp\_enabled\_ipv4) | Boolean Enable Flag for IPv4 Peering on BGP Routing Protocol | `bool` | `true` | no |
 | <a name="input_bgp_enabled_ipv6"></a> [bgp\_enabled\_ipv6](#input\_bgp\_enabled\_ipv6) | Boolean Enable Flag for IPv6 Peering on BGP Routing Protocol | `bool` | `true` | no |
 | <a name="input_bgp_rp_name"></a> [bgp\_rp\_name](#input\_bgp\_rp\_name) | Name of the BGP Routing Protocol | `string` | `""` | no |
+| <a name="input_connection_uuid"></a> [connection\_uuid](#input\_connection\_uuid) | Equinix Connection UUID to Apply the Routing Protocols to | `string` | n/a | yes |
+| <a name="input_direct_equinix_ipv4_ip"></a> [direct\_equinix\_ipv4\_ip](#input\_direct\_equinix\_ipv4\_ip) | IPv4 Address for Direct Routing Protocol | `string` | n/a | yes |
+| <a name="input_direct_equinix_ipv6_ip"></a> [direct\_equinix\_ipv6\_ip](#input\_direct\_equinix\_ipv6\_ip) | IPv6 Address for Direct Routing Protocol | `string` | n/a | yes |
+| <a name="input_direct_rp_name"></a> [direct\_rp\_name](#input\_direct\_rp\_name) | Name of the Direct Routing Protocol | `string` | n/a | yes |
 
 ## Outputs
 

@@ -218,6 +218,207 @@ module "cloud_router_virtual_device_redundant_connection" {
 <!-- End Example Usage -->
 
 <!-- BEGIN_TF_DOCS -->
+## Equinix Fabric Developer Documentation
+
+To see the documentation for the APIs that the Fabric Terraform Provider is built on
+and to learn how to procure your own Client_Id and Client_Secret follow the link below:
+[Equinix Fabric Developer Portal](https://developer.equinix.com/docs?page=/dev-docs/fabric/overview)
+
+## Usage of Example as Terraform Module
+
+To provision this example directly as a usable module please use the *Provision Instructions* provided by Hashicorp
+in the upper right of this page and be sure to include at a minimum the required variables.
+
+## Usage of Example Locally or in Your Own Configuration
+
+*Note:* This example creates resources which cost money. Run 'terraform destroy' when you don't need these resources.
+
+To provision this example directly,
+you should clone the github repository for this module and run terraform within this directory:
+
+```bash
+git clone https://github.com/equinix/terraform-equinix-fabric.git
+cd terraform-equinix-fabric/examples/cloud-router-2-virtual-device-redundant-connection
+terraform init
+terraform apply
+```
+
+terraform.tfvars.example
+```hcl
+equinix_client_id           = "<MyEquinixClientId>"
+equinix_client_secret       = "<MyEquinixSecret>"
+
+notifications_type          = "ALL"
+notifications_emails        = ["example@equinix.com", "test1@equinix.com"]
+purchase_order_number       = "1-323292"
+aside_fcr_uuid              = "<Fabric Cloud Router UUID>"
+connection_name             = "FCR_2_VD_Pri"
+connection_type             = "IP_VC"
+bandwidth                   = 50
+
+zside_ap_type               = "VD"
+zside_vd_type               = "EDGE"
+zside_vd_uuid               = "<Primary Virtual Device UUID>"
+zside_interface_type        = "NETWORK"
+zside_interface_id          = 5
+
+secondary_connection_name   = "FCR_2_VD_sec"
+secondary_bandwidth         = 50
+zside_vd_sec_uuid           = "<Secondary Virtual Device UUID>"
+zside_sec_interface_type    = "NETWORK"
+zside_sec_interface_id      = 2
+```
+
+versions.tf
+```hcl
+terraform {
+  required_version = ">= 1.5.4"
+  required_providers {
+    equinix = {
+      source  = "equinix/equinix"
+      version = ">= 1.31.0"
+    }
+  }
+}
+```
+
+variables.tf
+ ```hcl
+variable "equinix_client_id" {
+  description = "Equinix client ID (consumer key), obtained after registering app in the developer platform"
+  type        = string
+  sensitive   = true
+}
+variable "equinix_client_secret" {
+  description = "Equinix client secret ID (consumer secret), obtained after registering app in the developer platform"
+  type        = string
+  sensitive   = true
+}
+variable "connection_name" {
+  description = "Connection name. An alpha-numeric 24 characters string which can include only hyphens and underscores"
+  type        = string
+}
+variable "connection_type" {
+  description = "Defines the connection type like VG_VC, EVPL_VC, EPL_VC, EC_VC, IP_VC, ACCESS_EPL_VC"
+  type        = string
+}
+variable "notifications_type" {
+  description = "Notification Type - ALL is the only type currently supported"
+  type        = string
+  default     = "ALL"
+}
+variable "notifications_emails" {
+  description = "Array of contact emails"
+  type        = list(string)
+}
+variable "bandwidth" {
+  description = "Connection bandwidth in Mbps"
+  type        = number
+}
+variable "purchase_order_number" {
+  description = "Purchase order number"
+  type        = string
+  default     = ""
+}
+variable "aside_fcr_uuid" {
+  description = "Equinix-assigned Fabric Cloud Router identifier"
+  type        = string
+}
+variable "zside_ap_type" {
+  description = "Access point type - COLO, VD, VG, SP, IGW, SUBNET, GW"
+  type        = string
+  default     = "VD"
+}
+variable "zside_vd_type" {
+  description = "Virtual Device type - EDGE"
+  type        = string
+}
+variable "zside_vd_uuid" {
+  description = "Virtual Device UUID"
+  type        = string
+}
+variable "zside_interface_type" {
+  description = "Virtual Device Interface type - CLOUD, NETWORK"
+  type        = string
+  default     = ""
+}
+variable "zside_interface_id" {
+  description = "Interface Id"
+  type        = number
+  default     = null
+}
+variable "secondary_connection_name" {
+  description = "Secondary Connection name"
+  type        = string
+}
+variable "secondary_bandwidth" {
+  description = "Secondary Connection bandwidth in Mbps"
+  type        = number
+  default     = 50
+}
+variable "zside_sec_vd_uuid" {
+  description = "Secondary Virtual Device UUID"
+  type        = string
+}
+variable "zside_sec_interface_type" {
+  description = "Secondary Virtual Device Interface type - CLOUD, NETWORK"
+  type        = string
+  default     = ""
+}
+variable "zside_sec_interface_id" {
+  description = "Secondary Interface Id"
+  type        = number
+  default     = null
+}
+```
+
+outputs.tf
+```hcl
+output "FCR_VD_Primary_Connection" {
+  value = module.cloud_router_virtual_device_redundant_connection.primary_connection_id
+}
+output "FCR_VD_Secondary_Connection" {
+  value = module.cloud_router_virtual_device_redundant_connection.secondary_connection_id
+}
+
+```
+
+main.tf
+```hcl
+provider "equinix" {
+  client_id     = var.equinix_client_id
+  client_secret = var.equinix_client_secret
+}
+
+module "cloud_router_virtual_device_redundant_connection" {
+  source = "../../modules/cloud-router-connection"
+
+  connection_name       = var.connection_name
+  connection_type       = var.connection_type
+  notifications_type    = var.notifications_type
+  notifications_emails  = var.notifications_emails
+  bandwidth             = var.bandwidth
+  purchase_order_number = var.purchase_order_number
+
+  #Aside
+  aside_fcr_uuid = var.aside_fcr_uuid
+
+  #Zside
+  zside_ap_type        = var.zside_ap_type
+  zside_vd_type        = var.zside_vd_type
+  zside_vd_uuid        = var.zside_vd_uuid
+  zside_interface_type = var.zside_interface_type
+  zside_interface_id   = var.zside_interface_id
+
+  #Secondary-Connection
+  secondary_connection_name = var.secondary_connection_name
+  secondary_bandwidth       = var.secondary_bandwidth
+  zside_sec_vd_uuid         = var.zside_sec_vd_uuid
+  zside_sec_interface_type  = var.zside_sec_interface_type
+  zside_sec_interface_id    = var.zside_sec_interface_id
+}
+```
+
 ## Requirements
 
 | Name | Version |
@@ -250,18 +451,18 @@ No resources.
 | <a name="input_equinix_client_id"></a> [equinix\_client\_id](#input\_equinix\_client\_id) | Equinix client ID (consumer key), obtained after registering app in the developer platform | `string` | n/a | yes |
 | <a name="input_equinix_client_secret"></a> [equinix\_client\_secret](#input\_equinix\_client\_secret) | Equinix client secret ID (consumer secret), obtained after registering app in the developer platform | `string` | n/a | yes |
 | <a name="input_notifications_emails"></a> [notifications\_emails](#input\_notifications\_emails) | Array of contact emails | `list(string)` | n/a | yes |
-| <a name="input_secondary_connection_name"></a> [secondary\_connection\_name](#input\_secondary\_connection\_name) | Secondary Connection name | `string` | n/a | yes |
-| <a name="input_zside_sec_vd_uuid"></a> [zside\_sec\_vd\_uuid](#input\_zside\_sec\_vd\_uuid) | Secondary Virtual Device UUID | `string` | n/a | yes |
-| <a name="input_zside_vd_type"></a> [zside\_vd\_type](#input\_zside\_vd\_type) | Virtual Device type - EDGE | `string` | n/a | yes |
-| <a name="input_zside_vd_uuid"></a> [zside\_vd\_uuid](#input\_zside\_vd\_uuid) | Virtual Device UUID | `string` | n/a | yes |
 | <a name="input_notifications_type"></a> [notifications\_type](#input\_notifications\_type) | Notification Type - ALL is the only type currently supported | `string` | `"ALL"` | no |
 | <a name="input_purchase_order_number"></a> [purchase\_order\_number](#input\_purchase\_order\_number) | Purchase order number | `string` | `""` | no |
 | <a name="input_secondary_bandwidth"></a> [secondary\_bandwidth](#input\_secondary\_bandwidth) | Secondary Connection bandwidth in Mbps | `number` | `50` | no |
+| <a name="input_secondary_connection_name"></a> [secondary\_connection\_name](#input\_secondary\_connection\_name) | Secondary Connection name | `string` | n/a | yes |
 | <a name="input_zside_ap_type"></a> [zside\_ap\_type](#input\_zside\_ap\_type) | Access point type - COLO, VD, VG, SP, IGW, SUBNET, GW | `string` | `"VD"` | no |
 | <a name="input_zside_interface_id"></a> [zside\_interface\_id](#input\_zside\_interface\_id) | Interface Id | `number` | `null` | no |
 | <a name="input_zside_interface_type"></a> [zside\_interface\_type](#input\_zside\_interface\_type) | Virtual Device Interface type - CLOUD, NETWORK | `string` | `""` | no |
 | <a name="input_zside_sec_interface_id"></a> [zside\_sec\_interface\_id](#input\_zside\_sec\_interface\_id) | Secondary Interface Id | `number` | `null` | no |
 | <a name="input_zside_sec_interface_type"></a> [zside\_sec\_interface\_type](#input\_zside\_sec\_interface\_type) | Secondary Virtual Device Interface type - CLOUD, NETWORK | `string` | `""` | no |
+| <a name="input_zside_sec_vd_uuid"></a> [zside\_sec\_vd\_uuid](#input\_zside\_sec\_vd\_uuid) | Secondary Virtual Device UUID | `string` | n/a | yes |
+| <a name="input_zside_vd_type"></a> [zside\_vd\_type](#input\_zside\_vd\_type) | Virtual Device type - EDGE | `string` | n/a | yes |
+| <a name="input_zside_vd_uuid"></a> [zside\_vd\_uuid](#input\_zside\_vd\_uuid) | Virtual Device UUID | `string` | n/a | yes |
 
 ## Outputs
 

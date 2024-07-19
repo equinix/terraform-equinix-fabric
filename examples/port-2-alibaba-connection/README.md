@@ -197,6 +197,187 @@ module "create_port_2_alibaba_connection" {
 ```
 <!-- End Example Usage -->
 <!-- BEGIN_TF_DOCS -->
+## Equinix Fabric Developer Documentation
+
+To see the documentation for the APIs that the Fabric Terraform Provider is built on
+and to learn how to procure your own Client_Id and Client_Secret follow the link below:
+[Equinix Fabric Developer Portal](https://developer.equinix.com/docs?page=/dev-docs/fabric/overview)
+
+## Usage of Example as Terraform Module
+
+To provision this example directly as a usable module please use the *Provision Instructions* provided by Hashicorp
+in the upper right of this page and be sure to include at a minimum the required variables.
+
+## Usage of Example Locally or in Your Own Configuration
+
+*Note:* This example creates resources which cost money. Run 'terraform destroy' when you don't need these resources.
+
+To provision this example directly,
+you should clone the github repository for this module and run terraform within this directory:
+
+```bash
+git clone https://github.com/equinix/terraform-equinix-fabric.git
+cd terraform-equinix-fabric/examples/port-2-alibaba-connection
+terraform init
+terraform apply
+```
+
+terraform.tfvars.example
+```hcl
+equinix_client_id      = "MyEquinixClientId"
+equinix_client_secret  = "MyEquinixSecret"
+
+connection_name             = "Port_2_alibaba"
+connection_type             = "EVPL_VC"
+notifications_type          = "ALL"
+notifications_emails        = ["example@equinix.com"]
+bandwidth                   = 50
+purchase_order_number       = "1-323292"
+aside_port_name             = "sit-tb1-dc-e5.tlab,10GSMF,A,001,201257, 21951980"
+aside_vlan_tag              = "2019"
+zside_ap_type               = "SP"
+zside_ap_authentication_key = "<Alibaba Auth Key>"
+zside_ap_profile_type       = "L2_PROFILE"
+zside_location              = "SY"
+zside_sp_name               = "Alibaba Cloud Express Connect"
+zside_seller_region         = "ap-southeast-2"
+```
+
+versions.tf
+```hcl
+terraform {
+  required_version = ">= 1.5.4"
+  required_providers {
+    equinix = {
+      source  = "equinix/equinix"
+      version = ">= 1.20.0"
+    }
+  }
+}
+```
+
+variables.tf
+ ```hcl
+variable "equinix_client_id" {
+  description = "Equinix client ID (consumer key), obtained after registering app in the developer platform"
+  type        = string
+  sensitive   = true
+}
+variable "equinix_client_secret" {
+  description = "Equinix client secret ID (consumer secret), obtained after registering app in the developer platform"
+  type        = string
+  sensitive   = true
+}
+variable "connection_name" {
+  description = "Connection name. An alpha-numeric 24 characters string which can include only hyphens and underscores"
+  type        = string
+}
+variable "project_id" {
+  description = "Subscriber-assigned project ID"
+  type        = string
+  default     = ""
+}
+variable "connection_type" {
+  description = "Defines the connection type like VG_VC, EVPL_VC, EPL_VC, EC_VC, IP_VC, ACCESS_EPL_VC"
+  type        = string
+}
+variable "notifications_type" {
+  description = "Notification Type - ALL is the only type currently supported"
+  type        = string
+  default     = "ALL"
+}
+variable "notifications_emails" {
+  description = "Array of contact emails"
+  type        = list(string)
+}
+variable "bandwidth" {
+  description = "Connection bandwidth in Mbps"
+  type        = number
+}
+variable "purchase_order_number" {
+  description = "Purchase order number"
+  type        = string
+  default     = ""
+}
+variable "aside_port_name" {
+  description = "Equinix A-Side Port Name"
+  type        = string
+}
+variable "aside_vlan_tag" {
+  description = "Vlan Tag information, outer vlanSTag for QINQ connections"
+  type        = string
+}
+variable "aside_vlan_inner_tag" {
+  description = "Vlan Inner Tag information, inner vlanCTag for QINQ connections"
+  type        = string
+  default     = ""
+}
+variable "zside_ap_type" {
+  description = "Access point type - COLO, VD, VG, SP, IGW, SUBNET, GW"
+  type        = string
+}
+variable "zside_ap_authentication_key" {
+  description = "Authentication key for provider based connections"
+  type        = string
+  sensitive   = true
+}
+variable "zside_ap_profile_type" {
+  description = "Service profile type - L2_PROFILE, L3_PROFILE, ECIA_PROFILE, ECMC_PROFILE"
+  type        = string
+}
+variable "zside_location" {
+  description = "Access point metro code"
+  type        = string
+}
+variable "zside_sp_name" {
+  description = "Equinix Service Profile Name"
+  type        = string
+}
+variable "zside_seller_region" {
+  description = "Access point seller region"
+  type        = string
+}
+```
+
+outputs.tf
+```hcl
+output "alibaba_connection_id" {
+  value = module.create_port_2_alibaba_connection.primary_connection_id
+}
+```
+
+main.tf
+```hcl
+provider "equinix" {
+  client_id     = var.equinix_client_id
+  client_secret = var.equinix_client_secret
+}
+
+module "create_port_2_alibaba_connection" {
+  source = "../../modules/port-connection"
+
+  connection_name       = var.connection_name
+  connection_type       = var.connection_type
+  notifications_type    = var.notifications_type
+  notifications_emails  = var.notifications_emails
+  bandwidth             = var.bandwidth
+  purchase_order_number = var.purchase_order_number
+  project_id            = var.project_id
+
+  # A-side
+  aside_port_name = var.aside_port_name
+  aside_vlan_tag  = var.aside_vlan_tag
+
+  # Z-side
+  zside_ap_type               = var.zside_ap_type
+  zside_ap_authentication_key = var.zside_ap_authentication_key
+  zside_ap_profile_type       = var.zside_ap_profile_type
+  zside_location              = var.zside_location
+  zside_seller_region         = var.zside_seller_region
+  zside_sp_name               = var.zside_sp_name
+}
+```
+
 ## Requirements
 
 | Name | Version |
@@ -223,6 +404,7 @@ No resources.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_aside_port_name"></a> [aside\_port\_name](#input\_aside\_port\_name) | Equinix A-Side Port Name | `string` | n/a | yes |
+| <a name="input_aside_vlan_inner_tag"></a> [aside\_vlan\_inner\_tag](#input\_aside\_vlan\_inner\_tag) | Vlan Inner Tag information, inner vlanCTag for QINQ connections | `string` | `""` | no |
 | <a name="input_aside_vlan_tag"></a> [aside\_vlan\_tag](#input\_aside\_vlan\_tag) | Vlan Tag information, outer vlanSTag for QINQ connections | `string` | n/a | yes |
 | <a name="input_bandwidth"></a> [bandwidth](#input\_bandwidth) | Connection bandwidth in Mbps | `number` | n/a | yes |
 | <a name="input_connection_name"></a> [connection\_name](#input\_connection\_name) | Connection name. An alpha-numeric 24 characters string which can include only hyphens and underscores | `string` | n/a | yes |
@@ -230,16 +412,15 @@ No resources.
 | <a name="input_equinix_client_id"></a> [equinix\_client\_id](#input\_equinix\_client\_id) | Equinix client ID (consumer key), obtained after registering app in the developer platform | `string` | n/a | yes |
 | <a name="input_equinix_client_secret"></a> [equinix\_client\_secret](#input\_equinix\_client\_secret) | Equinix client secret ID (consumer secret), obtained after registering app in the developer platform | `string` | n/a | yes |
 | <a name="input_notifications_emails"></a> [notifications\_emails](#input\_notifications\_emails) | Array of contact emails | `list(string)` | n/a | yes |
+| <a name="input_notifications_type"></a> [notifications\_type](#input\_notifications\_type) | Notification Type - ALL is the only type currently supported | `string` | `"ALL"` | no |
+| <a name="input_project_id"></a> [project\_id](#input\_project\_id) | Subscriber-assigned project ID | `string` | `""` | no |
+| <a name="input_purchase_order_number"></a> [purchase\_order\_number](#input\_purchase\_order\_number) | Purchase order number | `string` | `""` | no |
 | <a name="input_zside_ap_authentication_key"></a> [zside\_ap\_authentication\_key](#input\_zside\_ap\_authentication\_key) | Authentication key for provider based connections | `string` | n/a | yes |
 | <a name="input_zside_ap_profile_type"></a> [zside\_ap\_profile\_type](#input\_zside\_ap\_profile\_type) | Service profile type - L2\_PROFILE, L3\_PROFILE, ECIA\_PROFILE, ECMC\_PROFILE | `string` | n/a | yes |
 | <a name="input_zside_ap_type"></a> [zside\_ap\_type](#input\_zside\_ap\_type) | Access point type - COLO, VD, VG, SP, IGW, SUBNET, GW | `string` | n/a | yes |
 | <a name="input_zside_location"></a> [zside\_location](#input\_zside\_location) | Access point metro code | `string` | n/a | yes |
 | <a name="input_zside_seller_region"></a> [zside\_seller\_region](#input\_zside\_seller\_region) | Access point seller region | `string` | n/a | yes |
 | <a name="input_zside_sp_name"></a> [zside\_sp\_name](#input\_zside\_sp\_name) | Equinix Service Profile Name | `string` | n/a | yes |
-| <a name="input_aside_vlan_inner_tag"></a> [aside\_vlan\_inner\_tag](#input\_aside\_vlan\_inner\_tag) | Vlan Inner Tag information, inner vlanCTag for QINQ connections | `string` | `""` | no |
-| <a name="input_notifications_type"></a> [notifications\_type](#input\_notifications\_type) | Notification Type - ALL is the only type currently supported | `string` | `"ALL"` | no |
-| <a name="input_project_id"></a> [project\_id](#input\_project\_id) | Subscriber-assigned project ID | `string` | `""` | no |
-| <a name="input_purchase_order_number"></a> [purchase\_order\_number](#input\_purchase\_order\_number) | Purchase order number | `string` | `""` | no |
 
 ## Outputs
 
