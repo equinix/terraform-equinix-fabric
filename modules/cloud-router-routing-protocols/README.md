@@ -5,13 +5,6 @@ existing Fabric Connection.
 
 Please refer to the routing-protocols example in this module's registry for more details on how to leverage the submodule.
 
-<!-- Begin Module Docs (Do not edit contents) -->
-## Equinix Fabric Developer Documentation
-
-To see the documentation for the APIs that the Fabric Terraform Provider is built on
-and to learn how to procure your own Client_Id and Client_Secret follow the link below:
-[Equinix Fabric Developer Portal](https://developer.equinix.com/docs?page=/dev-docs/fabric/overview)
-<!-- End Module Docs -->
 <!-- BEGIN_TF_DOCS -->
 ## Equinix Fabric Developer Documentation
 

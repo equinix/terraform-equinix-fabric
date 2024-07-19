@@ -25,7 +25,11 @@ content: |-
   terraform apply
   ```
   
-  terraform.tfvars.example
+  To use this example of the module in your own terraform configuration include the following:
+
+  *NOTE: terraform.tfvars must be a separate file, but all other content can be placed together in main.tf if you prefer*
+
+  terraform.tfvars (Replace these values with your own):
   ```hcl
   {{ include "terraform.tfvars.example" }}
   ```
