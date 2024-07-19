@@ -31,7 +31,7 @@ content: |-
   {{ .Content }}
 output:
   file: "README.md"
-  template: |-
-    <!-- BEGIN_TF_DOCS-->
-    {{ .Content }}
-    <!-- END_OF_DOCS -->
+  mode: "inject"
+  inject:
+    begin-comment: "BEGIN_TF_DOCS"
+    end-comment: "END_TF_DOCS"
