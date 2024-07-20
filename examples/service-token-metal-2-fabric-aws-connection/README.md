@@ -1,6 +1,6 @@
 # Fabric Service Token - Equinix Metal to Fabric AWS Service Profile Connection
 
-This example shows how to leverage the [Fabric Service Token Connection Module](../../modules/service-token-connection/README.md)
+This example shows how to leverage the [Fabric Service Token Connection Module](equinix/fabric/modules/service-token-connection/README.md)
 to create a Fabric Connection from Equinix Metal to Fabric AWS Service Profile.
 
 It leverages the Equinix Terraform Provider, the AWS Terraform Provider, and the Fabric Service Token Connection
@@ -304,7 +304,7 @@ resource "equinix_metal_connection" "metal-connection" {
   contact_email      = "srpatel@equinix.com"
 }
 module "metal-2-fabric-connection" {
-  source = "../../modules/service-token-connection"
+  source = "equinix/fabric/modules/service-token-connection"
 
   connection_name = var.connection_name
   connection_type = var.connection_type
@@ -377,7 +377,7 @@ resource "aws_dx_private_virtual_interface" "aws_virtual_interface" {
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_metal-2-fabric-connection"></a> [metal-2-fabric-connection](#module\_metal-2-fabric-connection) | ../../modules/service-token-connection | n/a |
+| <a name="module_metal-2-fabric-connection"></a> [metal-2-fabric-connection](#module\_metal-2-fabric-connection) | equinix/fabric/modules/service-token-connection | n/a |
 
 ## Resources
 

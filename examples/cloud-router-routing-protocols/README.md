@@ -1,6 +1,6 @@
 # Fabric Routing Protocols Addition to Fabric Connection
 
-This example shows how to leverage the [Fabric Cloud Router Routing Protocols Module](../../modules/cloud-router-routing-protocols/README.md)
+This example shows how to leverage the [Fabric Cloud Router Routing Protocols Module](equinix/fabric/modules/cloud-router-routing-protocols/README.md)
 to create Routing Protocols for a Fabric Connection.
 
 It leverages the Equinix Terraform Provider, and the Fabric Cloud Router Routing Protocols
@@ -152,7 +152,7 @@ provider "equinix" {
 }
 
 module "routing_protocols" {
-  source = "../../modules/cloud-router-routing-protocols"
+  source = "equinix/fabric/modules/cloud-router-routing-protocols"
 
   connection_uuid = var.connection_uuid
 
@@ -186,7 +186,7 @@ No providers.
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_routing_protocols"></a> [routing\_protocols](#module\_routing\_protocols) | ../../modules/cloud-router-routing-protocols | n/a |
+| <a name="module_routing_protocols"></a> [routing\_protocols](#module\_routing\_protocols) | equinix/fabric/modules/cloud-router-routing-protocols | n/a |
 
 ## Resources
 

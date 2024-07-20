@@ -1,6 +1,6 @@
 # Fabric Virtual Device to Equinix Internet Access Service Profile Connection
 
-This example shows how to leverage the [Fabric Virtual Device Connection Module](../../modules/virtual-device-connection/README.md)
+This example shows how to leverage the [Fabric Virtual Device Connection Module](equinix/fabric/modules/virtual-device-connection/README.md)
 to create a Fabric Connection from a Fabric Virtual Device to Equinix Internet Access Service Profile.
 
 It leverages the Equinix Terraform Provider and the Fabric Virtual Device Connection
@@ -149,7 +149,7 @@ provider "equinix" {
   client_secret = var.equinix_client_secret
 }
 module "create_virtual_device_2_azure_connection" {
-  source = "../../modules/virtual-device-connection"
+  source = "equinix/fabric/modules/virtual-device-connection"
 
   connection_name       = var.connection_name
   connection_type       = var.connection_type
@@ -185,7 +185,7 @@ No providers.
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_create_virtual_device_2_azure_connection"></a> [create\_virtual\_device\_2\_azure\_connection](#module\_create\_virtual\_device\_2\_azure\_connection) | ../../modules/virtual-device-connection | n/a |
+| <a name="module_create_virtual_device_2_azure_connection"></a> [create\_virtual\_device\_2\_azure\_connection](#module\_create\_virtual\_device\_2\_azure\_connection) | equinix/fabric/modules/virtual-device-connection | n/a |
 
 ## Resources
 

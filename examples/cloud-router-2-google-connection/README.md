@@ -1,6 +1,6 @@
 # Fabric Cloud Router to Google Service Profile Connection
 
-This example shows how to leverage the [Fabric Cloud Router Connection Module](../../modules/cloud-router-connection/README.md)
+This example shows how to leverage the [Fabric Cloud Router Connection Module](equinix/fabric/modules/cloud-router-connection/README.md)
 to create a Fabric Connection from a Fabric Cloud Router to Google Service Profile.
 
 It leverages the Equinix Terraform Provider, and the Fabric Cloud Router Connection
@@ -259,7 +259,7 @@ resource "google_compute_interconnect_attachment" "cloud-router-google" {
 }
 
 module "cloud_router_google_connection" {
-  source = "../../modules/cloud-router-connection"
+  source = "equinix/fabric/modules/cloud-router-connection"
 
   connection_name       = var.connection_name
   connection_type       = var.connection_type
@@ -299,7 +299,7 @@ module "cloud_router_google_connection" {
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_cloud_router_google_connection"></a> [cloud\_router\_google\_connection](#module\_cloud\_router\_google\_connection) | ../../modules/cloud-router-connection | n/a |
+| <a name="module_cloud_router_google_connection"></a> [cloud\_router\_google\_connection](#module\_cloud\_router\_google\_connection) | equinix/fabric/modules/cloud-router-connection | n/a |
 
 ## Resources
 

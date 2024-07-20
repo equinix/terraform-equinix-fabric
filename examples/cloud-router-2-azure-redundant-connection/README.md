@@ -1,6 +1,6 @@
 # Fabric Cloud Router to Azure Service Profile Redundant Connection
 
-This example shows how to leverage the [Fabric Cloud Router Connection Module](../../modules/cloud-router-connection/README.md)
+This example shows how to leverage the [Fabric Cloud Router Connection Module](equinix/fabric/modules/cloud-router-connection/README.md)
 to create a Fabric Connection from a Fabric Cloud Router to Azure Service Profile using two connections. A primary and
 secondary connection.
 
@@ -284,7 +284,7 @@ resource "azurerm_express_route_circuit" "fcr2azure" {
   }
 }
 module "cloud_router_azure_redundant_connection" {
-  source = "../../modules/cloud-router-connection"
+  source = "equinix/fabric/modules/cloud-router-connection"
 
   #Primary Connection
   connection_name       = var.connection_name
@@ -330,7 +330,7 @@ module "cloud_router_azure_redundant_connection" {
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_cloud_router_azure_redundant_connection"></a> [cloud\_router\_azure\_redundant\_connection](#module\_cloud\_router\_azure\_redundant\_connection) | ../../modules/cloud-router-connection | n/a |
+| <a name="module_cloud_router_azure_redundant_connection"></a> [cloud\_router\_azure\_redundant\_connection](#module\_cloud\_router\_azure\_redundant\_connection) | equinix/fabric/modules/cloud-router-connection | n/a |
 
 ## Resources
 

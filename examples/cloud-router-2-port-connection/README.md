@@ -1,6 +1,6 @@
 # Fabric Cloud Router to Fabric Port Connection
 
-This example shows how to leverage the [Fabric Cloud Router Connection Module](../../modules/cloud-router-connection/README.md)
+This example shows how to leverage the [Fabric Cloud Router Connection Module](equinix/fabric/modules/cloud-router-connection/README.md)
 to create a Fabric Connection from a Fabric Cloud Router to Fabric Port.
 
 It leverages the Equinix Terraform Provider, and the Fabric Cloud Router Connection
@@ -148,7 +148,7 @@ provider "equinix" {
 }
 
 module "cloud_router_port_connection" {
-  source = "../../modules/cloud-router-connection"
+  source = "equinix/fabric/modules/cloud-router-connection"
 
   connection_name       = var.connection_name
   connection_type       = var.connection_type
@@ -183,7 +183,7 @@ No providers.
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_cloud_router_port_connection"></a> [cloud\_router\_port\_connection](#module\_cloud\_router\_port\_connection) | ../../modules/cloud-router-connection | n/a |
+| <a name="module_cloud_router_port_connection"></a> [cloud\_router\_port\_connection](#module\_cloud\_router\_port\_connection) | equinix/fabric/modules/cloud-router-connection | n/a |
 
 ## Resources
 

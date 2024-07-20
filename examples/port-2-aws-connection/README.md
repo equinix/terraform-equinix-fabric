@@ -1,6 +1,6 @@
 # Fabric Port to Fabric AWS Profile Connection
 
-This example shows how to leverage the [Fabric Port Connection Module](../../modules/port-connection/README.md)
+This example shows how to leverage the [Fabric Port Connection Module](equinix/fabric/modules/port-connection/README.md)
 to create a Fabric Connection from a Fabric Port to Fabric AWS Service Profile.
 
 It leverages the Equinix Terraform Provider, the AWS Terraform Provider, and the Fabric Port Connection
@@ -236,7 +236,7 @@ provider "aws" {
   region     = var.zside_seller_region
 }
 module "port_2_aws_connection" {
-  source = "../../modules/port-connection"
+  source = "equinix/fabric/modules/port-connection"
 
   connection_name       = var.connection_name
   connection_type       = var.connection_type
@@ -309,7 +309,7 @@ resource "aws_dx_private_virtual_interface" "aws_virtual_interface" {
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_port_2_aws_connection"></a> [port\_2\_aws\_connection](#module\_port\_2\_aws\_connection) | ../../modules/port-connection | n/a |
+| <a name="module_port_2_aws_connection"></a> [port\_2\_aws\_connection](#module\_port\_2\_aws\_connection) | equinix/fabric/modules/port-connection | n/a |
 
 ## Resources
 

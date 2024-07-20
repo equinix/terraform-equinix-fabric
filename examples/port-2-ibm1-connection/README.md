@@ -1,6 +1,6 @@
 # Fabric Port to Fabric IBM 1.0 Service Profile Connection
 
-This example shows how to leverage the [Fabric Port Connection Module](../../modules/port-connection/README.md)
+This example shows how to leverage the [Fabric Port Connection Module](equinix/fabric/modules/port-connection/README.md)
 to create a Fabric Connection from a Fabric Port to Fabric IBM 1.0 Service Profile.
 
 It leverages the Equinix Terraform Provider, and the Fabric Port Connection
@@ -173,7 +173,7 @@ provider "equinix" {
 }
 
 module "create_port_2_ibm1_connection" {
-  source = "../../modules/port-connection"
+  source = "equinix/fabric/modules/port-connection"
 
   connection_name       = var.connection_name
   connection_type       = var.connection_type
@@ -213,7 +213,7 @@ No providers.
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_create_port_2_ibm1_connection"></a> [create\_port\_2\_ibm1\_connection](#module\_create\_port\_2\_ibm1\_connection) | ../../modules/port-connection | n/a |
+| <a name="module_create_port_2_ibm1_connection"></a> [create\_port\_2\_ibm1\_connection](#module\_create\_port\_2\_ibm1\_connection) | equinix/fabric/modules/port-connection | n/a |
 
 ## Resources
 
