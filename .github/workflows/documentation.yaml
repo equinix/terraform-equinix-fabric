@@ -49,7 +49,7 @@ jobs:
           find examples -name "README.md" | while read -r file; do
             dir_name=$(basename "$(dirname "$file")")
             sed -i "" "s@EXAMPLE_PATH@$dir_name@g" "$file"
-            sed -i "" "s@\.\.\/.\.@equinix/fabric@g" "$file"
+            sed -i "" "s@\.\.\/\.\.@equinix\/fabric\/equinix\/@" "$file"
           done
 
       # terraform-docs/gh-actions@v1.0.0 modifies .git files with owner root:root, and the following steps fail with
