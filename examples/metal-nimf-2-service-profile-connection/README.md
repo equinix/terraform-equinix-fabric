@@ -219,7 +219,7 @@ resource "equinix_metal_connection" "metal-connection" {
 }
 
 module "metal_2_service_profile" {
-  source = "equinix/fabric/modules/metal-connection"
+  source = "equinix/fabric/equinix//modules/metal-connection"
 
   connection_name       = var.connection_name
   connection_type       = var.connection_type
@@ -256,7 +256,7 @@ module "metal_2_service_profile" {
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_metal_2_service_profile"></a> [metal\_2\_service\_profile](#module\_metal\_2\_service\_profile) | equinix/fabric/modules/metal-connection | n/a |
+| <a name="module_metal_2_service_profile"></a> [metal\_2\_service\_profile](#module\_metal\_2\_service\_profile) | equinix/fabric/equinix//modules/metal-connection | n/a |
 
 ## Resources
 

@@ -230,7 +230,7 @@ provider "ibm" {
 }
 
 module "create_port_2_ibm2_connection" {
-  source = "equinix/fabric/modules/port-connection"
+  source = "equinix/fabric/equinix//modules/port-connection"
 
   connection_name       = var.connection_name
   connection_type       = var.connection_type
@@ -296,7 +296,7 @@ resource "ibm_dl_gateway_action" "test_dl_gateway_action" {
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_create_port_2_ibm2_connection"></a> [create\_port\_2\_ibm2\_connection](#module\_create\_port\_2\_ibm2\_connection) | equinix/fabric/modules/port-connection | n/a |
+| <a name="module_create_port_2_ibm2_connection"></a> [create\_port\_2\_ibm2\_connection](#module\_create\_port\_2\_ibm2\_connection) | equinix/fabric/equinix//modules/port-connection | n/a |
 
 ## Resources
 

@@ -137,7 +137,7 @@ provider "equinix" {
 }
 
 module "cloud_router_wan_connection" {
-  source = "equinix/fabric/modules/cloud-router-connection"
+  source = "equinix/fabric/equinix//modules/cloud-router-connection"
 
   connection_name       = var.connection_name
   connection_type       = var.connection_type
@@ -170,7 +170,7 @@ No providers.
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_cloud_router_wan_connection"></a> [cloud\_router\_wan\_connection](#module\_cloud\_router\_wan\_connection) | equinix/fabric/modules/cloud-router-connection | n/a |
+| <a name="module_cloud_router_wan_connection"></a> [cloud\_router\_wan\_connection](#module\_cloud\_router\_wan\_connection) | equinix/fabric/equinix//modules/cloud-router-connection | n/a |
 
 ## Resources
 

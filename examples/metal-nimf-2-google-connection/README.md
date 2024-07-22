@@ -318,7 +318,7 @@ resource "google_compute_interconnect_attachment" "metal-nimf-google" {
 }
 
 module "metal_2_google_connection" {
-  source = "equinix/fabric/modules/metal-connection"
+  source = "equinix/fabric/equinix//modules/metal-connection"
 
   connection_name       = var.connection_name
   connection_type       = var.connection_type
@@ -360,7 +360,7 @@ module "metal_2_google_connection" {
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_metal_2_google_connection"></a> [metal\_2\_google\_connection](#module\_metal\_2\_google\_connection) | equinix/fabric/modules/metal-connection | n/a |
+| <a name="module_metal_2_google_connection"></a> [metal\_2\_google\_connection](#module\_metal\_2\_google\_connection) | equinix/fabric/equinix//modules/metal-connection | n/a |
 
 ## Resources
 

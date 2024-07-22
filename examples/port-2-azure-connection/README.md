@@ -259,7 +259,7 @@ resource "azurerm_express_route_circuit" "port2azure" {
   }
 }
 module "create_port_2_azure_connection" {
-  source = "equinix/fabric/modules/port-connection"
+  source = "equinix/fabric/equinix//modules/port-connection"
 
   connection_name       = var.connection_name
   connection_type       = var.connection_type
@@ -301,7 +301,7 @@ module "create_port_2_azure_connection" {
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_create_port_2_azure_connection"></a> [create\_port\_2\_azure\_connection](#module\_create\_port\_2\_azure\_connection) | equinix/fabric/modules/port-connection | n/a |
+| <a name="module_create_port_2_azure_connection"></a> [create\_port\_2\_azure\_connection](#module\_create\_port\_2\_azure\_connection) | equinix/fabric/equinix//modules/port-connection | n/a |
 
 ## Resources
 

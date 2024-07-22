@@ -304,7 +304,7 @@ resource "equinix_metal_connection" "metal-connection" {
   contact_email      = "srpatel@equinix.com"
 }
 module "metal-2-fabric-connection" {
-  source = "equinix/fabric/modules/service-token-connection"
+  source = "equinix/fabric/equinix//modules/service-token-connection"
 
   connection_name = var.connection_name
   connection_type = var.connection_type
@@ -377,7 +377,7 @@ resource "aws_dx_private_virtual_interface" "aws_virtual_interface" {
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_metal-2-fabric-connection"></a> [metal-2-fabric-connection](#module\_metal-2-fabric-connection) | equinix/fabric/modules/service-token-connection | n/a |
+| <a name="module_metal-2-fabric-connection"></a> [metal-2-fabric-connection](#module\_metal-2-fabric-connection) | equinix/fabric/equinix//modules/service-token-connection | n/a |
 
 ## Resources
 

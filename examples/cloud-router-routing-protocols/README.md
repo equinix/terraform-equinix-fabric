@@ -152,7 +152,7 @@ provider "equinix" {
 }
 
 module "routing_protocols" {
-  source = "equinix/fabric/modules/cloud-router-routing-protocols"
+  source = "equinix/fabric/equinix//modules/cloud-router-routing-protocols"
 
   connection_uuid = var.connection_uuid
 
@@ -186,7 +186,7 @@ No providers.
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_routing_protocols"></a> [routing\_protocols](#module\_routing\_protocols) | equinix/fabric/modules/cloud-router-routing-protocols | n/a |
+| <a name="module_routing_protocols"></a> [routing\_protocols](#module\_routing\_protocols) | equinix/fabric/equinix//modules/cloud-router-routing-protocols | n/a |
 
 ## Resources
 

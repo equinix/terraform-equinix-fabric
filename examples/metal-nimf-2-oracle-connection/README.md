@@ -325,7 +325,7 @@ resource "oci_core_virtual_circuit" "test_virtual_circuit" {
 }
 
 module "metal_2_oracle_connection" {
-  source = "equinix/fabric/modules/metal-connection"
+  source = "equinix/fabric/equinix//modules/metal-connection"
 
   connection_name       = var.connection_name
   connection_type       = var.connection_type
@@ -367,7 +367,7 @@ module "metal_2_oracle_connection" {
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_metal_2_oracle_connection"></a> [metal\_2\_oracle\_connection](#module\_metal\_2\_oracle\_connection) | equinix/fabric/modules/metal-connection | n/a |
+| <a name="module_metal_2_oracle_connection"></a> [metal\_2\_oracle\_connection](#module\_metal\_2\_oracle\_connection) | equinix/fabric/equinix//modules/metal-connection | n/a |
 
 ## Resources
 

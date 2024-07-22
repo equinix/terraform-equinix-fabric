@@ -232,7 +232,7 @@ provider "aws" {
   region     = var.zside_seller_region
 }
 module "cloud_router_aws_connection" {
-  source = "equinix/fabric/modules/cloud-router-connection"
+  source = "equinix/fabric/equinix//modules/cloud-router-connection"
 
   connection_name       = var.connection_name
   connection_type       = var.connection_type
@@ -305,7 +305,7 @@ resource "aws_dx_private_virtual_interface" "aws_virtual_interface" {
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_cloud_router_aws_connection"></a> [cloud\_router\_aws\_connection](#module\_cloud\_router\_aws\_connection) | equinix/fabric/modules/cloud-router-connection | n/a |
+| <a name="module_cloud_router_aws_connection"></a> [cloud\_router\_aws\_connection](#module\_cloud\_router\_aws\_connection) | equinix/fabric/equinix//modules/cloud-router-connection | n/a |
 
 ## Resources
 

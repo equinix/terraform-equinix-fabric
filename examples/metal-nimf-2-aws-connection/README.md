@@ -290,7 +290,7 @@ resource "equinix_metal_connection" "metal-connection" {
 }
 
 module "metal_2_aws_connection" {
-  source = "equinix/fabric/modules/metal-connection"
+  source = "equinix/fabric/equinix//modules/metal-connection"
 
   connection_name       = var.connection_name
   connection_type       = var.connection_type
@@ -362,7 +362,7 @@ resource "aws_dx_private_virtual_interface" "aws_virtual_interface" {
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_metal_2_aws_connection"></a> [metal\_2\_aws\_connection](#module\_metal\_2\_aws\_connection) | equinix/fabric/modules/metal-connection | n/a |
+| <a name="module_metal_2_aws_connection"></a> [metal\_2\_aws\_connection](#module\_metal\_2\_aws\_connection) | equinix/fabric/equinix//modules/metal-connection | n/a |
 
 ## Resources
 

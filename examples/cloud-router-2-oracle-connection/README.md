@@ -275,7 +275,7 @@ resource "oci_core_virtual_circuit" "test_virtual_circuit" {
 }
 
 module "cloud_router_oracle_connection" {
-  source = "equinix/fabric/modules/cloud-router-connection"
+  source = "equinix/fabric/equinix//modules/cloud-router-connection"
 
   connection_name       = var.connection_name
   connection_type       = var.connection_type
@@ -317,7 +317,7 @@ module "cloud_router_oracle_connection" {
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_cloud_router_oracle_connection"></a> [cloud\_router\_oracle\_connection](#module\_cloud\_router\_oracle\_connection) | equinix/fabric/modules/cloud-router-connection | n/a |
+| <a name="module_cloud_router_oracle_connection"></a> [cloud\_router\_oracle\_connection](#module\_cloud\_router\_oracle\_connection) | equinix/fabric/equinix//modules/cloud-router-connection | n/a |
 
 ## Resources
 

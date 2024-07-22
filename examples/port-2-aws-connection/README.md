@@ -236,7 +236,7 @@ provider "aws" {
   region     = var.zside_seller_region
 }
 module "port_2_aws_connection" {
-  source = "equinix/fabric/modules/port-connection"
+  source = "equinix/fabric/equinix//modules/port-connection"
 
   connection_name       = var.connection_name
   connection_type       = var.connection_type
@@ -309,7 +309,7 @@ resource "aws_dx_private_virtual_interface" "aws_virtual_interface" {
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_port_2_aws_connection"></a> [port\_2\_aws\_connection](#module\_port\_2\_aws\_connection) | equinix/fabric/modules/port-connection | n/a |
+| <a name="module_port_2_aws_connection"></a> [port\_2\_aws\_connection](#module\_port\_2\_aws\_connection) | equinix/fabric/equinix//modules/port-connection | n/a |
 
 ## Resources
 

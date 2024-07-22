@@ -414,7 +414,7 @@ resource "azurerm_express_route_circuit" "vd2azure" {
 
 #Connection
 module "create_virtual_device_2_azure_connection" {
-  source = "equinix/fabric/modules/virtual-device-connection"
+  source = "equinix/fabric/equinix//modules/virtual-device-connection"
 
   connection_name       = var.connection_name
   connection_type       = var.connection_type
@@ -456,7 +456,7 @@ module "create_virtual_device_2_azure_connection" {
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_create_virtual_device_2_azure_connection"></a> [create\_virtual\_device\_2\_azure\_connection](#module\_create\_virtual\_device\_2\_azure\_connection) | equinix/fabric/modules/virtual-device-connection | n/a |
+| <a name="module_create_virtual_device_2_azure_connection"></a> [create\_virtual\_device\_2\_azure\_connection](#module\_create\_virtual\_device\_2\_azure\_connection) | equinix/fabric/equinix//modules/virtual-device-connection | n/a |
 
 ## Resources
 
