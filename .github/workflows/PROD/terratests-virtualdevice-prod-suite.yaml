@@ -1,0 +1,62 @@
+name: terratests-prod-suite
+
+on:
+  workflow_dispatch:
+
+jobs:
+  setup-tests:
+    name: Setup PROD DIGP Tests
+    runs-on: ubuntu-latest
+    env:
+      TF_VAR_equinix_client_id: ${{ secrets.EQUINIX_CLIENT_ID }}
+      TF_VAR_equinix_client_secret: ${{ secrets.EQUINIX_CLIENT_SECRET }}
+      GOOGLE_SERVICE_KEYS: ${{ secrets.GOOGLE_SERVICE_KEYS }}
+      TEST_DATA_PROD_VIRTUAL_DEVICE_2_WAN_CONNECTION: ${{ secrets.TEST_DATA_PROD_VIRTUAL_DEVICE_2_WAN_CONNECTION }}
+      TEST_DATA_PROD_VIRTUAL_DEVICE_2_AZURE_CONNECTION: ${{secrets.TEST_DATA_PROD_VIRTUAL_DEVICE_2_AZURE_CONNECTION}}
+      TEST_DATA_PROD_VIRTUAL_DEVICE_2_PORT_CONNECTION: ${{secrets.TEST_DATA_PROD_VIRTUAL_DEVICE_2_PORT_CONNECTION}}
+
+    steps:
+      - name: Check out code into the Go module directory
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: './go.mod'
+        id: go
+
+      - name: Get dependencies
+        run: |
+              go mod download
+
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: ${{ matrix.terraform }}
+          terraform_wrapper: false
+
+      - name: Install jq
+        run: | 
+              sudo apt-get install jq
+
+      - name: Setup Variables Files
+        run: |
+          TIMESTAMP=$(date +"%m%d%M%S")
+          SUFFIX="_DIGP"
+          echo $GOOGLE_SERVICE_KEYS >> "./examples/port-2-google-connection/keys.json"
+          echo $TEST_DATA_PROD_VIRTUAL_DEVICE_2_WAN_CONNECTION >> "./tests/examples-without-external-providers/virtual-device-2-wan-connection/terraform.tfvars.json"
+          jq --arg timestamp "$TIMESTAMP" '.connection_name = ($timestamp + "_" + .connection_name)' ./tests/examples-without-external-providers/virtual-device-2-wan-connection/terraform.tfvars.json > ./tests/examples-without-external-providers/virtual-device-2-wan-connection/tmp.test.json && mv ./tests/examples-without-external-providers/virtual-device-2-wan-connection/tmp.test.json ./tests/examples-without-external-providers/virtual-device-2-wan-connection/terraform.tfvars.json
+          echo $TEST_DATA_PROD_VIRTUAL_DEVICE_2_AZURE_CONNECTION >> "./tests/examples-without-external-providers/virtual-device-2-azure-connection/terraform.tfvars.json"
+          jq --arg timestamp "$TIMESTAMP" '.connection_name = ($timestamp + "_" + .connection_name)' ./tests/examples-without-external-providers/virtual-device-2-azure-connection/terraform.tfvars.json > ./tests/examples-without-external-providers/virtual-device-2-azure-connection/tmp.test.json && mv ./tests/examples-without-external-providers/virtual-device-2-azure-connection/tmp.test.json ./tests/examples-without-external-providers/virtual-device-2-azure-connection/terraform.tfvars.json
+          echo $TEST_DATA_PROD_VIRTUAL_DEVICE_2_PORT_CONNECTION >> "./tests/examples-without-external-providers/virtual-device-2-port-connection/terraform.tfvars.json"
+          jq --arg timestamp "$TIMESTAMP" '.connection_name = ($timestamp + "_" + .connection_name)' ./tests/examples-without-external-providers/virtual-device-2-port-connection/terraform.tfvars.json > ./tests/examples-without-external-providers/virtual-device-2-port-connection/tmp.test.json && mv ./tests/examples-without-external-providers/virtual-device-2-port-connection/tmp.test.json ./tests/examples-without-external-providers/virtual-device-2-port-connection/terraform.tfvars.json
+
+      - name: Run Go Tests
+        run:
+          go test ./tests/prod -v -coverprofile coverage_prod_modules.txt -covermode=atomic -count 1 -parallel 8 -run "(DIGP)" -timeout 180m
+
+      - name: Upload test coverage to Codecov
+        if: ${{ always() }}
+        uses: codecov/codecov-action@v4
+        with:
+            token: ${{ secrets.CODECOV_TOKEN }}
+            files: ./coverage_prod_modules.txt
