@@ -182,7 +182,7 @@ func TestCloudRouter2AwsCreateConnection_DIGP(t *testing.T) {
 func TestCloudRouter2AzureCreateConnection_DIGP(t *testing.T) {
 
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
-		TerraformDir: "../../tests/examples-without-external-providers/cloud-router-2-azure-connection",
+		TerraformDir: "../../examples/cloud-router-2-azure-connection",
 	})
 
 	defer terraform.Destroy(t, terraformOptions)
@@ -191,6 +191,15 @@ func TestCloudRouter2AzureCreateConnection_DIGP(t *testing.T) {
 	terraform.InitAndApply(t, terraformOptions)
 	output := terraform.Output(t, terraformOptions, "azure_connection_id")
 	assert.NotNil(t, output)
+
+	terraformOptions = terraform.WithDefaultRetryableErrors(t, &terraform.Options{
+		Vars: map[string]interface{}{
+			"connection_name": "FCR2Azure_Name_Update",
+			"bandwidth":       100,
+		},
+		TerraformDir: "../../examples/cloud-router-2-azure-connection",
+	})
+	terraform.Apply(t, terraformOptions)
 }
 
 func TestCloudRouter2PortRoutingProtocolCreateConnection_DIGP(t *testing.T) {
