@@ -1,6 +1,6 @@
 # Fabric Virtual Device to Fabric Azure Service Profile Connection
 
-This example shows how to leverage the [Fabric Virtual Device Connection Module](equinix/fabric/modules/virtual-device-connection/README.md)
+This example shows how to leverage the [Fabric Virtual Device Connection Module](https://registry.terraform.io/modules/equinix/fabric/equinix/latest/submodules/virtual-device-connection)
 to create a Fabric Connection from a Fabric Virtual Device to Fabric Azure Service Profile.
 
 It leverages the Equinix Terraform Provider, the Azure Terraform Provider, and the Fabric Virtual Device Connection

@@ -1,6 +1,6 @@
 # Metal to Generic Service Profile Connection Example
 
-This example shows how to leverage the [Metal Connection Module](equinix/fabric/modules/metalconnection/README.md)
+This example shows how to leverage the [Metal Connection Module](https://registry.terraform.io/modules/equinix/fabric/equinix/latest/submodules/metal-connection)
 to create a Fabric Connection from Equinix Metal to Generic Service Profile.
 
 It leverages the Equinix Terraform Provider and the Metal Connection

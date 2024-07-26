@@ -1,6 +1,6 @@
 # Fabric Cloud Router to Azure Service Profile Redundant Connection
 
-This example shows how to leverage the [Fabric Cloud Router Connection Module](equinix/fabric/modules/cloud-router-connection/README.md)
+This example shows how to leverage the [Fabric Cloud Router Connection Module](https://registry.terraform.io/modules/equinix/fabric/equinix/latest/submodules/cloud-router-connection)
 to create a Fabric Connection from a Fabric Cloud Router to Azure Service Profile using two connections. A primary and
 secondary connection.
 

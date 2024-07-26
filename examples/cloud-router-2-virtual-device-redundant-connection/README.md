@@ -1,6 +1,6 @@
 # Fabric Cloud Router to Virtual Device Redundant Connection
 
-This example shows how to leverage the [Fabric Cloud Router Connection Module](equinix/fabric/modules/cloud-router-connection/README.md)
+This example shows how to leverage the [Fabric Cloud Router Connection Module](https://registry.terraform.io/modules/equinix/fabric/equinix/latest/submodules/cloud-router-connection)
 to create a Fabric Connection from a Fabric Cloud Router to Virtual Devices using two connections.A Primary and secondary connection.
 
 It leverages the Equinix Terraform Provider and the Fabric Cloud Router Connection

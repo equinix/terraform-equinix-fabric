@@ -1,6 +1,6 @@
 # Fabric Port to Fabric Azure Service Profile Redundant Connection
 
-This example shows how to leverage the [Fabric Port Connection Module](equinix/fabric/modules/port-connection/README.md)
+This example shows how to leverage the [Fabric Port Connection Module](https://registry.terraform.io/modules/equinix/fabric/equinix/latest/submodules/port-connection)
 to create a Fabric Connection from a Fabric Port to Fabric Azure Service Profile with two connections. A primary
 and secondary connection.
 

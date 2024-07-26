@@ -1,6 +1,6 @@
 # Fabric Routing Protocols Addition to Fabric Connection
 
-This example shows how to leverage the [Fabric Cloud Router Routing Protocols Module](equinix/fabric/modules/cloud-router-routing-protocols/README.md)
+This example shows how to leverage the [Fabric Cloud Router Routing Protocols Module](https://registry.terraform.io/modules/equinix/fabric/equinix/latest/submodules/cloud-router-routing-protocols)
 to create Routing Protocols for a Fabric Connection.
 
 It leverages the Equinix Terraform Provider, and the Fabric Cloud Router Routing Protocols
