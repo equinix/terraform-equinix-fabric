@@ -38,3 +38,11 @@ terraform.rc
 
 # Ignore IDE Files
 .idea*
+
+# Ignore OSX Files
+.DS_Store
+
+# Ignore log/xml/html files generated from test output
+*.log
+*.xml
+*.html
