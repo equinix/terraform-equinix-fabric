@@ -1,4 +1,4 @@
-name: terratests-metal-nimf-suite
+name: terratests-prod-metal-nimf-suite
 
 on:
   workflow_dispatch:

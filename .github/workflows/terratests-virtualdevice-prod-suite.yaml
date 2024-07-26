@@ -1,4 +1,4 @@
-name: terratests-prod-suite
+name: terratests-vurtualdevice-prod-suite
 
 on:
   workflow_dispatch:
