@@ -10,4 +10,3 @@ output "metal_service_profile_connection_id" {
 output "metal_connection_status" {
   value = data.equinix_metal_connection.NIMF-test.status
 }
-

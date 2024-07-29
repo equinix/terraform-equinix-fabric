@@ -74,5 +74,6 @@ resource "ibm_dl_gateway_action" "test_dl_gateway_action" {
 }
 
 data "equinix_metal_connection" "NIMF-test" {
+  depends_on = [time_sleep.wait_dl_connection]
   connection_id     = equinix_metal_connection.metal-connection.id
 }
