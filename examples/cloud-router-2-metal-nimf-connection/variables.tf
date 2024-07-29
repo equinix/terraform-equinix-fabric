@@ -82,3 +82,11 @@ variable "zside_ap_type" {
   type        = string
   default     = "SP"
 }
+variable "direct_rp_name" {
+  description = "Name of the Direct Routing Protocol"
+  type        = string
+}
+variable "direct_equinix_ipv4_ip" {
+  description = "IPv4 Address for Direct Routing Protocol"
+  type        = string
+}

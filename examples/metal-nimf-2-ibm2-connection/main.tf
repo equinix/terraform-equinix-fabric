@@ -52,6 +52,7 @@ module "metal_2_ibm2_connection" {
 }
 
 resource "time_sleep" "wait_dl_connection" {
+  depends_on = [module.metal_2_ibm2_connection]
   create_duration = "1m"
 }
 
@@ -70,4 +71,8 @@ resource "ibm_dl_gateway_action" "test_dl_gateway_action" {
   global          = var.ibm_gateway_global
   metered         = var.ibm_gateway_metered
   resource_group  = data.ibm_resource_group.rg.id
+}
+
+data "equinix_metal_connection" "NIMF-test" {
+  connection_id     = equinix_metal_connection.metal-connection.id
 }

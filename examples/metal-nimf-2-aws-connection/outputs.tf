@@ -13,3 +13,6 @@ output "aws_dx_gateway_id" {
 output "aws_interface_id" {
   value = aws_dx_private_virtual_interface.aws_virtual_interface.id
 }
+output "metal_connection_status" {
+  value = data.equinix_metal_connection.NIMF-test.status
+}

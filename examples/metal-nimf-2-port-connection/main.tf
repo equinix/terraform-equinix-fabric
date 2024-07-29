@@ -37,3 +37,11 @@ module "metal_2_port_connection" {
   zside_vlan_tag        = var.zside_vlan_tag
   zside_location        = var.zside_location
 }
+
+resource "time_sleep" "wait_dl_connection" {
+  create_duration = "2m"
+}
+
+data "equinix_metal_connection" "NIMF-test" {
+  connection_id     = equinix_metal_connection.metal-connection.id
+}

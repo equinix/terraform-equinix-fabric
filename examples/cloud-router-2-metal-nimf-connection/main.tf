@@ -36,3 +36,24 @@ module "cloud_router_2_metal_connection" {
   zside_ap_type               = var.zside_ap_type
   zside_ap_authentication_key = equinix_metal_connection.metal-connection.authorization_code
 }
+
+module "routing_protocols" {
+  depends_on = [module.cloud_router_2_metal_connection]
+  source     = "../../modules/cloud-router-routing-protocols"
+
+  connection_uuid = module.cloud_router_2_metal_connection.primary_connection_id
+
+  # Direct RP Details
+  direct_rp_name         = var.direct_rp_name
+  direct_equinix_ipv4_ip = var.direct_equinix_ipv4_ip
+}
+
+resource "time_sleep" "wait_dl_connection" {
+  depends_on = [module.routing_protocols]
+  create_duration = "2m"
+}
+
+data "equinix_metal_connection" "NIMF-test" {
+  depends_on = [time_sleep.wait_dl_connection]
+  connection_id     = equinix_metal_connection.metal-connection.id
+}

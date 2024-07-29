@@ -30,4 +30,10 @@ resource "equinix_fabric_routing_protocol" "bgp" {
     enabled          = var.bgp_enabled_ipv6
     customer_peer_ip = var.bgp_customer_peer_ipv6
   }
+  dynamic "bgp_ipv6" {
+    for_each = var.bgp_customer_peer_ipv6 != "" ? [1] : []
+    content {
+      customer_peer_ip = var.bgp_customer_peer_ipv6
+    }
+  }
 }

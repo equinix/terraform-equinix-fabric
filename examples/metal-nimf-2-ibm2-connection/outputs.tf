@@ -10,3 +10,6 @@ output "Metal_IBM2_Connection_Id" {
 output "IBM_Gateway_Action_Id" {
   value = ibm_dl_gateway_action.test_dl_gateway_action.id
 }
+output "metal_connection_status" {
+  value = data.equinix_metal_connection.NIMF-test.status
+}

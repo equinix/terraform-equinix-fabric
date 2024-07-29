@@ -76,3 +76,13 @@ resource "aws_dx_private_virtual_interface" "aws_virtual_interface" {
   bgp_auth_key     = var.aws_vif_bgp_auth_key
   dx_gateway_id    = aws_dx_gateway.aws_gateway.id
 }
+
+resource "time_sleep" "wait_dl_connection" {
+  depends_on = [module.metal_2_aws_connection]
+  create_duration = "2m"
+}
+
+data "equinix_metal_connection" "NIMF-test" {
+  depends_on = [time_sleep.wait_dl_connection]
+  connection_id     = equinix_metal_connection.metal-connection.id
+}

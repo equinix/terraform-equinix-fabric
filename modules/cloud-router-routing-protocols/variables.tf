@@ -13,9 +13,8 @@ variable "direct_equinix_ipv4_ip" {
 variable "direct_equinix_ipv6_ip" {
   description = "IPv6 Address for Direct Routing Protocol"
   type        = string
+  default     = ""
 }
-
-
 variable "bgp_rp_name" {
   description = "Name of the BGP Routing Protocol"
   type        = string
