@@ -4,11 +4,11 @@ provider "equinix" {
   auth_token    = var.metal_auth_token
 }
 provider "oci" {
-  tenancy_ocid      = var.oracle_tenancy_ocid
-  user_ocid         = var.oracle_user_ocid
-  private_key       = var.oracle_private_key
-  fingerprint       = var.oracle_fingerprint
-  region            = var.oracle_region
+  tenancy_ocid = var.oracle_tenancy_ocid
+  user_ocid    = var.oracle_user_ocid
+  private_key  = var.oracle_private_key
+  fingerprint  = var.oracle_fingerprint
+  region       = var.oracle_region
 }
 
 resource "equinix_metal_vlan" "vlan-server" {
@@ -42,10 +42,10 @@ locals {
 }
 
 resource "oci_core_virtual_circuit" "test_virtual_circuit" {
-  display_name          = var.oracle_vc_display_name
-  compartment_id        = var.oracle_compartment_id
-  type                  = var.oracle_vc_type
-  bandwidth_shape_name  = var.oracle_bandwidth
+  display_name         = var.oracle_vc_display_name
+  compartment_id       = var.oracle_compartment_id
+  type                 = var.oracle_vc_type
+  bandwidth_shape_name = var.oracle_bandwidth
   cross_connect_mappings {
     customer_bgp_peering_ip = var.oracle_customer_bgp_peering_ip
     oracle_bgp_peering_ip   = var.oracle_bgp_peering_ip
@@ -80,11 +80,11 @@ module "metal_2_oracle_connection" {
 }
 
 resource "time_sleep" "wait_dl_connection" {
-  depends_on = [module.metal_2_oracle_connection]
+  depends_on      = [module.metal_2_oracle_connection]
   create_duration = "2m"
 }
 
 data "equinix_metal_connection" "NIMF-test" {
-  depends_on = [time_sleep.wait_dl_connection]
-  connection_id     = equinix_metal_connection.metal-connection.id
+  depends_on    = [time_sleep.wait_dl_connection]
+  connection_id = equinix_metal_connection.metal-connection.id
 }

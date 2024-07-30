@@ -32,18 +32,18 @@ module "metal_2_port_connection" {
 
   aside_ap_authentication_key = equinix_metal_connection.metal-connection.authorization_code
 
-  zside_ap_type         = var.zside_ap_type
-  zside_port_name       = var.zside_port_name
-  zside_vlan_tag        = var.zside_vlan_tag
-  zside_location        = var.zside_location
+  zside_ap_type   = var.zside_ap_type
+  zside_port_name = var.zside_port_name
+  zside_vlan_tag  = var.zside_vlan_tag
+  zside_location  = var.zside_location
 }
 
 resource "time_sleep" "wait_dl_connection" {
-  depends_on = [module.metal_2_port_connection]
+  depends_on      = [module.metal_2_port_connection]
   create_duration = "2m"
 }
 
 data "equinix_metal_connection" "NIMF-test" {
-  depends_on = [time_sleep.wait_dl_connection]
-  connection_id     = equinix_metal_connection.metal-connection.id
+  depends_on    = [time_sleep.wait_dl_connection]
+  connection_id = equinix_metal_connection.metal-connection.id
 }

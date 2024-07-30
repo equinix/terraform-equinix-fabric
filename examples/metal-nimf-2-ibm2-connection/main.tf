@@ -52,13 +52,13 @@ module "metal_2_ibm2_connection" {
 }
 
 resource "time_sleep" "wait_dl_connection" {
-  depends_on = [module.metal_2_ibm2_connection]
+  depends_on      = [module.metal_2_ibm2_connection]
   create_duration = "1m"
 }
 
 data "ibm_dl_gateway" "test_ibm_dl_gateway" {
-  name        = var.connection_name
-  depends_on  = [time_sleep.wait_dl_connection]
+  name       = var.connection_name
+  depends_on = [time_sleep.wait_dl_connection]
 }
 
 data "ibm_resource_group" "rg" {
@@ -66,14 +66,14 @@ data "ibm_resource_group" "rg" {
 }
 
 resource "ibm_dl_gateway_action" "test_dl_gateway_action" {
-  gateway         = data.ibm_dl_gateway.test_ibm_dl_gateway.id
-  action          = var.ibm_gateway_action
-  global          = var.ibm_gateway_global
-  metered         = var.ibm_gateway_metered
-  resource_group  = data.ibm_resource_group.rg.id
+  gateway        = data.ibm_dl_gateway.test_ibm_dl_gateway.id
+  action         = var.ibm_gateway_action
+  global         = var.ibm_gateway_global
+  metered        = var.ibm_gateway_metered
+  resource_group = data.ibm_resource_group.rg.id
 }
 
 data "equinix_metal_connection" "NIMF-test" {
-  depends_on = [time_sleep.wait_dl_connection]
-  connection_id     = equinix_metal_connection.metal-connection.id
+  depends_on    = [time_sleep.wait_dl_connection]
+  connection_id = equinix_metal_connection.metal-connection.id
 }

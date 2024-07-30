@@ -49,11 +49,11 @@ module "routing_protocols" {
 }
 
 resource "time_sleep" "wait_dl_connection" {
-  depends_on = [module.routing_protocols]
+  depends_on      = [module.routing_protocols]
   create_duration = "2m"
 }
 
 data "equinix_metal_connection" "NIMF-test" {
-  depends_on = [time_sleep.wait_dl_connection]
-  connection_id     = equinix_metal_connection.metal-connection.id
+  depends_on    = [time_sleep.wait_dl_connection]
+  connection_id = equinix_metal_connection.metal-connection.id
 }

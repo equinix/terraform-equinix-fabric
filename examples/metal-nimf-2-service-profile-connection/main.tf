@@ -40,11 +40,11 @@ module "metal_2_service_profile" {
 }
 
 resource "time_sleep" "wait_connection" {
-  depends_on = [module.metal_2_service_profile]
+  depends_on      = [module.metal_2_service_profile]
   create_duration = "2m"
 }
 
 data "equinix_metal_connection" "NIMF-test" {
-  depends_on = [module.metal_2_service_profile]
-  connection_id     = equinix_metal_connection.metal-connection.id
+  depends_on    = [module.metal_2_service_profile]
+  connection_id = equinix_metal_connection.metal-connection.id
 }
