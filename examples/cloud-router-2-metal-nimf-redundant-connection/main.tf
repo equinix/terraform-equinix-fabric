@@ -63,7 +63,7 @@ module "primary_connection_routing_protocols" {
 
 module "secondary_connection_routing_protocols" {
   depends_on = [module.cloud_router_2_metal_connection]
-  source = "../../modules/cloud-router-routing-protocols"
+  source     = "../../modules/cloud-router-routing-protocols"
 
   connection_uuid = module.cloud_router_2_metal_connection.secondary_connection_id
 
