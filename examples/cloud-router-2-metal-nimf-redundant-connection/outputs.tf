@@ -13,3 +13,4 @@ output "primary_connection_cloud_router_routing_protocol_id" {
 output "secondary_connection_cloud_router_routing_protocol_id" {
   value = module.secondary_connection_routing_protocols.direct_routing_protocol_id
 }
+
