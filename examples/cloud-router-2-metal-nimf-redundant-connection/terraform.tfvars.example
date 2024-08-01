@@ -25,6 +25,3 @@ secondary_direct_equinix_ipv4_ip = "190.1.1.9/30"
 secondary_connection_name       = "fcr_2_metal_sec"
 secondary_bandwidth             = "50"
 aside_fcr_uuid                  = "<Primary Fabric Cloud router UUID>"
-
-
-
