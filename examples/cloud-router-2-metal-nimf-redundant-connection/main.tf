@@ -3,16 +3,19 @@ provider "equinix" {
   client_secret = var.equinix_client_secret
   auth_token    = var.metal_auth_token
 }
+
 resource "equinix_metal_vlan" "vlan-server" {
   description = "${var.metal_connection_metro} VLAN Server 1 to Cloud"
   metro       = var.metal_connection_metro
   project_id  = var.metal_project_id
 }
+
 resource "equinix_metal_vlan" "vlan-server-1" {
   description = "${var.metal_connection_metro} VLAN Server 2 to Cloud"
   metro       = var.metal_connection_metro
   project_id  = var.metal_project_id
 }
+
 resource "equinix_metal_connection" "metal-connection" {
   name          = var.metal_connection_name
   redundancy    = var.metal_connection_redundancy
@@ -23,6 +26,7 @@ resource "equinix_metal_connection" "metal-connection" {
   vlans         = [equinix_metal_vlan.vlan-server.vxlan, equinix_metal_vlan.vlan-server-1.vxlan]
   contact_email = var.metal_contact_email
 }
+
 module "cloud_router_2_metal_connection" {
   source = "../../modules/cloud-router-connection"
 
@@ -45,6 +49,7 @@ module "cloud_router_2_metal_connection" {
   secondary_connection_name = var.secondary_connection_name
   secondary_bandwidth       = var.secondary_bandwidth
 }
+
 module "primary_connection_routing_protocols" {
   depends_on = [module.cloud_router_2_metal_connection]
   source     = "../../modules/cloud-router-routing-protocols"
@@ -55,9 +60,10 @@ module "primary_connection_routing_protocols" {
   direct_rp_name         = var.primary_direct_rp_name
   direct_equinix_ipv4_ip = var.primary_direct_equinix_ipv4_ip
 }
+
 module "secondary_connection_routing_protocols" {
   depends_on = [module.cloud_router_2_metal_connection]
-  source     = "../../modules/cloud-router-routing-protocols"
+  source = "../../modules/cloud-router-routing-protocols"
 
   connection_uuid = module.cloud_router_2_metal_connection.secondary_connection_id
 
@@ -65,16 +71,3 @@ module "secondary_connection_routing_protocols" {
   direct_rp_name         = var.secondary_direct_rp_name
   direct_equinix_ipv4_ip = var.secondary_direct_equinix_ipv4_ip
 }
-resource "time_sleep" "wait_dl_connection" {
-  depends_on = [
-    module.primary_connection_routing_protocols,
-    module.secondary_connection_routing_protocols
-  ]
-  create_duration = "2m"
-
-}
-data "equinix_metal_connection" "NIMF-test" {
-  depends_on    = [time_sleep.wait_dl_connection]
-  connection_id = equinix_metal_connection.metal-connection.id
-}
-
