@@ -375,3 +375,4 @@ data "equinix_metal_connection" "NIMF-test" {
 | <a name="output_primary_connection_cloud_router_routing_protocol_id"></a> [primary\_connection\_cloud\_router\_routing\_protocol\_id](#output\_primary\_connection\_cloud\_router\_routing\_protocol\_id) | n/a |
 | <a name="output_secondary_connection_cloud_router_routing_protocol_id"></a> [secondary\_connection\_cloud\_router\_routing\_protocol\_id](#output\_secondary\_connection\_cloud\_router\_routing\_protocol\_id) | n/a |
 <!-- END_TF_DOCS -->
+

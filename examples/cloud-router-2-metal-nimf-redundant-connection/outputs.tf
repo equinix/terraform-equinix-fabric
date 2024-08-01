@@ -16,3 +16,4 @@ output "secondary_connection_cloud_router_routing_protocol_id" {
 output "metal_connection_status" {
   value = data.equinix_metal_connection.NIMF-test.status
 }
+
