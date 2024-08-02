@@ -106,4 +106,3 @@ variable "secondary_direct_equinix_ipv4_ip" {
   description = "IPv4 Address for Direct Routing Protocol for Secondary Connection"
   type        = string
 }
-

@@ -71,4 +71,3 @@ module "secondary_connection_routing_protocols" {
   direct_rp_name         = var.secondary_direct_rp_name
   direct_equinix_ipv4_ip = var.secondary_direct_equinix_ipv4_ip
 }
-
