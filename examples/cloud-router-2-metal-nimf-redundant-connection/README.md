@@ -8,6 +8,3 @@ Module to setup the connection based on the parameters you have provided to this
 you see used in this example it will allow you to create a more specific use case for your own needs.
 
 See example usage below for details on how to use this example.
-
-<!-- Begin Example Usage (Do not edit contents) -->
-<!-- End Example Usage -->
