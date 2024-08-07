@@ -26,8 +26,9 @@ jobs:
         uses: terraform-docs/gh-actions@v1.2.0
         with:
           config-file: templates/examples-terraform-docs.yaml
-          recursive: true
+          recursive: "true"
           recursive-path: examples
+          recursive-include-main: "false"
           output-file: README.md
           args: --sort-by required
           indention: 2
@@ -38,7 +39,7 @@ jobs:
         uses: terraform-docs/gh-actions@v1.2.0
         with:
           config-file: templates/modules-terraform-docs.yaml
-          recursive: true
+          recursive: "true"
           recursive-path: modules
           output-file: README.md
           args: --sort-by required

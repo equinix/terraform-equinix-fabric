@@ -1,6 +1,4 @@
 formatter: "markdown table"
-recursive:
-  recursive-include-main: "false"
 content: |-
   ## Equinix Fabric Developer Documentation
   
