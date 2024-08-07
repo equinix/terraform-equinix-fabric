@@ -9,6 +9,7 @@ on:
     paths:
       - '**/*.tpl'
       - '**/*.tf'
+  workflow_dispatch:
 
 jobs:
   tf-docs:
