@@ -1,4 +1,6 @@
 formatter: "markdown table"
+recursive:
+  recursive-include-main: "false"
 content: |-
   ## Equinix Fabric Developer Documentation
   
@@ -36,12 +38,15 @@ content: |-
   
   versions.tf
   ```hcl
-  {{ include "versions.tf" }}
+  {{ include "EXAMPLE_PATH/versions.tf" }}
+     METAL=NIMF/versions.tf
+     ,..
+  ...
   ```
   
   variables.tf
    ```hcl
-  {{ include "variables.tf" }}
+  {{ include "EXAMPLE_PATH/variables.tf" }}
   ```
   
   outputs.tf
