@@ -28,7 +28,6 @@ jobs:
           config-file: templates/examples-terraform-docs.yaml
           recursive: "true"
           recursive-path: examples
-          recursive-include-main: "false"
           output-file: README.md
           args: --sort-by required
           indention: 2
