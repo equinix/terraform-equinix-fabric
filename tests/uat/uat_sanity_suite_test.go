@@ -201,3 +201,17 @@ func TestVirtualDevice2PortCreateConnection_PNFV(t *testing.T) {
 	output := terraform.Output(t, terraformOptions, "port_connection_id")
 	assert.NotNil(t, output)
 }
+
+func TestCloudRouter2VirtualDeviceCreateConnection_PFCR(t *testing.T) {
+
+	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
+		TerraformDir: "../../examples/cloud-router-2-virtual-device-connection",
+	})
+
+	defer terraform.Destroy(t, terraformOptions)
+	t.Parallel()
+
+	terraform.InitAndApply(t, terraformOptions)
+	output := terraform.Output(t, terraformOptions, "FCR_VD_Connection")
+	assert.NotNil(t, output)
+}

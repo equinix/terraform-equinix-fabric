@@ -326,3 +326,17 @@ func TestVirtualDevice2PortCreateConnection_DIGP(t *testing.T) {
 	})
 	terraform.Apply(t, terraformOptions)
 }
+
+func TestCloudRouter2VirtualDeviceCreateConnection_DIGP(t *testing.T) {
+
+	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
+		TerraformDir: "../../tests/examples-without-external-providers/cloud-router-2-virtual-device-connection",
+	})
+
+	defer terraform.Destroy(t, terraformOptions)
+	t.Parallel()
+
+	terraform.InitAndApply(t, terraformOptions)
+	output := terraform.Output(t, terraformOptions, "FCR_VD_Connection")
+	assert.NotNil(t, output)
+}

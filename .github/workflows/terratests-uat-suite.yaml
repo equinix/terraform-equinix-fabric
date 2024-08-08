@@ -72,6 +72,7 @@ jobs:
       TEST_DATA_UAT_CLOUD_ROUTER_2_PORT_ROUTING_PROTOCOL_CONNECTION: ${{secrets.TEST_DATA_UAT_CLOUD_ROUTER_2_PORT_ROUTING_PROTOCOL_CONNECTION}}
       TEST_DATA_UAT_CLOUD_ROUTER_2_SERVICE_PROFILE_CONNECTION: ${{secrets.TEST_DATA_UAT_CLOUD_ROUTER_2_SERVICE_PROFILE_CONNECTION}}
       TEST_DATA_UAT_CLOUD_ROUTER_2_WAN_CONNECTION: ${{secrets.TEST_DATA_UAT_CLOUD_ROUTER_2_WAN_CONNECTION}}
+      TEST_DATA_UAT_CLOUD_ROUTER_2_VIRTUAL_DEVICE_CONNECTION: ${{secrets.TEST_DATA_UAT_CLOUD_ROUTER_2_WAN_CONNECTION}}
 
     steps:
       - name: Check out code into the Go module directory
@@ -108,6 +109,7 @@ jobs:
           echo $TEST_DATA_UAT_CLOUD_ROUTER_2_PORT_ROUTING_PROTOCOL_CONNECTION >> "./tests/examples-without-external-providers/cloud-router-2-port-routing-protocol-connection/terraform.tfvars.json"
           echo $TEST_DATA_UAT_CLOUD_ROUTER_2_SERVICE_PROFILE_CONNECTION >> "./examples/cloud-router-2-service-profile-connection/terraform.tfvars.json"
           echo $TEST_DATA_UAT_CLOUD_ROUTER_2_WAN_CONNECTION >> "./examples/cloud-router-2-wan-connection/terraform.tfvars.json"
+          echo $TEST_DATA_UAT_CLOUD_ROUTER_2_VIRTUAL_DEVICE_CONNECTION >> "./examples/cloud-router-2-virtual-device-connection/terraform.tfvars.json"
 
       - name: Run Go Tests
         run:
