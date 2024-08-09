@@ -52,7 +52,7 @@ jobs:
 
       - name: Run Go Tests
         run:
-          go test ./tests/prod -v -coverprofile coverage_prod_modules.txt -covermode=atomic -count 1 -parallel 8 -run "(DIGP)" -timeout 180m
+          go test ./tests/prod/virtual-device -v -coverprofile coverage_prod_modules.txt -covermode=atomic -count 1 -parallel 8 -run "(DIGP)" -timeout 180m
 
       - name: Upload test coverage to Codecov
         if: ${{ always() }}
