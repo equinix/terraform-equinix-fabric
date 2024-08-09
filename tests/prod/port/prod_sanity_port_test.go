@@ -147,7 +147,7 @@ func TestPort2WanCreateConnection_DIGP(t *testing.T) {
 			"connection_name": "P2WAN_Name_Update",
 			"bandwidth":       50,
 		},
-		TerraformDir: "../../tests/examples-without-external-providers/port-2-wan-connection",
+		TerraformDir: "../../../tests/examples-without-external-providers/port-2-wan-connection",
 	})
 	terraform.Apply(t, terraformOptions)
 }
