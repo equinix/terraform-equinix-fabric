@@ -19,3 +19,5 @@ bandwidth                       = 50
 project_id                      = "<Fabric_Project_ID>"
 aside_fcr_uuid                  = "<Primary Fabric Cloud router UUID>"
 zside_ap_type                   = "METAL_NETWORK"
+direct_rp_name                  = "metal-conn-rp"
+direct_equinix_ipv4_ip          = "192.168.100.1/30"

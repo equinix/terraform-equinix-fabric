@@ -83,10 +83,6 @@ variable "zside_fabric_sp_name" {
   description = "Equinix Service Profile Name"
   type        = string
 }
-variable "zside_seller_region" {
-  description = "Access point seller region"
-  type        = string
-}
 variable "zside_location" {
   description = "Access point metro code"
   type        = string
