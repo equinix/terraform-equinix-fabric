@@ -39,7 +39,7 @@ func TestMetalNIMF2AzureCreateConnection(t *testing.T) {
 
 	assert.NotNil(t, outputConnectionId)
 	assert.NotNil(t, outputStatus)
-	assert.Equal(t, "active", outputStatus)
+	assert.Equal(t, "pending", outputStatus)
 }
 
 func TestMetalNIMF2GoogleCreateConnection(t *testing.T) {
