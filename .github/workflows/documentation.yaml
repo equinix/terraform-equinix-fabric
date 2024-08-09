@@ -47,3 +47,20 @@ jobs:
             sed -i "s@EXAMPLE_PATH@dir_name@g" "$file"
             sed -i "s@\.\.\/\.\.@equinix\/fabric\/equinix\/@" "$file"
           done
+
+      - name: Create Pull Request
+        if: steps.terraform-docs.outputs.num_changed != '0'
+        uses: peter-evans/create-pull-request@v6
+        with:
+          commit-message: 'generate-terraform-docs: automated action'
+          committer: GitHub <noreply@github.com>
+          author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
+          title: 'Generate-terraform-docs: Automated action'
+          body: |
+            Update terraform docs
+          branch: update-terraform-docs
+          branch-suffix: timestamp
+          base: main
+          delete-branch: true
+
+      # TODO(ocobleseqx): https://github.com/peter-evans/enable-pull-request-automerge
