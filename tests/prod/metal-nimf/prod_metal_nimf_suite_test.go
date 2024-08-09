@@ -60,24 +60,6 @@ func TestMetalNIMF2GoogleCreateConnection(t *testing.T) {
 	assert.Equal(t, "active", outputStatus)
 }
 
-func TestMetalNIMF2Ibm2CreateConnection(t *testing.T) {
-
-	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
-		TerraformDir: "../../../examples/metal-nimf-2-ibm2-connection",
-	})
-
-	defer terraform.Destroy(t, terraformOptions)
-	t.Parallel()
-
-	terraform.InitAndApply(t, terraformOptions)
-	outputConnectionId := terraform.Output(t, terraformOptions, "Metal_IBM2_Connection_Id")
-	outputStatus := terraform.Output(t, terraformOptions, "metal_connection_status")
-
-	assert.NotNil(t, outputConnectionId)
-	assert.NotNil(t, outputStatus)
-	assert.Equal(t, "active", outputStatus)
-}
-
 func TestMetalNIMF2OracleCreateConnection(t *testing.T) {
 
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{

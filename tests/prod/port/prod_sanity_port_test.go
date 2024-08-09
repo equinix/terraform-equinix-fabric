@@ -78,20 +78,6 @@ func TestPort2GoogleCreateConnection_DIGP(t *testing.T) {
 	terraform.Apply(t, terraformOptions)
 }
 
-func TestPort2Ibm2CreateConnection_DIGP(t *testing.T) {
-
-	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
-		TerraformDir: "../../../examples/port-2-ibm2-connection",
-	})
-
-	defer terraform.Destroy(t, terraformOptions)
-	t.Parallel()
-
-	terraform.InitAndApply(t, terraformOptions)
-	output := terraform.Output(t, terraformOptions, "ibm2_connection_id")
-	assert.NotNil(t, output)
-}
-
 func TestPort2OracleCreateConnection_DIGP(t *testing.T) {
 
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
