@@ -9,7 +9,7 @@ import (
 func TestVirtualDevice2WanCreateConnection_DIGP(t *testing.T) {
 
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
-		TerraformDir: "../../tests/examples-without-external-providers/virtual-device-2-wan-connection",
+		TerraformDir: "../../../tests/examples-without-external-providers/virtual-device-2-wan-connection",
 	})
 
 	defer terraform.Destroy(t, terraformOptions)
@@ -23,7 +23,7 @@ func TestVirtualDevice2WanCreateConnection_DIGP(t *testing.T) {
 func TestVirtualDevice2AzureCreateConnection_DIGP(t *testing.T) {
 
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
-		TerraformDir: "../../tests/examples-without-external-providers/virtual-device-2-azure-connection",
+		TerraformDir: "../../../tests/examples-without-external-providers/virtual-device-2-azure-connection",
 	})
 
 	defer terraform.Destroy(t, terraformOptions)
@@ -37,7 +37,7 @@ func TestVirtualDevice2AzureCreateConnection_DIGP(t *testing.T) {
 func TestVirtualDevice2PortCreateConnection_DIGP(t *testing.T) {
 
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
-		TerraformDir: "../../tests/examples-without-external-providers/virtual-device-2-port-connection",
+		TerraformDir: "../../../tests/examples-without-external-providers/virtual-device-2-port-connection",
 	})
 
 	defer terraform.Destroy(t, terraformOptions)
@@ -52,7 +52,7 @@ func TestVirtualDevice2PortCreateConnection_DIGP(t *testing.T) {
 			"connection_name": "VD2Port_Name_Update",
 			"bandwidth":       10,
 		},
-		TerraformDir: "../../tests/examples-without-external-providers/virtual-device-2-port-connection",
+		TerraformDir: "../../../tests/examples-without-external-providers/virtual-device-2-port-connection",
 	})
 	terraform.Apply(t, terraformOptions)
 }

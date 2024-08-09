@@ -9,7 +9,7 @@ import (
 func TestCloudRouterCreate_DIGP(t *testing.T) {
 
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
-		TerraformDir: "../../tests/examples-without-external-providers/cloud-router",
+		TerraformDir: "../../../tests/examples-without-external-providers/cloud-router",
 	})
 
 	defer terraform.Destroy(t, terraformOptions)
@@ -23,7 +23,7 @@ func TestCloudRouterCreate_DIGP(t *testing.T) {
 		Vars: map[string]interface{}{
 			"fcr_name": "FCR_Name_Update",
 		},
-		TerraformDir: "../../tests/examples-without-external-providers/cloud-router",
+		TerraformDir: "../../../tests/examples-without-external-providers/cloud-router",
 	})
 	terraform.Apply(t, terraformOptions)
 }
@@ -31,7 +31,7 @@ func TestCloudRouterCreate_DIGP(t *testing.T) {
 func TestCloudRouter2AwsCreateConnection_DIGP(t *testing.T) {
 
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
-		TerraformDir: "../../tests/examples-without-external-providers/cloud-router-2-aws-connection",
+		TerraformDir: "../../../tests/examples-without-external-providers/cloud-router-2-aws-connection",
 	})
 
 	defer terraform.Destroy(t, terraformOptions)
@@ -45,7 +45,7 @@ func TestCloudRouter2AwsCreateConnection_DIGP(t *testing.T) {
 func TestCloudRouter2AzureCreateConnection_DIGP(t *testing.T) {
 
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
-		TerraformDir: "../../tests/examples-without-external-providers/cloud-router-2-azure-connection",
+		TerraformDir: "../../../tests/examples-without-external-providers/cloud-router-2-azure-connection",
 	})
 
 	defer terraform.Destroy(t, terraformOptions)
@@ -59,7 +59,7 @@ func TestCloudRouter2AzureCreateConnection_DIGP(t *testing.T) {
 func TestCloudRouter2PortRoutingProtocolCreateConnection_DIGP(t *testing.T) {
 
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
-		TerraformDir: "../../tests/examples-without-external-providers/cloud-router-2-port-routing-protocol-connection",
+		TerraformDir: "../../../tests/examples-without-external-providers/cloud-router-2-port-routing-protocol-connection",
 	})
 
 	defer terraform.Destroy(t, terraformOptions)
@@ -74,7 +74,7 @@ func TestCloudRouter2PortRoutingProtocolCreateConnection_DIGP(t *testing.T) {
 			"connection_name": "FCR2Port_Name_Update",
 			"bandwidth":       100,
 		},
-		TerraformDir: "../../tests/examples-without-external-providers/cloud-router-2-port-routing-protocol-connection",
+		TerraformDir: "../../../tests/examples-without-external-providers/cloud-router-2-port-routing-protocol-connection",
 	})
 	terraform.Apply(t, terraformOptions)
 }
@@ -82,7 +82,7 @@ func TestCloudRouter2PortRoutingProtocolCreateConnection_DIGP(t *testing.T) {
 func TestCloudRouter2ServiceProfileCreateConnection_DIGP(t *testing.T) {
 
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
-		TerraformDir: "../../examples/cloud-router-2-service-profile-connection",
+		TerraformDir: "../../../examples/cloud-router-2-service-profile-connection",
 	})
 
 	defer terraform.Destroy(t, terraformOptions)
@@ -96,7 +96,7 @@ func TestCloudRouter2ServiceProfileCreateConnection_DIGP(t *testing.T) {
 func TestCloudRouter2WanCreateConnection_DIGP(t *testing.T) {
 
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
-		TerraformDir: "../../examples/cloud-router-2-wan-connection",
+		TerraformDir: "../../../examples/cloud-router-2-wan-connection",
 	})
 
 	defer terraform.Destroy(t, terraformOptions)
@@ -111,7 +111,7 @@ func TestCloudRouter2WanCreateConnection_DIGP(t *testing.T) {
 			"connection_name": "FCR2WAN_Name_Update",
 			"bandwidth":       50,
 		},
-		TerraformDir: "../../examples/cloud-router-2-wan-connection",
+		TerraformDir: "../../../examples/cloud-router-2-wan-connection",
 	})
 	terraform.Apply(t, terraformOptions)
 }

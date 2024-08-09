@@ -9,7 +9,7 @@ import (
 func TestPort2AlibabaCreateConnection_DIGP(t *testing.T) {
 
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
-		TerraformDir: "../../examples/port-2-alibaba-connection",
+		TerraformDir: "../../../examples/port-2-alibaba-connection",
 	})
 
 	defer terraform.Destroy(t, terraformOptions)
@@ -23,7 +23,7 @@ func TestPort2AlibabaCreateConnection_DIGP(t *testing.T) {
 func TestPort2AwsCreateConnection_DIGP(t *testing.T) {
 
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
-		TerraformDir: "../../tests/examples-without-external-providers/port-2-aws-connection",
+		TerraformDir: "../../../tests/examples-without-external-providers/port-2-aws-connection",
 	})
 
 	defer terraform.Destroy(t, terraformOptions)
@@ -37,7 +37,7 @@ func TestPort2AwsCreateConnection_DIGP(t *testing.T) {
 func TestPort2AzureCreateConnection_DIGP(t *testing.T) {
 
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
-		TerraformDir: "../../tests/examples-without-external-providers/port-2-azure-connection",
+		TerraformDir: "../../../tests/examples-without-external-providers/port-2-azure-connection",
 	})
 
 	defer terraform.Destroy(t, terraformOptions)
@@ -51,7 +51,7 @@ func TestPort2AzureCreateConnection_DIGP(t *testing.T) {
 		Vars: map[string]interface{}{
 			"connection_name": "P2Azure_Name_Update",
 		},
-		TerraformDir: "../../tests/examples-without-external-providers/port-2-azure-connection",
+		TerraformDir: "../../../tests/examples-without-external-providers/port-2-azure-connection",
 	})
 	terraform.Apply(t, terraformOptions)
 }
@@ -59,7 +59,7 @@ func TestPort2AzureCreateConnection_DIGP(t *testing.T) {
 func TestPort2GoogleCreateConnection_DIGP(t *testing.T) {
 
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
-		TerraformDir: "../../examples/port-2-google-connection",
+		TerraformDir: "../../../examples/port-2-google-connection",
 	})
 
 	defer terraform.Destroy(t, terraformOptions)
@@ -73,7 +73,7 @@ func TestPort2GoogleCreateConnection_DIGP(t *testing.T) {
 		Vars: map[string]interface{}{
 			"bandwidth": 100,
 		},
-		TerraformDir: "../../examples/port-2-google-connection",
+		TerraformDir: "../../../examples/port-2-google-connection",
 	})
 	terraform.Apply(t, terraformOptions)
 }
@@ -81,7 +81,7 @@ func TestPort2GoogleCreateConnection_DIGP(t *testing.T) {
 func TestPort2Ibm2CreateConnection_DIGP(t *testing.T) {
 
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
-		TerraformDir: "../../examples/port-2-ibm2-connection",
+		TerraformDir: "../../../examples/port-2-ibm2-connection",
 	})
 
 	defer terraform.Destroy(t, terraformOptions)
@@ -95,7 +95,7 @@ func TestPort2Ibm2CreateConnection_DIGP(t *testing.T) {
 func TestPort2OracleCreateConnection_DIGP(t *testing.T) {
 
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
-		TerraformDir: "../../examples/port-2-oracle-connection",
+		TerraformDir: "../../../examples/port-2-oracle-connection",
 	})
 
 	defer terraform.Destroy(t, terraformOptions)
@@ -109,7 +109,7 @@ func TestPort2OracleCreateConnection_DIGP(t *testing.T) {
 func TestPort2PortCreateConnection_DIGP(t *testing.T) {
 
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
-		TerraformDir: "../../examples/port-2-port-connection",
+		TerraformDir: "../../../examples/port-2-port-connection",
 	})
 
 	defer terraform.Destroy(t, terraformOptions)
@@ -124,7 +124,7 @@ func TestPort2PortCreateConnection_DIGP(t *testing.T) {
 			"connection_name": "P2Port_Name_Update",
 			"bandwidth":       100,
 		},
-		TerraformDir: "../../examples/port-2-port-connection",
+		TerraformDir: "../../../examples/port-2-port-connection",
 	})
 	terraform.Apply(t, terraformOptions)
 }
@@ -132,7 +132,7 @@ func TestPort2PortCreateConnection_DIGP(t *testing.T) {
 func TestPort2PrivateServiceProfileCreateConnection_DIGP(t *testing.T) {
 
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
-		TerraformDir: "../../examples/port-2-private-service-profile-connection",
+		TerraformDir: "../../../examples/port-2-private-service-profile-connection",
 	})
 
 	defer terraform.Destroy(t, terraformOptions)
@@ -146,7 +146,7 @@ func TestPort2PrivateServiceProfileCreateConnection_DIGP(t *testing.T) {
 func TestPort2WanCreateConnection_DIGP(t *testing.T) {
 
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
-		TerraformDir: "../../tests/examples-without-external-providers/port-2-wan-connection",
+		TerraformDir: "../../../tests/examples-without-external-providers/port-2-wan-connection",
 	})
 
 	defer terraform.Destroy(t, terraformOptions)
