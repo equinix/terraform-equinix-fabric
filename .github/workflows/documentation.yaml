@@ -21,36 +21,31 @@ jobs:
         with:
           ref: main
 
+      - name: Install terraform-docs
+        run: |
+          curl -sSLo ./terraform-docs.tar.gz https://terraform-docs.io/dl/v0.18.0/terraform-docs-v0.18.0-$(uname)-amd64.tar.gz
+          tar -xzf terraform-docs.tar.gz
+          chmod +x terraform-docs
+          mv terraform-docs /usr/local/bin/terraform-docs
+
       - name: Render Terraform docs inside the README.md files of examples
-        id: terraform-docs-examples
-        uses: terraform-docs/gh-actions@v1.2.0
-        with:
-          config-file: templates/examples-terraform-docs.yaml
-          recursive: true
-          recursive-path: examples
-          output-file: README.md
-          args: --sort-by required
-          indention: 2
-          git-push: "false"
+        run: |
+          find examples -type d -mindepth 1 -maxdepth 1 | while read dir; do
+            terraform-docs -c "./templates/examples-terraform-docs.yaml" --output-file "README.md" "$dir"
+          done
 
       - name: Render Terraform docs inside the README.md files of modules
-        id: terraform-docs-modules
-        uses: terraform-docs/gh-actions@v1.2.0
-        with:
-          config-file: templates/modules-terraform-docs.yaml
-          recursive: true
-          recursive-path: modules
-          output-file: README.md
-          args: --sort-by required
-          indention: 2
-          git-push: "false"
+        run: |
+          find modules -type d -mindepth 1 -maxdepth 1 | while read dir; do
+            terraform-docs -c "./templates/modules-terraform-docs.yaml" --output-file "README.md" "$dir"
+          done
 
       - name: Replace EXAMPLE_PATH placeholders inside the README.md files of examples
         run: |
-          find examples -name "README.md" | while read -r file; do
-            dir_name=$(basename "$(dirname "$file")")
-            sed -i "" "s@EXAMPLE_PATH@$dir_name@g" "$file"
-            sed -i "" "s@\.\.\/\.\.@equinix\/fabric\/equinix\/@" "$file"
+          find examples -name "README.md" | while read file; do
+            dir_name=$(dirname "$file")
+            sed -i "s@EXAMPLE_PATH@dir_name@g" "$file"
+            sed -i "s@\.\.\/\.\.@equinix\/fabric\/equinix\/@" "$file"
           done
 
       # terraform-docs/gh-actions@v1.0.0 modifies .git files with owner root:root, and the following steps fail with
