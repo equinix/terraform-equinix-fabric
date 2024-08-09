@@ -22,28 +22,16 @@ jobs:
           ref: main
 
       - name: Render Terraform docs inside the README.md files of examples
-        id: terraform-docs-examples
-        uses: terraform-docs/gh-actions@v1.2.0
-        with:
-          config-file: templates/examples-terraform-docs.yaml
-          recursive: true
-          recursive-path: examples
-          output-file: README.md
-          args: --sort-by required
-          indention: 2
-          git-push: "false"
+        run: |
+          find examples -type d -mindepth 1 -maxdepth 1 | while read dir; do
+            terraform-docs -c "./templates/examples-terraform-docs.yaml" --output-file "README.md" "$dir"
+          done
 
       - name: Render Terraform docs inside the README.md files of modules
-        id: terraform-docs-modules
-        uses: terraform-docs/gh-actions@v1.2.0
-        with:
-          config-file: templates/modules-terraform-docs.yaml
-          recursive: true
-          recursive-path: modules
-          output-file: README.md
-          args: --sort-by required
-          indention: 2
-          git-push: "false"
+        run: |
+          find modules -type d -mindepth 1 -maxdepth 1 | while read dir; do
+            terraform-docs -c "./templates/modules-terraform-docs.yaml"" --output-file "README.md" "$dir"
+          done
 
       - name: Replace EXAMPLE_PATH placeholders inside the README.md files of examples
         run: |
