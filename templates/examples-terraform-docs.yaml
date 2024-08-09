@@ -20,7 +20,7 @@ content: |-
   
   ```bash
   git clone https://github.com/equinix/terraform-equinix-fabric.git
-  cd terraform-equinix-fabric/EXAMPLE_PATH
+  cd terraform-equinix-fabric/examples/EXAMPLE_PATH
   terraform init
   terraform apply
   ```
