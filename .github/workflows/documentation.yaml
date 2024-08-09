@@ -42,8 +42,8 @@ jobs:
 
       - name: Replace EXAMPLE_PATH placeholders inside the README.md files of examples
         run: |
-          find examples -name "README.md" | while read -r file; do
-            dir_name=$(basename "$(dirname "$file")")
+          find examples -name "README.md" | while read file; do
+            dir_name=$(dirname "$file")
             sed -i "" "s@EXAMPLE_PATH@$dir_name@g" "$file"
             sed -i "" "s@\.\.\/\.\.@equinix\/fabric\/equinix\/@" "$file"
           done
