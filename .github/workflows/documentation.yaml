@@ -54,7 +54,7 @@ jobs:
         with:
           message: 'Apply changes in README'
           push: false
-          new_branch: feature-gha-docs-${{ github.run_id }}
+          new_branch: gha-docs
 
       - name: Create Pull Request
         if: success() && steps.commit_doc_changes.outcome == 'success'
@@ -66,7 +66,7 @@ jobs:
           title: 'Generate-terraform-docs: Automated action'
           body: |
             Update terraform docs
-          branch: feature-gha-docs
+          branch: gha-docs
           branch-suffix: timestamp
           base: main
           delete-branch: true
