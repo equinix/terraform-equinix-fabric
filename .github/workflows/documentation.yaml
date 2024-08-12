@@ -54,7 +54,7 @@ jobs:
         with:
           message: 'Apply changes in README'
           push: false
-          new_branch: 'feature-gha-docs'
+          new_branch: feature-gha-docs-${{ github.run_id }}
 
       - name: Create Pull Request
         if: success() && steps.commit_doc_changes.outcome == 'success'
