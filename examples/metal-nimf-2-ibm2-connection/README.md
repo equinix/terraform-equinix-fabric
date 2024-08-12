@@ -30,7 +30,7 @@ you should clone the github repository for this module and run terraform within 
 
 ```bash
 git clone https://github.com/equinix/terraform-equinix-fabric.git
-cd terraform-equinix-fabric/examples/metal-nimf-2-ibm2-connection
+cd terraform-equinix-fabric/examples/examples/metal-nimf-2-ibm2-connection
 terraform init
 terraform apply
 ```
@@ -248,6 +248,9 @@ output "Metal_IBM2_Connection_Id" {
 output "IBM_Gateway_Action_Id" {
   value = ibm_dl_gateway_action.test_dl_gateway_action.id
 }
+output "metal_connection_status" {
+  value = data.equinix_metal_connection.NIMF-test.status
+}
 ```
 
 main.tf
@@ -306,12 +309,13 @@ module "metal_2_ibm2_connection" {
 }
 
 resource "time_sleep" "wait_dl_connection" {
+  depends_on      = [module.metal_2_ibm2_connection]
   create_duration = "1m"
 }
 
 data "ibm_dl_gateway" "test_ibm_dl_gateway" {
-  name        = var.connection_name
-  depends_on  = [time_sleep.wait_dl_connection]
+  name       = var.connection_name
+  depends_on = [time_sleep.wait_dl_connection]
 }
 
 data "ibm_resource_group" "rg" {
@@ -319,11 +323,16 @@ data "ibm_resource_group" "rg" {
 }
 
 resource "ibm_dl_gateway_action" "test_dl_gateway_action" {
-  gateway         = data.ibm_dl_gateway.test_ibm_dl_gateway.id
-  action          = var.ibm_gateway_action
-  global          = var.ibm_gateway_global
-  metered         = var.ibm_gateway_metered
-  resource_group  = data.ibm_resource_group.rg.id
+  gateway        = data.ibm_dl_gateway.test_ibm_dl_gateway.id
+  action         = var.ibm_gateway_action
+  global         = var.ibm_gateway_global
+  metered        = var.ibm_gateway_metered
+  resource_group = data.ibm_resource_group.rg.id
+}
+
+data "equinix_metal_connection" "NIMF-test" {
+  depends_on    = [time_sleep.wait_dl_connection]
+  connection_id = equinix_metal_connection.metal-connection.id
 }
 ```
 
@@ -339,9 +348,9 @@ resource "ibm_dl_gateway_action" "test_dl_gateway_action" {
 
 | Name | Version |
 |------|---------|
-| <a name="provider_equinix"></a> [equinix](#provider\_equinix) | 2.2.0 |
-| <a name="provider_ibm"></a> [ibm](#provider\_ibm) | 1.67.1 |
-| <a name="provider_time"></a> [time](#provider\_time) | 0.11.2 |
+| <a name="provider_equinix"></a> [equinix](#provider\_equinix) | >= 1.38.1 |
+| <a name="provider_ibm"></a> [ibm](#provider\_ibm) | >= 1.12.0 |
+| <a name="provider_time"></a> [time](#provider\_time) | n/a |
 
 ## Modules
 
@@ -357,6 +366,7 @@ resource "ibm_dl_gateway_action" "test_dl_gateway_action" {
 | [equinix_metal_vlan.vlan-server](https://registry.terraform.io/providers/equinix/equinix/latest/docs/resources/metal_vlan) | resource |
 | [ibm_dl_gateway_action.test_dl_gateway_action](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/resources/dl_gateway_action) | resource |
 | [time_sleep.wait_dl_connection](https://registry.terraform.io/providers/hashicorp/time/latest/docs/resources/sleep) | resource |
+| [equinix_metal_connection.NIMF-test](https://registry.terraform.io/providers/equinix/equinix/latest/docs/data-sources/metal_connection) | data source |
 | [ibm_dl_gateway.test_ibm_dl_gateway](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/data-sources/dl_gateway) | data source |
 | [ibm_resource_group.rg](https://registry.terraform.io/providers/IBM-Cloud/ibm/latest/docs/data-sources/resource_group) | data source |
 
@@ -403,5 +413,6 @@ resource "ibm_dl_gateway_action" "test_dl_gateway_action" {
 | <a name="output_IBM_Gateway_Action_Id"></a> [IBM\_Gateway\_Action\_Id](#output\_IBM\_Gateway\_Action\_Id) | n/a |
 | <a name="output_Metal_IBM2_Connection_Id"></a> [Metal\_IBM2\_Connection\_Id](#output\_Metal\_IBM2\_Connection\_Id) | n/a |
 | <a name="output_metal_connection_id"></a> [metal\_connection\_id](#output\_metal\_connection\_id) | n/a |
+| <a name="output_metal_connection_status"></a> [metal\_connection\_status](#output\_metal\_connection\_status) | n/a |
 | <a name="output_metal_vlan_id"></a> [metal\_vlan\_id](#output\_metal\_vlan\_id) | n/a |
 <!-- END_TF_DOCS -->

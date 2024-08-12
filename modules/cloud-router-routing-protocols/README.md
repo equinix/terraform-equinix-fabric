@@ -44,9 +44,8 @@ variable "direct_equinix_ipv4_ip" {
 variable "direct_equinix_ipv6_ip" {
   description = "IPv6 Address for Direct Routing Protocol"
   type        = string
+  default     = ""
 }
-
-
 variable "bgp_rp_name" {
   description = "Name of the BGP Routing Protocol"
   type        = string
@@ -99,8 +98,11 @@ resource "equinix_fabric_routing_protocol" "direct" {
   direct_ipv4 {
     equinix_iface_ip = var.direct_equinix_ipv4_ip
   }
-  direct_ipv6 {
-    equinix_iface_ip = var.direct_equinix_ipv6_ip
+  dynamic "direct_ipv6" {
+    for_each = var.direct_equinix_ipv6_ip != "" ? [1] : []
+    content {
+      equinix_iface_ip = var.direct_equinix_ipv6_ip
+    }
   }
 }
 
@@ -120,9 +122,11 @@ resource "equinix_fabric_routing_protocol" "bgp" {
     enabled          = var.bgp_enabled_ipv4
     customer_peer_ip = var.bgp_customer_peer_ipv4
   }
-  bgp_ipv6 {
-    enabled          = var.bgp_enabled_ipv6
-    customer_peer_ip = var.bgp_customer_peer_ipv6
+  dynamic "bgp_ipv6" {
+    for_each = var.bgp_customer_peer_ipv6 != "" ? [1] : []
+    content {
+      customer_peer_ip = var.bgp_customer_peer_ipv6
+    }
   }
 }
 ```
@@ -163,7 +167,7 @@ No modules.
 | <a name="input_bgp_rp_name"></a> [bgp\_rp\_name](#input\_bgp\_rp\_name) | Name of the BGP Routing Protocol | `string` | `""` | no |
 | <a name="input_connection_uuid"></a> [connection\_uuid](#input\_connection\_uuid) | Equinix Connection UUID to Apply the Routing Protocols to | `string` | n/a | yes |
 | <a name="input_direct_equinix_ipv4_ip"></a> [direct\_equinix\_ipv4\_ip](#input\_direct\_equinix\_ipv4\_ip) | IPv4 Address for Direct Routing Protocol | `string` | n/a | yes |
-| <a name="input_direct_equinix_ipv6_ip"></a> [direct\_equinix\_ipv6\_ip](#input\_direct\_equinix\_ipv6\_ip) | IPv6 Address for Direct Routing Protocol | `string` | n/a | yes |
+| <a name="input_direct_equinix_ipv6_ip"></a> [direct\_equinix\_ipv6\_ip](#input\_direct\_equinix\_ipv6\_ip) | IPv6 Address for Direct Routing Protocol | `string` | `""` | no |
 | <a name="input_direct_rp_name"></a> [direct\_rp\_name](#input\_direct\_rp\_name) | Name of the Direct Routing Protocol | `string` | n/a | yes |
 
 ## Outputs
