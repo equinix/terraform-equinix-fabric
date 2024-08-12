@@ -30,7 +30,7 @@ you should clone the github repository for this module and run terraform within 
 
 ```bash
 git clone https://github.com/equinix/terraform-equinix-fabric.git
-cd terraform-equinix-fabric/examples/metal-nimf-2-aws-connection
+cd terraform-equinix-fabric/examples/examples/metal-nimf-2-aws-connection
 terraform init
 terraform apply
 ```
@@ -259,6 +259,9 @@ output "aws_dx_gateway_id" {
 output "aws_interface_id" {
   value = aws_dx_private_virtual_interface.aws_virtual_interface.id
 }
+output "metal_connection_status" {
+  value = data.equinix_metal_connection.NIMF-test.status
+}
 ```
 
 main.tf
@@ -341,6 +344,16 @@ resource "aws_dx_private_virtual_interface" "aws_virtual_interface" {
   bgp_auth_key     = var.aws_vif_bgp_auth_key
   dx_gateway_id    = aws_dx_gateway.aws_gateway.id
 }
+
+resource "time_sleep" "wait_dl_connection" {
+  depends_on      = [module.metal_2_aws_connection]
+  create_duration = "2m"
+}
+
+data "equinix_metal_connection" "NIMF-test" {
+  depends_on    = [time_sleep.wait_dl_connection]
+  connection_id = equinix_metal_connection.metal-connection.id
+}
 ```
 
 ## Requirements
@@ -355,8 +368,9 @@ resource "aws_dx_private_virtual_interface" "aws_virtual_interface" {
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | 5.58.0 |
-| <a name="provider_equinix"></a> [equinix](#provider\_equinix) | 2.2.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | ~> 5.0 |
+| <a name="provider_equinix"></a> [equinix](#provider\_equinix) | >= 1.34.0 |
+| <a name="provider_time"></a> [time](#provider\_time) | n/a |
 
 ## Modules
 
@@ -372,7 +386,9 @@ resource "aws_dx_private_virtual_interface" "aws_virtual_interface" {
 | [aws_dx_private_virtual_interface.aws_virtual_interface](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/dx_private_virtual_interface) | resource |
 | [equinix_metal_connection.metal-connection](https://registry.terraform.io/providers/equinix/equinix/latest/docs/resources/metal_connection) | resource |
 | [equinix_metal_vlan.vlan-server](https://registry.terraform.io/providers/equinix/equinix/latest/docs/resources/metal_vlan) | resource |
+| [time_sleep.wait_dl_connection](https://registry.terraform.io/providers/hashicorp/time/latest/docs/resources/sleep) | resource |
 | [aws_dx_connection.aws_connection](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/dx_connection) | data source |
+| [equinix_metal_connection.NIMF-test](https://registry.terraform.io/providers/equinix/equinix/latest/docs/data-sources/metal_connection) | data source |
 
 ## Inputs
 
@@ -419,5 +435,6 @@ resource "aws_dx_private_virtual_interface" "aws_virtual_interface" {
 | <a name="output_aws_interface_id"></a> [aws\_interface\_id](#output\_aws\_interface\_id) | n/a |
 | <a name="output_metal_aws_connection_id"></a> [metal\_aws\_connection\_id](#output\_metal\_aws\_connection\_id) | n/a |
 | <a name="output_metal_connection_id"></a> [metal\_connection\_id](#output\_metal\_connection\_id) | n/a |
+| <a name="output_metal_connection_status"></a> [metal\_connection\_status](#output\_metal\_connection\_status) | n/a |
 | <a name="output_metal_vlan_id"></a> [metal\_vlan\_id](#output\_metal\_vlan\_id) | n/a |
 <!-- END_TF_DOCS -->

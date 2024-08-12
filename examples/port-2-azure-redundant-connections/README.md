@@ -31,7 +31,7 @@ you should clone the github repository for this module and run terraform within 
 
 ```bash
 git clone https://github.com/equinix/terraform-equinix-fabric.git
-cd terraform-equinix-fabric/examples/port-2-azure-redundant-connections
+cd terraform-equinix-fabric/examples/examples/port-2-azure-redundant-connections
 terraform init
 terraform apply
 ```
