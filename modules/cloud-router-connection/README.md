@@ -298,8 +298,8 @@ resource "equinix_fabric_connection" "primary_cloud_router_connection" {
     for_each = var.zside_ap_type == "METAL_NETWORK" ? [1] : []
     content {
       access_point {
-        type                = "METAL_NETWORK"
-        authentication_key  = var.zside_ap_authentication_key
+        type               = "METAL_NETWORK"
+        authentication_key = var.zside_ap_authentication_key
       }
     }
   }
@@ -411,8 +411,8 @@ resource "equinix_fabric_connection" "secondary_cloud_router_connection" {
     for_each = var.zside_ap_type == "METAL_NETWORK" ? [1] : []
     content {
       access_point {
-        type                = "METAL_NETWORK"
-        authentication_key  = var.zside_ap_authentication_key
+        type               = "METAL_NETWORK"
+        authentication_key = var.zside_ap_authentication_key
       }
     }
   }

@@ -30,7 +30,7 @@ you should clone the github repository for this module and run terraform within 
 
 ```bash
 git clone https://github.com/equinix/terraform-equinix-fabric.git
-cd terraform-equinix-fabric/examples/port-2-ibm2-connection
+cd terraform-equinix-fabric/examples/examples/port-2-ibm2-connection
 terraform init
 terraform apply
 ```
