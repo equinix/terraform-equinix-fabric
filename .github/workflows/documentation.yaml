@@ -54,6 +54,7 @@ jobs:
           commit_message: Apply changes in README
           branch: feature-gha-docs
           create_branch: true
+          skip_dirty_check: true
 
       - name: Create Pull Request
         if: steps.commit_doc_changes.outputs.num_changed != '0'
