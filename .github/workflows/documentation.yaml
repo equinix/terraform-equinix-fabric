@@ -65,7 +65,7 @@ jobs:
           title: 'Generate-terraform-docs: Automated action'
           body: |
             Update terraform docs
-          branch: update-terraform-docs
+          branch: feature-gha-docs
           branch-suffix: timestamp
           base: main
           delete-branch: true
