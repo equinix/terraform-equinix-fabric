@@ -44,6 +44,7 @@ jobs:
         run: |
           find examples -name "README.md" | while read file; do
             dir_name=$(dirname "$file")
+            echo "$dir_name"
             sed -i "s@EXAMPLE_PATH@$dir_name@g" "$file"
             sed -i "s@\.\.\/\.\.@equinix\/fabric\/equinix\/@" "$file"
           done
