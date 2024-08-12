@@ -30,7 +30,7 @@ you should clone the github repository for this module and run terraform within 
 
 ```bash
 git clone https://github.com/equinix/terraform-equinix-fabric.git
-cd terraform-equinix-fabric/examples/virtual-device-2-eia-connection
+cd terraform-equinix-fabric/examples/dir_name
 terraform init
 terraform apply
 ```

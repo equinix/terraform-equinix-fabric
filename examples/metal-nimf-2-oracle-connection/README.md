@@ -30,7 +30,7 @@ you should clone the github repository for this module and run terraform within 
 
 ```bash
 git clone https://github.com/equinix/terraform-equinix-fabric.git
-cd terraform-equinix-fabric/examples/metal-nimf-2-oracle-connection
+cd terraform-equinix-fabric/examples/dir_name
 terraform init
 terraform apply
 ```
@@ -262,6 +262,9 @@ output "metal_connection_id" {
 output "metal_oracle_connection_id" {
   value = module.metal_2_oracle_connection.primary_connection_id
 }
+output "metal_connection_status" {
+  value = data.equinix_metal_connection.NIMF-test.status
+}
 ```
 
 main.tf
@@ -272,11 +275,11 @@ provider "equinix" {
   auth_token    = var.metal_auth_token
 }
 provider "oci" {
-  tenancy_ocid      = var.oracle_tenancy_ocid
-  user_ocid         = var.oracle_user_ocid
-  private_key       = var.oracle_private_key
-  fingerprint       = var.oracle_fingerprint
-  region            = var.oracle_region
+  tenancy_ocid = var.oracle_tenancy_ocid
+  user_ocid    = var.oracle_user_ocid
+  private_key  = var.oracle_private_key
+  fingerprint  = var.oracle_fingerprint
+  region       = var.oracle_region
 }
 
 resource "equinix_metal_vlan" "vlan-server" {
@@ -310,10 +313,10 @@ locals {
 }
 
 resource "oci_core_virtual_circuit" "test_virtual_circuit" {
-  display_name          = var.oracle_vc_display_name
-  compartment_id        = var.oracle_compartment_id
-  type                  = var.oracle_vc_type
-  bandwidth_shape_name  = var.oracle_bandwidth
+  display_name         = var.oracle_vc_display_name
+  compartment_id       = var.oracle_compartment_id
+  type                 = var.oracle_vc_type
+  bandwidth_shape_name = var.oracle_bandwidth
   cross_connect_mappings {
     customer_bgp_peering_ip = var.oracle_customer_bgp_peering_ip
     oracle_bgp_peering_ip   = var.oracle_bgp_peering_ip
@@ -346,6 +349,16 @@ module "metal_2_oracle_connection" {
   zside_seller_region         = var.oracle_region
   zside_fabric_sp_name        = var.zside_fabric_sp_name
 }
+
+resource "time_sleep" "wait_dl_connection" {
+  depends_on      = [module.metal_2_oracle_connection]
+  create_duration = "2m"
+}
+
+data "equinix_metal_connection" "NIMF-test" {
+  depends_on    = [time_sleep.wait_dl_connection]
+  connection_id = equinix_metal_connection.metal-connection.id
+}
 ```
 
 ## Requirements
@@ -360,8 +373,9 @@ module "metal_2_oracle_connection" {
 
 | Name | Version |
 |------|---------|
-| <a name="provider_equinix"></a> [equinix](#provider\_equinix) | 2.2.0 |
+| <a name="provider_equinix"></a> [equinix](#provider\_equinix) | >= 1.36.3 |
 | <a name="provider_oci"></a> [oci](#provider\_oci) | 5.36.0 |
+| <a name="provider_time"></a> [time](#provider\_time) | n/a |
 
 ## Modules
 
@@ -376,6 +390,8 @@ module "metal_2_oracle_connection" {
 | [equinix_metal_connection.metal-connection](https://registry.terraform.io/providers/equinix/equinix/latest/docs/resources/metal_connection) | resource |
 | [equinix_metal_vlan.vlan-server](https://registry.terraform.io/providers/equinix/equinix/latest/docs/resources/metal_vlan) | resource |
 | [oci_core_virtual_circuit.test_virtual_circuit](https://registry.terraform.io/providers/oracle/oci/5.36.0/docs/resources/core_virtual_circuit) | resource |
+| [time_sleep.wait_dl_connection](https://registry.terraform.io/providers/hashicorp/time/latest/docs/resources/sleep) | resource |
+| [equinix_metal_connection.NIMF-test](https://registry.terraform.io/providers/equinix/equinix/latest/docs/data-sources/metal_connection) | data source |
 | [oci_core_fast_connect_provider_services.fc_provider_services](https://registry.terraform.io/providers/oracle/oci/5.36.0/docs/data-sources/core_fast_connect_provider_services) | data source |
 
 ## Inputs
@@ -423,6 +439,7 @@ module "metal_2_oracle_connection" {
 | Name | Description |
 |------|-------------|
 | <a name="output_metal_connection_id"></a> [metal\_connection\_id](#output\_metal\_connection\_id) | n/a |
+| <a name="output_metal_connection_status"></a> [metal\_connection\_status](#output\_metal\_connection\_status) | n/a |
 | <a name="output_metal_oracle_connection_id"></a> [metal\_oracle\_connection\_id](#output\_metal\_oracle\_connection\_id) | n/a |
 | <a name="output_metal_vlan_id"></a> [metal\_vlan\_id](#output\_metal\_vlan\_id) | n/a |
 <!-- END_TF_DOCS -->

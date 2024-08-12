@@ -30,7 +30,7 @@ you should clone the github repository for this module and run terraform within 
 
 ```bash
 git clone https://github.com/equinix/terraform-equinix-fabric.git
-cd terraform-equinix-fabric/examples/metal-nimf-2-port-connection
+cd terraform-equinix-fabric/examples/dir_name
 terraform init
 terraform apply
 ```
@@ -183,6 +183,9 @@ output "metal_connection_id" {
 output "metal_port_connection_id" {
   value = module.metal_2_port_connection.primary_connection_id
 }
+output "metal_connection_status" {
+  value = data.equinix_metal_connection.NIMF-test.status
+}
 ```
 
 main.tf
@@ -221,10 +224,20 @@ module "metal_2_port_connection" {
 
   aside_ap_authentication_key = equinix_metal_connection.metal-connection.authorization_code
 
-  zside_ap_type         = var.zside_ap_type
-  zside_port_name       = var.zside_port_name
-  zside_vlan_tag        = var.zside_vlan_tag
-  zside_location        = var.zside_location
+  zside_ap_type   = var.zside_ap_type
+  zside_port_name = var.zside_port_name
+  zside_vlan_tag  = var.zside_vlan_tag
+  zside_location  = var.zside_location
+}
+
+resource "time_sleep" "wait_dl_connection" {
+  depends_on      = [module.metal_2_port_connection]
+  create_duration = "2m"
+}
+
+data "equinix_metal_connection" "NIMF-test" {
+  depends_on    = [time_sleep.wait_dl_connection]
+  connection_id = equinix_metal_connection.metal-connection.id
 }
 ```
 
@@ -239,7 +252,8 @@ module "metal_2_port_connection" {
 
 | Name | Version |
 |------|---------|
-| <a name="provider_equinix"></a> [equinix](#provider\_equinix) | 2.1.0 |
+| <a name="provider_equinix"></a> [equinix](#provider\_equinix) | >= 1.36.4 |
+| <a name="provider_time"></a> [time](#provider\_time) | n/a |
 
 ## Modules
 
@@ -253,6 +267,8 @@ module "metal_2_port_connection" {
 |------|------|
 | [equinix_metal_connection.metal-connection](https://registry.terraform.io/providers/equinix/equinix/latest/docs/resources/metal_connection) | resource |
 | [equinix_metal_vlan.vlan-server](https://registry.terraform.io/providers/equinix/equinix/latest/docs/resources/metal_vlan) | resource |
+| [time_sleep.wait_dl_connection](https://registry.terraform.io/providers/hashicorp/time/latest/docs/resources/sleep) | resource |
+| [equinix_metal_connection.NIMF-test](https://registry.terraform.io/providers/equinix/equinix/latest/docs/data-sources/metal_connection) | data source |
 
 ## Inputs
 
@@ -285,6 +301,7 @@ module "metal_2_port_connection" {
 | Name | Description |
 |------|-------------|
 | <a name="output_metal_connection_id"></a> [metal\_connection\_id](#output\_metal\_connection\_id) | n/a |
+| <a name="output_metal_connection_status"></a> [metal\_connection\_status](#output\_metal\_connection\_status) | n/a |
 | <a name="output_metal_port_connection_id"></a> [metal\_port\_connection\_id](#output\_metal\_port\_connection\_id) | n/a |
 | <a name="output_metal_vlan_id"></a> [metal\_vlan\_id](#output\_metal\_vlan\_id) | n/a |
 <!-- END_TF_DOCS -->

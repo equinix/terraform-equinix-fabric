@@ -30,7 +30,7 @@ you should clone the github repository for this module and run terraform within 
 
 ```bash
 git clone https://github.com/equinix/terraform-equinix-fabric.git
-cd terraform-equinix-fabric/examples/metal-nimf-2-service-profile-connection
+cd terraform-equinix-fabric/examples/dir_name
 terraform init
 terraform apply
 ```
@@ -166,10 +166,6 @@ variable "zside_fabric_sp_name" {
   description = "Equinix Service Profile Name"
   type        = string
 }
-variable "zside_seller_region" {
-  description = "Access point seller region"
-  type        = string
-}
 variable "zside_location" {
   description = "Access point metro code"
   type        = string
@@ -192,6 +188,9 @@ output "metal_connection_id" {
 }
 output "metal_service_profile_connection_id" {
   value = module.metal_2_service_profile.primary_connection_id
+}
+output "metal_connection_status" {
+  value = data.equinix_metal_connection.NIMF-test.status
 }
 ```
 
@@ -237,6 +236,16 @@ module "metal_2_service_profile" {
   zside_location        = var.zside_location
   zside_fabric_sp_name  = var.zside_fabric_sp_name
 }
+
+resource "time_sleep" "wait_connection" {
+  depends_on      = [module.metal_2_service_profile]
+  create_duration = "2m"
+}
+
+data "equinix_metal_connection" "NIMF-test" {
+  depends_on    = [module.metal_2_service_profile]
+  connection_id = equinix_metal_connection.metal-connection.id
+}
 ```
 
 ## Requirements
@@ -250,7 +259,8 @@ module "metal_2_service_profile" {
 
 | Name | Version |
 |------|---------|
-| <a name="provider_equinix"></a> [equinix](#provider\_equinix) | 2.2.0 |
+| <a name="provider_equinix"></a> [equinix](#provider\_equinix) | >= 1.36.4 |
+| <a name="provider_time"></a> [time](#provider\_time) | n/a |
 
 ## Modules
 
@@ -264,6 +274,8 @@ module "metal_2_service_profile" {
 |------|------|
 | [equinix_metal_connection.metal-connection](https://registry.terraform.io/providers/equinix/equinix/latest/docs/resources/metal_connection) | resource |
 | [equinix_metal_vlan.vlan-server](https://registry.terraform.io/providers/equinix/equinix/latest/docs/resources/metal_vlan) | resource |
+| [time_sleep.wait_connection](https://registry.terraform.io/providers/hashicorp/time/latest/docs/resources/sleep) | resource |
+| [equinix_metal_connection.NIMF-test](https://registry.terraform.io/providers/equinix/equinix/latest/docs/data-sources/metal_connection) | data source |
 
 ## Inputs
 
@@ -291,13 +303,13 @@ module "metal_2_service_profile" {
 | <a name="input_zside_ap_type"></a> [zside\_ap\_type](#input\_zside\_ap\_type) | Access point type - COLO, VD, VG, SP, IGW, SUBNET, GW | `string` | n/a | yes |
 | <a name="input_zside_fabric_sp_name"></a> [zside\_fabric\_sp\_name](#input\_zside\_fabric\_sp\_name) | Equinix Service Profile Name | `string` | n/a | yes |
 | <a name="input_zside_location"></a> [zside\_location](#input\_zside\_location) | Access point metro code | `string` | n/a | yes |
-| <a name="input_zside_seller_region"></a> [zside\_seller\_region](#input\_zside\_seller\_region) | Access point seller region | `string` | n/a | yes |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
 | <a name="output_metal_connection_id"></a> [metal\_connection\_id](#output\_metal\_connection\_id) | n/a |
+| <a name="output_metal_connection_status"></a> [metal\_connection\_status](#output\_metal\_connection\_status) | n/a |
 | <a name="output_metal_service_profile_connection_id"></a> [metal\_service\_profile\_connection\_id](#output\_metal\_service\_profile\_connection\_id) | n/a |
 | <a name="output_metal_vlan_id"></a> [metal\_vlan\_id](#output\_metal\_vlan\_id) | n/a |
 <!-- END_TF_DOCS -->

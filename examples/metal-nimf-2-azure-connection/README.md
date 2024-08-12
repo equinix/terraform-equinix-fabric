@@ -30,7 +30,7 @@ you should clone the github repository for this module and run terraform within 
 
 ```bash
 git clone https://github.com/equinix/terraform-equinix-fabric.git
-cd terraform-equinix-fabric/examples/metal-nimf-2-azure-connection
+cd terraform-equinix-fabric/examples/dir_name
 terraform init
 terraform apply
 ```
@@ -265,6 +265,9 @@ output "azurerm_express_route_circuit" {
 output "metal_azure_connection_id" {
   value = module.metal_2_azure_connection.primary_connection_id
 }
+output "metal_connection_status" {
+  value = data.equinix_metal_connection.NIMF-test.status
+}
 ```
 
 main.tf
@@ -339,6 +342,15 @@ module "metal_2_azure_connection" {
   zside_location              = var.zside_location
   zside_fabric_sp_name        = var.zside_fabric_sp_name
 }
+resource "time_sleep" "wait_dl_connection" {
+  depends_on      = [module.metal_2_azure_connection]
+  create_duration = "2m"
+}
+
+data "equinix_metal_connection" "NIMF-test" {
+  depends_on    = [time_sleep.wait_dl_connection]
+  connection_id = equinix_metal_connection.metal-connection.id
+}
 ```
 
 ## Requirements
@@ -353,8 +365,9 @@ module "metal_2_azure_connection" {
 
 | Name | Version |
 |------|---------|
-| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | 3.112.0 |
-| <a name="provider_equinix"></a> [equinix](#provider\_equinix) | 2.2.0 |
+| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | 3.84.0 |
+| <a name="provider_equinix"></a> [equinix](#provider\_equinix) | >= 1.34.0 |
+| <a name="provider_time"></a> [time](#provider\_time) | n/a |
 
 ## Modules
 
@@ -370,6 +383,8 @@ module "metal_2_azure_connection" {
 | [azurerm_resource_group.metal2azure](https://registry.terraform.io/providers/hashicorp/azurerm/3.84.0/docs/resources/resource_group) | resource |
 | [equinix_metal_connection.metal-connection](https://registry.terraform.io/providers/equinix/equinix/latest/docs/resources/metal_connection) | resource |
 | [equinix_metal_vlan.vlan-server](https://registry.terraform.io/providers/equinix/equinix/latest/docs/resources/metal_vlan) | resource |
+| [time_sleep.wait_dl_connection](https://registry.terraform.io/providers/hashicorp/time/latest/docs/resources/sleep) | resource |
+| [equinix_metal_connection.NIMF-test](https://registry.terraform.io/providers/equinix/equinix/latest/docs/data-sources/metal_connection) | data source |
 
 ## Inputs
 
@@ -418,5 +433,6 @@ module "metal_2_azure_connection" {
 | <a name="output_azurerm_resource_group_id"></a> [azurerm\_resource\_group\_id](#output\_azurerm\_resource\_group\_id) | n/a |
 | <a name="output_metal_azure_connection_id"></a> [metal\_azure\_connection\_id](#output\_metal\_azure\_connection\_id) | n/a |
 | <a name="output_metal_connection_id"></a> [metal\_connection\_id](#output\_metal\_connection\_id) | n/a |
+| <a name="output_metal_connection_status"></a> [metal\_connection\_status](#output\_metal\_connection\_status) | n/a |
 | <a name="output_metal_vlan_id"></a> [metal\_vlan\_id](#output\_metal\_vlan\_id) | n/a |
 <!-- END_TF_DOCS -->
