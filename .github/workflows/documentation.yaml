@@ -53,7 +53,6 @@ jobs:
         uses: EndBug/add-and-commit@v9
         with:
           message: 'Apply changes in README'
-          new_branch: gha-docs
 
       - name: Create Pull Request
         if: success() && steps.commit_doc_changes.outcome == 'success'
@@ -65,8 +64,8 @@ jobs:
           title: 'Generate-terraform-docs: Automated action'
           body: |
             Update terraform docs
-          branch: gha-docs
           branch-suffix: timestamp
+          signoff: true
           base: main
           delete-branch: true
 
