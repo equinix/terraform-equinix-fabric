@@ -57,7 +57,7 @@ jobs:
           new_branch: 'feature-gha-docs'
 
       - name: Create Pull Request
-        if: steps.commit_doc_changes.outputs.num_changed != '0'
+        if: success() && steps.commit_doc_changes.outcome == 'success'
         uses: peter-evans/create-pull-request@v6
         with:
           commit-message: 'generate-terraform-docs: automated action'
