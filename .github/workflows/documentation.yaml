@@ -27,6 +27,8 @@ jobs:
           tar -xzf terraform-docs.tar.gz
           chmod +x terraform-docs
           mv terraform-docs /usr/local/bin/terraform-docs
+          rm -rf terraform-docs.tar.gz
+          git restore *
 
       - name: Render Terraform docs inside the README.md files of examples
         run: |
@@ -43,8 +45,7 @@ jobs:
       - name: Replace EXAMPLE_PATH placeholders inside the README.md files of examples
         run: |
           find examples -name "README.md" | while read file; do
-            dir_name=$(dirname "$file")
-            echo "$dir_name"
+            dir_name=$(basename "$(dirname "$file")")
             sed -i "s@EXAMPLE_PATH@$dir_name@g" "$file"
             sed -i "s@\.\.\/\.\.@equinix\/fabric\/equinix\/@" "$file"
           done
