@@ -62,6 +62,8 @@ bandwidth                       = 50
 project_id                      = "<Fabric_Project_ID>"
 aside_fcr_uuid                  = "<Primary Fabric Cloud router UUID>"
 zside_ap_type                   = "METAL_NETWORK"
+direct_rp_name                  = "metal-conn-rp"
+direct_equinix_ipv4_ip          = "192.168.100.1/30"
 ```
 
 versions.tf
@@ -163,6 +165,14 @@ variable "zside_ap_type" {
   type        = string
   default     = "SP"
 }
+variable "direct_rp_name" {
+  description = "Name of the Direct Routing Protocol"
+  type        = string
+}
+variable "direct_equinix_ipv4_ip" {
+  description = "IPv4 Address for Direct Routing Protocol"
+  type        = string
+}
 ```
 
 outputs.tf
@@ -175,6 +185,12 @@ output "metal_connection_id" {
 }
 output "cloud_router_metal_connection_id" {
   value = module.cloud_router_2_metal_connection.primary_connection_id
+}
+output "cloud_router_routing_protocol_id" {
+  value = module.routing_protocols.direct_routing_protocol_id
+}
+output "metal_connection_status" {
+  value = data.equinix_metal_connection.NIMF-test.status
 }
 ```
 
@@ -218,6 +234,27 @@ module "cloud_router_2_metal_connection" {
   zside_ap_type               = var.zside_ap_type
   zside_ap_authentication_key = equinix_metal_connection.metal-connection.authorization_code
 }
+
+module "routing_protocols" {
+  depends_on = [module.cloud_router_2_metal_connection]
+  source     = "equinix/fabric/equinix//modules/cloud-router-routing-protocols"
+
+  connection_uuid = module.cloud_router_2_metal_connection.primary_connection_id
+
+  # Direct RP Details
+  direct_rp_name         = var.direct_rp_name
+  direct_equinix_ipv4_ip = var.direct_equinix_ipv4_ip
+}
+
+resource "time_sleep" "wait_dl_connection" {
+  depends_on      = [module.routing_protocols]
+  create_duration = "2m"
+}
+
+data "equinix_metal_connection" "NIMF-test" {
+  depends_on    = [time_sleep.wait_dl_connection]
+  connection_id = equinix_metal_connection.metal-connection.id
+}
 ```
 
 ## Requirements
@@ -231,13 +268,15 @@ module "cloud_router_2_metal_connection" {
 
 | Name | Version |
 |------|---------|
-| <a name="provider_equinix"></a> [equinix](#provider\_equinix) | 2.2.0 |
+| <a name="provider_equinix"></a> [equinix](#provider\_equinix) | >= 1.36.4 |
+| <a name="provider_time"></a> [time](#provider\_time) | n/a |
 
 ## Modules
 
 | Name | Source | Version |
 |------|--------|---------|
 | <a name="module_cloud_router_2_metal_connection"></a> [cloud\_router\_2\_metal\_connection](#module\_cloud\_router\_2\_metal\_connection) | equinix/fabric/equinix//modules/cloud-router-connection | n/a |
+| <a name="module_routing_protocols"></a> [routing\_protocols](#module\_routing\_protocols) | equinix/fabric/equinix//modules/cloud-router-routing-protocols | n/a |
 
 ## Resources
 
@@ -245,6 +284,8 @@ module "cloud_router_2_metal_connection" {
 |------|------|
 | [equinix_metal_connection.metal-connection](https://registry.terraform.io/providers/equinix/equinix/latest/docs/resources/metal_connection) | resource |
 | [equinix_metal_vlan.vlan-server](https://registry.terraform.io/providers/equinix/equinix/latest/docs/resources/metal_vlan) | resource |
+| [time_sleep.wait_dl_connection](https://registry.terraform.io/providers/hashicorp/time/latest/docs/resources/sleep) | resource |
+| [equinix_metal_connection.NIMF-test](https://registry.terraform.io/providers/equinix/equinix/latest/docs/data-sources/metal_connection) | data source |
 
 ## Inputs
 
@@ -254,6 +295,8 @@ module "cloud_router_2_metal_connection" {
 | <a name="input_bandwidth"></a> [bandwidth](#input\_bandwidth) | Connection bandwidth in Mbps | `number` | n/a | yes |
 | <a name="input_connection_name"></a> [connection\_name](#input\_connection\_name) | Connection name. An alpha-numeric 24 characters string which can include only hyphens and underscores | `string` | n/a | yes |
 | <a name="input_connection_type"></a> [connection\_type](#input\_connection\_type) | Defines the connection type like VG\_VC, EVPL\_VC, EPL\_VC, EC\_VC, IP\_VC, ACCESS\_EPL\_VC | `string` | `""` | no |
+| <a name="input_direct_equinix_ipv4_ip"></a> [direct\_equinix\_ipv4\_ip](#input\_direct\_equinix\_ipv4\_ip) | IPv4 Address for Direct Routing Protocol | `string` | n/a | yes |
+| <a name="input_direct_rp_name"></a> [direct\_rp\_name](#input\_direct\_rp\_name) | Name of the Direct Routing Protocol | `string` | n/a | yes |
 | <a name="input_equinix_client_id"></a> [equinix\_client\_id](#input\_equinix\_client\_id) | Equinix client ID (consumer key), obtained after registering app in the developer platform | `string` | n/a | yes |
 | <a name="input_equinix_client_secret"></a> [equinix\_client\_secret](#input\_equinix\_client\_secret) | Equinix client secret ID (consumer secret), obtained after registering app in the developer platform | `string` | n/a | yes |
 | <a name="input_metal_auth_token"></a> [metal\_auth\_token](#input\_metal\_auth\_token) | Equinix Metal Authentication API Token | `string` | n/a | yes |
@@ -275,6 +318,8 @@ module "cloud_router_2_metal_connection" {
 | Name | Description |
 |------|-------------|
 | <a name="output_cloud_router_metal_connection_id"></a> [cloud\_router\_metal\_connection\_id](#output\_cloud\_router\_metal\_connection\_id) | n/a |
+| <a name="output_cloud_router_routing_protocol_id"></a> [cloud\_router\_routing\_protocol\_id](#output\_cloud\_router\_routing\_protocol\_id) | n/a |
 | <a name="output_metal_connection_id"></a> [metal\_connection\_id](#output\_metal\_connection\_id) | n/a |
+| <a name="output_metal_connection_status"></a> [metal\_connection\_status](#output\_metal\_connection\_status) | n/a |
 | <a name="output_metal_vlan_id"></a> [metal\_vlan\_id](#output\_metal\_vlan\_id) | n/a |
 <!-- END_TF_DOCS -->

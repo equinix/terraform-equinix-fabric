@@ -261,6 +261,9 @@ output "GCP_Interconnect_Id" {
 output "Metal_Google_Connection_Id" {
   value = module.metal_2_google_connection.primary_connection_id
 }
+output "metal_connection_status" {
+  value = data.equinix_metal_connection.NIMF-test.status
+}
 ```
 
 main.tf
@@ -339,6 +342,16 @@ module "metal_2_google_connection" {
   zside_seller_region         = var.google_region
   zside_fabric_sp_name        = var.zside_fabric_sp_name
 }
+
+resource "time_sleep" "wait_dl_connection" {
+  depends_on      = [module.metal_2_google_connection]
+  create_duration = "2m"
+}
+
+data "equinix_metal_connection" "NIMF-test" {
+  depends_on    = [time_sleep.wait_dl_connection]
+  connection_id = equinix_metal_connection.metal-connection.id
+}
 ```
 
 ## Requirements
@@ -353,8 +366,9 @@ module "metal_2_google_connection" {
 
 | Name | Version |
 |------|---------|
-| <a name="provider_equinix"></a> [equinix](#provider\_equinix) | 2.2.0 |
+| <a name="provider_equinix"></a> [equinix](#provider\_equinix) | >= 1.34.0 |
 | <a name="provider_google"></a> [google](#provider\_google) | 5.17.0 |
+| <a name="provider_time"></a> [time](#provider\_time) | n/a |
 
 ## Modules
 
@@ -371,6 +385,8 @@ module "metal_2_google_connection" {
 | [google_compute_interconnect_attachment.metal-nimf-google](https://registry.terraform.io/providers/hashicorp/google/5.17.0/docs/resources/compute_interconnect_attachment) | resource |
 | [google_compute_network.metal-nimf-google](https://registry.terraform.io/providers/hashicorp/google/5.17.0/docs/resources/compute_network) | resource |
 | [google_compute_router.metal-nimf-google](https://registry.terraform.io/providers/hashicorp/google/5.17.0/docs/resources/compute_router) | resource |
+| [time_sleep.wait_dl_connection](https://registry.terraform.io/providers/hashicorp/time/latest/docs/resources/sleep) | resource |
+| [equinix_metal_connection.NIMF-test](https://registry.terraform.io/providers/equinix/equinix/latest/docs/data-sources/metal_connection) | data source |
 
 ## Inputs
 
@@ -419,5 +435,6 @@ module "metal_2_google_connection" {
 | <a name="output_GCP_Router_Id"></a> [GCP\_Router\_Id](#output\_GCP\_Router\_Id) | n/a |
 | <a name="output_Metal_Google_Connection_Id"></a> [Metal\_Google\_Connection\_Id](#output\_Metal\_Google\_Connection\_Id) | n/a |
 | <a name="output_metal_connection_id"></a> [metal\_connection\_id](#output\_metal\_connection\_id) | n/a |
+| <a name="output_metal_connection_status"></a> [metal\_connection\_status](#output\_metal\_connection\_status) | n/a |
 | <a name="output_metal_vlan_id"></a> [metal\_vlan\_id](#output\_metal\_vlan\_id) | n/a |
 <!-- END_TF_DOCS -->
