@@ -27,3 +27,4 @@ module "virtual_device_2_aws_connection" {
   zside_seller_region         = var.zside_seller_region
   zside_sp_name               = var.zside_sp_name
 }
+
