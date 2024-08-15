@@ -1,0 +1,17 @@
+equinix_client_id     = "<MyEquinixClientId>"
+equinix_client_secret = "<MyEquinixSecret>"
+
+notifications_type    = "ALL"
+notifications_emails  = ["example@equinix.com", "test1@equinix.com"]
+purchase_order_number = "1-323292"
+connection_name       = "fcr_2_vd"
+connection_type       = "IP_VC"
+bandwidth             = 50
+
+aside_fcr_uuid        = "<Fabric Cloud Router UUID>"
+
+zside_ap_type         = "VD"
+zside_vd_type         = "EDGE"
+zside_vd_uuid         = "<Virtual Device UUID>"
+zside_interface_type  = "NETWORK"
+zside_interface_id    = 5
