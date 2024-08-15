@@ -56,8 +56,7 @@ module "virtual_device_2_aws_connection" {
 
   # A-side
   aside_vd_type = var.aside_vd_type
-  #aside_vd_uuid = equinix_network_device.C8KV-SV.id
-  aside_vd_uuid = var.aside_vd_uuid
+  aside_vd_uuid = equinix_network_device.C8KV-SV.id
 
   #Zside
   zside_ap_type               = var.zside_ap_type
