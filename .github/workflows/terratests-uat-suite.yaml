@@ -15,6 +15,7 @@ jobs:
       TEST_DATA_UAT_PORT_2_ALIBABA_CONNECTION: ${{ secrets.TEST_DATA_UAT_PORT_2_ALIBABA_CONNECTION }}
       TEST_DATA_UAT_VIRTUAL_DEVICE_2_AZURE_CONNECTION: ${{ secrets.TEST_DATA_UAT_VIRTUAL_DEVICE_2_AZURE_CONNECTION }}
       TEST_DATA_UAT_VIRTUAL_DEVICE_2_PORT_CONNECTION: ${{ secrets.TEST_DATA_UAT_VIRTUAL_DEVICE_2_PORT_CONNECTION }}
+      TEST_DATA_UAT_VIRTUAL_DEVICE_2_AWS_CONNECTION: ${{ secrets.TEST_DATA_UAT_VIRTUAL_DEVICE_2_AWS_CONNECTION }}
 
     steps:
       - name: Check out code into the Go module directory
@@ -42,6 +43,7 @@ jobs:
           echo $TEST_DATA_UAT_PORT_2_ALIBABA_CONNECTION >> "./examples/port-2-alibaba-connection/terraform.tfvars.json"
           echo $TEST_DATA_UAT_VIRTUAL_DEVICE_2_AZURE_CONNECTION >> "./tests/examples-without-external-providers/virtual-device-2-azure-connection/terraform.tfvars.json"
           echo $TEST_DATA_UAT_VIRTUAL_DEVICE_2_PORT_CONNECTION >> "./tests/examples-without-external-providers/virtual-device-2-port-connection/terraform.tfvars.json"
+          echo $TEST_DATA_UAT_VIRTUAL_DEVICE_2_AWS_CONNECTION >> "./tests/examples-without-external-providers/virtual-device-2-aws-connection/terraform.tfvars.json"
 
       - name: Run Go Tests
         run:

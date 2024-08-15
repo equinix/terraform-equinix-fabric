@@ -4,7 +4,7 @@ provider "equinix" {
 }
 
 #Connection
-module "create_virtual_device_2_aws_connection" {
+module "virtual_device_2_aws_connection" {
   source = "../../../modules/virtual-device-connection"
 
   connection_name       = var.connection_name
@@ -25,5 +25,5 @@ module "create_virtual_device_2_aws_connection" {
   zside_ap_profile_type       = var.zside_ap_profile_type
   zside_location              = var.zside_location
   zside_seller_region         = var.zside_seller_region
-  zside_fabric_sp_name        = var.zside_fabric_sp_name
+  zside_sp_name               = var.zside_sp_name
 }
