@@ -98,4 +98,3 @@ resource "aws_dx_private_virtual_interface" "aws_virtual_interface" {
   dx_gateway_id    = aws_dx_gateway.aws_gateway.id
 }
 
-
