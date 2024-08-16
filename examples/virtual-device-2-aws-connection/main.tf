@@ -9,7 +9,7 @@ provider "aws" {
   region     = var.zside_seller_region
 }
 
-#Network Edge Module
+## Creates NE ACL template and assigns it to the network device
 resource "equinix_network_acl_template" "wan-acl-template" {
   name        = var.template_name
   description = var.template_description

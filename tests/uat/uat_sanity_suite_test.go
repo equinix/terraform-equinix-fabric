@@ -202,7 +202,7 @@ func TestVirtualDevice2PortCreateConnection_PNFV(t *testing.T) {
 	assert.NotNil(t, output)
 }
 
-func TestVirtualDevice2AWSCreateConnection_DIGP(t *testing.T) {
+func TestVirtualDevice2AWSCreateConnection_PFCR(t *testing.T) {
 
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
 		TerraformDir: "../../tests/examples-without-external-providers/virtual-device-2-aws-connection",
