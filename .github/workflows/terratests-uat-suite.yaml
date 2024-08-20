@@ -28,9 +28,16 @@ jobs:
           go-version-file: './go.mod'
         id: go
 
+      - name: Set up Python3
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
       - name: Get dependencies
         run: |
               go mod download
+              go install github.com/thogarty/go-junit-report/v2@latest
+              pip3 install junit2html
 
       - uses: hashicorp/setup-terraform@v3
         with:
@@ -45,7 +52,7 @@ jobs:
 
       - name: Run Go Tests
         run:
-          go test ./tests/uat -v -coverprofile coverage_uat_modules.txt -covermode=atomic -count 1 -parallel 8 -run "(PNFV)" -timeout 180m
+          go test ./tests/uat -json -v -coverprofile coverage_uat_modules.txt -covermode=atomic -count 1 -parallel 8 -run "(PNFV)" -timeout 180m | tee pnfv_test_output.log
 
       - name: Upload test coverage to Codecov
         if: ${{ always() }}
@@ -115,7 +122,7 @@ jobs:
 
       - name: Run Go Tests
         run:
-          go test ./tests/uat -v -coverprofile coverage_uat_modules.txt -covermode=atomic -count 1 -parallel 8 -run "(PFCR)" -timeout 180m
+          go test ./tests/uat -json -v -coverprofile coverage_uat_modules.txt -covermode=atomic -count 1 -parallel 8 -run "(PFCR)" -timeout 180m | tee pfcr_test_output.log
 
       - name: Upload test coverage to Codecov
         if: ${{ always() }}
@@ -123,3 +130,17 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: ./coverage_uat_modules.txt
+
+      - name: Create HTML Testing Report
+        run: |
+          pip3 install junit2html
+          cat pfcr_test_output.log > uat_sanity_report.log && cat pnfv_test_output.log >> uat_sanity_report.log
+          go-junit-report -parser gojson -in uat_sanity_report.log  > uat_sanity_report.xml && python3 -m junit2htmlreport uat_sanity_report.xml uat_sanity_report.html
+
+      - name: Upload HTML Testing Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: UAT Terraform Modules Testing Report
+          path: ./uat_sanity_report.html
+
+

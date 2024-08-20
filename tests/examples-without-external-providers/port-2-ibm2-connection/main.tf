@@ -10,7 +10,7 @@ provider "ibm" {
 }
 
 module "create_port_2_ibm2_connection" {
-  source = "../../modules/port-connection"
+  source = "../../../modules/port-connection"
 
   connection_name       = var.connection_name
   connection_type       = var.connection_type

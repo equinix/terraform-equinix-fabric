@@ -9,7 +9,7 @@ import (
 func TestPort2Ibm2CreateConnection_PFCR(t *testing.T) {
 
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
-		TerraformDir: "../../examples/port-2-ibm2-connection",
+		TerraformDir: "../examples-without-external-providers/port-2-ibm2-connection",
 	})
 
 	defer terraform.Destroy(t, terraformOptions)
