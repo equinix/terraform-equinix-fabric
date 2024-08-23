@@ -342,7 +342,7 @@ func TestVirtualDevice2AWSCreateConnection_DIGP(t *testing.T) {
 }
 
 func TestCloudRouter2VirtualDeviceCreateConnection_DIGP(t *testing.T) {
-  terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
+	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
 		TerraformDir: "../../tests/examples-without-external-providers/cloud-router-2-virtual-device-connection",
 	})
 
