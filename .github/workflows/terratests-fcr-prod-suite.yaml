@@ -28,9 +28,16 @@ jobs:
           go-version-file: './go.mod'
         id: go
 
+      - name: Set up Python3
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
       - name: Get dependencies
         run: |
-              go mod download
+          go mod download
+          go install github.com/thogarty/go-junit-report/v2@latest
+          pip3 install junit2html
 
       - uses: hashicorp/setup-terraform@v3
         with:
@@ -61,11 +68,15 @@ jobs:
           jq --arg timestamp "$TIMESTAMP" '.connection_name = ($timestamp + "_" + .connection_name)' ./examples/cloud-router-2-virtual-device-connection/terraform.tfvars.json > ./examples/cloud-router-2-virtual-device-connection/tmp.test.json && mv ./examples/cloud-router-2-virtual-device-connection/tmp.test.json ./examples/cloud-router-2-virtual-device-connection/terraform.tfvars.json
       - name: Run Go Tests
         run:
-          go test ./tests/prod/cloud-router -v -coverprofile coverage_prod_modules.txt -covermode=atomic -count 1 -parallel 8 -run "(DIGP)" -timeout 180m
+          go test ./tests/prod/cloud-router -json -v -count 1 -parallel 8 -run "(DIGP)" -timeout 180m | tee fcr_prod_suite.log
 
-      - name: Upload test coverage to Codecov
-        if: ${{ always() }}
-        uses: codecov/codecov-action@v4
+      - name: Create HTML Testing Report
+        run: |
+          go-junit-report -parser gojson -in fcr_prod_suite.log  > fcr_prod_suite.xml && python3 -m junit2htmlreport fcr_prod_suite.xml fcr_prod_suite.html
+
+      - name: Upload HTML Testing Report
+        uses: actions/upload-artifact@v4
         with:
-            token: ${{ secrets.CODECOV_TOKEN }}
-            files: ./coverage_prod_modules.txt
+          name: FCR Prod Suite Terraform Modules Testing Report
+          path: fcr_prod_suite.html
+          compression-level: 0

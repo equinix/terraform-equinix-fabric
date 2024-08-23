@@ -30,9 +30,16 @@ jobs:
           go-version-file: './go.mod'
         id: go
 
+      - name: Set up Python3
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
       - name: Get dependencies
         run: |
-              go mod download
+          go mod download
+          go install github.com/thogarty/go-junit-report/v2@latest
+          pip3 install junit2html
 
       - uses: hashicorp/setup-terraform@v3
         with:
@@ -67,11 +74,15 @@ jobs:
 
       - name: Run Go Tests
         run:
-          go test ./tests/prod/port -v -coverprofile coverage_prod_modules.txt -covermode=atomic -count 1 -parallel 8 -run "(DIGP)" -timeout 180m
+          go test ./tests/prod/port -v -json -count 1 -parallel 8 -run "(DIGP)" -timeout 180m | tee port_prod_suite.log
 
-      - name: Upload test coverage to Codecov
-        if: ${{ always() }}
-        uses: codecov/codecov-action@v4
+      - name: Create HTML Testing Report
+        run: |
+          go-junit-report -parser gojson -in port_prod_suite.log  > port_prod_suite.xml && python3 -m junit2htmlreport port_prod_suite.xml port_prod_suite.html
+
+      - name: Upload HTML Testing Report
+        uses: actions/upload-artifact@v4
         with:
-            token: ${{ secrets.CODECOV_TOKEN }}
-            files: ./coverage_prod_modules.txt
+          name: Port Prod Suite Terraform Modules Testing Report
+          path: port_prod_suite.html
+          compression-level: 0
