@@ -16,6 +16,7 @@ jobs:
       TEST_DATA_PROD_CLOUD_ROUTER_2_PORT_ROUTING_PROTOCOL_CONNECTION: ${{secrets.TEST_DATA_PROD_CLOUD_ROUTER_2_PORT_ROUTING_PROTOCOL_CONNECTION}}
       TEST_DATA_PROD_CLOUD_ROUTER_2_SERVICE_PROFILE_CONNECTION: ${{secrets.TEST_DATA_PROD_CLOUD_ROUTER_2_SERVICE_PROFILE_CONNECTION}}
       TEST_DATA_PROD_CLOUD_ROUTER_2_WAN_CONNECTION: ${{secrets.TEST_DATA_PROD_CLOUD_ROUTER_2_WAN_CONNECTION}}
+      TEST_DATA_PROD_CLOUD_ROUTER_2_VIRTUAL_DEVICE_CONNECTION: ${{secrets.TEST_DATA_PROD_CLOUD_ROUTER_2_VIRTUAL_DEVICE_CONNECTION}}
 
     steps:
       - name: Check out code into the Go module directory
@@ -56,7 +57,8 @@ jobs:
           jq --arg timestamp "$TIMESTAMP" '.connection_name = ($timestamp + "_" + .connection_name)' ./examples/cloud-router-2-service-profile-connection/terraform.tfvars.json > ./examples/cloud-router-2-service-profile-connection/tmp.test.json && mv ./examples/cloud-router-2-service-profile-connection/tmp.test.json ./examples/cloud-router-2-service-profile-connection/terraform.tfvars.json
           echo $TEST_DATA_PROD_CLOUD_ROUTER_2_WAN_CONNECTION >> "./examples/cloud-router-2-wan-connection/terraform.tfvars.json"
           jq --arg timestamp "$TIMESTAMP" '.connection_name = ($timestamp + "_" + .connection_name)' ./examples/cloud-router-2-wan-connection/terraform.tfvars.json > ./examples/cloud-router-2-wan-connection/tmp.test.json && mv ./examples/cloud-router-2-wan-connection/tmp.test.json ./examples/cloud-router-2-wan-connection/terraform.tfvars.json
-
+          echo $TEST_DATA_PROD_CLOUD_ROUTER_2_VIRTUAL_DEVICE_CONNECTION >> "./examples/cloud-router-2-virtual-device-connection/terraform.tfvars.json"
+          jq --arg timestamp "$TIMESTAMP" '.connection_name = ($timestamp + "_" + .connection_name)' ./examples/cloud-router-2-virtual-device-connection/terraform.tfvars.json > ./examples/cloud-router-2-virtual-device-connection/tmp.test.json && mv ./examples/cloud-router-2-virtual-device-connection/tmp.test.json ./examples/cloud-router-2-virtual-device-connection/terraform.tfvars.json
       - name: Run Go Tests
         run:
           go test ./tests/prod/cloud-router -v -coverprofile coverage_prod_modules.txt -covermode=atomic -count 1 -parallel 8 -run "(DIGP)" -timeout 180m
