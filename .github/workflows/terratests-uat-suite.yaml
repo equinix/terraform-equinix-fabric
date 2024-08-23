@@ -99,7 +99,7 @@ jobs:
         run: |
           echo $TEST_DATA_UAT_PORT_2_AWS_CONNECTION >> "./tests/examples-without-external-providers/port-2-aws-connection/terraform.tfvars.json"
           echo $TEST_DATA_UAT_PORT_2_AZURE_CONNECTION >> "./tests/examples-without-external-providers/port-2-azure-connection/terraform.tfvars.json"
-          echo $TEST_DATA_UAT_PORT_2_IBM2_CONNECTION >> "./examples/port-2-ibm2-connection/terraform.tfvars.json"
+          echo $TEST_DATA_UAT_PORT_2_IBM2_CONNECTION >> "./tests/examples-without-external-providers/port-2-ibm2-connection/terraform.tfvars.json"
           echo $TEST_DATA_UAT_PORT_2_PORT_CONNECTION >> "./examples/port-2-port-connection/terraform.tfvars.json"
           echo $TEST_DATA_UAT_PORT_2_PRIVATE_SERVICE_PROFILE_CONNECTION >> "./examples/port-2-private-service-profile-connection/terraform.tfvars.json"
           echo $TEST_DATA_UAT_PORT_2_PUBLIC_SERVICE_PROFILE_CONNECTION >> "./examples/port-2-public-service-profile-connection/terraform.tfvars.json"   
