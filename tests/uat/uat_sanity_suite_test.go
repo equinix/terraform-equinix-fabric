@@ -51,7 +51,7 @@ func TestPort2AzureCreateConnection_PFCR(t *testing.T) {
 func TestPort2Ibm2CreateConnection_PFCR(t *testing.T) {
 
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
-		TerraformDir: "../../examples/port-2-ibm2-connection",
+		TerraformDir: "../../tests/examples-without-external-providers/port-2-ibm2-connection",
 	})
 
 	defer terraform.Destroy(t, terraformOptions)
