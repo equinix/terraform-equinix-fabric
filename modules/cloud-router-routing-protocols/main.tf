@@ -24,6 +24,7 @@ resource "equinix_fabric_routing_protocol" "bgp" {
   type            = "BGP"
 
   customer_asn = var.bgp_customer_asn
+  bgp_auth_key = var.bgp_auth_key != "" ? var.bgp_auth_key : null
 
   bgp_ipv4 {
     enabled          = var.bgp_enabled_ipv4

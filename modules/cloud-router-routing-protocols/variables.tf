@@ -45,3 +45,8 @@ variable "bgp_customer_asn" {
   type        = string
   default     = ""
 }
+variable "bgp_auth_key" {
+  description = "BGP authorization key"
+  type        = string
+  default     = ""
+}
