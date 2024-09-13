@@ -76,6 +76,11 @@ variable "bgp_customer_asn" {
   type        = string
   default     = ""
 }
+variable "bgp_auth_key" {
+  description = "BGP authorization key"
+  type        = string
+  default     = ""
+}
 ```
 
  #outputs.tf
@@ -117,6 +122,7 @@ resource "equinix_fabric_routing_protocol" "bgp" {
   type            = "BGP"
 
   customer_asn = var.bgp_customer_asn
+  bgp_auth_key = var.bgp_auth_key != "" ? var.bgp_auth_key : null
 
   bgp_ipv4 {
     enabled          = var.bgp_enabled_ipv4
@@ -159,6 +165,7 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_bgp_auth_key"></a> [bgp\_auth\_key](#input\_bgp\_auth\_key) | BGP authorization key | `string` | `""` | no |
 | <a name="input_bgp_customer_asn"></a> [bgp\_customer\_asn](#input\_bgp\_customer\_asn) | Customer ASN for BGP Routing Protocol | `string` | `""` | no |
 | <a name="input_bgp_customer_peer_ipv4"></a> [bgp\_customer\_peer\_ipv4](#input\_bgp\_customer\_peer\_ipv4) | Customer Peering IPv4 Address for BGP Routing Protocol | `string` | `""` | no |
 | <a name="input_bgp_customer_peer_ipv6"></a> [bgp\_customer\_peer\_ipv6](#input\_bgp\_customer\_peer\_ipv6) | Customer Peering IPv6 Address for BGP Routing Protocol | `string` | `""` | no |
