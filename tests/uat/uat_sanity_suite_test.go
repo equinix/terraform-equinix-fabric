@@ -1,10 +1,18 @@
 package uat
 
 import (
+	"github.com/equinix/terraform-equinix-fabric/tests/sweepers"
 	"github.com/gruntwork-io/terratest/modules/terraform"
 	"github.com/stretchr/testify/assert"
+	"os"
 	"testing"
 )
+
+func TestMain(m *testing.M) {
+	code := m.Run()
+	sweepers.RunTestSweepers()
+	os.Exit(code)
+}
 
 func TestPort2AlibabaCreateConnection_PNFV(t *testing.T) {
 
