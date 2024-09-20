@@ -1,6 +1,6 @@
-# Fabric Cloud Router Creation with Market Place Susbscription
+# Fabric Cloud Router Creation with Market Place Subscription
 
-This example shows how to create a Fabric Cloud Router using Market Place Subscription, which can be generated through various CloudRouter Service Providers.
+This example shows how to create a Fabric Cloud Router using Market Place Subscription, which can be generated through various Cloud Service Providers.
 
 It leverages the Equinix Terraform Provider to setup the Fabric Cloud Router based on the parameters you have provided to this example; or based on the pattern
 you see used in this example it will allow you to create a more specific use case for your own needs.
