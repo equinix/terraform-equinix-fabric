@@ -31,7 +31,7 @@ const (
 )
 
 var (
-	fabricTestResourceSuffixes = []string{"_PFCR", "_PNFV", "_PPDS"}
+	fabricTestResourceSuffixes = []string{"_PFCR", "_PNFV", "_PPDS", "_DIGP"}
 )
 
 func isSweepableFabricTestResource(resourceName string) bool {
