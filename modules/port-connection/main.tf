@@ -154,7 +154,7 @@ resource "equinix_fabric_connection" "secondary_port_connection" {
       }
       link_protocol {
         type       = one(data.equinix_fabric_ports.aside_secondary_port[0].data.0.encapsulation).type
-        vlan_tag   = one(data.equinix_fabric_ports.aside_secondary_port[0].data.0.encapsulation).type == "DOT1Q" ? var.aside_vlan_tag : null
+        vlan_tag   = one(data.equinix_fabric_ports.aside_secondary_port[0].data.0.encapsulation).type == "DOT1Q" ? var.secondary_aside_vlan_tag : null
         vlan_s_tag = one(data.equinix_fabric_ports.aside_secondary_port[0].data.0.encapsulation).type == "QINQ" ? var.aside_vlan_tag : null
 
         # This is adding ctag for any connection that is QINQ Aside AND not COLO on Zside OR when COLO on Zside is not QINQ Encapsulation Type
