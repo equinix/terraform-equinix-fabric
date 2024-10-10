@@ -1,0 +1,49 @@
+equinix_client_id      = "<MyEquinixClientId>"
+equinix_client_secret  = "<MyEquinixSecret>"
+
+
+cloud_router_name = "cloud_router_alpha"
+cloud_router_type = "XF_ROUTER"
+cloud_router_metro_code = "DC"
+cloud_router_package = "STANDARD"
+
+project_id = "<Equinix Fabric Project Id>"
+account_number = "<Equinix account number>"
+
+notifications_type       = "ALL"
+notifications_emails     = ["example@equinix.com","test1@equinix.com"]
+purchase_order_number    = "1-323292"
+connection_name          = "fcr_2_port"
+connection_type          = "IP_VC"
+bandwidth                = 50
+zside_ap_type            = "COLO"
+zside_vlan_tag           = "2711"
+zside_location           = "SV"
+zside_port_name          = "<Equinix Port Name>"
+
+routing_protocol_direct_rp_name = "DRP_PFCR"
+routing_protocol_direct_ipv4_ip = "10.2.1.1/30"
+routing_protocol_bgp_rp_name = "BGPRP_PFCR"
+routing_protocol_bgp_ipv4_ip = "10.2.1.2/30"
+routing_protocol_bgp_customer_asn = 4007
+
+route_filter_direction = "INBOUND"
+route_filter_policy_name = "rf_policy_PFCR"
+route_filter_policy_type = "BGP_IPv4_PREFIX_FILTER"
+
+route_filter_rules = [
+  {
+    name = "rule_1",
+    prefix = "192.168.0.0/24",
+    prefix_match = "exact",
+    description = "first rule on route filter"
+  },
+  {
+    name = "rule_2",
+    prefix = "192.168.1.0/24",
+    prefix_match = "or_longer",
+    description = "second rule on route filter"
+  }
+]
+
+
