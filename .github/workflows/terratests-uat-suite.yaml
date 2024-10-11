@@ -106,7 +106,7 @@ jobs:
 
           echo $TEST_DATA_UAT_CLOUD_ROUTER_2_AWS_CONNECTION >> "./tests/examples-without-external-providers/cloud-router-2-aws-connection/terraform.tfvars.json"
           echo $TEST_DATA_UAT_CLOUD_ROUTER_2_AZURE_CONNECTION >> "./tests/examples-without-external-providers/cloud-router-2-azure-connection/terraform.tfvars.json"
-          echo $TEST_DATA_UAT_CLOUD_ROUTER_2_PORT_ROUTING_PROTOCOL_CONNECTION >> "./tests/examples-without-external-providers/cloud-router-2-port-routing-protocol-connection/terraform.tfvars.json"
+          echo $TEST_DATA_UAT_CLOUD_ROUTER_2_PORT_ROUTING_PROTOCOL_CONNECTION >> "./tests/examples-without-external-providers/cloud-router-2-port-connection-with-routing-protocols-and-route-filters/terraform.tfvars.json"
           echo $TEST_DATA_UAT_CLOUD_ROUTER_2_SERVICE_PROFILE_CONNECTION >> "./examples/cloud-router-2-service-profile-connection/terraform.tfvars.json"
           echo $TEST_DATA_UAT_CLOUD_ROUTER_2_WAN_CONNECTION >> "./examples/cloud-router-2-wan-connection/terraform.tfvars.json"
           echo $TEST_DATA_UAT_CLOUD_ROUTER_2_VIRTUAL_DEVICE_CONNECTION >> "./examples/cloud-router-2-virtual-device-connection/terraform.tfvars.json"
