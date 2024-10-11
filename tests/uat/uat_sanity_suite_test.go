@@ -143,7 +143,7 @@ func TestCloudRouter2AzureCreateConnection_PFCR(t *testing.T) {
 func TestCloudRouter2PortRoutingProtocolCreateConnection_PFCR(t *testing.T) {
 
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
-		TerraformDir: "../../tests/examples-without-external-providers/cloud-router-2-port-routing-protocol-connection",
+		TerraformDir: "../../tests/examples-without-external-providers/cloud-router-2-port-connection-with-routing-protocols-and-route-filters",
 	})
 
 	defer terraform.Destroy(t, terraformOptions)

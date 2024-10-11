@@ -8,6 +8,10 @@ variable "equinix_client_secret" {
   type        = string
   sensitive   = true
 }
+variable "project_id" {
+  description = "Id of the Fabric Project for the resources to be created in"
+  type        = string
+}
 variable "connection_name" {
   description = "Connection name. An alpha-numeric 24 characters string which can include only hyphens and underscores"
   type        = string
@@ -98,4 +102,29 @@ variable "bgp_customer_asn" {
   description = "Customer ASN for BGP Routing Protocol"
   type        = string
   default     = ""
+}
+
+variable "route_filter_direction" {
+  description = "Direction of the route filtering [INBOUND or OUTBOUND]"
+  type        = string
+}
+
+variable "route_filter_policy_name" {
+  description = "Name of the route filter policy that will be created in this module"
+  type        = string
+}
+
+variable "route_filter_policy_type" {
+  description = "Type of the route filter policy. Should be one of: BGP_IPv4_PREFIX_FILTER, BGP_IPv6_PREFIX_FILTER"
+  type        = string
+}
+
+variable "route_filter_rules" {
+  description = "List of route filter rules to add to the created route filter policy"
+  type = list(object({
+    prefix       = string,
+    name         = optional(string),
+    description  = optional(string),
+    prefix_match = optional(string),
+  }))
 }
