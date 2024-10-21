@@ -87,11 +87,11 @@ terraform {
   required_providers {
     equinix = {
       source  = "equinix/equinix"
-      version = ">= 1.34.0"
+      version = ">= 2.9.0"
     }
     google = {
       source = "hashicorp/google"
-      version = "5.17.0"
+      version = ">= 5.17.0"
     }
   }
 }
@@ -359,15 +359,15 @@ data "equinix_metal_connection" "NIMF-test" {
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.5.4 |
-| <a name="requirement_equinix"></a> [equinix](#requirement\_equinix) | >= 1.34.0 |
-| <a name="requirement_google"></a> [google](#requirement\_google) | 5.17.0 |
+| <a name="requirement_equinix"></a> [equinix](#requirement\_equinix) | >= 2.9.0 |
+| <a name="requirement_google"></a> [google](#requirement\_google) | >= 5.17.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_equinix"></a> [equinix](#provider\_equinix) | >= 1.34.0 |
-| <a name="provider_google"></a> [google](#provider\_google) | 5.17.0 |
+| <a name="provider_equinix"></a> [equinix](#provider\_equinix) | >= 2.9.0 |
+| <a name="provider_google"></a> [google](#provider\_google) | >= 5.17.0 |
 | <a name="provider_time"></a> [time](#provider\_time) | n/a |
 
 ## Modules
@@ -382,9 +382,9 @@ data "equinix_metal_connection" "NIMF-test" {
 |------|------|
 | [equinix_metal_connection.metal-connection](https://registry.terraform.io/providers/equinix/equinix/latest/docs/resources/metal_connection) | resource |
 | [equinix_metal_vlan.vlan-server](https://registry.terraform.io/providers/equinix/equinix/latest/docs/resources/metal_vlan) | resource |
-| [google_compute_interconnect_attachment.metal-nimf-google](https://registry.terraform.io/providers/hashicorp/google/5.17.0/docs/resources/compute_interconnect_attachment) | resource |
-| [google_compute_network.metal-nimf-google](https://registry.terraform.io/providers/hashicorp/google/5.17.0/docs/resources/compute_network) | resource |
-| [google_compute_router.metal-nimf-google](https://registry.terraform.io/providers/hashicorp/google/5.17.0/docs/resources/compute_router) | resource |
+| [google_compute_interconnect_attachment.metal-nimf-google](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_interconnect_attachment) | resource |
+| [google_compute_network.metal-nimf-google](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_network) | resource |
+| [google_compute_router.metal-nimf-google](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_router) | resource |
 | [time_sleep.wait_dl_connection](https://registry.terraform.io/providers/hashicorp/time/latest/docs/resources/sleep) | resource |
 | [equinix_metal_connection.NIMF-test](https://registry.terraform.io/providers/equinix/equinix/latest/docs/data-sources/metal_connection) | data source |
 
