@@ -5,5 +5,9 @@ terraform {
       source  = "equinix/equinix"
       version = ">= 2.9.0"
     }
+    google = {
+      source = "hashicorp/google"
+      version = ">= 5.17.0"
+    }
   }
 }
