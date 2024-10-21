@@ -88,11 +88,11 @@ terraform {
   required_providers {
     equinix = {
       source  = "equinix/equinix"
-      version = ">= 1.36.3"
+      version = ">= 2.9.0"
     }
     oci = {
       source = "oracle/oci"
-      version = "5.36.0"
+      version = ">= 5.36.0"
     }
   }
 }
@@ -366,15 +366,15 @@ data "equinix_metal_connection" "NIMF-test" {
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.5.4 |
-| <a name="requirement_equinix"></a> [equinix](#requirement\_equinix) | >= 1.36.3 |
-| <a name="requirement_oci"></a> [oci](#requirement\_oci) | 5.36.0 |
+| <a name="requirement_equinix"></a> [equinix](#requirement\_equinix) | >= 2.9.0 |
+| <a name="requirement_oci"></a> [oci](#requirement\_oci) | >= 5.36.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_equinix"></a> [equinix](#provider\_equinix) | >= 1.36.3 |
-| <a name="provider_oci"></a> [oci](#provider\_oci) | 5.36.0 |
+| <a name="provider_equinix"></a> [equinix](#provider\_equinix) | >= 2.9.0 |
+| <a name="provider_oci"></a> [oci](#provider\_oci) | >= 5.36.0 |
 | <a name="provider_time"></a> [time](#provider\_time) | n/a |
 
 ## Modules
@@ -389,10 +389,10 @@ data "equinix_metal_connection" "NIMF-test" {
 |------|------|
 | [equinix_metal_connection.metal-connection](https://registry.terraform.io/providers/equinix/equinix/latest/docs/resources/metal_connection) | resource |
 | [equinix_metal_vlan.vlan-server](https://registry.terraform.io/providers/equinix/equinix/latest/docs/resources/metal_vlan) | resource |
-| [oci_core_virtual_circuit.test_virtual_circuit](https://registry.terraform.io/providers/oracle/oci/5.36.0/docs/resources/core_virtual_circuit) | resource |
+| [oci_core_virtual_circuit.test_virtual_circuit](https://registry.terraform.io/providers/oracle/oci/latest/docs/resources/core_virtual_circuit) | resource |
 | [time_sleep.wait_dl_connection](https://registry.terraform.io/providers/hashicorp/time/latest/docs/resources/sleep) | resource |
 | [equinix_metal_connection.NIMF-test](https://registry.terraform.io/providers/equinix/equinix/latest/docs/data-sources/metal_connection) | data source |
-| [oci_core_fast_connect_provider_services.fc_provider_services](https://registry.terraform.io/providers/oracle/oci/5.36.0/docs/data-sources/core_fast_connect_provider_services) | data source |
+| [oci_core_fast_connect_provider_services.fc_provider_services](https://registry.terraform.io/providers/oracle/oci/latest/docs/data-sources/core_fast_connect_provider_services) | data source |
 
 ## Inputs
 

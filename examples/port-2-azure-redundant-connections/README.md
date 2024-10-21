@@ -84,11 +84,11 @@ terraform {
   required_providers {
     equinix = {
       source  = "equinix/equinix"
-      version = ">= 1.20.0"
+      version = ">= 2.9.0"
     }
     azurerm = {
       source = "hashicorp/azurerm"
-      version = "3.84.0"
+      version = ">= 3.84.0"
     }
   }
 }
@@ -317,14 +317,14 @@ module "create_port_2_azure_connections" {
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.5.4 |
-| <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | 3.84.0 |
-| <a name="requirement_equinix"></a> [equinix](#requirement\_equinix) | >= 1.20.0 |
+| <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | >= 3.84.0 |
+| <a name="requirement_equinix"></a> [equinix](#requirement\_equinix) | >= 2.9.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | 3.84.0 |
+| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | >= 3.84.0 |
 
 ## Modules
 
@@ -336,8 +336,8 @@ module "create_port_2_azure_connections" {
 
 | Name | Type |
 |------|------|
-| [azurerm_express_route_circuit.port2azure](https://registry.terraform.io/providers/hashicorp/azurerm/3.84.0/docs/resources/express_route_circuit) | resource |
-| [azurerm_resource_group.port2azure](https://registry.terraform.io/providers/hashicorp/azurerm/3.84.0/docs/resources/resource_group) | resource |
+| [azurerm_express_route_circuit.port2azure](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/express_route_circuit) | resource |
+| [azurerm_resource_group.port2azure](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group) | resource |
 
 ## Inputs
 
