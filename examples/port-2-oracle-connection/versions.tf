@@ -3,11 +3,11 @@ terraform {
   required_providers {
     equinix = {
       source  = "equinix/equinix"
-      version = ">= 1.36.3"
+      version = ">= 2.9.0"
     }
     oci = {
       source = "oracle/oci"
-      version = "5.36.0"
+      version = ">= 5.36.0"
     }
   }
 }
