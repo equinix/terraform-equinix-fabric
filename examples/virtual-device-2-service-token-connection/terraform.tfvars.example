@@ -1,0 +1,13 @@
+equinix_client_id      = "<MyEquinixClientId>"
+equinix_client_secret  = "<MyEquinixSecre>"
+
+connection_name             = "VD2Azure"
+connection_type             = "EVPL_VC"
+notifications_type          = "ALL"
+notifications_emails        = ["example@equinix.com"]
+purchase_order_number       = "1-323292"
+bandwidth                   = 50
+
+aside_vd_type               = "EDGE"
+aside_vd_uuid               = "<Virtual_Device_UUID>"
+zside_service_token_uuid    = "<Service_Token_UUID>"
