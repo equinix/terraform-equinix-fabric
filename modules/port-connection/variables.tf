@@ -60,6 +60,7 @@ variable "aside_vlan_inner_tag" {
 variable "zside_ap_type" {
   description = "Access point type - VD, SP, COLO, CLOUD_ROUTER, NETWORK"
   type        = string
+  default     = ""
 }
 variable "zside_ap_authentication_key" {
   description = "Authentication key for provider based connections"
@@ -108,6 +109,11 @@ variable "zside_peering_type" {
 }
 variable "zside_network_uuid" {
   description = "Equinix Network UUID"
+  default     = ""
+}
+variable "zside_service_token_uuid" {
+  description = "Service Token UUID"
+  type        = string
   default     = ""
 }
 variable "additional_info" {

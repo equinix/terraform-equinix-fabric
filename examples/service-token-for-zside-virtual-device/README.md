@@ -1,4 +1,4 @@
-# Fabric Service Token Creation Example
+# Fabric Service Token for Zside Virtual Device Creation Example
 
 This example shows how to create Fabric Zside Virtual Device based Service Token.
 
