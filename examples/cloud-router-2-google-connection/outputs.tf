@@ -7,6 +7,6 @@ output "GCP_Router_Id" {
 output "GCP_Interconnect_Id" {
   value = google_compute_interconnect_attachment.cloud-router-google.id
 }
-output "Google_Connection_Id" {
-  value = module.cloud_router_google_connection.primary_connection_id
+output "Google_Connection" {
+  value = module.cloud_router_google_connection.primary_connection
 }
