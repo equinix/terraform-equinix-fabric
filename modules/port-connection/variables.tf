@@ -52,12 +52,18 @@ variable "aside_vlan_tag" {
   description = "VLan Tag information for DOT1Q connections, and the outer VLan tag for QINQ connections)"
   type        = string
 }
-variable "secondary_aside_vlan_tag" {
-  description = "VLan Tag information for DOT1Q connections, and the outer VLan tag for QINQ connections)"
+variable "aside_secondary_vlan_tag" {
+  description = "Secondary VLan Tag information for DOT1Q connections, and the outer VLan tag for QINQ connections)"
   type        = string
+  default = ""
 }
 variable "aside_vlan_inner_tag" {
-  description = "VLan Tag information for DOT1Q connections"
+  description = "VLan Tag information for QINQ connections"
+  type        = string
+  default     = ""
+}
+variable "aside_secondary_vlan_inner_tag" {
+  description = "Secondary VLan Tag information for QINQ connections"
   type        = string
   default     = ""
 }
@@ -101,8 +107,18 @@ variable "zside_vlan_tag" {
   type        = string
   default     = ""
 }
+variable "zside_secondary_vlan_tag" {
+  description = "Secondary VLan Tag information for DOT1Q connections, and the outer VLan tag for QINQ connections"
+  type        = string
+  default     = ""
+}
 variable "zside_vlan_inner_tag" {
   description = "Inner VLan tag for QINQ connections"
+  type        = string
+  default     = ""
+}
+variable "zside_secondary_vlan_inner_tag" {
+  description = "Secondary Inner VLan tag for QINQ connections"
   type        = string
   default     = ""
 }

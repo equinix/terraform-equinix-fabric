@@ -59,6 +59,15 @@ variable "aside_vlan_inner_tag" {
   type        = string
   default     = ""
 }
+variable "aside_secondary_vlan_tag" {
+  description = "Secondary Vlan Tag information, outer vlanSTag for QINQ connections"
+  type        = string
+}
+variable "aside_secondary_vlan_inner_tag" {
+  description = "Secondary Vlan Inner Tag information, inner vlanCTag for QINQ connections"
+  type        = string
+  default     = ""
+}
 variable "zside_ap_type" {
   description = "Access point type - COLO, VD, VG, SP, IGW, SUBNET, GW"
   type        = string
@@ -78,6 +87,7 @@ variable "zside_sp_name" {
 variable "zside_peering_type" {
   description = "Zside Access Point Peering type. Available values; PRIVATE, MICROSOFT, PUBLIC, MANUAL"
   type        = string
+  default = ""
 }
 variable "azure_client_id" {
   description = "Azure Client id"
