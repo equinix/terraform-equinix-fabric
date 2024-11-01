@@ -119,6 +119,15 @@ resource "equinix_fabric_connection" "primary_port_connection" {
       }
     }
   }
+
+  dynamic "z_side" {
+    for_each = var.zside_service_token_uuid != "" ? [1] : []
+    content {
+      service_token {
+        uuid = var.zside_service_token_uuid
+      }
+    }
+  }
 }
 
 resource "equinix_fabric_connection" "secondary_port_connection" {
@@ -214,6 +223,15 @@ resource "equinix_fabric_connection" "secondary_port_connection" {
         network {
           uuid = var.zside_network_uuid
         }
+      }
+    }
+  }
+
+  dynamic "z_side" {
+    for_each = var.zside_service_token_uuid != "" ? [1] : []
+    content {
+      service_token {
+        uuid = var.zside_service_token_uuid
       }
     }
   }

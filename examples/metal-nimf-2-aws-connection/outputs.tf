@@ -4,8 +4,8 @@ output "metal_vlan_id" {
 output "metal_connection_id" {
   value = equinix_metal_connection.metal-connection.id
 }
-output "metal_aws_connection_id" {
-  value = module.metal_2_aws_connection.primary_connection_id
+output "metal_aws_connection" {
+  value = module.metal_2_aws_connection.primary_connection
 }
 output "aws_dx_gateway_id" {
   value = aws_dx_gateway.aws_gateway.id

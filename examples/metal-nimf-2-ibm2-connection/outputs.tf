@@ -4,8 +4,8 @@ output "metal_vlan_id" {
 output "metal_connection_id" {
   value = equinix_metal_connection.metal-connection.id
 }
-output "Metal_IBM2_Connection_Id" {
-  value = module.metal_2_ibm2_connection.primary_connection_id
+output "Metal_IBM2_Connection" {
+  value = module.metal_2_ibm2_connection.primary_connection
 }
 output "IBM_Gateway_Action_Id" {
   value = ibm_dl_gateway_action.test_dl_gateway_action.id

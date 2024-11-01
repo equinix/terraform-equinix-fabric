@@ -13,8 +13,8 @@ output "GCP_Router_Id" {
 output "GCP_Interconnect_Id" {
   value = google_compute_interconnect_attachment.metal-nimf-google.id
 }
-output "Metal_Google_Connection_Id" {
-  value = module.metal_2_google_connection.primary_connection_id
+output "Metal_Google_Connection" {
+  value = module.metal_2_google_connection.primary_connection
 }
 output "metal_connection_status" {
   value = data.equinix_metal_connection.NIMF-test.status

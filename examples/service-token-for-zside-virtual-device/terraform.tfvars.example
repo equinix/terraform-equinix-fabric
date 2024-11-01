@@ -1,0 +1,44 @@
+equinix_client_id      = "<MyEquinixClientId>"
+equinix_client_secret  = "<MyEquinixSecret>"
+
+#NE Acl Template
+template_name           = "test-wan-acl-template"
+template_description    = "WAN ACL template"
+template_subnet         = "172.16.25.0/24"
+template_protocol       = "TCP"
+template_src_port       = "any"
+template_dst_port       = "22"
+
+#Network Edge
+ne_name                 = "Terra_Test_router"
+ne_metro_code           = "SV"
+ne_type_code            = "C8000V"
+ne_package_code         = "network-essentials"
+ne_notifications        = ["test@eq.com"]
+ne_hostname             = "C8KV"
+ne_account_number       = "182390403"
+ne_version              = "17.11.01a"
+ne_core_count           = 2
+ne_term_length          = 1
+
+ne_ssh_key_username     = "<SSH_Key_Username>"
+ne_ssh_key_name         = "<SSH_Key_Name"
+
+#network_ssh_key
+network_public_key_name = "<Public_SSH_Key_Name>"
+network_public_key      = "<Public_SSH_Key>"
+
+#Service Token
+service_token_type                  = "VC_TOKEN"
+service_token_name                  = "Terra_Test_Token"
+service_token_description           = "Zside VD Token Test"
+service_token_expiration_date_time  = "2024-12-29T06:43:49.980Z"
+notifications_type                  = "ALL"
+notifications_emails                = ["example@equinix.com"]
+connection_type                     = "EVPL_VC"
+supported_bandwidths                = [50,100, 500, 1000]
+zside_ap_type                       = "VD"
+zside_vd_type                       = "EDGE"
+zside_vd_uuid                       = "<Virtual_Device_UUID>"
+zside_interface_type                = "NETWORK"
+zside_interface_id                  = "3"
