@@ -6,4 +6,5 @@ output "azurerm_express_route_circuit" {
 }
 output "azure_connection" {
   value = module.cloud_router_azure_connection.primary_connection
+  sensitive = true
 }

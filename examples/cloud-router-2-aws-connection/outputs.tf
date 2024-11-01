@@ -1,5 +1,6 @@
 output "aws_connection" {
   value = module.cloud_router_aws_connection.primary_connection
+  sensitive = true
 }
 output "aws_dx_gateway_id" {
   value = aws_dx_gateway.aws_gateway.id

@@ -9,4 +9,5 @@ output "GCP_Interconnect_Id" {
 }
 output "Google_Connection" {
   value = module.cloud_router_google_connection.primary_connection
+  sensitive = true
 }

@@ -6,6 +6,7 @@ output "metal_connection_id" {
 }
 output "Metal_IBM2_Connection" {
   value = module.metal_2_ibm2_connection.primary_connection
+  sensitive = true
 }
 output "IBM_Gateway_Action_Id" {
   value = ibm_dl_gateway_action.test_dl_gateway_action.id

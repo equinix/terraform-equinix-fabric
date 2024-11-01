@@ -6,7 +6,9 @@ output "azurerm_express_route_circuit" {
 }
 output "azure_primary_connection" {
   value = module.cloud_router_azure_redundant_connection.primary_connection
+  sensitive = true
 }
 output "azure_secondary_connection" {
   value = module.cloud_router_azure_redundant_connection.secondary_connection
+  sensitive = true
 }

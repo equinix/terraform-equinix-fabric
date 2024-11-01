@@ -6,9 +6,11 @@ output "metal_connection_id" {
 }
 output "cloud_router_metal_connection" {
   value = module.cloud_router_2_metal_connection.primary_connection
+  sensitive = true
 }
 output "cloud_router_routing_protocol" {
   value = module.routing_protocols.direct_routing_protocol
+  sensitive = true
 }
 output "metal_connection_status" {
   value = data.equinix_metal_connection.NIMF-test.status

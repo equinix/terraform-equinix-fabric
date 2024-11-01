@@ -3,6 +3,7 @@ output "metal-connection" {
 }
 output "fabric-connection" {
   value = module.metal-2-fabric-connection.primary_connection
+  sensitive = true
 }
 output "aws_dx_gateway_id" {
   value = aws_dx_gateway.aws_gateway.id
