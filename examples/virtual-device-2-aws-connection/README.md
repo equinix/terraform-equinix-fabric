@@ -329,8 +329,9 @@ outputs.tf
 output "virtual_device_id" {
   value = equinix_network_device.C8KV-SV.id
 }
-output "aws_connection_id" {
-  value = module.virtual_device_2_aws_connection.primary_connection_id
+output "aws_connection" {
+  value = module.virtual_device_2_aws_connection.primary_connection
+  sensitive = true
 }
 ```
 
@@ -520,6 +521,6 @@ resource "aws_dx_private_virtual_interface" "aws_virtual_interface" {
 
 | Name | Description |
 |------|-------------|
-| <a name="output_aws_connection_id"></a> [aws\_connection\_id](#output\_aws\_connection\_id) | n/a |
+| <a name="output_aws_connection"></a> [aws\_connection](#output\_aws\_connection) | n/a |
 | <a name="output_virtual_device_id"></a> [virtual\_device\_id](#output\_virtual\_device\_id) | n/a |
 <!-- END_TF_DOCS -->

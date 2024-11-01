@@ -57,6 +57,8 @@ aside_port_name             = "200001-SV1-CX-Primary-01"
 aside_secondary_port_name   = "200001-SV5-CX-Secondary-02"
 aside_vlan_tag              = "2867"
 aside_vlan_inner_tag        = "2098"
+aside_secondary_vlan_inner_tag = "3444"
+aside_secondary_vlan_tag    = "2453"
 zside_ap_type               = "SP"
 zside_ap_authentication_key = "<Azure Express Route Service Key>"
 zside_ap_profile_type       = "L2_PROFILE"
@@ -157,6 +159,15 @@ variable "aside_vlan_inner_tag" {
   type        = string
   default     = ""
 }
+variable "aside_secondary_vlan_tag" {
+  description = "Secondary Vlan Tag information, outer vlanSTag for QINQ connections"
+  type        = string
+}
+variable "aside_secondary_vlan_inner_tag" {
+  description = "Secondary Vlan Inner Tag information, inner vlanCTag for QINQ connections"
+  type        = string
+  default     = ""
+}
 variable "zside_ap_type" {
   description = "Access point type - COLO, VD, VG, SP, IGW, SUBNET, GW"
   type        = string
@@ -176,6 +187,7 @@ variable "zside_sp_name" {
 variable "zside_peering_type" {
   description = "Zside Access Point Peering type. Available values; PRIVATE, MICROSOFT, PUBLIC, MANUAL"
   type        = string
+  default = ""
 }
 variable "azure_client_id" {
   description = "Azure Client id"
@@ -235,12 +247,14 @@ variable "azure_environment" {
 
 outputs.tf
 ```hcl
-output "azure_primary_connection_id" {
-  value = module.create_port_2_azure_connections.primary_connection_id
+output "azure_primary_connection" {
+  value = module.create_port_2_azure_connections.primary_connection
+  sensitive = true
 }
 
 output "azure_secondary_connection_id" {
-  value = module.create_port_2_azure_connections.secondary_connection_id
+  value = module.create_port_2_azure_connections.secondary_connection
+  sensitive = true
 }
 ```
 
@@ -301,6 +315,9 @@ module "create_port_2_azure_connections" {
 
   # Secondary A-side
   aside_secondary_port_name = var.aside_secondary_port_name
+  aside_secondary_vlan_tag = var.aside_secondary_vlan_tag
+  aside_secondary_vlan_inner_tag = var.aside_secondary_vlan_inner_tag
+
 
   # Z-side
   zside_ap_type               = var.zside_ap_type
@@ -308,7 +325,6 @@ module "create_port_2_azure_connections" {
   zside_ap_profile_type       = var.zside_ap_profile_type
   zside_location              = var.zside_location
   zside_sp_name               = var.zside_sp_name
-  zside_peering_type          = var.zside_peering_type
 }
 ```
 
@@ -345,6 +361,8 @@ module "create_port_2_azure_connections" {
 |------|-------------|------|---------|:--------:|
 | <a name="input_aside_port_name"></a> [aside\_port\_name](#input\_aside\_port\_name) | Equinix A-Side Port Name | `string` | n/a | yes |
 | <a name="input_aside_secondary_port_name"></a> [aside\_secondary\_port\_name](#input\_aside\_secondary\_port\_name) | Secondary Equinix A-Side Port Name | `string` | n/a | yes |
+| <a name="input_aside_secondary_vlan_inner_tag"></a> [aside\_secondary\_vlan\_inner\_tag](#input\_aside\_secondary\_vlan\_inner\_tag) | Secondary Vlan Inner Tag information, inner vlanCTag for QINQ connections | `string` | `""` | no |
+| <a name="input_aside_secondary_vlan_tag"></a> [aside\_secondary\_vlan\_tag](#input\_aside\_secondary\_vlan\_tag) | Secondary Vlan Tag information, outer vlanSTag for QINQ connections | `string` | n/a | yes |
 | <a name="input_aside_vlan_inner_tag"></a> [aside\_vlan\_inner\_tag](#input\_aside\_vlan\_inner\_tag) | Vlan Inner Tag information, inner vlanCTag for QINQ connections | `string` | `""` | no |
 | <a name="input_aside_vlan_tag"></a> [aside\_vlan\_tag](#input\_aside\_vlan\_tag) | Vlan Tag information, outer vlanSTag for QINQ connections | `string` | n/a | yes |
 | <a name="input_azure_client_id"></a> [azure\_client\_id](#input\_azure\_client\_id) | Azure Client id | `string` | n/a | yes |
@@ -372,13 +390,13 @@ module "create_port_2_azure_connections" {
 | <a name="input_zside_ap_profile_type"></a> [zside\_ap\_profile\_type](#input\_zside\_ap\_profile\_type) | Service profile type - L2\_PROFILE, L3\_PROFILE, ECIA\_PROFILE, ECMC\_PROFILE | `string` | n/a | yes |
 | <a name="input_zside_ap_type"></a> [zside\_ap\_type](#input\_zside\_ap\_type) | Access point type - COLO, VD, VG, SP, IGW, SUBNET, GW | `string` | n/a | yes |
 | <a name="input_zside_location"></a> [zside\_location](#input\_zside\_location) | Access point metro code | `string` | n/a | yes |
-| <a name="input_zside_peering_type"></a> [zside\_peering\_type](#input\_zside\_peering\_type) | Zside Access Point Peering type. Available values; PRIVATE, MICROSOFT, PUBLIC, MANUAL | `string` | n/a | yes |
+| <a name="input_zside_peering_type"></a> [zside\_peering\_type](#input\_zside\_peering\_type) | Zside Access Point Peering type. Available values; PRIVATE, MICROSOFT, PUBLIC, MANUAL | `string` | `""` | no |
 | <a name="input_zside_sp_name"></a> [zside\_sp\_name](#input\_zside\_sp\_name) | Equinix Service Profile Name | `string` | n/a | yes |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| <a name="output_azure_primary_connection_id"></a> [azure\_primary\_connection\_id](#output\_azure\_primary\_connection\_id) | n/a |
+| <a name="output_azure_primary_connection"></a> [azure\_primary\_connection](#output\_azure\_primary\_connection) | n/a |
 | <a name="output_azure_secondary_connection_id"></a> [azure\_secondary\_connection\_id](#output\_azure\_secondary\_connection\_id) | n/a |
 <!-- END_TF_DOCS -->
