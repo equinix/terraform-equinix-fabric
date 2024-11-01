@@ -52,6 +52,10 @@ variable "aside_vlan_tag" {
   description = "VLan Tag information for DOT1Q connections, and the outer VLan tag for QINQ connections)"
   type        = string
 }
+variable "secondary_aside_vlan_tag" {
+  description = "VLan Tag information for DOT1Q connections, and the outer VLan tag for QINQ connections)"
+  type        = string
+}
 variable "aside_vlan_inner_tag" {
   description = "VLan Tag information for DOT1Q connections"
   type        = string
