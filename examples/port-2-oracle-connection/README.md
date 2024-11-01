@@ -222,8 +222,9 @@ variable "oracle_gateway_id" {
 
 outputs.tf
 ```hcl
-output "oracle_connection_id" {
-  value = module.create_port_2_oracle_connection.primary_connection_id
+output "oracle_connection" {
+  value = module.create_port_2_oracle_connection.primary_connection
+  sensitive = true
 }
 ```
 
@@ -359,5 +360,5 @@ module "create_port_2_oracle_connection" {
 
 | Name | Description |
 |------|-------------|
-| <a name="output_oracle_connection_id"></a> [oracle\_connection\_id](#output\_oracle\_connection\_id) | n/a |
+| <a name="output_oracle_connection"></a> [oracle\_connection](#output\_oracle\_connection) | n/a |
 <!-- END_TF_DOCS -->

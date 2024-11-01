@@ -180,8 +180,9 @@ output "metal_vlan_id" {
 output "metal_connection_id" {
   value = equinix_metal_connection.metal-connection.id
 }
-output "metal_port_connection_id" {
-  value = module.metal_2_port_connection.primary_connection_id
+output "metal_port_connection" {
+  value = module.metal_2_port_connection.primary_connection
+  sensitive = true
 }
 output "metal_connection_status" {
   value = data.equinix_metal_connection.NIMF-test.status
@@ -302,6 +303,6 @@ data "equinix_metal_connection" "NIMF-test" {
 |------|-------------|
 | <a name="output_metal_connection_id"></a> [metal\_connection\_id](#output\_metal\_connection\_id) | n/a |
 | <a name="output_metal_connection_status"></a> [metal\_connection\_status](#output\_metal\_connection\_status) | n/a |
-| <a name="output_metal_port_connection_id"></a> [metal\_port\_connection\_id](#output\_metal\_port\_connection\_id) | n/a |
+| <a name="output_metal_port_connection"></a> [metal\_port\_connection](#output\_metal\_port\_connection) | n/a |
 | <a name="output_metal_vlan_id"></a> [metal\_vlan\_id](#output\_metal\_vlan\_id) | n/a |
 <!-- END_TF_DOCS -->

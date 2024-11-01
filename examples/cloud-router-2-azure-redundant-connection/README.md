@@ -240,11 +240,13 @@ output "azurerm_resource_group_id" {
 output "azurerm_express_route_circuit" {
   value = azurerm_express_route_circuit.fcr2azure.id
 }
-output "azure_primary_connection_id" {
-  value = module.cloud_router_azure_redundant_connection.primary_connection_id
+output "azure_primary_connection" {
+  value = module.cloud_router_azure_redundant_connection.primary_connection
+  sensitive = true
 }
-output "azure_secondary_connection_id" {
-  value = var.secondary_connection_name != "" ? module.cloud_router_azure_redundant_connection.secondary_connection_id : null
+output "azure_secondary_connection" {
+  value = module.cloud_router_azure_redundant_connection.secondary_connection
+  sensitive = true
 }
 ```
 
@@ -377,8 +379,8 @@ module "cloud_router_azure_redundant_connection" {
 
 | Name | Description |
 |------|-------------|
-| <a name="output_azure_primary_connection_id"></a> [azure\_primary\_connection\_id](#output\_azure\_primary\_connection\_id) | n/a |
-| <a name="output_azure_secondary_connection_id"></a> [azure\_secondary\_connection\_id](#output\_azure\_secondary\_connection\_id) | n/a |
+| <a name="output_azure_primary_connection"></a> [azure\_primary\_connection](#output\_azure\_primary\_connection) | n/a |
+| <a name="output_azure_secondary_connection"></a> [azure\_secondary\_connection](#output\_azure\_secondary\_connection) | n/a |
 | <a name="output_azurerm_express_route_circuit"></a> [azurerm\_express\_route\_circuit](#output\_azurerm\_express\_route\_circuit) | n/a |
 | <a name="output_azurerm_resource_group_id"></a> [azurerm\_resource\_group\_id](#output\_azurerm\_resource\_group\_id) | n/a |
 <!-- END_TF_DOCS -->

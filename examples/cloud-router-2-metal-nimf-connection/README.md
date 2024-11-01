@@ -183,11 +183,13 @@ output "metal_vlan_id" {
 output "metal_connection_id" {
   value = equinix_metal_connection.metal-connection.id
 }
-output "cloud_router_metal_connection_id" {
-  value = module.cloud_router_2_metal_connection.primary_connection_id
+output "cloud_router_metal_connection" {
+  value = module.cloud_router_2_metal_connection.primary_connection
+  sensitive = true
 }
-output "cloud_router_routing_protocol_id" {
-  value = module.routing_protocols.direct_routing_protocol_id
+output "cloud_router_routing_protocol" {
+  value = module.routing_protocols.direct_routing_protocol
+  sensitive = true
 }
 output "metal_connection_status" {
   value = data.equinix_metal_connection.NIMF-test.status
@@ -317,8 +319,8 @@ data "equinix_metal_connection" "NIMF-test" {
 
 | Name | Description |
 |------|-------------|
-| <a name="output_cloud_router_metal_connection_id"></a> [cloud\_router\_metal\_connection\_id](#output\_cloud\_router\_metal\_connection\_id) | n/a |
-| <a name="output_cloud_router_routing_protocol_id"></a> [cloud\_router\_routing\_protocol\_id](#output\_cloud\_router\_routing\_protocol\_id) | n/a |
+| <a name="output_cloud_router_metal_connection"></a> [cloud\_router\_metal\_connection](#output\_cloud\_router\_metal\_connection) | n/a |
+| <a name="output_cloud_router_routing_protocol"></a> [cloud\_router\_routing\_protocol](#output\_cloud\_router\_routing\_protocol) | n/a |
 | <a name="output_metal_connection_id"></a> [metal\_connection\_id](#output\_metal\_connection\_id) | n/a |
 | <a name="output_metal_connection_status"></a> [metal\_connection\_status](#output\_metal\_connection\_status) | n/a |
 | <a name="output_metal_vlan_id"></a> [metal\_vlan\_id](#output\_metal\_vlan\_id) | n/a |

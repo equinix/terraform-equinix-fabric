@@ -216,8 +216,9 @@ output "GCP_Router_Id" {
 output "GCP_Interconnect_Id" {
   value = google_compute_interconnect_attachment.cloud-router-google.id
 }
-output "Google_Connection_Id" {
-  value = module.cloud_router_google_connection.primary_connection_id
+output "Google_Connection" {
+  value = module.cloud_router_google_connection.primary_connection
+  sensitive = true
 }
 ```
 
@@ -346,5 +347,5 @@ module "cloud_router_google_connection" {
 | <a name="output_GCP_Interconnect_Id"></a> [GCP\_Interconnect\_Id](#output\_GCP\_Interconnect\_Id) | n/a |
 | <a name="output_GCP_Network_Id"></a> [GCP\_Network\_Id](#output\_GCP\_Network\_Id) | n/a |
 | <a name="output_GCP_Router_Id"></a> [GCP\_Router\_Id](#output\_GCP\_Router\_Id) | n/a |
-| <a name="output_Google_Connection_Id"></a> [Google\_Connection\_Id](#output\_Google\_Connection\_Id) | n/a |
+| <a name="output_Google_Connection"></a> [Google\_Connection](#output\_Google\_Connection) | n/a |
 <!-- END_TF_DOCS -->

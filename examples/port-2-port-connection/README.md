@@ -142,8 +142,9 @@ variable "zside_vlan_tag" {
 
 outputs.tf
 ```hcl
-output "port_connection_id" {
-  value = module.create_port_2_port_connection.primary_connection_id
+output "port_connection" {
+  value = module.create_port_2_port_connection.primary_connection
+  sensitive = true
 }
 ```
 
@@ -221,5 +222,5 @@ No resources.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_port_connection_id"></a> [port\_connection\_id](#output\_port\_connection\_id) | n/a |
+| <a name="output_port_connection"></a> [port\_connection](#output\_port\_connection) | n/a |
 <!-- END_TF_DOCS -->

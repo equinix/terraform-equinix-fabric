@@ -85,12 +85,12 @@ variable "bgp_auth_key" {
 
  #outputs.tf
 ```hcl
-output "direct_routing_protocol_id" {
-  value = equinix_fabric_routing_protocol.direct.id
+output "direct_routing_protocol" {
+  value = equinix_fabric_routing_protocol.direct
 }
 
-output "bgp_routing_protocol_id" {
-  value = var.bgp_rp_name != "" ? equinix_fabric_routing_protocol.bgp[0].id : null
+output "bgp_routing_protocol" {
+  value = var.bgp_rp_name != "" ? equinix_fabric_routing_protocol.bgp[0] : null
 }
 ```
 
@@ -181,6 +181,6 @@ No modules.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_bgp_routing_protocol_id"></a> [bgp\_routing\_protocol\_id](#output\_bgp\_routing\_protocol\_id) | n/a |
-| <a name="output_direct_routing_protocol_id"></a> [direct\_routing\_protocol\_id](#output\_direct\_routing\_protocol\_id) | n/a |
+| <a name="output_bgp_routing_protocol"></a> [bgp\_routing\_protocol](#output\_bgp\_routing\_protocol) | n/a |
+| <a name="output_direct_routing_protocol"></a> [direct\_routing\_protocol](#output\_direct\_routing\_protocol) | n/a |
 <!-- END_TF_DOCS -->

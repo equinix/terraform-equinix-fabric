@@ -126,8 +126,9 @@ variable "marketplace_subscription_uuid" {
 
 outputs.tf
 ```hcl
-output "cloud_router_id" {
-  value = equinix_fabric_cloud_router.create_fcr_marketplace_subscription.id
+output "cloud_router" {
+  value = equinix_fabric_cloud_router.create_fcr_marketplace_subscription
+  sensitive = true
 }
 ```
 
@@ -221,5 +222,5 @@ No modules.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_cloud_router_id"></a> [cloud\_router\_id](#output\_cloud\_router\_id) | n/a |
+| <a name="output_cloud_router"></a> [cloud\_router](#output\_cloud\_router) | n/a |
 <!-- END_TF_DOCS -->

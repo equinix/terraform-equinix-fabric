@@ -74,7 +74,17 @@ variable "connection_id" {
 
  #outputs.tf
 ```hcl
+output "route_filter" {
+  value = equinix_fabric_route_filter
+}
 
+output "route_filter_rule" {
+  value = equinix_fabric_route_filter_rule
+}
+
+output "connection_route_filter" {
+  value = equinix_fabric_connection_route_filter
+}
 ```
 
  #main.tf
@@ -149,5 +159,9 @@ No modules.
 
 ## Outputs
 
-No outputs.
+| Name | Description |
+|------|-------------|
+| <a name="output_connection_route_filter"></a> [connection\_route\_filter](#output\_connection\_route\_filter) | n/a |
+| <a name="output_route_filter"></a> [route\_filter](#output\_route\_filter) | n/a |
+| <a name="output_route_filter_rule"></a> [route\_filter\_rule](#output\_route\_filter\_rule) | n/a |
 <!-- END_TF_DOCS -->

@@ -143,7 +143,8 @@ variable "zside_interface_id" {
 outputs.tf
 ```hcl
 output "FCR_VD_Connection" {
-  value = module.cloud_router_virtual_device_connection.primary_connection_id
+  value = module.cloud_router_virtual_device_connection.primary_connection
+  sensitive = true
 }
 ```
 

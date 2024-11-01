@@ -262,8 +262,9 @@ output "azurerm_resource_group_id" {
 output "azurerm_express_route_circuit" {
   value = azurerm_express_route_circuit.metal2azure.id
 }
-output "metal_azure_connection_id" {
-  value = module.metal_2_azure_connection.primary_connection_id
+output "metal_azure_connection" {
+  value = module.metal_2_azure_connection.primary_connection
+  sensitive = true
 }
 output "metal_connection_status" {
   value = data.equinix_metal_connection.NIMF-test.status
@@ -431,7 +432,7 @@ data "equinix_metal_connection" "NIMF-test" {
 |------|-------------|
 | <a name="output_azurerm_express_route_circuit"></a> [azurerm\_express\_route\_circuit](#output\_azurerm\_express\_route\_circuit) | n/a |
 | <a name="output_azurerm_resource_group_id"></a> [azurerm\_resource\_group\_id](#output\_azurerm\_resource\_group\_id) | n/a |
-| <a name="output_metal_azure_connection_id"></a> [metal\_azure\_connection\_id](#output\_metal\_azure\_connection\_id) | n/a |
+| <a name="output_metal_azure_connection"></a> [metal\_azure\_connection](#output\_metal\_azure\_connection) | n/a |
 | <a name="output_metal_connection_id"></a> [metal\_connection\_id](#output\_metal\_connection\_id) | n/a |
 | <a name="output_metal_connection_status"></a> [metal\_connection\_status](#output\_metal\_connection\_status) | n/a |
 | <a name="output_metal_vlan_id"></a> [metal\_vlan\_id](#output\_metal\_vlan\_id) | n/a |

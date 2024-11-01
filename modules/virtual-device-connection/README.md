@@ -161,11 +161,11 @@ variable "additional_info" {
 
  #outputs.tf
 ```hcl
-output "primary_connection_id" {
-  value = equinix_fabric_connection.virtual_device_connection.id
+output "primary_connection" {
+  value = equinix_fabric_connection.virtual_device_connection
 }
-output "secondary_connection_id" {
-  value = var.secondary_connection_name != "" ? equinix_fabric_connection.secondary_virtual_device_connection[0].id : null
+output "secondary_connection" {
+  value = var.secondary_connection_name != "" ? equinix_fabric_connection.secondary_virtual_device_connection[0] : null
 }
 ```
 
@@ -452,6 +452,6 @@ No modules.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_primary_connection_id"></a> [primary\_connection\_id](#output\_primary\_connection\_id) | n/a |
-| <a name="output_secondary_connection_id"></a> [secondary\_connection\_id](#output\_secondary\_connection\_id) | n/a |
+| <a name="output_primary_connection"></a> [primary\_connection](#output\_primary\_connection) | n/a |
+| <a name="output_secondary_connection"></a> [secondary\_connection](#output\_secondary\_connection) | n/a |
 <!-- END_TF_DOCS -->

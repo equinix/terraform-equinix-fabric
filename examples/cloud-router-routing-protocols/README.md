@@ -135,12 +135,14 @@ variable "bgp_customer_asn" {
 
 outputs.tf
 ```hcl
-output "direct_rp_id" {
-  value = module.routing_protocols.direct_routing_protocol_id
+output "direct_rp" {
+  value = module.routing_protocols.direct_routing_protocol
+  sensitive = true
 }
 
 output "bgp_rp_id" {
-  value = module.routing_protocols.bgp_routing_protocol_id
+  value = module.routing_protocols.bgp_routing_protocol
+  sensitive = true
 }
 ```
 
@@ -214,5 +216,5 @@ No resources.
 | Name | Description |
 |------|-------------|
 | <a name="output_bgp_rp_id"></a> [bgp\_rp\_id](#output\_bgp\_rp\_id) | n/a |
-| <a name="output_direct_rp_id"></a> [direct\_rp\_id](#output\_direct\_rp\_id) | n/a |
+| <a name="output_direct_rp"></a> [direct\_rp](#output\_direct\_rp) | n/a |
 <!-- END_TF_DOCS -->
