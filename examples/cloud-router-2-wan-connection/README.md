@@ -124,8 +124,8 @@ variable "zside_network_uuid" {
 
 outputs.tf
 ```hcl
-output "wan_connection_id" {
-  value = module.cloud_router_wan_connection.primary_connection_id
+output "wan_connection" {
+  value = module.cloud_router_wan_connection.primary_connection
 }
 ```
 
@@ -196,5 +196,5 @@ No resources.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_wan_connection_id"></a> [wan\_connection\_id](#output\_wan\_connection\_id) | n/a |
+| <a name="output_wan_connection"></a> [wan\_connection](#output\_wan\_connection) | n/a |
 <!-- END_TF_DOCS -->

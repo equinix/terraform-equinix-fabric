@@ -85,6 +85,10 @@ variable "aside_vlan_tag" {
   description = "VLan Tag information for DOT1Q connections, and the outer VLan tag for QINQ connections)"
   type        = string
 }
+variable "secondary_aside_vlan_tag" {
+  description = "VLan Tag information for DOT1Q connections, and the outer VLan tag for QINQ connections)"
+  type        = string
+}
 variable "aside_vlan_inner_tag" {
   description = "VLan Tag information for DOT1Q connections"
   type        = string
@@ -93,6 +97,7 @@ variable "aside_vlan_inner_tag" {
 variable "zside_ap_type" {
   description = "Access point type - VD, SP, COLO, CLOUD_ROUTER, NETWORK"
   type        = string
+  default     = ""
 }
 variable "zside_ap_authentication_key" {
   description = "Authentication key for provider based connections"
@@ -143,6 +148,11 @@ variable "zside_network_uuid" {
   description = "Equinix Network UUID"
   default     = ""
 }
+variable "zside_service_token_uuid" {
+  description = "Service Token UUID"
+  type        = string
+  default     = ""
+}
 variable "additional_info" {
   description = "Additional info parameters. It's a list of maps containing 'key' and 'value' keys with their corresponding values."
   type        = list(object({ key = string, value = string }))
@@ -152,12 +162,12 @@ variable "additional_info" {
 
  #outputs.tf
 ```hcl
-output "primary_connection_id" {
-  value = equinix_fabric_connection.primary_port_connection.id
+output "primary_connection" {
+  value = equinix_fabric_connection.primary_port_connection
 }
 
-output "secondary_connection_id" {
-  value = var.aside_secondary_port_name != "" ? equinix_fabric_connection.secondary_port_connection[0].id : null
+output "secondary_connection" {
+  value = var.aside_secondary_port_name != "" ? equinix_fabric_connection.secondary_port_connection[0] : null
 }
 ```
 
@@ -284,6 +294,15 @@ resource "equinix_fabric_connection" "primary_port_connection" {
       }
     }
   }
+
+  dynamic "z_side" {
+    for_each = var.zside_service_token_uuid != "" ? [1] : []
+    content {
+      service_token {
+        uuid = var.zside_service_token_uuid
+      }
+    }
+  }
 }
 
 resource "equinix_fabric_connection" "secondary_port_connection" {
@@ -319,8 +338,8 @@ resource "equinix_fabric_connection" "secondary_port_connection" {
       }
       link_protocol {
         type       = one(data.equinix_fabric_ports.aside_secondary_port[0].data.0.encapsulation).type
-        vlan_tag   = one(data.equinix_fabric_ports.aside_secondary_port[0].data.0.encapsulation).type == "DOT1Q" ? var.aside_vlan_tag : null
-        vlan_s_tag = one(data.equinix_fabric_ports.aside_secondary_port[0].data.0.encapsulation).type == "QINQ" ? var.aside_vlan_tag : null
+        vlan_tag   = one(data.equinix_fabric_ports.aside_secondary_port[0].data.0.encapsulation).type == "DOT1Q" ? var.secondary_aside_vlan_tag : null
+        vlan_s_tag = one(data.equinix_fabric_ports.aside_secondary_port[0].data.0.encapsulation).type == "QINQ" ? var.secondary_aside_vlan_tag : null
 
         # This is adding ctag for any connection that is QINQ Aside AND not COLO on Zside OR when COLO on Zside is not QINQ Encapsulation Type
         vlan_c_tag = one(data.equinix_fabric_ports.aside_secondary_port[0].data.0.encapsulation).type == "QINQ" && (var.zside_ap_type != "COLO" || (var.zside_ap_type == "COLO" ? one(data.equinix_fabric_ports.zside_port[0].data.0.encapsulation).type != "QINQ" : false)) ? var.aside_vlan_inner_tag : null
@@ -382,6 +401,15 @@ resource "equinix_fabric_connection" "secondary_port_connection" {
       }
     }
   }
+
+  dynamic "z_side" {
+    for_each = var.zside_service_token_uuid != "" ? [1] : []
+    content {
+      service_token {
+        uuid = var.zside_service_token_uuid
+      }
+    }
+  }
 }
 ```
 
@@ -429,16 +457,18 @@ No modules.
 | <a name="input_notifications_type"></a> [notifications\_type](#input\_notifications\_type) | Notification Type - ALL is the only type currently supported | `string` | `"ALL"` | no |
 | <a name="input_project_id"></a> [project\_id](#input\_project\_id) | Subscriber-assigned project ID | `string` | `""` | no |
 | <a name="input_purchase_order_number"></a> [purchase\_order\_number](#input\_purchase\_order\_number) | Purchase order number | `string` | `""` | no |
+| <a name="input_secondary_aside_vlan_tag"></a> [secondary\_aside\_vlan\_tag](#input\_secondary\_aside\_vlan\_tag) | VLan Tag information for DOT1Q connections, and the outer VLan tag for QINQ connections) | `string` | n/a | yes |
 | <a name="input_secondary_bandwidth"></a> [secondary\_bandwidth](#input\_secondary\_bandwidth) | Connection bandwidth in Mbps for the secondary connection | `number` | `0` | no |
 | <a name="input_secondary_connection_name"></a> [secondary\_connection\_name](#input\_secondary\_connection\_name) | Secondary Connection name. An alpha-numeric 24 characters string which can include only hyphens and underscores | `string` | `""` | no |
 | <a name="input_zside_ap_authentication_key"></a> [zside\_ap\_authentication\_key](#input\_zside\_ap\_authentication\_key) | Authentication key for provider based connections | `string` | `""` | no |
 | <a name="input_zside_ap_profile_type"></a> [zside\_ap\_profile\_type](#input\_zside\_ap\_profile\_type) | Service profile type - L2\_PROFILE, L3\_PROFILE, ECIA\_PROFILE, ECMC\_PROFILE | `string` | `""` | no |
-| <a name="input_zside_ap_type"></a> [zside\_ap\_type](#input\_zside\_ap\_type) | Access point type - VD, SP, COLO, CLOUD\_ROUTER, NETWORK | `string` | n/a | yes |
+| <a name="input_zside_ap_type"></a> [zside\_ap\_type](#input\_zside\_ap\_type) | Access point type - VD, SP, COLO, CLOUD\_ROUTER, NETWORK | `string` | `""` | no |
 | <a name="input_zside_location"></a> [zside\_location](#input\_zside\_location) | Access point metro code | `string` | `""` | no |
 | <a name="input_zside_network_uuid"></a> [zside\_network\_uuid](#input\_zside\_network\_uuid) | Equinix Network UUID | `string` | `""` | no |
 | <a name="input_zside_peering_type"></a> [zside\_peering\_type](#input\_zside\_peering\_type) | Zside Access Point Peering type. Available values; PRIVATE, MICROSOFT, PUBLIC, MANUAL | `string` | `""` | no |
 | <a name="input_zside_port_name"></a> [zside\_port\_name](#input\_zside\_port\_name) | Equinix Z-Side Port Name | `string` | `""` | no |
 | <a name="input_zside_seller_region"></a> [zside\_seller\_region](#input\_zside\_seller\_region) | Access point seller region | `string` | `""` | no |
+| <a name="input_zside_service_token_uuid"></a> [zside\_service\_token\_uuid](#input\_zside\_service\_token\_uuid) | Service Token UUID | `string` | `""` | no |
 | <a name="input_zside_sp_name"></a> [zside\_sp\_name](#input\_zside\_sp\_name) | Equinix Service Profile Name | `string` | `""` | no |
 | <a name="input_zside_vlan_inner_tag"></a> [zside\_vlan\_inner\_tag](#input\_zside\_vlan\_inner\_tag) | Inner VLan tag for QINQ connections | `string` | `""` | no |
 | <a name="input_zside_vlan_tag"></a> [zside\_vlan\_tag](#input\_zside\_vlan\_tag) | VLan Tag information for DOT1Q connections, and the outer VLan tag for QINQ connections | `string` | `""` | no |
@@ -447,6 +477,6 @@ No modules.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_primary_connection_id"></a> [primary\_connection\_id](#output\_primary\_connection\_id) | n/a |
-| <a name="output_secondary_connection_id"></a> [secondary\_connection\_id](#output\_secondary\_connection\_id) | n/a |
+| <a name="output_primary_connection"></a> [primary\_connection](#output\_primary\_connection) | n/a |
+| <a name="output_secondary_connection"></a> [secondary\_connection](#output\_secondary\_connection) | n/a |
 <!-- END_TF_DOCS -->

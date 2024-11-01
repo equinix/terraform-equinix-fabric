@@ -213,8 +213,8 @@ variable "aws_gateway_asn" {
 
 outputs.tf
 ```hcl
-output "aws_connection_id" {
-  value = module.port_2_aws_connection.primary_connection_id
+output "aws_connection" {
+  value = module.port_2_aws_connection.primary_connection
 }
 output "aws_dx_gateway_id" {
   value = aws_dx_gateway.aws_gateway.id
@@ -354,7 +354,7 @@ resource "aws_dx_private_virtual_interface" "aws_virtual_interface" {
 
 | Name | Description |
 |------|-------------|
-| <a name="output_aws_connection_id"></a> [aws\_connection\_id](#output\_aws\_connection\_id) | n/a |
+| <a name="output_aws_connection"></a> [aws\_connection](#output\_aws\_connection) | n/a |
 | <a name="output_aws_dx_gateway_id"></a> [aws\_dx\_gateway\_id](#output\_aws\_dx\_gateway\_id) | n/a |
 | <a name="output_aws_interface_id"></a> [aws\_interface\_id](#output\_aws\_interface\_id) | n/a |
 <!-- END_TF_DOCS -->

@@ -208,8 +208,8 @@ variable "ibm_gateway_metered" {
 
 outputs.tf
 ```hcl
-output "ibm2_connection_id" {
-  value = module.create_port_2_ibm2_connection.primary_connection_id
+output "ibm2_connection" {
+  value = module.create_port_2_ibm2_connection.primary_connection
 }
 output "IBM_Gateway_Action_Id" {
   value = ibm_dl_gateway_action.test_dl_gateway_action.id
@@ -343,5 +343,5 @@ resource "ibm_dl_gateway_action" "test_dl_gateway_action" {
 | Name | Description |
 |------|-------------|
 | <a name="output_IBM_Gateway_Action_Id"></a> [IBM\_Gateway\_Action\_Id](#output\_IBM\_Gateway\_Action\_Id) | n/a |
-| <a name="output_ibm2_connection_id"></a> [ibm2\_connection\_id](#output\_ibm2\_connection\_id) | n/a |
+| <a name="output_ibm2_connection"></a> [ibm2\_connection](#output\_ibm2\_connection) | n/a |
 <!-- END_TF_DOCS -->

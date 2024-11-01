@@ -142,8 +142,8 @@ variable "zside_sp_name" {
 
 outputs.tf
 ```hcl
-output "public_sp_connection_id" {
-  value = module.create_port_2_public_sp_connection.primary_connection_id
+output "public_sp_connection" {
+  value = module.create_port_2_public_sp_connection.primary_connection
 }
 ```
 
@@ -221,5 +221,5 @@ No resources.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_public_sp_connection_id"></a> [public\_sp\_connection\_id](#output\_public\_sp\_connection\_id) | n/a |
+| <a name="output_public_sp_connection"></a> [public\_sp\_connection](#output\_public\_sp\_connection) | n/a |
 <!-- END_TF_DOCS -->

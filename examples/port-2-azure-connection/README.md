@@ -218,8 +218,8 @@ variable "azure_environment" {
 
 outputs.tf
 ```hcl
-output "azure_connection_id" {
-  value = module.create_port_2_azure_connection.primary_connection_id
+output "azure_connection" {
+  value = module.create_port_2_azure_connection.primary_connection
 }
 ```
 
@@ -347,5 +347,5 @@ module "create_port_2_azure_connection" {
 
 | Name | Description |
 |------|-------------|
-| <a name="output_azure_connection_id"></a> [azure\_connection\_id](#output\_azure\_connection\_id) | n/a |
+| <a name="output_azure_connection"></a> [azure\_connection](#output\_azure\_connection) | n/a |
 <!-- END_TF_DOCS -->

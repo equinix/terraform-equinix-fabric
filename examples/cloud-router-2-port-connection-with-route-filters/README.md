@@ -247,8 +247,8 @@ variable "routing_protocol_bgp_customer_asn" {
 
 outputs.tf
 ```hcl
-output "port_connection_id" {
-  value = module.cloud_router_port_connection.primary_connection_id
+output "port_connection" {
+  value = module.cloud_router_port_connection.primary_connection
 }
 ```
 
@@ -391,5 +391,5 @@ module "cloud_router_route_filters" {
 
 | Name | Description |
 |------|-------------|
-| <a name="output_port_connection_id"></a> [port\_connection\_id](#output\_port\_connection\_id) | n/a |
+| <a name="output_port_connection"></a> [port\_connection](#output\_port\_connection) | n/a |
 <!-- END_TF_DOCS -->

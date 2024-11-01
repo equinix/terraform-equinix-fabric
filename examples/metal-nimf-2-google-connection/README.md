@@ -258,8 +258,8 @@ output "GCP_Router_Id" {
 output "GCP_Interconnect_Id" {
   value = google_compute_interconnect_attachment.metal-nimf-google.id
 }
-output "Metal_Google_Connection_Id" {
-  value = module.metal_2_google_connection.primary_connection_id
+output "Metal_Google_Connection" {
+  value = module.metal_2_google_connection.primary_connection
 }
 output "metal_connection_status" {
   value = data.equinix_metal_connection.NIMF-test.status
@@ -433,7 +433,7 @@ data "equinix_metal_connection" "NIMF-test" {
 | <a name="output_GCP_Interconnect_Id"></a> [GCP\_Interconnect\_Id](#output\_GCP\_Interconnect\_Id) | n/a |
 | <a name="output_GCP_Network_Id"></a> [GCP\_Network\_Id](#output\_GCP\_Network\_Id) | n/a |
 | <a name="output_GCP_Router_Id"></a> [GCP\_Router\_Id](#output\_GCP\_Router\_Id) | n/a |
-| <a name="output_Metal_Google_Connection_Id"></a> [Metal\_Google\_Connection\_Id](#output\_Metal\_Google\_Connection\_Id) | n/a |
+| <a name="output_Metal_Google_Connection"></a> [Metal\_Google\_Connection](#output\_Metal\_Google\_Connection) | n/a |
 | <a name="output_metal_connection_id"></a> [metal\_connection\_id](#output\_metal\_connection\_id) | n/a |
 | <a name="output_metal_connection_status"></a> [metal\_connection\_status](#output\_metal\_connection\_status) | n/a |
 | <a name="output_metal_vlan_id"></a> [metal\_vlan\_id](#output\_metal\_vlan\_id) | n/a |

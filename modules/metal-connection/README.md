@@ -127,8 +127,8 @@ variable "additional_info" {
 
  #outputs.tf
 ```hcl
-output "primary_connection_id" {
-  value = equinix_fabric_connection.primary_metal_connection.id
+output "primary_connection" {
+  value = equinix_fabric_connection.primary_metal_connection
 }
 ```
 
@@ -268,5 +268,5 @@ No modules.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_primary_connection_id"></a> [primary\_connection\_id](#output\_primary\_connection\_id) | n/a |
+| <a name="output_primary_connection"></a> [primary\_connection](#output\_primary\_connection) | n/a |
 <!-- END_TF_DOCS -->

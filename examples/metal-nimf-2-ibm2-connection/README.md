@@ -242,8 +242,8 @@ output "metal_vlan_id" {
 output "metal_connection_id" {
   value = equinix_metal_connection.metal-connection.id
 }
-output "Metal_IBM2_Connection_Id" {
-  value = module.metal_2_ibm2_connection.primary_connection_id
+output "Metal_IBM2_Connection" {
+  value = module.metal_2_ibm2_connection.primary_connection
 }
 output "IBM_Gateway_Action_Id" {
   value = ibm_dl_gateway_action.test_dl_gateway_action.id
@@ -411,7 +411,7 @@ data "equinix_metal_connection" "NIMF-test" {
 | Name | Description |
 |------|-------------|
 | <a name="output_IBM_Gateway_Action_Id"></a> [IBM\_Gateway\_Action\_Id](#output\_IBM\_Gateway\_Action\_Id) | n/a |
-| <a name="output_Metal_IBM2_Connection_Id"></a> [Metal\_IBM2\_Connection\_Id](#output\_Metal\_IBM2\_Connection\_Id) | n/a |
+| <a name="output_Metal_IBM2_Connection"></a> [Metal\_IBM2\_Connection](#output\_Metal\_IBM2\_Connection) | n/a |
 | <a name="output_metal_connection_id"></a> [metal\_connection\_id](#output\_metal\_connection\_id) | n/a |
 | <a name="output_metal_connection_status"></a> [metal\_connection\_status](#output\_metal\_connection\_status) | n/a |
 | <a name="output_metal_vlan_id"></a> [metal\_vlan\_id](#output\_metal\_vlan\_id) | n/a |

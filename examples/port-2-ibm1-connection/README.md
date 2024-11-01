@@ -160,8 +160,8 @@ variable "additional_info" {
 
 outputs.tf
 ```hcl
-output "ibm1_connection_id" {
-  value = module.create_port_2_ibm1_connection.primary_connection_id
+output "ibm1_connection" {
+  value = module.create_port_2_ibm1_connection.primary_connection
 }
 ```
 
@@ -246,5 +246,5 @@ No resources.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_ibm1_connection_id"></a> [ibm1\_connection\_id](#output\_ibm1\_connection\_id) | n/a |
+| <a name="output_ibm1_connection"></a> [ibm1\_connection](#output\_ibm1\_connection) | n/a |
 <!-- END_TF_DOCS -->
