@@ -15,6 +15,7 @@ output "GCP_Interconnect_Id" {
 }
 output "Metal_Google_Connection" {
   value = module.metal_2_google_connection.primary_connection
+  sensitive = true
 }
 output "metal_connection_status" {
   value = data.equinix_metal_connection.NIMF-test.status

@@ -3,4 +3,5 @@ output "virtual_device_id" {
 }
 output "aws_connection" {
   value = module.virtual_device_2_aws_connection.primary_connection
+  sensitive = true
 }
