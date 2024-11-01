@@ -82,7 +82,7 @@ terraform {
   required_providers {
     equinix = {
       source  = "equinix/equinix"
-      version = ">= 1.38.1"
+      version = ">= 2.9.0"
     }
     ibm = {
       source = "IBM-Cloud/ibm"
@@ -341,14 +341,14 @@ data "equinix_metal_connection" "NIMF-test" {
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.5.4 |
-| <a name="requirement_equinix"></a> [equinix](#requirement\_equinix) | >= 1.38.1 |
+| <a name="requirement_equinix"></a> [equinix](#requirement\_equinix) | >= 2.9.0 |
 | <a name="requirement_ibm"></a> [ibm](#requirement\_ibm) | >= 1.12.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_equinix"></a> [equinix](#provider\_equinix) | >= 1.38.1 |
+| <a name="provider_equinix"></a> [equinix](#provider\_equinix) | >= 2.9.0 |
 | <a name="provider_ibm"></a> [ibm](#provider\_ibm) | >= 1.12.0 |
 | <a name="provider_time"></a> [time](#provider\_time) | n/a |
 

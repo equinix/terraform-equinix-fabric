@@ -85,7 +85,7 @@ terraform {
   required_providers {
     equinix = {
       source  = "equinix/equinix"
-      version = ">= 1.25.1"
+      version = ">= 2.9.0"
     }
     aws = {
       source  = "hashicorp/aws"
@@ -363,14 +363,14 @@ resource "aws_dx_private_virtual_interface" "aws_virtual_interface" {
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.5.2 |
 | <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 5.0 |
-| <a name="requirement_equinix"></a> [equinix](#requirement\_equinix) | >= 1.25.1 |
+| <a name="requirement_equinix"></a> [equinix](#requirement\_equinix) | >= 2.9.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
 | <a name="provider_aws"></a> [aws](#provider\_aws) | ~> 5.0 |
-| <a name="provider_equinix"></a> [equinix](#provider\_equinix) | >= 1.25.1 |
+| <a name="provider_equinix"></a> [equinix](#provider\_equinix) | >= 2.9.0 |
 | <a name="provider_random"></a> [random](#provider\_random) | n/a |
 
 ## Modules

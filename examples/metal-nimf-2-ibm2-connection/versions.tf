@@ -3,7 +3,7 @@ terraform {
   required_providers {
     equinix = {
       source  = "equinix/equinix"
-      version = ">= 1.38.1"
+      version = ">= 2.9.0"
     }
     ibm = {
       source = "IBM-Cloud/ibm"
