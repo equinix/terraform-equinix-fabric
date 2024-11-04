@@ -8,6 +8,9 @@ output "metal_service_profile_connection" {
   value = module.metal_2_service_profile.primary_connection
   sensitive = true
 }
+output "metal_service_profile_connection_id" {
+  value = module.metal_2_service_profile.primary_connection_id
+}
 output "metal_connection_status" {
   value = data.equinix_metal_connection.NIMF-test.status
 }

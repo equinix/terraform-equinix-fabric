@@ -11,3 +11,7 @@ output "Google_Connection" {
   value = module.cloud_router_google_connection.primary_connection
   sensitive = true
 }
+
+output "Google_Connection_Id" {
+  value = module.cloud_router_google_connection.primary_connection_id
+}
