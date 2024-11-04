@@ -146,6 +146,10 @@ output "private_sp_connection" {
   value = module.create_port_2_private_sp_connection.primary_connection
   sensitive = true
 }
+
+output "private_sp_connection_id" {
+  value = module.create_port_2_private_sp_connection.primary_connection_id
+}
 ```
 
 main.tf
@@ -223,4 +227,5 @@ No resources.
 | Name | Description |
 |------|-------------|
 | <a name="output_private_sp_connection"></a> [private\_sp\_connection](#output\_private\_sp\_connection) | n/a |
+| <a name="output_private_sp_connection_id"></a> [private\_sp\_connection\_id](#output\_private\_sp\_connection\_id) | n/a |
 <!-- END_TF_DOCS -->

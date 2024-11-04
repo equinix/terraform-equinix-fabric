@@ -135,6 +135,10 @@ variable "additional_info" {
 output "primary_connection" {
   value = equinix_fabric_connection.service_token_connection
 }
+
+output "primary_connection_id" {
+  value = equinix_fabric_connection.service_token_connection.id
+}
 ```
 
  #main.tf
@@ -289,4 +293,5 @@ No modules.
 | Name | Description |
 |------|-------------|
 | <a name="output_primary_connection"></a> [primary\_connection](#output\_primary\_connection) | n/a |
+| <a name="output_primary_connection_id"></a> [primary\_connection\_id](#output\_primary\_connection\_id) | n/a |
 <!-- END_TF_DOCS -->

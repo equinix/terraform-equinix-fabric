@@ -254,6 +254,9 @@ output "metal_aws_connection" {
   value = module.metal_2_aws_connection.primary_connection
   sensitive = true
 }
+output "metal_aws_connection_id" {
+  value = module.metal_2_aws_connection.primary_connection_id
+}
 output "aws_dx_gateway_id" {
   value = aws_dx_gateway.aws_gateway.id
 }
@@ -435,6 +438,7 @@ data "equinix_metal_connection" "NIMF-test" {
 | <a name="output_aws_dx_gateway_id"></a> [aws\_dx\_gateway\_id](#output\_aws\_dx\_gateway\_id) | n/a |
 | <a name="output_aws_interface_id"></a> [aws\_interface\_id](#output\_aws\_interface\_id) | n/a |
 | <a name="output_metal_aws_connection"></a> [metal\_aws\_connection](#output\_metal\_aws\_connection) | n/a |
+| <a name="output_metal_aws_connection_id"></a> [metal\_aws\_connection\_id](#output\_metal\_aws\_connection\_id) | n/a |
 | <a name="output_metal_connection_id"></a> [metal\_connection\_id](#output\_metal\_connection\_id) | n/a |
 | <a name="output_metal_connection_status"></a> [metal\_connection\_status](#output\_metal\_connection\_status) | n/a |
 | <a name="output_metal_vlan_id"></a> [metal\_vlan\_id](#output\_metal\_vlan\_id) | n/a |

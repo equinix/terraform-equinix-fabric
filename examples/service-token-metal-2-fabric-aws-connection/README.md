@@ -241,6 +241,9 @@ output "fabric-connection" {
   value = module.metal-2-fabric-connection.primary_connection
   sensitive = true
 }
+output "fabric-connection-id" {
+  value = module.metal-2-fabric-connection.primary_connection.id
+}
 output "aws_dx_gateway_id" {
   value = aws_dx_gateway.aws_gateway.id
 }
@@ -435,5 +438,6 @@ resource "aws_dx_private_virtual_interface" "aws_virtual_interface" {
 | <a name="output_aws_dx_gateway_id"></a> [aws\_dx\_gateway\_id](#output\_aws\_dx\_gateway\_id) | n/a |
 | <a name="output_aws_interface_id"></a> [aws\_interface\_id](#output\_aws\_interface\_id) | n/a |
 | <a name="output_fabric-connection"></a> [fabric-connection](#output\_fabric-connection) | n/a |
+| <a name="output_fabric-connection-id"></a> [fabric-connection-id](#output\_fabric-connection-id) | n/a |
 | <a name="output_metal-connection"></a> [metal-connection](#output\_metal-connection) | n/a |
 <!-- END_TF_DOCS -->

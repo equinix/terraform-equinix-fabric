@@ -140,9 +140,17 @@ output "direct_rp" {
   sensitive = true
 }
 
-output "bgp_rp_id" {
+output "bgp_rp" {
   value = module.routing_protocols.bgp_routing_protocol
   sensitive = true
+}
+
+output "direct_rp_id" {
+  value = module.routing_protocols.direct_routing_protocol_id
+}
+
+output "bgp_rp_id" {
+  value = module.routing_protocols.bgp_routing_protocol_id
 }
 ```
 
@@ -215,6 +223,8 @@ No resources.
 
 | Name | Description |
 |------|-------------|
+| <a name="output_bgp_rp"></a> [bgp\_rp](#output\_bgp\_rp) | n/a |
 | <a name="output_bgp_rp_id"></a> [bgp\_rp\_id](#output\_bgp\_rp\_id) | n/a |
 | <a name="output_direct_rp"></a> [direct\_rp](#output\_direct\_rp) | n/a |
+| <a name="output_direct_rp_id"></a> [direct\_rp\_id](#output\_direct\_rp\_id) | n/a |
 <!-- END_TF_DOCS -->

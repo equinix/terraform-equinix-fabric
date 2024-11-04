@@ -139,6 +139,10 @@ output "port_connection" {
   value = module.cloud_router_port_connection.primary_connection
   sensitive = true
 }
+
+output "port_connection_id" {
+  value = module.cloud_router_port_connection.primary_connection_id
+}
 ```
 
 main.tf
@@ -213,4 +217,5 @@ No resources.
 | Name | Description |
 |------|-------------|
 | <a name="output_port_connection"></a> [port\_connection](#output\_port\_connection) | n/a |
+| <a name="output_port_connection_id"></a> [port\_connection\_id](#output\_port\_connection\_id) | n/a |
 <!-- END_TF_DOCS -->

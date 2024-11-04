@@ -141,6 +141,10 @@ output "eia_connection" {
   value = module.create_virtual_device_2_azure_connection.primary_connection
   sensitive = true
 }
+
+output "eia_connection_id" {
+  value = module.create_virtual_device_2_azure_connection.primary_connection_id
+}
 ```
 
 main.tf
@@ -216,4 +220,5 @@ No resources.
 | Name | Description |
 |------|-------------|
 | <a name="output_eia_connection"></a> [eia\_connection](#output\_eia\_connection) | n/a |
+| <a name="output_eia_connection_id"></a> [eia\_connection\_id](#output\_eia\_connection\_id) | n/a |
 <!-- END_TF_DOCS -->

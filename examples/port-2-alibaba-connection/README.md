@@ -162,6 +162,10 @@ output "alibaba_connection" {
   value = module.create_port_2_alibaba_connection.primary_connection
   sensitive = true
 }
+
+output "alibaba_connection_id" {
+  value = module.create_port_2_alibaba_connection.primary_connection_id
+}
 ```
 
 main.tf
@@ -245,4 +249,5 @@ No resources.
 | Name | Description |
 |------|-------------|
 | <a name="output_alibaba_connection"></a> [alibaba\_connection](#output\_alibaba\_connection) | n/a |
+| <a name="output_alibaba_connection_id"></a> [alibaba\_connection\_id](#output\_alibaba\_connection\_id) | n/a |
 <!-- END_TF_DOCS -->

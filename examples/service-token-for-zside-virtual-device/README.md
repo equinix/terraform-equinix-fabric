@@ -259,6 +259,10 @@ output "service-token" {
   value = equinix_fabric_service_token.service-token
   sensitive = true
 }
+
+output "service-token-id" {
+  value = equinix_fabric_service_token.service-token.id
+}
 ```
 
 main.tf
@@ -400,4 +404,5 @@ No modules.
 | Name | Description |
 |------|-------------|
 | <a name="output_service-token"></a> [service-token](#output\_service-token) | n/a |
+| <a name="output_service-token-id"></a> [service-token-id](#output\_service-token-id) | n/a |
 <!-- END_TF_DOCS -->

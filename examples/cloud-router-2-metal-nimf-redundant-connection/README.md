@@ -203,17 +203,27 @@ output "metal_vlan_id" {
 output "metal_connection_id" {
   value = equinix_metal_connection.metal-connection.id
 }
-output "cloud_router_metal_primary_connection_id" {
+output "cloud_router_metal_primary_connection" {
   value = module.cloud_router_2_metal_connection.primary_connection
   sensitive = true
 }
-output "primary_connection_cloud_router_routing_protocol_id" {
+output "primary_connection_cloud_router_routing_protocol" {
   value = module.primary_connection_routing_protocols.direct_routing_protocol
   sensitive = true
 }
-output "secondary_connection_cloud_router_routing_protocol_id" {
+output "secondary_connection_cloud_router_routing_protocol" {
   value = module.secondary_connection_routing_protocols.direct_routing_protocol
   sensitive = true
+}
+
+output "cloud_router_metal_primary_connection_id" {
+  value = module.cloud_router_2_metal_connection.primary_connection_id
+}
+output "primary_connection_cloud_router_routing_protocol_id" {
+  value = module.primary_connection_routing_protocols.direct_routing_protocol_id
+}
+output "secondary_connection_cloud_router_routing_protocol_id" {
+  value = module.secondary_connection_routing_protocols.direct_routing_protocol_id
 }
 ```
 
@@ -357,9 +367,12 @@ module "secondary_connection_routing_protocols" {
 
 | Name | Description |
 |------|-------------|
+| <a name="output_cloud_router_metal_primary_connection"></a> [cloud\_router\_metal\_primary\_connection](#output\_cloud\_router\_metal\_primary\_connection) | n/a |
 | <a name="output_cloud_router_metal_primary_connection_id"></a> [cloud\_router\_metal\_primary\_connection\_id](#output\_cloud\_router\_metal\_primary\_connection\_id) | n/a |
 | <a name="output_metal_connection_id"></a> [metal\_connection\_id](#output\_metal\_connection\_id) | n/a |
 | <a name="output_metal_vlan_id"></a> [metal\_vlan\_id](#output\_metal\_vlan\_id) | n/a |
+| <a name="output_primary_connection_cloud_router_routing_protocol"></a> [primary\_connection\_cloud\_router\_routing\_protocol](#output\_primary\_connection\_cloud\_router\_routing\_protocol) | n/a |
 | <a name="output_primary_connection_cloud_router_routing_protocol_id"></a> [primary\_connection\_cloud\_router\_routing\_protocol\_id](#output\_primary\_connection\_cloud\_router\_routing\_protocol\_id) | n/a |
+| <a name="output_secondary_connection_cloud_router_routing_protocol"></a> [secondary\_connection\_cloud\_router\_routing\_protocol](#output\_secondary\_connection\_cloud\_router\_routing\_protocol) | n/a |
 | <a name="output_secondary_connection_cloud_router_routing_protocol_id"></a> [secondary\_connection\_cloud\_router\_routing\_protocol\_id](#output\_secondary\_connection\_cloud\_router\_routing\_protocol\_id) | n/a |
 <!-- END_TF_DOCS -->
