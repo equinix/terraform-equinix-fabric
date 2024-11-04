@@ -8,6 +8,9 @@ output "metal_aws_connection" {
   value = module.metal_2_aws_connection.primary_connection
   sensitive = true
 }
+output "metal_aws_connection_id" {
+  value = module.metal_2_aws_connection.primary_connection_id
+}
 output "aws_dx_gateway_id" {
   value = aws_dx_gateway.aws_gateway.id
 }

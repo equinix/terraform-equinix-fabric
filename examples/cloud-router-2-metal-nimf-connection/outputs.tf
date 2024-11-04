@@ -15,3 +15,11 @@ output "cloud_router_routing_protocol" {
 output "metal_connection_status" {
   value = data.equinix_metal_connection.NIMF-test.status
 }
+
+output "cloud_router_metal_connection_id" {
+  value = module.cloud_router_2_metal_connection.primary_connection_id
+}
+
+output "cloud_router_routing_protocol_id" {
+  value = module.routing_protocols.direct_routing_protocol_id
+}
