@@ -18,5 +18,5 @@ output "azure_primary_connection_id" {
 }
 
 output "azure_secondary_connection_id" {
-  value = var.secondary_connection_name != "" ? module.cloud_router_azure_redundant_connection.secondary_connection_id : null
+  value = module.cloud_router_azure_redundant_connection.secondary_connection_id
 }
