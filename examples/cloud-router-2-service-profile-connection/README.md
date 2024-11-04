@@ -141,6 +141,10 @@ output "service_profile_connection" {
   value = module.cloud_router_sp_connection.primary_connection
   sensitive = true
 }
+
+output "service_profile_connection_id" {
+  value = module.cloud_router_sp_connection.primary_connection_id
+}
 ```
 
 main.tf
@@ -215,4 +219,5 @@ No resources.
 | Name | Description |
 |------|-------------|
 | <a name="output_service_profile_connection"></a> [service\_profile\_connection](#output\_service\_profile\_connection) | n/a |
+| <a name="output_service_profile_connection_id"></a> [service\_profile\_connection\_id](#output\_service\_profile\_connection\_id) | n/a |
 <!-- END_TF_DOCS -->

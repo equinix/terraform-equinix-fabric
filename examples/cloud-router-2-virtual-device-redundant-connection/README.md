@@ -179,6 +179,13 @@ output "FCR_VD_Secondary_Connection" {
   sensitive = true
 }
 
+output "FCR_VD_Primary_Connection_id" {
+  value = module.cloud_router_virtual_device_redundant_connection.primary_connection_id
+}
+output "FCR_VD_Secondary_Connection_id" {
+  value = module.cloud_router_virtual_device_redundant_connection.secondary_connection_id
+}
+
 ```
 
 main.tf
@@ -267,5 +274,7 @@ No resources.
 | Name | Description |
 |------|-------------|
 | <a name="output_FCR_VD_Primary_Connection"></a> [FCR\_VD\_Primary\_Connection](#output\_FCR\_VD\_Primary\_Connection) | n/a |
+| <a name="output_FCR_VD_Primary_Connection_id"></a> [FCR\_VD\_Primary\_Connection\_id](#output\_FCR\_VD\_Primary\_Connection\_id) | n/a |
 | <a name="output_FCR_VD_Secondary_Connection"></a> [FCR\_VD\_Secondary\_Connection](#output\_FCR\_VD\_Secondary\_Connection) | n/a |
+| <a name="output_FCR_VD_Secondary_Connection_id"></a> [FCR\_VD\_Secondary\_Connection\_id](#output\_FCR\_VD\_Secondary\_Connection\_id) | n/a |
 <!-- END_TF_DOCS -->

@@ -230,6 +230,10 @@ output "oracle_connection" {
   value = module.cloud_router_oracle_connection.primary_connection
   sensitive = true
 }
+
+output "oracle_connection_id" {
+  value = module.cloud_router_oracle_connection.primary_connection_id
+}
 ```
 
 main.tf
@@ -366,4 +370,5 @@ module "cloud_router_oracle_connection" {
 | Name | Description |
 |------|-------------|
 | <a name="output_oracle_connection"></a> [oracle\_connection](#output\_oracle\_connection) | n/a |
+| <a name="output_oracle_connection_id"></a> [oracle\_connection\_id](#output\_oracle\_connection\_id) | n/a |
 <!-- END_TF_DOCS -->

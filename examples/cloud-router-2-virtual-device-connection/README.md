@@ -146,6 +146,10 @@ output "FCR_VD_Connection" {
   value = module.cloud_router_virtual_device_connection.primary_connection
   sensitive = true
 }
+
+output "FCR_VD_Connection_id" {
+  value = module.cloud_router_virtual_device_connection.primary_connection_id
+}
 ```
 
 main.tf
@@ -222,4 +226,5 @@ No resources.
 | Name | Description |
 |------|-------------|
 | <a name="output_FCR_VD_Connection"></a> [FCR\_VD\_Connection](#output\_FCR\_VD\_Connection) | n/a |
+| <a name="output_FCR_VD_Connection_id"></a> [FCR\_VD\_Connection\_id](#output\_FCR\_VD\_Connection\_id) | n/a |
 <!-- END_TF_DOCS -->
