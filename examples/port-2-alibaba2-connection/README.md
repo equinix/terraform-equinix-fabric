@@ -1,12 +1,12 @@
 # Fabric Port to Fabric Alibaba Profile Connection
 
-Here is a guide with step-by-step instructions for creating a connection using the Equinix Terraform Provider and the Alibaba Terraform Provider.
+This is a step-by-step guide for creating a connection using the Equinix Terraform Provider and the Alibaba Terraform Provider.
 By following these steps, you will be able to:
 
 1. Setup a connection through Equinix Fabric.
 2. Configure and accept the connection in the Alibaba Portal.
 3. Manage resources effectively using Terraform.
-4. Handle cleanup operations effciently
+4. Perform cleanup operations efficiently
 
 ### Step by Step Instructions for Fabric Port to Fabric Alibaba Profile Connection
 
