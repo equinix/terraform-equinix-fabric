@@ -11,8 +11,7 @@ provider "alicloud" {
 
 resource "random_string" "random" {
   length           = 12
-  special          = true
-  override_special = "@_-"
+  special          = false
 }
 
 module "create_port_2_alibaba_connection" {
@@ -57,7 +56,7 @@ resource "alicloud_express_connect_virtual_border_router" "vbr" {
 
 resource "null_resource" "destroy_warning" {
   triggers = {
-    warning = "WARNING: Destroy process is not complete yet. You need to delete the instance from Alibaba Console!"
+    warning = "WARNING: Destroy process is not complete yet. You need to delete the resource from Alibaba Portal!"
   }
 }
 
