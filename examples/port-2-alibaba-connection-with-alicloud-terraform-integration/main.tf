@@ -3,12 +3,6 @@ provider "equinix" {
   client_secret = var.equinix_client_secret
 }
 
-# provider "alicloud" {
-#   access_key = var.access_key
-#   secret_key = var.secret_key
-#   region = var.region
-# }
-
 module "create_port_2_alibaba_connection" {
   source = "../../modules/port-connection"
 
@@ -32,6 +26,12 @@ module "create_port_2_alibaba_connection" {
   zside_seller_region         = var.zside_seller_region
   zside_sp_name               = var.zside_sp_name
 }
+
+# provider "alicloud" {
+#   access_key = var.access_key
+#   secret_key = var.secret_key
+#   region = var.region
+# }
 #
 # data "alicloud_express_connect_physical_connections" "nameRegex" {
 #   name_regex = "^${module.create_port_2_alibaba_connection.primary_connection.name}"
