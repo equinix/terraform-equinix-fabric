@@ -19,7 +19,7 @@ See example usage below for details on how to use this example.
 
 
 * A `connection_name` with atmost 12 characters combined with a random string of 12 characters:  
-  `connection_name = "${var.connection_name}${random_string.random.result}"`. 
+  `connection_name = "${var.connection_name}${random_string.random.result}"`  
   Use the `random_string` resource to perform this operation:
   ```hcl
   resource "random_string" "random" {
@@ -33,7 +33,7 @@ See example usage below for details on how to use this example.
   
 
 #### 2. Formulate main.tf and output.tf Files
-* The resources and data sources (from the example) are in comments when you run the initial `terraform apply`. 
+* When you run the initial `terraform apply`, the resources and data sources (from the example) are in comments
 * The comments can be removed after you accept the connection with the Alibaba portal.
 
 #### 3. Accept the Connection Request
@@ -44,7 +44,7 @@ Manually accept the connection request in the Alibaba Portal for the created phy
 * The VBR resource is created successfully and linked to the physical connection.
 
 #### 5. [Cleanup] Delete Resources
-1. Run `terraform destroy` to delete the Alibaba Virtual Border Router (VBR).  
+1. Run `terraform destroy` to delete the Alibaba VBR  
 Directly deleting the Equinix Fabric connection, will result in the following error: `ERR-UAA-003-00: Deletion for a provisioned connection needs to be initiated from Alibaba Portal.`  
 
 
