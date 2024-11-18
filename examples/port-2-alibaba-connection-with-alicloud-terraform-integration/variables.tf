@@ -101,11 +101,6 @@ variable "peering_subnet_mask" {
   type        = string
   default     = ""
 }
-variable "vlan_id" {
-  description = "Vlan ID"
-  type        = string
-  default     = ""
-}
 variable "min_rx_interval" {
   description = "Minimum RX Interval"
   type        = string

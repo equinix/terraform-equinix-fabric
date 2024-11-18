@@ -31,5 +31,3 @@ detect_multiplier           = 10
 access_key                  = "<Alibaba_Cloud_Access_Key>"
 secret_key                  = "<Alibaba_Cloud_Secret_Key>"
 project_id                  = "<Fabric_Project_ID>"
-physical_connection_id      = "<Physical_Connection_ID>"
-vlan_id                     = 2019
