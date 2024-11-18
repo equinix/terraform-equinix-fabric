@@ -33,14 +33,8 @@ See example usage below for details on how to use this example.
   
 
 #### 2. Formulate main.tf and output.tf Files
-Use the following resources and data sources from the example (place them as comments initially):
-
-* `provider "alicloud"`  
-* `data "alicloud_express_connect_physical_connections" {}`  
-* `resource "alicloud_express_connect_virtual_border_router" {}`
-* `resource "null_resource" {}`  
-* `output alicloud_express_connect_virtual_border_router {}` 
-* `output alicloud_express_connect_virtual_border_router_id {}`
+* The resources and data sources (from the example) are in comments when you run the initial `terraform apply`. 
+* The comments can be removed after you accept the connection with the Alibaba portal.
 
 #### 3. Accept the Connection Request
 Manually accept the connection request in the Alibaba Portal for the created physical connection.
