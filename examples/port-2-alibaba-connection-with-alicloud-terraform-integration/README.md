@@ -42,10 +42,8 @@ See example usage below for details on how to use this example.
 * The VBR resource is created successfully and linked to the physical connection
 
 #### 5. Delete Resources
-* Run `terraform destroy` to delete the Alibaba VBR
-* Directly deleting the Equinix Fabric connection, will result in the following error: `ERR-UAA-003-00: Deletion for a provisioned connection needs to be initiated from Alibaba Portal`  
-* Go to the Alibaba Portal to manually **terminate** and then **delete** the physical connection 
-* This action will automatically delete the connection on the Equinix side, updating its status to Deprovisioned on both Equinix and Provider side
+* Run `terraform destroy` to delete the Alibaba VBR. Directly deleting the Equinix Fabric connection, will result in the following error: `ERR-UAA-003-00: Deletion for a provisioned connection needs to be initiated from Alibaba Portal`  
+* Go to the Alibaba Portal to manually **terminate** and then **delete** the physical connection. This action will automatically delete the connection on the Equinix side, updating its status to Deprovisioned on both Equinix and Provider side
 
 <!-- BEGIN_TF_DOCS -->
 
