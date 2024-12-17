@@ -1,0 +1,16 @@
+equinix_client_id      = "<MyEquinixClientId>"
+equinix_client_secret  = "<MyEquinixSecret>"
+
+#Service Token
+service_token_type                  = "VC_TOKEN"
+service_token_name                  = "Terra_Test_Token"
+service_token_description           = "Zside VD Token Test"
+service_token_expiration_date_time  = "2024-12-29T06:43:49.980Z"
+notifications_type                  = "ALL"
+notifications_emails                = ["example@equinix.com"]
+connection_type                     = "EVPL_VC"
+supported_bandwidths                = [50,100, 500, 1000]
+zside_ap_type                       = "COLO"
+zside_port_name                     = "<Fabric_Port_Name>"
+zside_vlan_tag_type                 = "DOT1Q"
+zside_vlan_tag                      = "2876"
