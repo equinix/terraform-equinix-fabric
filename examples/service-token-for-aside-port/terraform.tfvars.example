@@ -14,4 +14,3 @@ aside_ap_type                       = "COLO"
 aside_port_name                     = "<Fabric_Port_Name>"
 aside_vlan_tag_type                 = "DOT1Q"
 aside_vlan_tag                      = "2876"
-

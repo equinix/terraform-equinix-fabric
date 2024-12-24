@@ -40,7 +40,7 @@ variable "connection_type" {
 }
 variable "bandwidth_limit" {
   description = "Connection bandwidth limit in Mbps"
-  type        = string
+  type        = number
 }
 variable "aside_ap_type" {
   description = "Type of Access point; COLO, VD, NETWORK"

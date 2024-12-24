@@ -145,7 +145,3 @@ variable "zside_interface_type" {
   description = "Interface Type"
   type        = string
 }
-variable "zside_interface_id" {
-  description = "Interface Id"
-  type        = string
-}
