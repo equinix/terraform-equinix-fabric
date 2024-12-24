@@ -82,7 +82,6 @@ zside_ap_type                       = "VD"
 zside_vd_type                       = "EDGE"
 zside_vd_uuid                       = "<Virtual_Device_UUID>"
 zside_interface_type                = "NETWORK"
-zside_interface_id                  = "3"
 ```
 
 versions.tf
@@ -92,7 +91,7 @@ terraform {
   required_providers {
     equinix = {
       source  = "equinix/equinix"
-      version = ">= 2.10.0"
+      version = ">= 3.1.0"
     }
   }
 }
@@ -247,10 +246,6 @@ variable "zside_interface_type" {
   description = "Interface Type"
   type        = string
 }
-variable "zside_interface_id" {
-  description = "Interface Id"
-  type        = string
-}
 ```
 
 outputs.tf
@@ -339,13 +334,13 @@ resource "equinix_fabric_service_token" "service-token" {
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.5.4 |
-| <a name="requirement_equinix"></a> [equinix](#requirement\_equinix) | >= 2.10.0 |
+| <a name="requirement_equinix"></a> [equinix](#requirement\_equinix) | >= 3.1.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_equinix"></a> [equinix](#provider\_equinix) | >= 2.10.0 |
+| <a name="provider_equinix"></a> [equinix](#provider\_equinix) | >= 3.1.0 |
 
 ## Modules
 
@@ -394,7 +389,6 @@ No modules.
 | <a name="input_template_src_port"></a> [template\_src\_port](#input\_template\_src\_port) | Inbound traffic source ports | `string` | n/a | yes |
 | <a name="input_template_subnet"></a> [template\_subnet](#input\_template\_subnet) | Inbound traffic source IP subnets in CIDR format | `string` | n/a | yes |
 | <a name="input_zside_ap_type"></a> [zside\_ap\_type](#input\_zside\_ap\_type) | Type of Access point; COLO, VD, NETWORK | `string` | n/a | yes |
-| <a name="input_zside_interface_id"></a> [zside\_interface\_id](#input\_zside\_interface\_id) | Interface Id | `string` | n/a | yes |
 | <a name="input_zside_interface_type"></a> [zside\_interface\_type](#input\_zside\_interface\_type) | Interface Type | `string` | n/a | yes |
 | <a name="input_zside_vd_type"></a> [zside\_vd\_type](#input\_zside\_vd\_type) | Virtual Device type - EDGE | `string` | n/a | yes |
 | <a name="input_zside_vd_uuid"></a> [zside\_vd\_uuid](#input\_zside\_vd\_uuid) | Virtual Device UUID | `string` | n/a | yes |
