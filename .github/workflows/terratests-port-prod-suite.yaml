@@ -86,3 +86,6 @@ jobs:
           name: Port Prod Suite Terraform Modules Testing Report
           path: port_prod_suite.html
           compression-level: 0
+
+      - name: Check if Tests are passed
+        run: sh check_tests.sh
