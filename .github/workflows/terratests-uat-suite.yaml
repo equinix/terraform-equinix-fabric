@@ -7,7 +7,7 @@ on:
 jobs:
   test-PNFV:
     name: Setup UAT PNFV Tests
-    runs-on: ecx
+    runs-on: ubuntu-latest
     env:
       TF_VAR_equinix_client_id: ${{ secrets.EQUINIX_CLIENT_ID_PNFV }}
       TF_VAR_equinix_client_secret: ${{ secrets.EQUINIX_CLIENT_SECRET_PNFV }}
@@ -55,7 +55,7 @@ jobs:
 
   test-PFCR:
     name: Setup UAT PFCR Tests
-    runs-on: ecx
+    runs-on: ubuntu-latest
     env:
       TF_VAR_equinix_client_id: ${{ secrets.EQUINIX_CLIENT_ID_PFCR }}
       TF_VAR_equinix_client_secret: ${{ secrets.EQUINIX_CLIENT_SECRET_PFCR }}
@@ -125,7 +125,7 @@ jobs:
   upload-test-report:
     name: Upload Testing Report
     needs: [test-PNFV, test-PFCR]
-    runs-on: ecx
+    runs-on: ubuntu-latest
 
     steps:
       - name: Set up Go

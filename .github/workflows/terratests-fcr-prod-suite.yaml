@@ -6,7 +6,7 @@ on:
 jobs:
   setup-tests:
     name: Setup PROD DIGP Tests
-    runs-on: ecx
+    runs-on: ubuntu-latest
     env:
       TF_VAR_equinix_client_id: ${{ secrets.EQUINIX_CLIENT_ID }}
       TF_VAR_equinix_client_secret: ${{ secrets.EQUINIX_CLIENT_SECRET }}
