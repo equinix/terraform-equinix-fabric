@@ -88,4 +88,4 @@ jobs:
           compression-level: 0
 
       - name: Check if Tests are passed
-        run: sh check_tests.sh
+        run: sh check_tests.sh *suite.log

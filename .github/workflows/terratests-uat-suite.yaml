@@ -53,6 +53,9 @@ jobs:
           name: pnfv_test_logs
           path: pnfv_test_output.log
 
+      - name: Check if Tests are passed
+        run: sh check_tests.sh output.log
+
   test-PFCR:
     name: Setup UAT PFCR Tests
     runs-on: ubuntu-latest
@@ -122,8 +125,12 @@ jobs:
           name: pfcr_test_logs
           path: pfcr_test_output.log
 
+      - name: Check if Tests are passed
+        run: sh check_tests.sh output.log
+
   upload-test-report:
     name: Upload Testing Report
+    if: always()
     needs: [test-PNFV, test-PFCR]
     runs-on: ubuntu-latest
 
