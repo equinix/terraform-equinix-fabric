@@ -80,3 +80,6 @@ jobs:
           name: FCR Prod Suite Terraform Modules Testing Report
           path: fcr_prod_suite.html
           compression-level: 0
+
+      - name: Check if Tests are passed
+        run: sh check_tests.sh *suite.log

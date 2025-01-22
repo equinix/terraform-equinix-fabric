@@ -122,3 +122,6 @@ jobs:
           name: Prod Suite ALL Terraform Modules Testing Report
           path: prod_suite_all.html
           compression-level: 0
+
+      - name: Check if Tests are passed
+        run: sh check_tests.sh *suite_all.log
