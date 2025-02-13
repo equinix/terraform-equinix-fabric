@@ -45,7 +45,7 @@ func TestPort2AwsCreateConnection_DIGP(t *testing.T) {
 func TestPort2AzureCreateConnection_DIGP(t *testing.T) {
 
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
-		TerraformDir: "../../tests/examples-without-external-providers/port-2-azure-connection",
+		TerraformDir: "../../example/port-2-azure-connection",
 	})
 
 	defer terraform.Destroy(t, terraformOptions)
@@ -190,7 +190,7 @@ func TestCloudRouter2AwsCreateConnection_DIGP(t *testing.T) {
 func TestCloudRouter2AzureCreateConnection_DIGP(t *testing.T) {
 
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
-		TerraformDir: "../../tests/examples-without-external-providers/cloud-router-2-azure-connection",
+		TerraformDir: "../../examples/cloud-router-2-azure-connection",
 	})
 
 	defer terraform.Destroy(t, terraformOptions)
