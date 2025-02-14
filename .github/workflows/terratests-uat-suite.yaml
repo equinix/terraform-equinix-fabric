@@ -11,10 +11,6 @@ jobs:
     env:
       TF_VAR_equinix_client_id: ${{ secrets.EQUINIX_CLIENT_ID_PNFV }}
       TF_VAR_equinix_client_secret: ${{ secrets.EQUINIX_CLIENT_SECRET_PNFV }}
-      TF_VAR_azure_client_id: ${{ secrets.AZURE_CLIENT_ID}}
-      TF_VAR_azure_client_secret: ${{ secrets.AZURE_CLIENT_SECRET}}
-      TF_VAR_azure_tenant_id: ${{ secrets.AZURE_TENANT_ID}}
-      TF_VAR_azure_subscription_id: ${{ secrets.AZURE_SUBSCRIPTION_ID}}
       EQUINIX_API_ENDPOINT: "https://uatapi.equinix.com"
       TEST_DATA_UAT_PORT_2_ALIBABA_CONNECTION: ${{ secrets.TEST_DATA_UAT_PORT_2_ALIBABA_CONNECTION }}
       TEST_DATA_UAT_VIRTUAL_DEVICE_2_AZURE_CONNECTION: ${{ secrets.TEST_DATA_UAT_VIRTUAL_DEVICE_2_AZURE_CONNECTION }}

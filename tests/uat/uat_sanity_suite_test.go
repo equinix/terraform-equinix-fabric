@@ -45,7 +45,7 @@ func TestPort2AwsCreateConnection_PFCR(t *testing.T) {
 func TestPort2AzureCreateConnection_PFCR(t *testing.T) {
 
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
-		TerraformDir: "../../examples/port-2-azure-connection",
+		TerraformDir: "../../tests/examples-without-external-providers/port-2-azure-connection",
 	})
 
 	defer terraform.Destroy(t, terraformOptions)
@@ -129,7 +129,7 @@ func TestCloudRouter2AwsCreateConnection_PFCR(t *testing.T) {
 func TestCloudRouter2AzureCreateConnection_PFCR(t *testing.T) {
 
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
-		TerraformDir: "../../examples/cloud-router-2-azure-connection",
+		TerraformDir: "../../tests/examples-without-external-providers/cloud-router-2-azure-connection",
 	})
 
 	defer terraform.Destroy(t, terraformOptions)
@@ -185,7 +185,7 @@ func TestCloudRouter2WanCreateConnection_PFCR(t *testing.T) {
 func TestVirtualDevice2AzureCreateConnection_PNFV(t *testing.T) {
 
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
-		TerraformDir: "../../examples/virtual-device-2-azure-connection",
+		TerraformDir: "../../tests/examples-without-external-providers/virtual-device-2-azure-connection",
 	})
 
 	defer terraform.Destroy(t, terraformOptions)
