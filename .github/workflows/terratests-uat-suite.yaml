@@ -101,14 +101,14 @@ jobs:
       - name: Setup Variables Files
         run: |
           echo $TEST_DATA_UAT_PORT_2_AWS_CONNECTION >> "./tests/examples-without-external-providers/port-2-aws-connection/terraform.tfvars.json"
-          echo $TEST_DATA_UAT_PORT_2_AZURE_CONNECTION >> "./examples/port-2-azure-connection/terraform.tfvars.json"
+          echo $TEST_DATA_UAT_PORT_2_AZURE_CONNECTION >> "./tests/examples-without-external-providers/port-2-azure-connection/terraform.tfvars.json"
           echo $TEST_DATA_UAT_PORT_2_IBM2_CONNECTION >> "./tests/examples-without-external-providers/port-2-ibm2-connection/terraform.tfvars.json"
           echo $TEST_DATA_UAT_PORT_2_PORT_CONNECTION >> "./examples/port-2-port-connection/terraform.tfvars.json"
           echo $TEST_DATA_UAT_PORT_2_PRIVATE_SERVICE_PROFILE_CONNECTION >> "./examples/port-2-private-service-profile-connection/terraform.tfvars.json"
           echo $TEST_DATA_UAT_PORT_2_PUBLIC_SERVICE_PROFILE_CONNECTION >> "./examples/port-2-public-service-profile-connection/terraform.tfvars.json"   
 
           echo $TEST_DATA_UAT_CLOUD_ROUTER_2_AWS_CONNECTION >> "./tests/examples-without-external-providers/cloud-router-2-aws-connection/terraform.tfvars.json"
-          echo $TEST_DATA_UAT_CLOUD_ROUTER_2_AZURE_CONNECTION >> "./examples/cloud-router-2-azure-connection/terraform.tfvars.json"
+          echo $TEST_DATA_UAT_CLOUD_ROUTER_2_AZURE_CONNECTION >> "./tests/examples-without-external-providers/cloud-router-2-azure-connection/terraform.tfvars.json"
           echo $TEST_DATA_UAT_CLOUD_ROUTER_2_PORT_ROUTING_PROTOCOL_CONNECTION >> "./tests/examples-without-external-providers/cloud-router-2-port-connection-with-routing-protocols-and-route-filters/terraform.tfvars.json"
           echo $TEST_DATA_UAT_CLOUD_ROUTER_2_SERVICE_PROFILE_CONNECTION >> "./examples/cloud-router-2-service-profile-connection/terraform.tfvars.json"
           echo $TEST_DATA_UAT_CLOUD_ROUTER_2_WAN_CONNECTION >> "./examples/cloud-router-2-wan-connection/terraform.tfvars.json"
