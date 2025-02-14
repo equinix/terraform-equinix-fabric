@@ -140,7 +140,7 @@ func TestCloudRouter2AzureCreateConnection_PFCR(t *testing.T) {
 	assert.NotNil(t, output)
 }
 
-func TestCloudRouter2PortRoutingProtocolCreateConnection_PFCR(t *testing.T) {
+func  TestCloudRouter2PortRoutingProtocolAndRouteFilterCreateConnection_PFCR(t *testing.T) {
 
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
 		TerraformDir: "../../tests/examples-without-external-providers/cloud-router-2-port-connection-with-routing-protocols-and-route-filters",
