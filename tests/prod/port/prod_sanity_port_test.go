@@ -45,7 +45,7 @@ func TestPort2AwsCreateConnection_DIGP(t *testing.T) {
 func TestPort2AzureCreateConnection_DIGP(t *testing.T) {
 
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
-		TerraformDir: "../../../tests/examples-without-external-providers/port-2-azure-connection",
+		TerraformDir: "../../../examples/port-2-azure-connection",
 	})
 
 	defer terraform.Destroy(t, terraformOptions)
@@ -59,7 +59,7 @@ func TestPort2AzureCreateConnection_DIGP(t *testing.T) {
 		Vars: map[string]interface{}{
 			"connection_name": "P2Azure_Name_Update",
 		},
-		TerraformDir: "../../../tests/examples-without-external-providers/port-2-azure-connection",
+		TerraformDir: "../../../examples/port-2-azure-connection",
 	})
 	terraform.Apply(t, terraformOptions)
 }
