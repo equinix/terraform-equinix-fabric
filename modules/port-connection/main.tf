@@ -44,6 +44,7 @@ resource "equinix_fabric_connection" "primary_port_connection" {
   redundancy { priority = "PRIMARY" }
   order {
     purchase_order_number = var.purchase_order_number != "" ? var.purchase_order_number : null
+    term_length = var.term_length != "" ? var.term_length: null
   }
 
   additional_info = var.additional_info != [] ? var.additional_info : null
@@ -53,6 +54,9 @@ resource "equinix_fabric_connection" "primary_port_connection" {
       type = "COLO"
       port {
         uuid = data.equinix_fabric_ports.aside_port.data.0.uuid
+      }
+      location {
+        metro_code = var.aside_location != "" ? var.aside_location : null
       }
       link_protocol {
         type       = one(data.equinix_fabric_ports.aside_port.data.0.encapsulation).type
@@ -151,6 +155,7 @@ resource "equinix_fabric_connection" "secondary_port_connection" {
   }
   order {
     purchase_order_number = var.purchase_order_number != "" ? var.purchase_order_number : null
+    term_length = var.term_length != "" ? var.term_length: null
   }
 
   additional_info = var.additional_info != [] ? var.additional_info : null
@@ -160,6 +165,9 @@ resource "equinix_fabric_connection" "secondary_port_connection" {
       type = "COLO"
       port {
         uuid = data.equinix_fabric_ports.aside_secondary_port[0].data.0.uuid
+      }
+      location {
+        metro_code = var.aside_location != "" ? var.aside_location : null
       }
       link_protocol {
         type       = one(data.equinix_fabric_ports.aside_secondary_port[0].data.0.encapsulation).type

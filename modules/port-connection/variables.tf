@@ -39,12 +39,22 @@ variable "purchase_order_number" {
   type        = string
   default     = ""
 }
+variable "term_length" {
+  description = "Order Term Length"
+  type        = number
+  default     = 1
+}
 variable "aside_port_name" {
   description = "Equinix A-Side Port Name; your tagging must match the encapsulation type of the port (DOT1Q or QINQ)"
   type        = string
 }
 variable "aside_secondary_port_name" {
   description = "Equinix A-Side Port Name; your tagging must match the encapsulation type of the port (DOT1Q or QINQ)"
+  type        = string
+  default     = ""
+}
+variable "aside_location" {
+  description = "Aside metro code"
   type        = string
   default     = ""
 }
@@ -83,7 +93,7 @@ variable "zside_ap_profile_type" {
   default     = ""
 }
 variable "zside_location" {
-  description = "Access point metro code"
+  description = "Zside metro code"
   type        = string
   default     = ""
 }
