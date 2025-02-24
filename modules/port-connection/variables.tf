@@ -42,6 +42,7 @@ variable "purchase_order_number" {
 variable "term_length" {
   description = "Order Term Length"
   type        = number
+  default     = 0
 }
 variable "aside_port_name" {
   description = "Equinix A-Side Port Name; your tagging must match the encapsulation type of the port (DOT1Q or QINQ)"
