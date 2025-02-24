@@ -23,7 +23,7 @@ terraform {
   required_providers {
     equinix = {
       source  = "equinix/equinix"
-      version = ">= 2.9.0"
+      version = ">= 3.2.0"
     }
   }
 }
@@ -72,12 +72,22 @@ variable "purchase_order_number" {
   type        = string
   default     = ""
 }
+variable "term_length" {
+  description = "Order Term Length"
+  type        = number
+  default     = 0
+}
 variable "aside_port_name" {
   description = "Equinix A-Side Port Name; your tagging must match the encapsulation type of the port (DOT1Q or QINQ)"
   type        = string
 }
 variable "aside_secondary_port_name" {
   description = "Equinix A-Side Port Name; your tagging must match the encapsulation type of the port (DOT1Q or QINQ)"
+  type        = string
+  default     = ""
+}
+variable "aside_location" {
+  description = "Aside metro code"
   type        = string
   default     = ""
 }
@@ -116,7 +126,7 @@ variable "zside_ap_profile_type" {
   default     = ""
 }
 variable "zside_location" {
-  description = "Access point metro code"
+  description = "Zside metro code"
   type        = string
   default     = ""
 }
@@ -243,6 +253,7 @@ resource "equinix_fabric_connection" "primary_port_connection" {
   redundancy { priority = "PRIMARY" }
   order {
     purchase_order_number = var.purchase_order_number != "" ? var.purchase_order_number : null
+    term_length = var.term_length >= 1 ? var.term_length: null
   }
 
   additional_info = var.additional_info != [] ? var.additional_info : null
@@ -252,6 +263,9 @@ resource "equinix_fabric_connection" "primary_port_connection" {
       type = "COLO"
       port {
         uuid = data.equinix_fabric_ports.aside_port.data.0.uuid
+      }
+      location {
+        metro_code = var.aside_location != "" ? var.aside_location : null
       }
       link_protocol {
         type       = one(data.equinix_fabric_ports.aside_port.data.0.encapsulation).type
@@ -350,6 +364,7 @@ resource "equinix_fabric_connection" "secondary_port_connection" {
   }
   order {
     purchase_order_number = var.purchase_order_number != "" ? var.purchase_order_number : null
+    term_length = var.term_length >= 1 ? var.term_length: null
   }
 
   additional_info = var.additional_info != [] ? var.additional_info : null
@@ -359,6 +374,9 @@ resource "equinix_fabric_connection" "secondary_port_connection" {
       type = "COLO"
       port {
         uuid = data.equinix_fabric_ports.aside_secondary_port[0].data.0.uuid
+      }
+      location {
+        metro_code = var.aside_location != "" ? var.aside_location : null
       }
       link_protocol {
         type       = one(data.equinix_fabric_ports.aside_secondary_port[0].data.0.encapsulation).type
@@ -442,13 +460,13 @@ resource "equinix_fabric_connection" "secondary_port_connection" {
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.5.4 |
-| <a name="requirement_equinix"></a> [equinix](#requirement\_equinix) | >= 2.9.0 |
+| <a name="requirement_equinix"></a> [equinix](#requirement\_equinix) | >= 3.2.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_equinix"></a> [equinix](#provider\_equinix) | >= 2.9.0 |
+| <a name="provider_equinix"></a> [equinix](#provider\_equinix) | >= 3.2.0 |
 
 ## Modules
 
@@ -470,6 +488,7 @@ No modules.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_additional_info"></a> [additional\_info](#input\_additional\_info) | Additional info parameters. It's a list of maps containing 'key' and 'value' keys with their corresponding values. | `list(object({ key = string, value = string }))` | `[]` | no |
+| <a name="input_aside_location"></a> [aside\_location](#input\_aside\_location) | Aside metro code | `string` | `""` | no |
 | <a name="input_aside_port_name"></a> [aside\_port\_name](#input\_aside\_port\_name) | Equinix A-Side Port Name; your tagging must match the encapsulation type of the port (DOT1Q or QINQ) | `string` | n/a | yes |
 | <a name="input_aside_secondary_port_name"></a> [aside\_secondary\_port\_name](#input\_aside\_secondary\_port\_name) | Equinix A-Side Port Name; your tagging must match the encapsulation type of the port (DOT1Q or QINQ) | `string` | `""` | no |
 | <a name="input_aside_secondary_vlan_inner_tag"></a> [aside\_secondary\_vlan\_inner\_tag](#input\_aside\_secondary\_vlan\_inner\_tag) | Secondary VLan Tag information for QINQ connections | `string` | `""` | no |
@@ -485,10 +504,11 @@ No modules.
 | <a name="input_purchase_order_number"></a> [purchase\_order\_number](#input\_purchase\_order\_number) | Purchase order number | `string` | `""` | no |
 | <a name="input_secondary_bandwidth"></a> [secondary\_bandwidth](#input\_secondary\_bandwidth) | Connection bandwidth in Mbps for the secondary connection | `number` | `0` | no |
 | <a name="input_secondary_connection_name"></a> [secondary\_connection\_name](#input\_secondary\_connection\_name) | Secondary Connection name. An alpha-numeric 24 characters string which can include only hyphens and underscores | `string` | `""` | no |
+| <a name="input_term_length"></a> [term\_length](#input\_term\_length) | Order Term Length | `number` | `0` | no |
 | <a name="input_zside_ap_authentication_key"></a> [zside\_ap\_authentication\_key](#input\_zside\_ap\_authentication\_key) | Authentication key for provider based connections | `string` | `""` | no |
 | <a name="input_zside_ap_profile_type"></a> [zside\_ap\_profile\_type](#input\_zside\_ap\_profile\_type) | Service profile type - L2\_PROFILE, L3\_PROFILE, ECIA\_PROFILE, ECMC\_PROFILE | `string` | `""` | no |
 | <a name="input_zside_ap_type"></a> [zside\_ap\_type](#input\_zside\_ap\_type) | Access point type - VD, SP, COLO, CLOUD\_ROUTER, NETWORK | `string` | `""` | no |
-| <a name="input_zside_location"></a> [zside\_location](#input\_zside\_location) | Access point metro code | `string` | `""` | no |
+| <a name="input_zside_location"></a> [zside\_location](#input\_zside\_location) | Zside metro code | `string` | `""` | no |
 | <a name="input_zside_network_uuid"></a> [zside\_network\_uuid](#input\_zside\_network\_uuid) | Equinix Network UUID | `string` | `""` | no |
 | <a name="input_zside_peering_type"></a> [zside\_peering\_type](#input\_zside\_peering\_type) | Zside Access Point Peering type. Available values; PRIVATE, MICROSOFT, PUBLIC, MANUAL | `string` | `""` | no |
 | <a name="input_zside_port_name"></a> [zside\_port\_name](#input\_zside\_port\_name) | Equinix Z-Side Port Name | `string` | `""` | no |
