@@ -30,18 +30,16 @@
   "route_aggregation_type": "BGP_IPv4_PREFIX_AGGREGATION",
   "route_aggregation_name": "terra-route-aggregation",
   "route_aggregation_description": "Test aggregation policy",
-  "route_filter_rules" : [
+  "route_aggregation_rules" : [
    {
      "name" : "rule_1",
      "prefix" : "192.168.0.0/24",
-     "prefix_match" : "exact",
-     "description" : "first rule on route filter"
+     "description" : "first rule on route aggregation"
    },
    {
      "name" : "rule_2",
      "prefix" : "192.168.1.0/24",
-     "prefix_match" : "or_longer",
-     "description" : "second rule on route filter"
+     "description" : "second rule on route aggregation"
    }
  ]
 }
