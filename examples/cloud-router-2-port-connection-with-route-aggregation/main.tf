@@ -64,11 +64,9 @@ module "cloud_router_route_aggregation" {
   route_aggregation_type            = var.route_aggregation_type
   route_aggregation_name            = var.route_aggregation_name
   route_aggregation_description     = var.route_aggregation_description
-
   route_aggregation_project_id = var.project_id
-  route_aggregation_rule_name = var.route_aggregation_rule_name
-  route_aggregation_rule_description = var.route_aggregation_rule_description
-  route_aggregation_rule_prefix = var.route_aggregation_rule_prefix
+
+  route_aggregation_rules = var.route_aggregation_rules
 
   connection_id                     = module.cloud_router_port_connection.primary_connection_id
 }

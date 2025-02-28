@@ -84,38 +84,6 @@ variable "account_number" {
   type        = number
 }
 
-variable "route_aggregation_type" {
-  description = "Type of the route aggregation policy. Should be one of: BGP_IPv4_PREFIX_ROUTE_AGGREGATION"
-  type        = string
-}
-
-variable "route_aggregation_name" {
-  description = "Name of the route aggregation policy that will be created in this module"
-  type        = string
-}
-
-variable "route_aggregation_description" {
-  description = "Description of the route aggregation policy you're creating"
-  type        = string
-  default     = ""
-}
-
-variable "route_aggregation_rule_name" {
-  description = "Name of the route aggregation rule that will be created in this module"
-  type        = string
-}
-
-variable "route_aggregation_rule_description" {
-  description = "Description of the route aggregation rule you're creating"
-  type        = string
-  default     = ""
-}
-
-variable "route_aggregation_rule_prefix" {
-  description = "Route Aggregation prefix Rule"
-  type        = string
-}
-
 variable "routing_protocol_direct_rp_name" {
   description = "Name of the Direct Routing Protocol Added to the Cloud Router Connection"
   type = string
@@ -138,4 +106,29 @@ variable "routing_protocol_bgp_ipv4_ip" {
 variable "routing_protocol_bgp_customer_asn" {
   description = "Customer ASN number for BGP Routing Protocol"
   type = number
+}
+
+variable "route_aggregation_type" {
+  description = "Type of the route aggregation policy. Should be one of: BGP_IPv4_PREFIX_ROUTE_AGGREGATION"
+  type        = string
+}
+
+variable "route_aggregation_name" {
+  description = "Name of the route aggregation policy that will be created in this module"
+  type        = string
+}
+
+variable "route_aggregation_description" {
+  description = "Description of the route aggregation policy you're creating"
+  type        = string
+  default     = ""
+}
+
+variable "route_aggregation_rules" {
+  description = "List of route aggregation rules to add to the created route aggrgeation policy"
+  type = list(object({
+    prefix       = string,
+    name         = optional(string),
+    description  = optional(string),
+  }))
 }
