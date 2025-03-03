@@ -1,0 +1,43 @@
+equinix_client_id       = "<MyEquinixClientId>"
+equinix_client_secret   = "<MyEquinixSecret>"
+
+cloud_router_type       = "XF_ROUTER"
+cloud_router_name       = "terra_fcr"
+cloud_router_metro_code = "SV"
+cloud_router_package    = "STANDARD"
+
+account_number          = "<equinix_Account_number>"
+project_id              = "<project_id>"
+
+notifications_emails    = ["test@gmail.com"]
+notifications_type      = "ALL"
+purchase_order_number   = "1-323292"
+bandwidth               = 50
+connection_name         = "terra_fcr_2_port"
+connection_type         =  "IP_VC"
+zside_ap_type           = "COLO"
+zside_location          = "SV"
+zside_port_name         = "<port_name>"
+zside_vlan_tag          = "2720"
+
+routing_protocol_direct_ipv4_ip     = "190.1.1.1/30"
+routing_protocol_direct_rp_name     = "DIRECT_RP"
+routing_protocol_bgp_rp_name        = "BGP_RP"
+routing_protocol_bgp_customer_asn   = "100"
+routing_protocol_bgp_ipv4_ip        =  "190.1.1.2"
+
+route_aggregation_type          = "BGP_IPv4_PREFIX_AGGREGATION"
+route_aggregation_name          = "terra-route-aggregation"
+route_aggregation_description   = "Test aggregation policy"
+route_aggregation_rules         = [
+   {
+     "name"         = "rule_1",
+     "prefix"       = "192.168.0.0/24",
+     "description"  = "first rule on route aggregation"
+   },
+   {
+     "name"         = "rule_2",
+     "prefix"       = "192.168.1.0/24",
+     "description"  = "second rule on route aggregation"
+   }
+]
