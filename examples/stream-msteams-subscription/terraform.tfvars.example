@@ -1,0 +1,22 @@
+equinix_client_id      = "<MyEquinixClientId>"
+equinix_client_secret  = "<MyEquinixSecret>"
+
+stream_name = "EmergingNetworksStream"
+stream_description = "Source for Equinix Events/Metrics/Alerts"
+
+msteams_name = "Microsoft Teams Sub"
+msteams_description = "Destination for Equinix Events/Metrics/Alerts"
+msteams_enabled = true
+msteams_uri = "<customer_specific_uri>"
+msteams_filters = [{
+  property = "/type"
+  operator = "LIKE"
+  values = [
+    "equinix.fabric.connection%"
+  ]
+}]
+msteams_event_exceptions = ["equinix.fabric.connection.route_filter.pending_bgp_configuration"]
+msteams_event_selections = ["equinix.fabric.router.*"]
+msteams_metric_exceptions = ["equinix.fabric.connection.*"]
+msteams_metric_selections = ["equinix.fabric.port.*"]
+

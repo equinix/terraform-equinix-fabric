@@ -1,0 +1,25 @@
+equinix_client_id      = "<MyEquinixClientId>"
+equinix_client_secret  = "<MyEquinixSecret>"
+
+stream_name = "EmergingNetworksStream"
+stream_description = "Source for Equinix Events/Metrics/Alerts"
+
+pagerduty_name = "pagerdutySub"
+pagerduty_description = "Destination for Equinix Events/Metrics/Alerts"
+pagerduty_enabled = true
+pagerduty_host = "<customer_specific_host>"
+pagerduty_integration_key = "<pagerduty_integration_key>"
+pagerduty_filters = [{
+  property = "/type"
+  operator = "LIKE"
+  values = [
+    "equinix.fabric.connection%"
+  ]
+}]
+pagerduty_event_exceptions = ["equinix.fabric.connection.route_filter.pending_bgp_configuration"]
+pagerduty_event_selections = ["equinix.fabric.router.*"]
+pagerduty_metric_exceptions = ["equinix.fabric.connection.*"]
+pagerduty_metric_selections = ["equinix.fabric.port.*"]
+pagerduty_change_uri = "<pagerduty_change_uri>"
+pagerduty_alert_uri = "<pagerduty_alert_uri>"
+

@@ -140,7 +140,7 @@ func TestCloudRouter2AzureCreateConnection_PFCR(t *testing.T) {
 	assert.NotNil(t, output)
 }
 
-func  TestCloudRouter2PortRoutingProtocolAndRouteFilterCreateConnection_PFCR(t *testing.T) {
+func TestCloudRouter2PortRoutingProtocolAndRouteFilterCreateConnection_PFCR(t *testing.T) {
 
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
 		TerraformDir: "../../tests/examples-without-external-providers/cloud-router-2-port-connection-with-routing-protocols-and-route-filters",
@@ -220,6 +220,78 @@ func TestVirtualDevice2AWSCreateConnection_PFCR(t *testing.T) {
 
 	terraform.InitAndApply(t, terraformOptions)
 	output := terraform.Output(t, terraformOptions, "aws_connection_id")
+	assert.NotNil(t, output)
+}
+
+func TestStreamDatadogSubscription_PFCR(t *testing.T) {
+	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
+		TerraformDir: "../../examples/stream-datadog-subscription",
+	})
+
+	defer terraform.Destroy(t, terraformOptions)
+
+	terraform.InitAndApply(t, terraformOptions)
+	output := terraform.Output(t, terraformOptions, "datadog_subscription")
+	assert.NotNil(t, output)
+}
+
+func TestStreamMSTeamsSubscription_PFCR(t *testing.T) {
+	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
+		TerraformDir: "../../examples/stream-msteams-subscription",
+	})
+
+	defer terraform.Destroy(t, terraformOptions)
+
+	terraform.InitAndApply(t, terraformOptions)
+	output := terraform.Output(t, terraformOptions, "msteams_subscription")
+	assert.NotNil(t, output)
+}
+
+func TestStreamPagerDutySubscription_PFCR(t *testing.T) {
+	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
+		TerraformDir: "../../examples/stream-pagerduty-subscription",
+	})
+
+	defer terraform.Destroy(t, terraformOptions)
+
+	terraform.InitAndApply(t, terraformOptions)
+	output := terraform.Output(t, terraformOptions, "pagerduty_subscription")
+	assert.NotNil(t, output)
+}
+
+func TestStreamSlackSubscription_PFCR(t *testing.T) {
+	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
+		TerraformDir: "../../examples/stream-slack-subscription",
+	})
+
+	defer terraform.Destroy(t, terraformOptions)
+
+	terraform.InitAndApply(t, terraformOptions)
+	output := terraform.Output(t, terraformOptions, "slack_subscription")
+	assert.NotNil(t, output)
+}
+
+func TestStreamSplunkSubscription_PFCR(t *testing.T) {
+	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
+		TerraformDir: "../../examples/stream-splunk-subscription",
+	})
+
+	defer terraform.Destroy(t, terraformOptions)
+
+	terraform.InitAndApply(t, terraformOptions)
+	output := terraform.Output(t, terraformOptions, "splunk_subscription")
+	assert.NotNil(t, output)
+}
+
+func TestStreamMultipleSubscriptionsAndAttachment_PFCR(t *testing.T) {
+	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
+		TerraformDir: "../../examples/stream-multiple-subscriptions-with-port-connection-attachment",
+	})
+
+	defer terraform.Destroy(t, terraformOptions)
+
+	terraform.InitAndApply(t, terraformOptions)
+	output := terraform.Output(t, terraformOptions, "first_stream")
 	assert.NotNil(t, output)
 }
 

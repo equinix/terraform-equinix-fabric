@@ -75,6 +75,12 @@ jobs:
       TEST_DATA_UAT_CLOUD_ROUTER_2_SERVICE_PROFILE_CONNECTION: ${{secrets.TEST_DATA_UAT_CLOUD_ROUTER_2_SERVICE_PROFILE_CONNECTION}}
       TEST_DATA_UAT_CLOUD_ROUTER_2_WAN_CONNECTION: ${{secrets.TEST_DATA_UAT_CLOUD_ROUTER_2_WAN_CONNECTION}}
       TEST_DATA_UAT_CLOUD_ROUTER_2_VIRTUAL_DEVICE_CONNECTION: ${{secrets.TEST_DATA_UAT_CLOUD_ROUTER_2_VIRTUAL_DEVICE_CONNECTION}}
+      TEST_DATA_UAT_STREAM_DATADOG_SUBSCRIPTION: ${{ secrets.TEST_DATA_UAT_STREAM_DATADOG_SUBSCRIPTION }}
+      TEST_DATA_UAT_STREAM_MSTEAMS_SUBSCRIPTION: ${{ secrets.TEST_DATA_UAT_STREAM_MSTEAMS_SUBSCRIPTION }}
+      TEST_DATA_UAT_STREAM_PAGERDUTY_SUBSCRIPTION: ${{ secrets.TEST_DATA_UAT_STREAM_PAGERDUTY_SUBSCRIPTION }}
+      TEST_DATA_UAT_STREAM_SLACK_SUBSCRIPTION: ${{ secrets.TEST_DATA_UAT_STREAM_SLACK_SUBSCRIPTION }}
+      TEST_DATA_UAT_STREAM_SPLUNK_SUBSCRIPTION: ${{ secrets.TEST_DATA_UAT_STREAM_SPLUNK_SUBSCRIPTION }}
+      TEST_DATA_UAT_STREAM_MULTIPLE_SUBSCRIPTIONS_AND_ATTACHMENT: ${{ secrets.TEST_DATA_UAT_STREAM_MULTIPLE_SUBSCRIPTIONS_AND_ATTACHMENT }}
       TEST_DATA_UAT_VIRTUAL_DEVICE_2_AWS_CONNECTION: ${{secrets.TEST_DATA_UAT_VIRTUAL_DEVICE_2_AWS_CONNECTION}}
 
     steps:
@@ -114,6 +120,14 @@ jobs:
           echo $TEST_DATA_UAT_CLOUD_ROUTER_2_WAN_CONNECTION >> "./examples/cloud-router-2-wan-connection/terraform.tfvars.json"
           echo $TEST_DATA_UAT_CLOUD_ROUTER_2_VIRTUAL_DEVICE_CONNECTION >> "./examples/cloud-router-2-virtual-device-connection/terraform.tfvars.json"
           echo $TEST_DATA_UAT_VIRTUAL_DEVICE_2_AWS_CONNECTION >> "./tests/examples-without-external-providers/virtual-device-2-aws-connection/terraform.tfvars.json"
+          
+          echo $TEST_DATA_UAT_STREAM_DATADOG_SUBSCRIPTION >> "./examples/stream-datadog-subscription/terraform.tfvars.json"
+          echo $TEST_DATA_UAT_STREAM_MSTEAMS_SUBSCRIPTION >> "./examples/stream-msteams-subscription/terraform.tfvars.json"
+          echo $TEST_DATA_UAT_STREAM_PAGERDUTY_SUBSCRIPTION >> "./examples/stream-pagerduty-subscription/terraform.tfvars.json"
+          echo $TEST_DATA_UAT_STREAM_SLACK_SUBSCRIPTION >> "./examples/stream-slack-subscription/terraform.tfvars.json"
+          echo $TEST_DATA_UAT_STREAM_SPLUNK_SUBSCRIPTION >> "./examples/stream-splunk-subscription/terraform.tfvars.json"
+          echo $TEST_DATA_UAT_STREAM_MULTIPLE_SUBSCRIPTIONS_AND_ATTACHMENT >> "./examples/stream-multiple-subscriptions-with-port-connection-attachment/terraform.tfvars.json"
+          
 
       - name: Run Go Tests
         run:
