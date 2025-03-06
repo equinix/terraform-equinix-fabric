@@ -15,8 +15,6 @@ module "create_virtual_device_2_port_connection" {
   # A-side
   aside_vd_type = var.aside_vd_type
   aside_vd_uuid = var.aside_vd_uuid
-#  aside_interface_id = 10
-#  aside_interface_type = "CLOUD"
 
   # Z-side
   zside_ap_type   = var.zside_ap_type
