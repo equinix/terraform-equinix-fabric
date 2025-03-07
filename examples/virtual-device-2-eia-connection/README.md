@@ -138,12 +138,12 @@ variable "zside_sp_name" {
 outputs.tf
 ```hcl
 output "eia_connection" {
-  value = module.create_virtual_device_2_azure_connection.primary_connection
+  value = module.create_virtual_device_2_eia_connection.primary_connection
   sensitive = true
 }
 
 output "eia_connection_id" {
-  value = module.create_virtual_device_2_azure_connection.primary_connection_id
+  value = module.create_virtual_device_2_eia_connection.primary_connection_id
 }
 ```
 
@@ -153,7 +153,7 @@ provider "equinix" {
   client_id     = var.equinix_client_id
   client_secret = var.equinix_client_secret
 }
-module "create_virtual_device_2_azure_connection" {
+module "create_virtual_device_2_eia_connection" {
   source = "equinix/fabric/equinix//modules/virtual-device-connection"
 
   connection_name       = var.connection_name
@@ -190,7 +190,7 @@ No providers.
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_create_virtual_device_2_azure_connection"></a> [create\_virtual\_device\_2\_azure\_connection](#module\_create\_virtual\_device\_2\_azure\_connection) | equinix/fabric/equinix//modules/virtual-device-connection | n/a |
+| <a name="module_create_virtual_device_2_eia_connection"></a> [create\_virtual\_device\_2\_eia\_connection](#module\_create\_virtual\_device\_2\_eia\_connection) | equinix/fabric/equinix//modules/virtual-device-connection | n/a |
 
 ## Resources
 
