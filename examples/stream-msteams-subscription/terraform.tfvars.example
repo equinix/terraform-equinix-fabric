@@ -19,4 +19,3 @@ msteams_event_exceptions  = ["equinix.fabric.connection.route_filter.pending_bgp
 msteams_event_selections  = ["equinix.fabric.router.*"]
 msteams_metric_exceptions = ["equinix.fabric.connection.*"]
 msteams_metric_selections = ["equinix.fabric.port.*"]
-

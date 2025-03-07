@@ -19,4 +19,3 @@ slack_event_exceptions  = ["equinix.fabric.connection.route_filter.pending_bgp_c
 slack_event_selections  = ["equinix.fabric.router.*"]
 slack_metric_exceptions = ["equinix.fabric.connection.*"]
 slack_metric_selections = ["equinix.fabric.port.*"]
-

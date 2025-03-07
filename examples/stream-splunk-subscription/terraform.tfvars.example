@@ -23,4 +23,3 @@ splunk_metric_selections = ["equinix.fabric.port.*"]
 splunk_source            = "<splunk_source>"
 splunk_event_index       = "<splunk_event_index>"
 splunk_metric_index      = "<splunk_metric_index>"
-

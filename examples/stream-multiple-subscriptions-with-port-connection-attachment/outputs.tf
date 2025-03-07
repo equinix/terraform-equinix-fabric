@@ -47,5 +47,3 @@ output "port_attachment_on_second_stream" {
   value     = equinix_fabric_stream_attachment.port_connection_on_stream2
   sensitive = true
 }
-
-
