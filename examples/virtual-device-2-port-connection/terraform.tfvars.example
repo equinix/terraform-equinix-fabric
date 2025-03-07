@@ -1,0 +1,16 @@
+equinix_client_id     = "<MyEquinixClientId>"
+equinix_client_secret = "<MyEquinixSecret>"
+
+bandwidth                   = 50
+connection_name             = "VD_2_PORT"
+connection_type             = "EVPL_VC"
+notifications_type          = "ALL"
+notifications_emails        = ["example@equinix.com"]
+purchase_order_number       = "1-323292"
+
+aside_vd_type               = "EDGE"
+aside_vd_uuid               = "<Virtua_Device_UUID>"
+zside_ap_type               = "COLO"
+zside_port_name             = "ops-user100-CX-SV1-NL-Qinq-STD-1G-PRI-NK-349"
+zside_vlan_tag              = "3711"
+zside_location              = "SV"

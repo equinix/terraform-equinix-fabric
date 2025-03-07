@@ -2,7 +2,7 @@ provider "equinix" {
   client_id     = var.equinix_client_id
   client_secret = var.equinix_client_secret
 }
-module "create_virtual_device_2_eia_connection" {
+module "create_virtual_device_2_port_connection" {
   source = "../../modules/virtual-device-connection"
 
   connection_name       = var.connection_name
@@ -17,8 +17,8 @@ module "create_virtual_device_2_eia_connection" {
   aside_vd_uuid = var.aside_vd_uuid
 
   # Z-side
-  zside_ap_type               = var.zside_ap_type
-  zside_ap_profile_type       = var.zside_ap_profile_type
-  zside_location              = var.zside_location
-  zside_sp_name               = var.zside_sp_name
+  zside_ap_type   = var.zside_ap_type
+  zside_port_name = var.zside_port_name
+  zside_vlan_tag  = var.zside_vlan_tag
+  zside_location  = var.zside_location
 }
