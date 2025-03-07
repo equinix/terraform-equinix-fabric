@@ -1,14 +1,14 @@
-equinix_client_id      = "<MyEquinixClientId>"
-equinix_client_secret  = "<MyEquinixSecret>"
+equinix_client_id     = "<MyEquinixClientId>"
+equinix_client_secret = "<MyEquinixSecret>"
 
-stream_name = "EmergingNetworksStream"
+stream_name        = "EmergingNetworksStream"
 stream_description = "Source for Equinix Events/Metrics/Alerts"
 
-datadog_name = "DatadogSub"
-datadog_description = "Destination for Equinix Events/Metrics/Alerts"
-datadog_enabled = true
-datadog_host = "<customer_specific_host>"
-datadog_api_key = "<datadog_api_key>"
+datadog_name            = "DatadogSub"
+datadog_description     = "Destination for Equinix Events/Metrics/Alerts"
+datadog_enabled         = true
+datadog_host            = "<customer_specific_host>"
+datadog_api_key         = "<datadog_api_key>"
 datadog_application_key = "<datadog_application_key>"
 datadog_filters = [{
   property = "/type"
@@ -17,10 +17,10 @@ datadog_filters = [{
     "equinix.fabric.connection%"
   ]
 }]
-datadog_event_exceptions = ["equinix.fabric.connection.route_filter.pending_bgp_configuration"]
-datadog_event_selections = ["equinix.fabric.router.*"]
+datadog_event_exceptions  = ["equinix.fabric.connection.route_filter.pending_bgp_configuration"]
+datadog_event_selections  = ["equinix.fabric.router.*"]
 datadog_metric_exceptions = ["equinix.fabric.connection.*"]
 datadog_metric_selections = ["equinix.fabric.port.*"]
-datadog_event_uri = "<datadog_event_uri>"
-datadog_metric_uri = "<datadog_metric_uri>"
+datadog_event_uri         = "<datadog_event_uri>"
+datadog_metric_uri        = "<datadog_metric_uri>"
 

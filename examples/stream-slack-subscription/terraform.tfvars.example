@@ -1,13 +1,13 @@
-equinix_client_id      = "<MyEquinixClientId>"
-equinix_client_secret  = "<MyEquinixSecret>"
+equinix_client_id     = "<MyEquinixClientId>"
+equinix_client_secret = "<MyEquinixSecret>"
 
-stream_name = "EmergingNetworksStream"
+stream_name        = "EmergingNetworksStream"
 stream_description = "Source for Equinix Events/Metrics/Alerts"
 
-slack_name = "slackSub"
+slack_name        = "slackSub"
 slack_description = "Destination for Equinix Events/Metrics/Alerts"
-slack_enabled = true
-slack_uri = "<customer_specific_uri>"
+slack_enabled     = true
+slack_uri         = "<customer_specific_uri>"
 slack_filters = [{
   property = "/type"
   operator = "LIKE"
@@ -15,8 +15,8 @@ slack_filters = [{
     "equinix.fabric.connection%"
   ]
 }]
-slack_event_exceptions = ["equinix.fabric.connection.route_filter.pending_bgp_configuration"]
-slack_event_selections = ["equinix.fabric.router.*"]
+slack_event_exceptions  = ["equinix.fabric.connection.route_filter.pending_bgp_configuration"]
+slack_event_selections  = ["equinix.fabric.router.*"]
 slack_metric_exceptions = ["equinix.fabric.connection.*"]
 slack_metric_selections = ["equinix.fabric.port.*"]
 

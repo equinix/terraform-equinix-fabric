@@ -1,13 +1,13 @@
-equinix_client_id      = "<MyEquinixClientId>"
-equinix_client_secret  = "<MyEquinixSecret>"
+equinix_client_id     = "<MyEquinixClientId>"
+equinix_client_secret = "<MyEquinixSecret>"
 
-stream_name = "EmergingNetworksStream"
+stream_name        = "EmergingNetworksStream"
 stream_description = "Source for Equinix Events/Metrics/Alerts"
 
-slack_name = "slackSub"
+slack_name        = "slackSub"
 slack_description = "Destination for Equinix Events/Metrics/Alerts"
-slack_enabled = true
-slack_uri = "<customer_specific_uri>"
+slack_enabled     = true
+slack_uri         = "<customer_specific_uri>"
 slack_filters = [{
   property = "/type"
   operator = "LIKE"
@@ -15,15 +15,15 @@ slack_filters = [{
     "equinix.fabric.connection%"
   ]
 }]
-slack_event_exceptions = ["equinix.fabric.connection.route_filter.pending_bgp_configuration"]
-slack_event_selections = ["equinix.fabric.router.*"]
+slack_event_exceptions  = ["equinix.fabric.connection.route_filter.pending_bgp_configuration"]
+slack_event_selections  = ["equinix.fabric.router.*"]
 slack_metric_exceptions = ["equinix.fabric.connection.*"]
 slack_metric_selections = ["equinix.fabric.port.*"]
 
-msteams_name = "Microsoft Teams Sub"
+msteams_name        = "Microsoft Teams Sub"
 msteams_description = "Destination for Equinix Events/Metrics/Alerts"
-msteams_enabled = true
-msteams_uri = "<customer_specific_uri>"
+msteams_enabled     = true
+msteams_uri         = "<customer_specific_uri>"
 msteams_filters = [{
   property = "/type"
   operator = "LIKE"
@@ -31,15 +31,15 @@ msteams_filters = [{
     "equinix.fabric.connection%"
   ]
 }]
-msteams_event_exceptions = ["equinix.fabric.connection.route_filter.pending_bgp_configuration"]
-msteams_event_selections = ["equinix.fabric.router.*"]
+msteams_event_exceptions  = ["equinix.fabric.connection.route_filter.pending_bgp_configuration"]
+msteams_event_selections  = ["equinix.fabric.router.*"]
 msteams_metric_exceptions = ["equinix.fabric.connection.*"]
 msteams_metric_selections = ["equinix.fabric.port.*"]
 
-splunk_name = "splunkSub"
-splunk_description = "Destination for Equinix Events/Metrics/Alerts"
-splunk_enabled = true
-splunk_uri = "<customer_specific_uri>"
+splunk_name         = "splunkSub"
+splunk_description  = "Destination for Equinix Events/Metrics/Alerts"
+splunk_enabled      = true
+splunk_uri          = "<customer_specific_uri>"
 splunk_access_token = "<customer_splunk_access_token"
 splunk_filters = [{
   property = "/type"
@@ -48,18 +48,18 @@ splunk_filters = [{
     "equinix.fabric.connection%"
   ]
 }]
-splunk_event_exceptions = ["equinix.fabric.connection.route_filter.pending_bgp_configuration"]
-splunk_event_selections = ["equinix.fabric.router.*"]
+splunk_event_exceptions  = ["equinix.fabric.connection.route_filter.pending_bgp_configuration"]
+splunk_event_selections  = ["equinix.fabric.router.*"]
 splunk_metric_exceptions = ["equinix.fabric.connection.*"]
 splunk_metric_selections = ["equinix.fabric.port.*"]
-splunk_source = "<splunk_source>"
-splunk_event_index = "<splunk_event_index>"
-splunk_metric_index = "<splunk_metric_index>"
+splunk_source            = "<splunk_source>"
+splunk_event_index       = "<splunk_event_index>"
+splunk_metric_index      = "<splunk_metric_index>"
 
-pagerduty_name = "pagerdutySub"
-pagerduty_description = "Destination for Equinix Events/Metrics/Alerts"
-pagerduty_enabled = true
-pagerduty_host = "<customer_specific_host>"
+pagerduty_name            = "pagerdutySub"
+pagerduty_description     = "Destination for Equinix Events/Metrics/Alerts"
+pagerduty_enabled         = true
+pagerduty_host            = "<customer_specific_host>"
 pagerduty_integration_key = "<pagerduty_integration_key>"
 pagerduty_filters = [{
   property = "/type"
@@ -68,18 +68,18 @@ pagerduty_filters = [{
     "equinix.fabric.connection%"
   ]
 }]
-pagerduty_event_exceptions = ["equinix.fabric.connection.route_filter.pending_bgp_configuration"]
-pagerduty_event_selections = ["equinix.fabric.router.*"]
+pagerduty_event_exceptions  = ["equinix.fabric.connection.route_filter.pending_bgp_configuration"]
+pagerduty_event_selections  = ["equinix.fabric.router.*"]
 pagerduty_metric_exceptions = ["equinix.fabric.connection.*"]
 pagerduty_metric_selections = ["equinix.fabric.port.*"]
-pagerduty_change_uri = "<pagerduty_change_uri>"
-pagerduty_alert_uri = "<pagerduty_alert_uri>"
+pagerduty_change_uri        = "<pagerduty_change_uri>"
+pagerduty_alert_uri         = "<pagerduty_alert_uri>"
 
-datadog_name = "DatadogSub"
-datadog_description = "Destination for Equinix Events/Metrics/Alerts"
-datadog_enabled = true
-datadog_host = "<customer_specific_host>"
-datadog_api_key = "<datadog_api_key>"
+datadog_name            = "DatadogSub"
+datadog_description     = "Destination for Equinix Events/Metrics/Alerts"
+datadog_enabled         = true
+datadog_host            = "<customer_specific_host>"
+datadog_api_key         = "<datadog_api_key>"
 datadog_application_key = "<datadog_application_key>"
 datadog_filters = [{
   property = "/type"
@@ -88,12 +88,12 @@ datadog_filters = [{
     "equinix.fabric.connection%"
   ]
 }]
-datadog_event_exceptions = ["equinix.fabric.connection.route_filter.pending_bgp_configuration"]
-datadog_event_selections = ["equinix.fabric.router.*"]
+datadog_event_exceptions  = ["equinix.fabric.connection.route_filter.pending_bgp_configuration"]
+datadog_event_selections  = ["equinix.fabric.router.*"]
 datadog_metric_exceptions = ["equinix.fabric.connection.*"]
 datadog_metric_selections = ["equinix.fabric.port.*"]
-datadog_event_uri = "<datadog_event_uri>"
-datadog_metric_uri = "<datadog_metric_uri>"
+datadog_event_uri         = "<datadog_event_uri>"
+datadog_metric_uri        = "<datadog_metric_uri>"
 
 connection_name       = "Port2Port"
 connection_type       = "EVPL_VC"
