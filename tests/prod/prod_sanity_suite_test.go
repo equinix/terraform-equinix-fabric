@@ -301,7 +301,7 @@ func TestVirtualDevice2WanCreateConnection_DIGP(t *testing.T) {
 func TestVirtualDevice2AzureCreateConnection_DIGP(t *testing.T) {
 
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
-		TerraformDir: "../../tests/examples-without-external-providers/virtual-device-2-azure-connection",
+		TerraformDir: "../../tests/examples-without-external-providers/virtual-device-2-azure-connection-with-azure",
 	})
 
 	defer terraform.Destroy(t, terraformOptions)
