@@ -35,7 +35,7 @@ resource "azurerm_express_route_circuit" "vd2azure" {
 
 #Connection
 module "create_virtual_device_2_azure_connection" {
-  source = "../../../modules/virtual-device-connection"
+  source = "../../modules/virtual-device-connection"
 
   connection_name       = var.connection_name
   connection_type       = var.connection_type
