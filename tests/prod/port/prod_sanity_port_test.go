@@ -57,7 +57,7 @@ func TestPort2AzureCreateConnection_DIGP(t *testing.T) {
 
 	terraformOptions = terraform.WithDefaultRetryableErrors(t, &terraform.Options{
 		Vars: map[string]interface{}{
-			"bandwidth": 100,
+			"connection_name": "P2Azure_Name_Update",
 		},
 		TerraformDir: "../../../examples/port-2-azure-connection",
 	})
