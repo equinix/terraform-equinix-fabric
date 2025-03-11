@@ -1,0 +1,34 @@
+equinix_client_id      = "MyEquinixClientId"
+equinix_client_secret  = "MyEquinixSecret"
+
+#Azure Provider
+azure_client_id             = "<Azure Client Id>"
+azure_client_secret         = "<Azure Client Secret Value>"
+azure_tenant_id             = "<Azure Tenant Id>"
+azure_subscription_id       = "<Azure Subscription Id>"
+azure_resource_name         = "Azure-Test"
+azure_location              = "West US 2"
+
+azure_service_key_name      = "Test_Azure_Key"
+azure_service_provider_name = "<Service Provider Name>"
+azure_peering_location      = "Silicon Valley Test"
+azure_tier                  = "Standard"
+azure_family                = "UnlimitedData"
+azure_environment           = "UAT"
+
+#VD_2_Azure_Connection
+connection_name             = "VD2Azure"
+connection_type             = "EVPL_VC"
+notifications_type          = "ALL"
+notifications_emails        = ["example@equinix.com"]
+bandwidth                   = 50
+purchase_order_number       = "1-323292"
+
+aside_vd_type               = "EDGE"
+aside_vd_uuid               = "<Virtual Device UUID>"
+
+zside_ap_type               = "SP"
+zside_peering_type          = "PRIVATE"
+zside_ap_profile_type       = "L2_PROFILE"
+zside_location              = "SV"
+zside_sp_name               = "Azure ExpressRoute"
