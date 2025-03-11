@@ -6,6 +6,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"os"
 	"testing"
+	"time"
 )
 
 func TestMain(m *testing.M) {
@@ -54,6 +55,8 @@ func TestPort2AzureCreateConnection_DIGP(t *testing.T) {
 	terraform.InitAndApply(t, terraformOptions)
 	output := terraform.Output(t, terraformOptions, "azure_connection_id")
 	assert.NotNil(t, output)
+
+	time.Sleep(30 * time.Second)
 
 	terraformOptions = terraform.WithDefaultRetryableErrors(t, &terraform.Options{
 		Vars: map[string]interface{}{
