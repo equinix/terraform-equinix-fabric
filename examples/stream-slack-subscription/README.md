@@ -73,7 +73,7 @@ terraform {
   required_providers {
     equinix = {
       source  = "equinix/equinix"
-      version = ">= 3.3.0"
+      version = ">= 3.4.0"
     }
   }
 }
@@ -196,7 +196,7 @@ module "stream_slack_subscription" {
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.5.4 |
-| <a name="requirement_equinix"></a> [equinix](#requirement\_equinix) | >= 3.3.0 |
+| <a name="requirement_equinix"></a> [equinix](#requirement\_equinix) | >= 3.4.0 |
 
 ## Providers
 
