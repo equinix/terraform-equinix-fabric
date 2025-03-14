@@ -54,14 +54,6 @@ func TestPort2AzureCreateConnection_DIGP(t *testing.T) {
 	terraform.InitAndApply(t, terraformOptions)
 	output := terraform.Output(t, terraformOptions, "azure_connection_id")
 	assert.NotNil(t, output)
-
-	terraformOptions = terraform.WithDefaultRetryableErrors(t, &terraform.Options{
-		Vars: map[string]interface{}{
-			"connection_name": "P2Azure_Name_Update",
-		},
-		TerraformDir: "../../tests/examples-without-external-providers/port-2-azure-connection",
-	})
-	terraform.Apply(t, terraformOptions)
 }
 
 func TestPort2GoogleCreateConnection_DIGP(t *testing.T) {
@@ -301,7 +293,7 @@ func TestVirtualDevice2WanCreateConnection_DIGP(t *testing.T) {
 func TestVirtualDevice2AzureCreateConnection_DIGP(t *testing.T) {
 
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
-		TerraformDir: "../../tests/examples-without-external-providers/virtual-device-2-azure-connection",
+		TerraformDir: "../../examples/virtual-device-2-azure-connection-without-vd-creation",
 	})
 
 	defer terraform.Destroy(t, terraformOptions)

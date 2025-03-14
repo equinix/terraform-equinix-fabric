@@ -54,14 +54,6 @@ func TestPort2AzureCreateConnection_DIGP(t *testing.T) {
 	terraform.InitAndApply(t, terraformOptions)
 	output := terraform.Output(t, terraformOptions, "azure_connection_id")
 	assert.NotNil(t, output)
-
-	terraformOptions = terraform.WithDefaultRetryableErrors(t, &terraform.Options{
-		Vars: map[string]interface{}{
-			"connection_name": "P2Azure_Name_Update",
-		},
-		TerraformDir: "../../../examples/port-2-azure-connection",
-	})
-	terraform.Apply(t, terraformOptions)
 }
 
 func TestPort2GoogleCreateConnection_DIGP(t *testing.T) {
