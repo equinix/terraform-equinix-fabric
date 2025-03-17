@@ -250,6 +250,8 @@ github.com/equinix/equinix-sdk-go v0.49.1 h1:dMiIZX2O+re3D5zjzTddanvtf51M9XYenaT
 github.com/equinix/equinix-sdk-go v0.49.1/go.mod h1:tUf2f7SQyztsdCnI0pu2cVTGQvZvmFi6trEvVjdMyvY=
 github.com/equinix/equinix-sdk-go v0.49.2 h1:ShgA8TsOjkuABtxbhH50pRjifm1e11tQfz6jyh61mAg=
 github.com/equinix/equinix-sdk-go v0.49.2/go.mod h1:tUf2f7SQyztsdCnI0pu2cVTGQvZvmFi6trEvVjdMyvY=
+github.com/equinix/equinix-sdk-go v0.50.0 h1:w1qc5B3994r1cx4mWrsyXjyNVIlAQSLn++NAWof9dAU=
+github.com/equinix/equinix-sdk-go v0.50.0/go.mod h1:3G7A41D7Wl9jg3EIbdh+ijt6GHfgZZFFLlx3DHq9Xsg=
 github.com/equinix/oauth2-go v1.0.0 h1:fHtAPGq82PdgtK5vEThs8Vwz6f7D/8SX4tE3NJu+KcU=
 github.com/equinix/oauth2-go v1.0.0/go.mod h1:4pulXvUNMktJlewLPnUeJyMW52iCoF1aM+A/Z5xY1ws=
 github.com/fatih/color v1.7.0/go.mod h1:Zm6kSWBoL9eyXnKyktHP6abPY2pDugNf5KwzbycvMj4=
