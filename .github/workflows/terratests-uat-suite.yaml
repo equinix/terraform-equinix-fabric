@@ -54,7 +54,7 @@ jobs:
           path: pnfv_test_output.log
 
       - name: Check if Tests are passed
-        run: sh check_tests.sh output.log
+        run: sh scripts/check_tests.sh output.log
 
   test-PFCR:
     name: Setup UAT PFCR Tests
@@ -140,7 +140,7 @@ jobs:
           path: pfcr_test_output.log
 
       - name: Check if Tests are passed
-        run: sh check_tests.sh output.log
+        run: sh scripts/check_tests.sh output.log
 
   upload-test-report:
     name: Upload Testing Report
