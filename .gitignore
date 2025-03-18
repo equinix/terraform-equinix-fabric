@@ -37,8 +37,7 @@ override.tf.json
 terraform.rc
 
 # Ignore helper scripts
-*.sh
-*.py
+helper_scripts/*
 
 # Ignore IDE Files
 .idea*
