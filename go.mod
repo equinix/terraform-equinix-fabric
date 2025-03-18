@@ -3,7 +3,7 @@ module github.com/equinix/terraform-equinix-fabric
 go 1.21
 
 require (
-	github.com/equinix/equinix-sdk-go v0.49.2
+	github.com/equinix/equinix-sdk-go v0.50.0
 	github.com/equinix/oauth2-go v1.0.0
 	github.com/gruntwork-io/terratest v0.48.2
 	github.com/hashicorp/go-retryablehttp v0.7.7
