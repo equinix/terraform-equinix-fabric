@@ -1,0 +1,23 @@
+equinix_client_id      = "MyEquinixClientId"
+equinix_client_secret  = "MyEquinixSecret"
+
+connection_name       = "Port2PublicSP"
+connection_type       = "EVPL_VC"
+notifications_type    = "ALL"
+notifications_emails  = ["example@equinix.com"]
+bandwidth             = 1
+purchase_order_number = "1-323292"
+aside_port_name       = "sit-001-CX-SV1-NL-Dot1q-BO-10G-PRI-JP-34"
+aside_vlan_tag        = "1222"
+zside_ap_type         = "SP"
+zside_ap_profile_type = "L2_PROFILE"
+zside_location        = "SV"
+zside_sp_name         = "Equinix Precision Time NTP UAT Global"
+
+precision_time_ntp_name                 = "NTP_EPT"
+precision_time_ntp_description          = "NTP Configured Precision Time Service"
+precision_time_ntp_package_code         = "NTP_STANDARD"
+precision_time_ntp_ipv4_primary         = "192.168.254.241"
+precision_time_ntp_ipv4_secondary       = "192.168.254.242"
+precision_time_ntp_ipv4_network_mask    = "255.255.255.240"
+precision_time_ntp_ipv4_default_gateway = "192.168.254.254"
