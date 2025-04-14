@@ -24,7 +24,6 @@ module "create_port_2_precision_time_ptp_service_profile" {
   zside_sp_name         = var.zside_sp_name
 }
 
-
 resource "equinix_fabric_precision_time_service" "ptp" {
   type = "PTP"
   name = var.precision_time_ptp_name
