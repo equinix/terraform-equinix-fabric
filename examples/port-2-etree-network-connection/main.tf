@@ -4,14 +4,14 @@ provider "equinix" {
 }
 
 resource "equinix_fabric_network" "etree_network" {
-  type = "EVPTREE"
-  name = "test_evptree_create_tf"
-  scope = "LOCAL"
+  name  = var.network_name
+  type  = var.network_type
+  scope = var.network_scope
   notifications {
-    emails = ["dbhola@equinix.com"]
-    type = "ALL"
+    type   = var.notifications_type
+    emails = var.notifications_emails
   }
   project {
-    project_id = "d467b426-98a6-4854-afa1-f620ce6799bb"
+    project_id = var.project_id
   }
 }
