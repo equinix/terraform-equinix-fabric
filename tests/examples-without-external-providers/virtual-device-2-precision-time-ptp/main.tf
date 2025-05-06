@@ -3,8 +3,8 @@ provider "equinix" {
   client_secret = var.equinix_client_secret
 }
 
-module "create_port_2_precision_time_ptp_service_profile" {
-  source = "../../../modules/cloud-router-connection"
+module "create_virtual_device_2_precision_time_ptp" {
+  source = "../../../modules/virtual-device-connection"
 
   connection_name       = var.connection_name
   connection_type       = var.connection_type
@@ -14,12 +14,14 @@ module "create_port_2_precision_time_ptp_service_profile" {
   purchase_order_number = var.purchase_order_number
 
   # A-side
-  aside_fcr_uuid = var.aside_fcr_uuid
+  aside_vd_type = var.aside_vd_type
+  aside_vd_uuid = var.aside_vd_uuid
 
   # Z-side
-  zside_ap_type         = var.zside_ap_type
-  zside_ap_profile_type = var.zside_ap_profile_type
-  zside_location        = var.zside_location
+  zside_ap_type   = var.zside_ap_type
+  zside_port_name = var.zside_port_name
+  zside_vlan_tag  = var.zside_vlan_tag
+  zside_location  = var.zside_location
 }
 
 resource "equinix_fabric_precision_time_service" "ptp" {
@@ -30,7 +32,7 @@ resource "equinix_fabric_precision_time_service" "ptp" {
   }
   connections = [
     {
-      uuid = module.create_port_2_precision_time_ptp_service_profile.primary_connection_id
+      uuid = module.create_virtual_device_2_precision_time_ptp.primary_connection_id
     }
   ]
   ipv4 = {

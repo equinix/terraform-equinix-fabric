@@ -1,0 +1,71 @@
+name: terratests-ept-prod-suite
+
+on:
+  workflow_dispatch:
+
+jobs:
+  setup-tests:
+    name: Setup PROD DIGP Tests
+    runs-on: ubuntu-latest
+    env:
+      TF_VAR_equinix_client_id: ${{ secrets.EQUINIX_CLIENT_ID }}
+      TF_VAR_equinix_client_secret: ${{ secrets.EQUINIX_CLIENT_SECRET }}
+      TEST_DATA_PROD_VD_2_PRECISION_TIME_PTP: ${{ secrets.TEST_DATA_PROD_VD_2_PRECISION_TIME_PTP }}
+      TEST_DATA_PROD_FCR_2_PRECISION_TIME_NTP: ${{ secrets.TEST_DATA_PROD_FCR_2_PRECISION_TIME_NTP }}
+
+    steps:
+      - name: Check out code into the Go module directory
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: './go.mod'
+        id: go
+
+      - name: Set up Python3
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Get dependencies
+        run: |
+          go mod download
+          go install github.com/thogarty/go-junit-report/v2@latest
+          pip3 install junit2html
+
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: ${{ matrix.terraform }}
+          terraform_wrapper: false
+
+      - name: Install jq
+        run: | 
+              sudo apt-get install jq
+
+      - name: Setup Variables Files
+        run: |
+          TIMESTAMP=$(date +"%m%d%M%S")
+          SUFFIX="_DIGP"
+          echo $TEST_DATA_PROD_FCR_2_PRECISION_TIME_NTP >> "./tests/examples-without-external-providers/cloud-router-2-precision-time-npt/terraform.tfvars.json"
+          jq --arg timestamp "$TIMESTAMP" '.connection_name = ($timestamp + "_" + .connection_name)' ./tests/examples-without-external-providers/cloud-router-2-precision-time-npt/terraform.tfvars.json > ./tests/examples-without-external-providers/cloud-router-2-precision-time-npt/tmp.test.json && mv ./tests/examples-without-external-providers/cloud-router-2-precision-time-npt/tmp.test.json ./tests/examples-without-external-providers/cloud-router-2-precision-time-npt/terraform.tfvars.json
+          echo $TEST_DATA_PROD_VD_2_PRECISION_TIME_PTP >> "./tests/examples-without-external-providers/virtual-device-2-precision-time-ptp/terraform.tfvars.json"
+          jq --arg timestamp "$TIMESTAMP" '.connection_name = ($timestamp + "_" + .connection_name)' ./tests/examples-without-external-providers/virtual-device-2-precision-time-ptp/terraform.tfvars.json > ./tests/examples-without-external-providers/virtual-device-2-precision-time-ptp/tmp.test.json && mv ./tests/examples-without-external-providers/virtual-device-2-precision-time-ptp/tmp.test.json ./tests/examples-without-external-providers/virtual-device-2-precision-time-ptp/terraform.tfvars.json
+
+      - name: Run Go Tests
+        run:
+          go test ./tests/prod/precision_time -v -json -count 1 -parallel 8 -run "(DIGP)" -timeout 180m | tee precision_time_prod_suite.log
+
+      - name: Create HTML Testing Report
+        run: |
+          go-junit-report -parser gojson -in precision_time_prod_suite.log  > precision_time_prod_suite.xml && python3 -m junit2htmlreport precision_time_prod_suite.xml precision_time_prod_suite.html
+
+      - name: Upload HTML Testing Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: Port Prod Suite Terraform Modules Testing Report
+          path: precision_time_prod_suite.html
+          compression-level: 0
+
+      - name: Check if Tests are passed
+        run: sh scripts/check_tests.sh *suite.log

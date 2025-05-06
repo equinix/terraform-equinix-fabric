@@ -34,24 +34,28 @@ variable "purchase_order_number" {
   type        = string
   default     = ""
 }
-variable "aside_fcr_uuid" {
-  description = "Equinix Cloud Router UUID"
+variable "aside_vd_type" {
+  description = "Virtual Device type - EDGE"
   type        = string
 }
-variable "zside_fabric_sp_name" {
-  description = "Service Profile name"
+variable "aside_vd_uuid" {
+  description = "Virtual Device UUID"
   type        = string
 }
 variable "zside_ap_type" {
   description = "Access point type - COLO, VD, VG, SP, IGW, SUBNET, GW"
   type        = string
 }
-variable "zside_ap_profile_type" {
-  description = "Service profile type - L2_PROFILE, L3_PROFILE, ECIA_PROFILE, ECMC_PROFILE"
-  type        = string
-}
 variable "zside_location" {
   description = "Access point metro code"
+  type        = string
+}
+variable "zside_port_name" {
+  description = "Equinix Port Name"
+  type        = string
+}
+variable "zside_vlan_tag" {
+  description = "Vlan Tag information, outer vlanSTag for QINQ connections"
   type        = string
 }
 variable "precision_time_ptp_name" {
