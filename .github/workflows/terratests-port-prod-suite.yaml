@@ -23,8 +23,6 @@ jobs:
       TEST_DATA_PROD_PORT_2_PORT_CONNECTION: ${{ secrets.TEST_DATA_PROD_PORT_2_PORT_CONNECTION }}
       TEST_DATA_PROD_PORT_2_PRIVATE_SERVICE_PROFILE_CONNECTION: ${{ secrets.TEST_DATA_PROD_PORT_2_PRIVATE_SERVICE_PROFILE_CONNECTION }}
       TEST_DATA_PROD_PORT_2_WAN_CONNECTION: ${{ secrets.TEST_DATA_PROD_PORT_2_WAN_CONNECTION }}
-      TEST_DATA_PROD_PORT_2_PRECISION_TIME_PTP: ${{ secrets.TEST_DATA_PROD_PORT_2_PRECISION_TIME_PTP }}
-      TEST_DATA_PROD_PORT_2_PRECISION_TIME_NTP: ${{ secrets.TEST_DATA_PROD_PORT_2_PRECISION_TIME_NTP }}
 
     steps:
       - name: Check out code into the Go module directory
@@ -77,12 +75,6 @@ jobs:
           jq --arg timestamp "$TIMESTAMP" '.connection_name = ($timestamp + "_" + .connection_name)' ./examples/port-2-private-service-profile-connection/terraform.tfvars.json > ./examples/port-2-private-service-profile-connection/tmp.test.json && mv ./examples/port-2-private-service-profile-connection/tmp.test.json ./examples/port-2-private-service-profile-connection/terraform.tfvars.json
           echo $TEST_DATA_PROD_PORT_2_WAN_CONNECTION >> "./tests/examples-without-external-providers/port-2-wan-connection/terraform.tfvars.json"
           jq --arg timestamp "$TIMESTAMP" '.connection_name = ($timestamp + "_" + .connection_name)' ./tests/examples-without-external-providers/port-2-wan-connection/terraform.tfvars.json > ./tests/examples-without-external-providers/port-2-wan-connection/tmp.test.json && mv ./tests/examples-without-external-providers/port-2-wan-connection/tmp.test.json ./tests/examples-without-external-providers/port-2-wan-connection/terraform.tfvars.json
-
-          echo $TEST_DATA_PROD_PORT_2_PRECISION_TIME_NTP >> "./examples/port-2-precision-time-npt/terraform.tfvars.json"
-          
-          echo $TEST_DATA_PROD_PORT_2_PRECISION_TIME_PTP >> "./examples/port-2-precision-time-ptp/terraform.tfvars.json"
-
-
 
       - name: Run Go Tests
         run:

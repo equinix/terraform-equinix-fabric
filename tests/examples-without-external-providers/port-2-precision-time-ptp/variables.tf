@@ -34,28 +34,29 @@ variable "purchase_order_number" {
   type        = string
   default     = ""
 }
-variable "aside_vd_type" {
-  description = "Virtual Device type - EDGE"
+variable "aside_port_name" {
+  description = "Equinix A-Side Port Name"
   type        = string
 }
-variable "aside_vd_uuid" {
-  description = "Virtual Device UUID"
+variable "aside_vlan_inner_tag" {
+  description = "Vlan Inner Tag information, inner vlanCTag for QINQ connections"
   type        = string
+  default     = ""
 }
 variable "zside_ap_type" {
   description = "Access point type - COLO, VD, VG, SP, IGW, SUBNET, GW"
+  type        = string
+}
+variable "zside_ap_profile_type" {
+  description = "Service profile type - L2_PROFILE, L3_PROFILE, ECIA_PROFILE, ECMC_PROFILE"
   type        = string
 }
 variable "zside_location" {
   description = "Access point metro code"
   type        = string
 }
-variable "zside_port_name" {
-  description = "Equinix Port Name"
-  type        = string
-}
-variable "zside_vlan_tag" {
-  description = "Vlan Tag information, outer vlanSTag for QINQ connections"
+variable "zside_sp_name" {
+  description = "Equinix Service Profile Name"
   type        = string
 }
 variable "precision_time_ptp_name" {
@@ -82,7 +83,6 @@ variable "precision_time_ptp_ipv4_default_gateway" {
   description = "Precision Time Service Ipv4 Default Gateway value"
   type        = string
 }
-
 variable "precision_time_ptp_advance_configuration" {
   description = "Precision Time Service PTP Advance Configuration Details"
   type = object({
