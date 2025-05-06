@@ -151,31 +151,3 @@ func TestPort2WanCreateConnection_DIGP(t *testing.T) {
 	})
 	terraform.Apply(t, terraformOptions)
 }
-
-func TestCloudRouterPTPCreateConnection_DIGP(t *testing.T) {
-
-	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
-		TerraformDir: "../../../tests/examples-without-external-providers/port-2-precision-time-ptp",
-	})
-
-	defer terraform.Destroy(t, terraformOptions)
-	t.Parallel()
-
-	terraform.InitAndApply(t, terraformOptions)
-	output := terraform.Output(t, terraformOptions, "port_2_ptp_connection_id")
-	assert.NotNil(t, output)
-}
-
-func TestCloudRouterNPTCreateConnection_DIGP(t *testing.T) {
-
-	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
-		TerraformDir: "../../../tests/examples-without-external-providers/port-2-precision-time-npt",
-	})
-
-	defer terraform.Destroy(t, terraformOptions)
-	t.Parallel()
-
-	terraform.InitAndApply(t, terraformOptions)
-	output := terraform.Output(t, terraformOptions, "port_2_npt_connection_id")
-	assert.NotNil(t, output)
-}

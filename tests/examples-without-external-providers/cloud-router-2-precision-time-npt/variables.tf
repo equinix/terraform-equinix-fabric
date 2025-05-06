@@ -34,18 +34,13 @@ variable "purchase_order_number" {
   type        = string
   default     = ""
 }
-variable "aside_port_name" {
-  description = "Equinix A-Side Port Name"
+variable "aside_fcr_uuid" {
+  description = "Equinix Cloud Router UUID"
   type        = string
 }
-variable "aside_vlan_tag" {
-  description = "Vlan Tag information, outer vlanSTag for QINQ connections"
+variable "zside_fabric_sp_name" {
+  description = "Service Profile name"
   type        = string
-}
-variable "aside_vlan_inner_tag" {
-  description = "Vlan Inner Tag information, inner vlanCTag for QINQ connections"
-  type        = string
-  default     = ""
 }
 variable "zside_ap_type" {
   description = "Access point type - COLO, VD, VG, SP, IGW, SUBNET, GW"
@@ -57,10 +52,6 @@ variable "zside_ap_profile_type" {
 }
 variable "zside_location" {
   description = "Access point metro code"
-  type        = string
-}
-variable "zside_sp_name" {
-  description = "Equinix Service Profile Name"
   type        = string
 }
 variable "precision_time_ntp_name" {
