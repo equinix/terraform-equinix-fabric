@@ -34,67 +34,58 @@ variable "purchase_order_number" {
   type        = string
   default     = ""
 }
-variable "aside_port_name" {
-  description = "Equinix A-Side Port Name"
+variable "aside_vd_type" {
+  description = "Virtual Device type - EDGE"
   type        = string
+  default     = ""
 }
-variable "aside_vlan_inner_tag" {
-  description = "Vlan Inner Tag information, inner vlanCTag for QINQ connections"
+variable "aside_vd_uuid" {
+  description = "Virtual Device UUID"
   type        = string
   default     = ""
 }
 variable "zside_ap_type" {
   description = "Access point type - COLO, VD, VG, SP, IGW, SUBNET, GW"
   type        = string
+  default     = "SP"
 }
 variable "zside_ap_profile_type" {
   description = "Service profile type - L2_PROFILE, L3_PROFILE, ECIA_PROFILE, ECMC_PROFILE"
   type        = string
+  default     = "L2_PROFILE"
 }
 variable "zside_location" {
   description = "Access point metro code"
   type        = string
+  default     = "SP"
 }
 variable "zside_sp_name" {
   description = "Equinix Service Profile Name"
   type        = string
+  default     = ""
 }
-variable "precision_time_ptp_name" {
+variable "precision_time_ntp_name" {
   description = "Precision Time Service Name"
   type        = string
 }
-variable "precision_time_ptp_package_code" {
+variable "precision_time_ntp_package_code" {
   description = "Precision Time Service Package Code"
   type        = string
 }
-variable "precision_time_ptp_ipv4_primary" {
+variable "precision_time_ntp_ipv4_primary" {
   description = "Precision Time Service Primary Ipv4 value"
   type        = string
 }
-variable "precision_time_ptp_ipv4_secondary" {
+variable "precision_time_ntp_ipv4_secondary" {
   description = "Precision Time Service Secondary Ipv4 value"
   type        = string
 }
-variable "precision_time_ptp_ipv4_network_mask" {
+variable "precision_time_ntp_ipv4_network_mask" {
   description = "Precision Time Service Ipv4 Network Mask value"
   type        = string
 }
-variable "precision_time_ptp_ipv4_default_gateway" {
+variable "precision_time_ntp_ipv4_default_gateway" {
   description = "Precision Time Service Ipv4 Default Gateway value"
   type        = string
 }
-variable "precision_time_ptp_advance_configuration" {
-  description = "Precision Time Service PTP Advance Configuration Details"
-  type = object({
-    time_scale             = string
-    domain                 = number
-    priority1              = number
-    priority2              = number
-    log_announce_interval  = number
-    log_sync_interval      = number
-    log_delay_req_interval = number
-    transport_mode         = string
-    grant_time             = number
-  })
-  default = null
-}
+

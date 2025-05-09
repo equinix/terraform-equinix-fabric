@@ -3,6 +3,15 @@ provider "equinix" {
   client_secret = var.equinix_client_secret
 }
 
+resource "random_integer" "random_vlan_tag" {
+  min = 50
+  max = 2549
+}
+
+output "random_vlan_tag" {
+  value = random_integer.random_vlan_tag.result
+}
+
 module "create_port_2_precision_time_ptp_service_profile" {
   source = "../../modules/port-connection"
 
@@ -15,7 +24,7 @@ module "create_port_2_precision_time_ptp_service_profile" {
 
   # A-side
   aside_port_name = var.aside_port_name
-  aside_vlan_tag  = var.aside_vlan_tag
+  aside_vlan_tag  = tostring(random_integer.random_vlan_tag.result)
 
   # Z-side
   zside_ap_type         = var.zside_ap_type
