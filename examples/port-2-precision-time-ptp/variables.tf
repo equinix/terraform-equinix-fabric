@@ -38,15 +38,6 @@ variable "aside_port_name" {
   description = "Equinix A-Side Port Name"
   type        = string
 }
-variable "aside_vlan_tag" {
-  description = "Vlan Tag information, outer vlanSTag for QINQ connections"
-  type        = string
-}
-variable "aside_vlan_inner_tag" {
-  description = "Vlan Inner Tag information, inner vlanCTag for QINQ connections"
-  type        = string
-  default     = ""
-}
 variable "zside_ap_type" {
   description = "Access point type - COLO, VD, VG, SP, IGW, SUBNET, GW"
   type        = string

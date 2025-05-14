@@ -88,4 +88,12 @@ variable "precision_time_ntp_ipv4_default_gateway" {
   description = "Precision Time Service Ipv4 Default Gateway value"
   type        = string
 }
-
+variable "precision_time_ntp_advance_configuration" {
+  description = "Precision Time Service NTP Advance Configuration MD5 Details"
+  type = list(object({
+    type       = string
+    key_number = number
+    key        = string
+  }))
+  default = null
+}

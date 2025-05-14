@@ -39,4 +39,5 @@ resource "equinix_fabric_precision_time_service" "ntp" {
     network_mask    = var.precision_time_ntp_ipv4_network_mask
     default_gateway = var.precision_time_ntp_ipv4_default_gateway
   }
+  ntp_advanced_configuration = var.precision_time_ntp_advance_configuration != null ? var.precision_time_ntp_advance_configuration : null
 }
