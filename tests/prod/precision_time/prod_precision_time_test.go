@@ -45,7 +45,7 @@ func TestCloudRouterNPTCreateConnection_DIGP(t *testing.T) {
 func TestVirtualDeviceNPTCreateConnection_DIGP(t *testing.T) {
 
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
-		TerraformDir: "../../../tests/examples-without-external-providers/virtual-device-2-precision-time-ntp",
+		TerraformDir: "../../../tests/examples-without-external-providers/virtual-device-2-precision-time-npt",
 	})
 
 	defer terraform.Destroy(t, terraformOptions)
