@@ -34,8 +34,12 @@ variable "purchase_order_number" {
   type        = string
   default     = ""
 }
-variable "aside_port_name" {
-  description = "Equinix A-Side Port Name"
+variable "aside_fcr_uuid" {
+  description = "Equinix Cloud Router UUID"
+  type        = string
+}
+variable "zside_fabric_sp_name" {
+  description = "Service Profile name"
   type        = string
 }
 variable "zside_ap_type" {
@@ -50,47 +54,36 @@ variable "zside_location" {
   description = "Access point metro code"
   type        = string
 }
-variable "zside_sp_name" {
-  description = "Equinix Service Profile Name"
-  type        = string
-}
-variable "precision_time_ptp_name" {
+variable "precision_time_ntp_name" {
   description = "Precision Time Service Name"
   type        = string
 }
-variable "precision_time_ptp_package_code" {
+variable "precision_time_ntp_package_code" {
   description = "Precision Time Service Package Code"
   type        = string
 }
-variable "precision_time_ptp_ipv4_primary" {
+variable "precision_time_ntp_ipv4_primary" {
   description = "Precision Time Service Primary Ipv4 value"
   type        = string
 }
-variable "precision_time_ptp_ipv4_secondary" {
+variable "precision_time_ntp_ipv4_secondary" {
   description = "Precision Time Service Secondary Ipv4 value"
   type        = string
 }
-variable "precision_time_ptp_ipv4_network_mask" {
+variable "precision_time_ntp_ipv4_network_mask" {
   description = "Precision Time Service Ipv4 Network Mask value"
   type        = string
 }
-variable "precision_time_ptp_ipv4_default_gateway" {
+variable "precision_time_ntp_ipv4_default_gateway" {
   description = "Precision Time Service Ipv4 Default Gateway value"
   type        = string
 }
-
-variable "precision_time_ptp_advance_configuration" {
-  description = "Precision Time Service PTP Advance Configuration Details"
-  type = object({
-    time_scale             = string
-    domain                 = number
-    priority1              = number
-    priority2              = number
-    log_announce_interval  = number
-    log_sync_interval      = number
-    log_delay_req_interval = number
-    transport_mode         = string
-    grant_time             = number
-  })
+variable "precision_time_ntp_advance_configuration" {
+  description = "Precision Time Service NTP Advance Configuration MD5 Details"
+  type = list(object({
+    type       = string
+    key_number = number
+    key        = string
+  }))
   default = null
 }
