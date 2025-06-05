@@ -100,6 +100,16 @@ jobs:
               echo "EOF" >> $GITHUB_OUTPUT
               fi
 
+      - name: Upload HTML Testing Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: FCR Prod Suite Terraform Modules Testing Report
+          path: fcr_prod_suite.html
+          compression-level: 0
+
+      - name: Check if Tests are passed
+        run: sh scripts/check_tests.sh *suite.log
+
       - name: Notify Slack
         uses: slackapi/slack-github-action@v2
         if: always()
@@ -117,13 +127,3 @@ jobs:
                     *Status:* ${{ job.status }}
                     *Results:* ${{ steps.slack_message.outputs.message }}
                     *Triggered by:* <@${{ github.actor }}>
-
-      - name: Upload HTML Testing Report
-        uses: actions/upload-artifact@v4
-        with:
-          name: FCR Prod Suite Terraform Modules Testing Report
-          path: fcr_prod_suite.html
-          compression-level: 0
-
-      - name: Check if Tests are passed
-        run: sh scripts/check_tests.sh *suite.log
