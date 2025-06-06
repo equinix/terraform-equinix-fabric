@@ -55,6 +55,7 @@ jobs:
       - name: Install jq
         run: |
             sudo apt-get install jq
+            sudo apt-get install -y libxml2-utils
 
       - name: Set Connection Name variable
         run: echo "TF_VAR_connection_name=nimf_$(date +'%Y%m%d%H%M%S')" >> $GITHUB_ENV
