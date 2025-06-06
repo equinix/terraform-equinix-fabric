@@ -18,6 +18,8 @@ jobs:
       TEST_DATA_PROD_VIRTUAL_DEVICE_2_AZURE_CONNECTION: ${{secrets.TEST_DATA_PROD_VIRTUAL_DEVICE_2_AZURE_CONNECTION}}
       TEST_DATA_PROD_VIRTUAL_DEVICE_2_PORT_CONNECTION: ${{secrets.TEST_DATA_PROD_VIRTUAL_DEVICE_2_PORT_CONNECTION}}
       TEST_DATA_PROD_VIRTUAL_DEVICE_2_AWS_CONNECTION: ${{secrets.TEST_DATA_PROD_VIRTUAL_DEVICE_2_AWS_CONNECTION}}
+    outputs:
+      message: ${{ steps.slack_message.outputs.message }}
 
     steps:
       - name: Check out code into the Go module directory
@@ -48,6 +50,7 @@ jobs:
       - name: Install jq
         run: | 
               sudo apt-get install jq
+              sudo apt-get install -y libxml2-utils
 
       - name: Setup Variables Files
         run: |
@@ -70,6 +73,25 @@ jobs:
         run: |
           go-junit-report -parser gojson -in vd_prod_suite.log  > vd_prod_suite.xml && python3 -m junit2htmlreport vd_prod_suite.xml vd_prod_suite.html
 
+      - name: Prepare slack message
+        id: slack_message
+        if: always()
+        shell: bash
+        run: |
+          xml_file=$(find . -type f -name '*prod_suite.xml' | head -n 1)
+          
+          if [[ -z "$xml_file" ]]; then
+            echo "No file ending with prod_suite.xml found."
+          exit 1
+          fi
+          
+          tests=$(xmllint --xpath 'string(//testsuite/@tests)' "$xml_file")
+          errors=$(xmllint --xpath 'string(//testsuite/@failures)' "$xml_file")
+          message="*Results:* $((tests-errors)) Passed, $errors Errors"
+          echo "message<<EOF" >> $GITHUB_OUTPUT
+          echo "$message" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
       - name: Upload HTML Testing Report
         uses: actions/upload-artifact@v4
         with:
@@ -79,3 +101,21 @@ jobs:
 
       - name: Check if Tests are passed
         run: sh scripts/check_tests.sh *suite.log
+
+      - name: Notify Slack
+        uses: slackapi/slack-github-action@v2
+        if: always()
+        with:
+          method: chat.postMessage
+          token: ${{ secrets.SLACK_ACCESS_TOKEN }}
+          payload: |
+            channel: digin-panthers-gha-automation
+
+            attachments:
+              - color: ${{ job.status == 'success' && 'good' || job.status == 'failure' && 'danger' || 'warning' }}
+                text: |
+                    *Repository:* <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|${{ github.repository }}>
+                    *Workflow:* ${{ github.workflow }}           
+                    *Status:* ${{ job.status }}
+                    *Results:* ${{ steps.slack_message.outputs.message }}
+                    *Triggered by:* <@${{ github.actor }}>        
