@@ -103,10 +103,9 @@ jobs:
           tests=$(xmllint --xpath 'string(//testsuite/@tests)' "$xml_file")
           errors=$(xmllint --xpath 'string(//testsuite/@failures)' "$xml_file")
           message="*Results:* $((tests-errors)) Passed, $errors Errors"
-              echo "message<<EOF" >> $GITHUB_OUTPUT
-              echo "$message" >> $GITHUB_OUTPUT
-              echo "EOF" >> $GITHUB_OUTPUT
-              fi
+          echo "message<<EOF" >> $GITHUB_OUTPUT
+          echo "$message" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
 
       - name: Upload HTML Testing Report
         uses: actions/upload-artifact@v4
