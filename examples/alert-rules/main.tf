@@ -98,7 +98,7 @@ data "equinix_fabric_stream_alert_rule" "data_alert_rule" {
   alert_rule_id = equinix_fabric_stream_alert_rule.alert_rule.uuid
 }
 
-data "equinix_fabric_stream_alert_rules" "alert_rules" {
+data "equinix_fabric_stream_alert_rules" "data_alert_rules" {
   depends_on = [
     equinix_fabric_stream.new_stream,
     equinix_fabric_stream_alert_rule.alert_rule
