@@ -61,13 +61,6 @@ variable "zside_vlan_tag" {
   description = "Vlan Tag information, outer vlanSTag for QINQ connections"
   type        = string
 }
-
-variable "access_token" {
-  description = "Access token for Splunk"
-  type        = string
-  sensitive   = true
-}
-
 variable "stream_name" {
   description = "Stream name"
   type        = string
@@ -96,6 +89,10 @@ variable "subscription_type" {
   description = "Stream subscription type"
   type        = string
 }
+variable "uri" {
+  description = "Uri for Splunk"
+  type        = string
+}
 variable "event_index" {
   description = "Event index for Splunk"
   type        = string
@@ -107,6 +104,11 @@ variable "metric_index" {
 variable "source_splunk" {
   description = "Source for Splunk data"
   type        = string
+}
+variable "access_token" {
+  description = "Access token for Splunk"
+  type        = string
+  sensitive   = true
 }
 variable "alert_rule_name" {
   description = "Alert rule name"
@@ -126,10 +128,6 @@ variable "warning_threshold" {
 }
 variable "critical_threshold" {
   description = "Alert rule critical threshold"
-  type        = string
-}
-variable "uri" {
-  description = "Uri for Splunk"
   type        = string
 }
 variable "metric_name" {
