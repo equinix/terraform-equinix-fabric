@@ -32,7 +32,6 @@ variable "bandwidth" {
 variable "purchase_order_number" {
   description = "Purchase order number"
   type        = string
-  default     = ""
 }
 variable "aside_port_name" {
   description = "Equinix A-Side Port Name"
@@ -45,7 +44,6 @@ variable "aside_vlan_tag" {
 variable "aside_vlan_inner_tag" {
   description = "Vlan Inner Tag information, inner vlanCTag for QINQ connections"
   type        = string
-  default     = ""
 }
 variable "zside_ap_type" {
   description = "Access point type - COLO, VD, VG, SP, IGW, SUBNET, GW"
