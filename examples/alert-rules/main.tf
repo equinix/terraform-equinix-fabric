@@ -38,7 +38,7 @@ resource "equinix_fabric_stream_subscription" "SPLUNK" {
   }
 }
 
-module "test_connection" {
+module "create_port_2_port_connection" {
   source = "../../modules/port-connection"
 
   connection_name       = var.connection_name
@@ -62,9 +62,9 @@ module "test_connection" {
 resource "equinix_fabric_stream_attachment" "asset" {
   depends_on = [
     equinix_fabric_stream.new_stream,
-    module.test_connection
+    module.create_port_2_port_connection
   ]
-  asset_id  = module.test_connection.primary_connection_id
+  asset_id  = module.create_port_2_port_connection.primary_connection_id
   asset     = "connections"
   stream_id = equinix_fabric_stream.new_stream.uuid
 }
@@ -84,7 +84,7 @@ resource "equinix_fabric_stream_alert_rule" "alert_rule" {
   metric_name        = var.metric_name
   resource_selector   = {
     "include" : [
-      "*/connections/${module.test_connection.primary_connection_id}"
+      "*/connections/${module.create_port_2_port_connection.primary_connection_id}"
     ]
   }
 }
