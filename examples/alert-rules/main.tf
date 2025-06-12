@@ -5,7 +5,7 @@ provider "equinix" {
 
 resource "equinix_fabric_stream" "new_stream" {
   type = "TELEMETRY_STREAM"
-  name = "Stream_Test_PFCR"
+  name = var.stream_name
 
   description = var.stream_description
   project = {
@@ -22,7 +22,7 @@ resource "equinix_fabric_stream_subscription" "SPLUNK" {
   name        = var.subscription_name
   description = var.subscription_description
   stream_id   = equinix_fabric_stream.new_stream.uuid
-  enabled     = true
+  enabled     = var.enabled
   sink = {
     type = "SPLUNK_HEC"
     uri  = var.uri
@@ -65,7 +65,7 @@ resource "equinix_fabric_stream_attachment" "asset" {
     module.create_port_2_port_connection
   ]
   asset_id  = module.create_port_2_port_connection.primary_connection_id
-  asset     = "connections"
+  asset     = var.asset
   stream_id = equinix_fabric_stream.new_stream.uuid
 }
 
@@ -77,14 +77,14 @@ resource "equinix_fabric_stream_alert_rule" "alert_rule" {
   name               = var.alert_rule_name
   type               = "METRIC_ALERT"
   description        = var.alert_rule_description
-  operand            = "ABOVE"
+  operand            = var.operand
   window_size        = var.window_size
   warning_threshold  = var.warning_threshold
-  critical_threshold = var.warning_threshold
+  critical_threshold = var.critical_threshold
   metric_name        = var.metric_name
   resource_selector   = {
     "include" : [
-      "*/connections/${module.create_port_2_port_connection.primary_connection_id}"
+      "*/${equinix_fabric_stream_attachment.asset.asset}/${module.create_port_2_port_connection.primary_connection_id}"
     ]
   }
 }

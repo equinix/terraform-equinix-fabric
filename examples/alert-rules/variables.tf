@@ -38,11 +38,7 @@ variable "aside_port_name" {
   type        = string
 }
 variable "aside_vlan_tag" {
-  description = "Vlan Tag information, outer vlanSTag for QINQ connections"
-  type        = string
-}
-variable "aside_vlan_inner_tag" {
-  description = "Vlan Inner Tag information, inner vlanCTag for QINQ connections"
+  description = "Access point protocol Vlan tag number for DOT1Q or QINQ connections"
   type        = string
 }
 variable "zside_ap_type" {
@@ -69,12 +65,12 @@ variable "stream_description" {
   description = "Stream description"
   type        = string
 }
-variable "stream_type" {
-  description = "Stream type"
-  type        = string
-}
 variable "project_id" {
   description = "Project id"
+  type        = string
+}
+variable "subscription_type" {
+  description = "Stream subscription type"
   type        = string
 }
 variable "subscription_name" {
@@ -85,9 +81,9 @@ variable "subscription_description" {
   description = "Stream description"
   type        = string
 }
-variable "subscription_type" {
-  description = "Stream subscription type"
-  type        = string
+variable "enabled" {
+  description = "Enabled status for the subscription"
+  type        = bool
 }
 variable "uri" {
   description = "Uri for Splunk"
@@ -110,12 +106,20 @@ variable "access_token" {
   type        = string
   sensitive   = true
 }
+variable "asset" {
+  description = "Asset type"
+  type        = string
+}
 variable "alert_rule_name" {
   description = "Alert rule name"
   type        = string
 }
 variable "alert_rule_description" {
   description = "Alert rule description"
+  type        = string
+}
+variable "operand" {
+  description = "Operand for the alert rule"
   type        = string
 }
 variable "window_size" {
