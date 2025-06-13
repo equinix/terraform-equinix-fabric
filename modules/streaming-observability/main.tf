@@ -30,7 +30,6 @@ resource "equinix_fabric_stream_subscription" "splunk" {
   description = var.splunk_description
   stream_id   = equinix_fabric_stream.stream1.id
   enabled     = var.splunk_enabled
-  filters     = var.splunk_filters != [] ? var.splunk_filters : null
   event_selector = {
     include = var.splunk_event_selections != [] ? var.splunk_event_selections : null
     except  = var.splunk_event_exceptions != [] ? var.splunk_event_exceptions : null
@@ -62,7 +61,6 @@ resource "equinix_fabric_stream_subscription" "slack" {
   description = var.slack_description
   stream_id   = equinix_fabric_stream.stream1.id
   enabled     = var.slack_enabled
-  filters     = var.slack_filters != [] ? var.slack_filters : null
   event_selector = {
     include = var.slack_event_selections != [] ? var.slack_event_selections : null
     except  = var.slack_event_exceptions != [] ? var.slack_event_exceptions : null
@@ -85,7 +83,6 @@ resource "equinix_fabric_stream_subscription" "pagerduty" {
   description = var.pagerduty_description
   stream_id   = equinix_fabric_stream.stream1.id
   enabled     = var.pagerduty_enabled
-  filters     = var.pagerduty_filters != [] ? var.pagerduty_filters : null
   event_selector = {
     include = var.pagerduty_event_selections != [] ? var.pagerduty_event_selections : null
     except  = var.pagerduty_event_exceptions != [] ? var.pagerduty_event_exceptions : null
@@ -116,7 +113,6 @@ resource "equinix_fabric_stream_subscription" "datadog" {
   description = var.datadog_description
   stream_id   = local.second_stream ? equinix_fabric_stream.stream2[0].id : equinix_fabric_stream.stream1.id
   enabled     = var.datadog_enabled
-  filters     = var.datadog_filters != [] ? var.datadog_filters : null
   event_selector = {
     include = var.datadog_event_selections != [] ? var.datadog_event_selections : null
     except  = var.datadog_event_exceptions != [] ? var.datadog_event_exceptions : null
@@ -149,7 +145,6 @@ resource "equinix_fabric_stream_subscription" "msteams" {
   description = var.msteams_description
   stream_id   = local.second_stream ? equinix_fabric_stream.stream2[0].id : equinix_fabric_stream.stream1.id
   enabled     = var.msteams_enabled
-  filters     = var.msteams_filters != [] ? var.msteams_filters : null
   event_selector = {
     include = var.msteams_event_selections != [] ? var.msteams_event_selections : null
     except  = var.msteams_event_exceptions != [] ? var.msteams_event_exceptions : null
