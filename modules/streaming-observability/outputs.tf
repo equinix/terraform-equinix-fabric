@@ -32,3 +32,7 @@ output "datadog_subscription" {
   value     = var.datadog_host != "" ? equinix_fabric_stream_subscription.datadog[0] : null
   sensitive = true
 }
+
+output "number_of_subscriptions" {
+  value = local.number_of_subscriptions
+}

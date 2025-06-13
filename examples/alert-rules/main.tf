@@ -1,41 +1,27 @@
+
 provider "equinix" {
   client_id     = var.equinix_client_id
   client_secret = var.equinix_client_secret
 }
 
-resource "equinix_fabric_stream" "new_stream" {
-  type = "TELEMETRY_STREAM"
-  name = var.stream_name
+module "stream_splunk_subscription" {
+  source = "../../modules/streaming-observability"
 
-  description = var.stream_description
-  project = {
-    project_id = var.project_id
-  }
-}
+  stream_name        = var.stream_name
+  stream_description = var.stream_description
 
-resource "equinix_fabric_stream_subscription" "SPLUNK" {
-  depends_on = [
-    equinix_fabric_stream.new_stream
-  ]
-
-  type        = var.subscription_type
-  name        = var.subscription_name
-  description = var.subscription_description
-  stream_id   = equinix_fabric_stream.new_stream.uuid
-  enabled     = var.enabled
-  sink = {
-    type = "SPLUNK_HEC"
-    uri  = var.uri
-    settings = {
-      event_index  = var.event_index
-      metric_index = var.metric_index
-      source       = var.source_splunk
-    }
-    credential = {
-      type         = "ACCESS_TOKEN"
-      access_token = var.access_token
-    }
-  }
+  splunk_enabled           = var.splunk_enabled
+  splunk_access_token      = var.splunk_access_token
+  splunk_name              = var.splunk_name
+  splunk_description       = var.splunk_description
+  splunk_uri               = var.splunk_uri
+  splunk_event_exceptions  = var.splunk_event_exceptions
+  splunk_event_selections  = var.splunk_event_exceptions
+  splunk_metric_exceptions = var.splunk_metric_exceptions
+  splunk_metric_selections = var.splunk_metric_selections
+  splunk_source            = var.splunk_source
+  splunk_event_index       = var.splunk_event_index
+  splunk_metric_index      = var.splunk_metric_index
 }
 
 module "create_port_2_port_connection" {
@@ -58,24 +44,32 @@ module "create_port_2_port_connection" {
   zside_vlan_tag  = var.zside_vlan_tag
   zside_location  = var.zside_location
 }
+locals {
+  stream_id = (
+    length(module.stream_splunk_subscription.number_of_subscriptions) > 3
+    ? module.stream_splunk_subscription.second_stream.id
+    : module.stream_splunk_subscription.first_stream.id
+  )
+}
 
 resource "equinix_fabric_stream_attachment" "asset" {
   depends_on = [
-    equinix_fabric_stream.new_stream,
+    module.stream_splunk_subscription,
     module.create_port_2_port_connection
   ]
+
   asset_id  = module.create_port_2_port_connection.primary_connection_id
-  asset     = var.asset
-  stream_id = equinix_fabric_stream.new_stream.uuid
+  asset     = var.asset_type
+  stream_id = local.stream_id
 }
 
 resource "equinix_fabric_stream_alert_rule" "alert_rule" {
   depends_on = [
     equinix_fabric_stream_attachment.asset
   ]
-  stream_id          = equinix_fabric_stream.new_stream.uuid
-  name               = var.alert_rule_name
   type               = "METRIC_ALERT"
+  stream_id          = local.stream_id
+  name               = var.alert_rule_name
   description        = var.alert_rule_description
   operand            = var.operand
   window_size        = var.window_size
@@ -83,29 +77,8 @@ resource "equinix_fabric_stream_alert_rule" "alert_rule" {
   critical_threshold = var.critical_threshold
   metric_name        = var.metric_name
   resource_selector   = {
-    "include" : [
+    "include" = [
       "*/${equinix_fabric_stream_attachment.asset.asset}/${module.create_port_2_port_connection.primary_connection_id}"
     ]
-  }
-}
-
-data "equinix_fabric_stream_alert_rule" "data_alert_rule" {
-  depends_on = [
-    equinix_fabric_stream.new_stream,
-    equinix_fabric_stream_alert_rule.alert_rule
-  ]
-  stream_id = equinix_fabric_stream.new_stream.uuid
-  alert_rule_id = equinix_fabric_stream_alert_rule.alert_rule.uuid
-}
-
-data "equinix_fabric_stream_alert_rules" "data_alert_rules" {
-  depends_on = [
-    equinix_fabric_stream.new_stream,
-    equinix_fabric_stream_alert_rule.alert_rule
-  ]
-  stream_id = equinix_fabric_stream.new_stream.uuid
-  pagination = {
-    limit = var.limit
-    offset = var.offset
   }
 }
