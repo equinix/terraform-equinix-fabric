@@ -44,6 +44,7 @@ module "create_port_2_port_connection" {
   zside_vlan_tag  = var.zside_vlan_tag
   zside_location  = var.zside_location
 }
+
 locals {
   stream_id = (
     length(module.stream_splunk_subscription.number_of_subscriptions) > 3
@@ -52,7 +53,7 @@ locals {
   )
 }
 
-resource "equinix_fabric_stream_attachment" "asset" {
+resource "equinix_fabric_stream_attachment" "attachment" {
   depends_on = [
     module.stream_splunk_subscription,
     module.create_port_2_port_connection
@@ -65,7 +66,7 @@ resource "equinix_fabric_stream_attachment" "asset" {
 
 resource "equinix_fabric_stream_alert_rule" "alert_rule" {
   depends_on = [
-    equinix_fabric_stream_attachment.asset
+    equinix_fabric_stream_attachment.attachment
   ]
   type               = "METRIC_ALERT"
   stream_id          = local.stream_id
@@ -78,7 +79,7 @@ resource "equinix_fabric_stream_alert_rule" "alert_rule" {
   metric_name        = var.metric_name
   resource_selector   = {
     "include" = [
-      "*/${equinix_fabric_stream_attachment.asset.asset}/${module.create_port_2_port_connection.primary_connection_id}"
+      "*/${equinix_fabric_stream_attachment.attachment.asset}/${module.create_port_2_port_connection.primary_connection_id}"
     ]
   }
 }
