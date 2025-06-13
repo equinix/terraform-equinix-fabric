@@ -8,6 +8,76 @@ variable "equinix_client_secret" {
   type        = string
   sensitive   = true
 }
+variable "stream_name" {
+  description = "Stream name"
+  type        = string
+}
+variable "stream_description" {
+  description = "Stream description"
+  type        = string
+}
+variable "splunk_enabled" {
+  description = "Boolean value indicating enablement of the Splunk Subscription"
+  type        = bool
+  default     = true
+}
+variable "splunk_access_token" {
+  description = "Credential for Splunk Sink Subscription"
+  type        = string
+  default     = ""
+  sensitive   = true
+}
+variable "splunk_name" {
+  description = "Name of the Splunk Equinix Subscription Resource"
+  type        = string
+  default     = ""
+}
+variable "splunk_description" {
+  description = "Description of the Splunk Equinix Subscription Resource"
+  type        = string
+  default     = ""
+}
+
+variable "splunk_uri" {
+  description = "URI for the streaming messages to be sent to for Splunk"
+  type        = string
+  default     = ""
+}
+variable "splunk_event_exceptions" {
+  description = "Events to exclude from the possibilities available to the stream for the Subscription"
+  type        = list(string)
+  default     = []
+}
+variable "splunk_event_selections" {
+  description = "Events to include from the possibilities available to the stream for the Subscription"
+  type        = list(string)
+  default     = []
+}
+variable "splunk_metric_exceptions" {
+  description = "Metrics to exclude from the possibilities available to the stream for the Subscription"
+  type        = list(string)
+  default     = []
+}
+variable "splunk_metric_selections" {
+  description = "Metrics to include from the possibilities available to the stream for the Subscription"
+  type        = list(string)
+  default     = []
+}
+variable "splunk_source" {
+  description = "Name of the created Splunk Source for the destination of the streaming messages"
+  type        = string
+  default     = ""
+}
+variable "splunk_event_index" {
+  description = "Event index for the Splunk Sink Source"
+  type        = string
+  default     = ""
+}
+variable "splunk_metric_index" {
+  description = "Metric index for Splunk Sink Source"
+  type        = string
+  default     = ""
+}
 variable "connection_name" {
   description = "Connection name. An alpha-numeric 24 characters string which can include only hyphens and underscores"
   type        = string
@@ -32,21 +102,18 @@ variable "bandwidth" {
 variable "purchase_order_number" {
   description = "Purchase order number"
   type        = string
+  default     = ""
 }
 variable "aside_port_name" {
   description = "Equinix A-Side Port Name"
   type        = string
 }
 variable "aside_vlan_tag" {
-  description = "Access point protocol Vlan tag number for DOT1Q or QINQ connections"
+  description = "Vlan tag for DOT1Q or QINQ connections"
   type        = string
 }
 variable "zside_ap_type" {
   description = "Access point type - COLO, VD, VG, SP, IGW, SUBNET, GW"
-  type        = string
-}
-variable "zside_location" {
-  description = "Access point metro code"
   type        = string
 }
 variable "zside_port_name" {
@@ -54,59 +121,14 @@ variable "zside_port_name" {
   type        = string
 }
 variable "zside_vlan_tag" {
-  description = "Vlan Tag information, outer vlanSTag for QINQ connections"
+  description = "Vlan tag for DOT1Q or QINQ connections"
   type        = string
 }
-variable "stream_name" {
-  description = "Stream name"
+variable "zside_location" {
+  description = "Access point metro code"
   type        = string
 }
-variable "stream_description" {
-  description = "Stream description"
-  type        = string
-}
-variable "project_id" {
-  description = "Project id"
-  type        = string
-}
-variable "subscription_type" {
-  description = "Stream subscription type"
-  type        = string
-}
-variable "subscription_name" {
-  description = "Stream name"
-  type        = string
-}
-variable "subscription_description" {
-  description = "Stream description"
-  type        = string
-}
-variable "enabled" {
-  description = "Enabled status for the subscription"
-  type        = bool
-}
-variable "uri" {
-  description = "Uri for Splunk"
-  type        = string
-}
-variable "event_index" {
-  description = "Event index for Splunk"
-  type        = string
-}
-variable "metric_index" {
-  description = "Metric index for Splunk"
-  type        = string
-}
-variable "source_splunk" {
-  description = "Source for Splunk data"
-  type        = string
-}
-variable "access_token" {
-  description = "Access token for Splunk"
-  type        = string
-  sensitive   = true
-}
-variable "asset" {
+variable "asset_type" {
   description = "Asset type"
   type        = string
 }
@@ -127,22 +149,14 @@ variable "window_size" {
   type        = string
 }
 variable "warning_threshold" {
-  description = "Alert rule warning threshold"
+  description = "Warning threshold for the alert rule"
   type        = string
 }
 variable "critical_threshold" {
-  description = "Alert rule critical threshold"
+  description = "Critical threshold for the alert rule"
   type        = string
 }
 variable "metric_name" {
   description = "Metric Name for the alert rule"
   type        = string
-}
-variable "limit" {
-  description = "Limit for alert rules data"
-  type        = number
-}
-variable "offset" {
-  description = "Offset for alert rule data"
-  type        = number
 }
