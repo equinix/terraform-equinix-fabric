@@ -1,5 +1,5 @@
 output "stream_id" {
-  value = equinix_fabric_stream.new_stream.uuid
+  value = module.stream_splunk_subscription.first_stream.uuid
 }
 output "port_connection_id" {
   value = module.create_port_2_port_connection.primary_connection_id
