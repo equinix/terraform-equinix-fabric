@@ -1,0 +1,9 @@
+equinix_client_id     = "MyEquinixClientId"
+equinix_client_secret = "MyEquinixSecret"
+
+network_name          = "EVPTreeNetwork"
+network_type          = "EVPTREE"
+scope                 = "GLOBAL"
+notifications_type    = "ALL"
+notifications_emails  = ["example@equinix.com", "test1@equinix.com"]
+project_id            = "345250818654"
