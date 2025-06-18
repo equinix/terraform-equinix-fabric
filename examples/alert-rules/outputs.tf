@@ -10,4 +10,3 @@ output "stream_alert_rule_id" {
 output "stream_alert_rule_state" {
   value = equinix_fabric_stream_alert_rule.alert_rule.state
 }
-

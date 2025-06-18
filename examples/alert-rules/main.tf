@@ -96,4 +96,3 @@ data "equinix_fabric_stream_alert_rules" "alert_rules" {
     offset = var.offset
   }
 }
-
