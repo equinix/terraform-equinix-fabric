@@ -160,3 +160,11 @@ variable "metric_name" {
   description = "Metric Name for the alert rule"
   type        = string
 }
+variable "limit" {
+  description = "Limit for pagination of alert rules"
+  type        = number
+}
+variable "offset" {
+  description = "Offset for pagination of alert rules"
+  type        = number
+}
