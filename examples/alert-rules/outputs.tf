@@ -1,7 +1,7 @@
 output "stream_id" {
-  value = module.stream_splunk_subscription.first_stream.uuid
+  value = module.stream_splunk_subscription.first_stream.id
 }
-output "port_connection_id" {
+output "connection_id" {
   value = module.create_port_2_port_connection.primary_connection_id
 }
 output "stream_alert_rule_id" {

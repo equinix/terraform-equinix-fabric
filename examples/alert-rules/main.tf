@@ -45,14 +45,6 @@ module "create_port_2_port_connection" {
   zside_location  = var.zside_location
 }
 
-locals {
-  stream_id = (
-    length(module.stream_splunk_subscription.number_of_subscriptions) > 3
-    ? module.stream_splunk_subscription.second_stream.id
-    : module.stream_splunk_subscription.first_stream.id
-  )
-}
-
 resource "equinix_fabric_stream_attachment" "attachment" {
   depends_on = [
     module.stream_splunk_subscription,
@@ -61,7 +53,7 @@ resource "equinix_fabric_stream_attachment" "attachment" {
 
   asset_id  = module.create_port_2_port_connection.primary_connection_id
   asset     = var.asset_type
-  stream_id = local.stream_id
+  stream_id =  module.stream_splunk_subscription.first_stream.id
 }
 
 resource "equinix_fabric_stream_alert_rule" "alert_rule" {
@@ -69,7 +61,7 @@ resource "equinix_fabric_stream_alert_rule" "alert_rule" {
     equinix_fabric_stream_attachment.attachment
   ]
   type               = "METRIC_ALERT"
-  stream_id          = local.stream_id
+  stream_id          =  module.stream_splunk_subscription.first_stream.id
   name               = var.alert_rule_name
   description        = var.alert_rule_description
   operand            = var.operand
@@ -77,9 +69,31 @@ resource "equinix_fabric_stream_alert_rule" "alert_rule" {
   warning_threshold  = var.warning_threshold
   critical_threshold = var.critical_threshold
   metric_name        = var.metric_name
-  resource_selector   = {
+  resource_selector  = {
     "include" = [
       "*/${equinix_fabric_stream_attachment.attachment.asset}/${module.create_port_2_port_connection.primary_connection_id}"
     ]
   }
 }
+
+data "equinix_fabric_stream_alert_rule" "alert_rule" {
+  depends_on = [
+    module.stream_splunk_subscription,
+    equinix_fabric_stream_alert_rule.alert_rule
+  ]
+  stream_id =  module.stream_splunk_subscription.first_stream.id
+  alert_rule_id = equinix_fabric_stream_alert_rule.alert_rule.id
+}
+
+data "equinix_fabric_stream_alert_rules" "alert_rules" {
+  depends_on = [
+    module.stream_splunk_subscription,
+    equinix_fabric_stream_alert_rule.alert_rule
+  ]
+  stream_id =  module.stream_splunk_subscription.first_stream.id
+  pagination = {
+    limit = var.limit
+    offset = var.offset
+  }
+}
+
