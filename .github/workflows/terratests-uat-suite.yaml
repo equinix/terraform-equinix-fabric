@@ -17,6 +17,21 @@ jobs:
       TEST_DATA_UAT_VIRTUAL_DEVICE_2_PORT_CONNECTION: ${{ secrets.TEST_DATA_UAT_VIRTUAL_DEVICE_2_PORT_CONNECTION }}
 
     steps:
+      - id: get_id_token
+        name: Get GitHub OIDC Token for PFCR
+        uses: actions/github-script@v6
+        with:
+          script: |
+            try {
+              const idToken = await core.getIDToken('gha-fcr-client');
+              console.log('Token generated with audience: gha-fcr-client');
+              core.setOutput('id_token', idToken);
+            } catch (error) {
+              console.error('Error getting OIDC token:', error.message);
+              core.setFailed(`Error getting OIDC token: ${error.message}`);
+            }
+          result-encoding: string
+
       - name: Check out code into the Go module directory
         uses: actions/checkout@v4
         with:
@@ -132,6 +147,21 @@ jobs:
       - name: Run Go Tests
         run:
           go test ./tests/uat -json -v -count 1 -parallel 8 -run "(PFCR)" -timeout 180m | tee pfcr_test_output.log
+
+      - name: UAT PFCR tests STS creds
+        timeout-minutes: 180
+        env:
+          TF_ACC: "1"
+          TF_ACC_FABRIC_CONNECTIONS_TEST_DATA: ${{ secrets.TF_ACC_FABRIC_CONNECTIONS_TEST_DATA }}
+          TF_ACC_FABRIC_DEDICATED_PORTS: ${{ secrets.TF_ACC_FABRIC_DEDICATED_PORTS }}
+          TF_ACC_FABRIC_MARKET_PLACE_SUBSCRIPTION_ID: ${{ secrets.TF_ACC_FABRIC_MARKET_PLACE_SUBSCRIPTION_ID }}
+          TF_ACC_FABRIC_STREAM_TEST_DATA: ${{ secrets.TF_ACC_FABRIC_STREAM_TEST_DATA }}
+          EQUINIX_STS_SOURCE_TOKEN: ${{ steps.get_id_token.outputs.id_token }}
+          EQUINIX_STS_AUTH_SCOPE: "roleassignments:405153000683548"
+          METAL_AUTH_TOKEN: ${{ secrets.METAL_AUTH_TOKEN }}
+        run: |
+          echo $TEST_DATA_UAT_PORT_2_PORT_CONNECTION_STS >> "./examples/port-2-port-connection-sts-token/terraform.tfvars.json"
+          go test ./tests/uat/uat_sanity_suite_test.go -v -run ^TestPort2PortCreateConnectionSTS_PFCR$ 
 
       - name: Upload PFCR Testing Log
         uses: actions/upload-artifact@v4
