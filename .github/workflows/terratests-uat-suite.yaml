@@ -58,7 +58,7 @@ jobs:
 
   test-PFCR:
     name: Setup UAT PFCR Tests
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     permissions:
       id-token: write
       contents: read
@@ -85,6 +85,7 @@ jobs:
       TEST_DATA_UAT_STREAM_SPLUNK_SUBSCRIPTION: ${{ secrets.TEST_DATA_UAT_STREAM_SPLUNK_SUBSCRIPTION }}
       TEST_DATA_UAT_STREAM_MULTIPLE_SUBSCRIPTIONS_AND_ATTACHMENT: ${{ secrets.TEST_DATA_UAT_STREAM_MULTIPLE_SUBSCRIPTIONS_AND_ATTACHMENT }}
       TEST_DATA_UAT_VIRTUAL_DEVICE_2_AWS_CONNECTION: ${{secrets.TEST_DATA_UAT_VIRTUAL_DEVICE_2_AWS_CONNECTION}}
+      TEST_DATA_UAT_PORT_2_PORT_CONNECTION_STS: ${{ secrets.TEST_DATA_UAT_PORT_2_PORT_CONNECTION_STS }}
 
     steps:
       - id: get_id_token
