@@ -59,6 +59,9 @@ jobs:
   test-PFCR:
     name: Setup UAT PFCR Tests
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
     env:
       TF_VAR_equinix_client_id: ${{ secrets.EQUINIX_CLIENT_ID_PFCR }}
       TF_VAR_equinix_client_secret: ${{ secrets.EQUINIX_CLIENT_SECRET_PFCR }}
