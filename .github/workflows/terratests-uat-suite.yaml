@@ -160,7 +160,7 @@ jobs:
           METAL_AUTH_TOKEN: ${{ secrets.METAL_AUTH_TOKEN }}
         run: |
           echo $TEST_DATA_UAT_PORT_2_PORT_CONNECTION_STS >> "./examples/port-2-port-connection-sts-token/terraform.tfvars.json"
-          go test ./tests/uat/uat_sanity_suite_test.go -v -run ^TestPort2PortCreateConnectionSTS_PFCR$ 
+          go test ./tests/uat/uat_sanity_suite_test.go -v -run ^TestPort2PortCreateConnection_STS_PFCR$ 
 
       - name: Run Go Tests
         run:
