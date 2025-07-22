@@ -146,11 +146,6 @@ jobs:
           echo $TEST_DATA_UAT_STREAM_SPLUNK_SUBSCRIPTION >> "./examples/stream-splunk-subscription/terraform.tfvars.json"
           echo $TEST_DATA_UAT_STREAM_MULTIPLE_SUBSCRIPTIONS_AND_ATTACHMENT >> "./examples/stream-multiple-subscriptions-with-port-connection-attachment/terraform.tfvars.json"
           
-
-      - name: Run Go Tests
-        run:
-          go test ./tests/uat -json -v -count 1 -parallel 8 -run "(PFCR)" -timeout 180m | tee pfcr_test_output.log
-
       - name: UAT PFCR tests STS creds
         timeout-minutes: 180
         env:
@@ -165,6 +160,11 @@ jobs:
         run: |
           echo $TEST_DATA_UAT_PORT_2_PORT_CONNECTION_STS >> "./examples/port-2-port-connection-sts-token/terraform.tfvars.json"
           go test ./tests/uat/uat_sanity_suite_test.go -v -run ^TestPort2PortCreateConnectionSTS_PFCR$ 
+      
+
+      - name: Run Go Tests
+        run:
+          go test ./tests/uat -json -v -count 1 -parallel 8 -run "(PFCR)" -timeout 180m | tee pfcr_test_output.log
 
       - name: Upload PFCR Testing Log
         uses: actions/upload-artifact@v4
