@@ -82,8 +82,24 @@ jobs:
       TEST_DATA_UAT_STREAM_SPLUNK_SUBSCRIPTION: ${{ secrets.TEST_DATA_UAT_STREAM_SPLUNK_SUBSCRIPTION }}
       TEST_DATA_UAT_STREAM_MULTIPLE_SUBSCRIPTIONS_AND_ATTACHMENT: ${{ secrets.TEST_DATA_UAT_STREAM_MULTIPLE_SUBSCRIPTIONS_AND_ATTACHMENT }}
       TEST_DATA_UAT_VIRTUAL_DEVICE_2_AWS_CONNECTION: ${{secrets.TEST_DATA_UAT_VIRTUAL_DEVICE_2_AWS_CONNECTION}}
+      TEST_DATA_UAT_PORT_2_PORT_CONNECTION_STS: ${{ secrets.TEST_DATA_UAT_PORT_2_PORT_CONNECTION_STS }}
 
     steps:
+      - id: get_id_token
+        name: Get GitHub OIDC Token for PFCR
+        uses: actions/github-script@v6
+        with:
+          script: |
+            try {
+              const idToken = await core.getIDToken('gha-fcr-client');
+              console.log('Token generated with audience: gha-fcr-client');
+              core.setOutput('id_token', idToken);
+            } catch (error) {
+              console.error('Error getting OIDC token:', error.message);
+              core.setFailed(`Error getting OIDC token: ${error.message}`);
+            }
+          result-encoding: string
+
       - name: Check out code into the Go module directory
         uses: actions/checkout@v4
         with:
@@ -128,6 +144,20 @@ jobs:
           echo $TEST_DATA_UAT_STREAM_SPLUNK_SUBSCRIPTION >> "./examples/stream-splunk-subscription/terraform.tfvars.json"
           echo $TEST_DATA_UAT_STREAM_MULTIPLE_SUBSCRIPTIONS_AND_ATTACHMENT >> "./examples/stream-multiple-subscriptions-with-port-connection-attachment/terraform.tfvars.json"
           
+      - name: UAT PFCR tests STS creds
+        timeout-minutes: 180
+        env:
+          TF_ACC: "1"
+          TF_ACC_FABRIC_CONNECTIONS_TEST_DATA: ${{ secrets.TF_ACC_FABRIC_CONNECTIONS_TEST_DATA }}
+          TF_ACC_FABRIC_DEDICATED_PORTS: ${{ secrets.TF_ACC_FABRIC_DEDICATED_PORTS }}
+          TF_ACC_FABRIC_MARKET_PLACE_SUBSCRIPTION_ID: ${{ secrets.TF_ACC_FABRIC_MARKET_PLACE_SUBSCRIPTION_ID }}
+          TF_ACC_FABRIC_STREAM_TEST_DATA: ${{ secrets.TF_ACC_FABRIC_STREAM_TEST_DATA }}
+          TF_VAR_sts_source_token: ${{ steps.get_id_token.outputs.id_token }}
+          TF_VAR_sts_auth_scope: ${{ secrets.EQUINIX_STS_AUTH_SCOPE_PFCR }}
+          METAL_AUTH_TOKEN: ${{ secrets.METAL_AUTH_TOKEN }}
+        run: |
+          echo $TEST_DATA_UAT_PORT_2_PORT_CONNECTION_STS >> "./examples/port-2-port-connection-sts-token/terraform.tfvars.json"
+          go test ./tests/uat/uat_sanity_suite_test.go -v -run ^TestPort2PortCreateConnectionSTS_PFCR$ 
 
       - name: Run Go Tests
         run:
