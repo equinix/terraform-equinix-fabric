@@ -123,6 +123,17 @@ jobs:
           terraform_version: ${{ matrix.terraform }}
           terraform_wrapper: false
 
+      - name: Build provider from branch - for testing in GHA
+        run: |
+          git clone -b your-branch-name https://github.com/equinix/terraform-provider-equinix.git
+          cd terraform-provider-equinix
+          make build -o terraform-provider-equinix
+          
+          PLUGIN_DIR="$HOME/.terraform.d/plugins/developer.equinix.com/terraform/equinix/9.0.0/linux_amd64"
+          mkdir -p "$PLUGIN_DIR"
+          mv terraform-provider-equinix "$PLUGIN_DIR/terraform-provider-equinix"
+          chmod +x "$PLUGIN_DIR/terraform-provider-equinix"          
+
       - name: Setup Variables Files
         run: |
           echo $TEST_DATA_UAT_PORT_2_AWS_CONNECTION >> "./tests/examples-without-external-providers/port-2-aws-connection/terraform.tfvars.json"
