@@ -125,7 +125,7 @@ jobs:
 
       - name: Build provider from branch - for testing in GHA
         run: |
-          git clone -b your-branch-name https://github.com/equinix/terraform-provider-equinix.git
+          git clone -b CXF-113767-add-example https://github.com/equinix/terraform-provider-equinix.git
           cd terraform-provider-equinix
           make build -o terraform-provider-equinix
           
