@@ -91,7 +91,7 @@ jobs:
 
     steps:
       - id: get_id_token
-        name: Configure OIDC Subject Claim Template
+        name: Get GitHub OIDC Token for PFCR
         uses: actions/github-script@v6
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
@@ -152,8 +152,6 @@ jobs:
         timeout-minutes: 180
         env:
           TF_ACC: "1"
-          TF_ACC_FABRIC_CONNECTIONS_TEST_DATA: ${{ secrets.TF_ACC_FABRIC_CONNECTIONS_TEST_DATA }}
-          TF_ACC_FABRIC_DEDICATED_PORTS: ${{ secrets.TF_ACC_FABRIC_DEDICATED_PORTS }}
           TF_VAR_sts_source_token: ${{ steps.get_id_token.outputs.id_token }}
           TF_VAR_sts_auth_scope: "roleassignments:405153000683548"
           METAL_AUTH_TOKEN: ${{ secrets.METAL_AUTH_TOKEN }}
