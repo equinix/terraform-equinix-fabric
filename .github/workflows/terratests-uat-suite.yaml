@@ -56,35 +56,20 @@ jobs:
       - name: Check if Tests are passed
         run: sh scripts/check_tests.sh output.log
 
-  test-PFCR:
-    name: Setup UAT PFCR Tests
+  test-STS:
+    name: Setup UAT PFCR Tests for STS token
     runs-on: ubuntu-latest
     permissions:
       id-token: write
       contents: read
     env:
-      TF_VAR_equinix_client_id: ${{ secrets.EQUINIX_CLIENT_ID_PFCR }}
-      TF_VAR_equinix_client_secret: ${{ secrets.EQUINIX_CLIENT_SECRET_PFCR }}
+      TF_ACC: "1"
+      TF_ACC_FABRIC_CONNECTIONS_TEST_DATA: ${{ secrets.TF_ACC_FABRIC_CONNECTIONS_TEST_DATA }}
+      TF_ACC_FABRIC_DEDICATED_PORTS: ${{ secrets.TF_ACC_FABRIC_DEDICATED_PORTS }}
+      TF_VAR_sts_source_token: ${{ steps.get_id_token.outputs.id_token }}
+      TF_VAR_sts_auth_scope: ${{ secrets.EQUINIX_STS_AUTH_SCOPE_PFCR }}
+      METAL_AUTH_TOKEN: ${{ secrets.METAL_AUTH_TOKEN }}
       EQUINIX_API_ENDPOINT: "https://uatapi.equinix.com"
-      TEST_DATA_UAT_PORT_2_AWS_CONNECTION: ${{ secrets.TEST_DATA_UAT_PORT_2_AWS_CONNECTION }}
-      TEST_DATA_UAT_PORT_2_AZURE_CONNECTION: ${{ secrets.TEST_DATA_UAT_PORT_2_AZURE_CONNECTION }}
-      TEST_DATA_UAT_PORT_2_IBM2_CONNECTION: ${{ secrets.TEST_DATA_UAT_PORT_2_IBM2_CONNECTION }}
-      TEST_DATA_UAT_PORT_2_PORT_CONNECTION: ${{ secrets.TEST_DATA_UAT_PORT_2_PORT_CONNECTION }}
-      TEST_DATA_UAT_PORT_2_PRIVATE_SERVICE_PROFILE_CONNECTION: ${{ secrets.TEST_DATA_UAT_PORT_2_PRIVATE_SERVICE_PROFILE_CONNECTION }}
-      TEST_DATA_UAT_PORT_2_PUBLIC_SERVICE_PROFILE_CONNECTION: ${{ secrets.TEST_DATA_UAT_PORT_2_PUBLIC_SERVICE_PROFILE_CONNECTION }}
-      TEST_DATA_UAT_CLOUD_ROUTER_2_AWS_CONNECTION: ${{secrets.TEST_DATA_UAT_CLOUD_ROUTER_2_AWS_CONNECTION}}
-      TEST_DATA_UAT_CLOUD_ROUTER_2_AZURE_CONNECTION: ${{secrets.TEST_DATA_UAT_CLOUD_ROUTER_2_AZURE_CONNECTION}}
-      TEST_DATA_UAT_CLOUD_ROUTER_2_PORT_ROUTING_PROTOCOL_AND_ROUTE_FILTER_CONNECTION: ${{secrets.TEST_DATA_UAT_CLOUD_ROUTER_2_PORT_ROUTING_PROTOCOL_AND_ROUTE_FILTER_CONNECTION}}
-      TEST_DATA_UAT_CLOUD_ROUTER_2_SERVICE_PROFILE_CONNECTION: ${{secrets.TEST_DATA_UAT_CLOUD_ROUTER_2_SERVICE_PROFILE_CONNECTION}}
-      TEST_DATA_UAT_CLOUD_ROUTER_2_WAN_CONNECTION: ${{secrets.TEST_DATA_UAT_CLOUD_ROUTER_2_WAN_CONNECTION}}
-      TEST_DATA_UAT_CLOUD_ROUTER_2_VIRTUAL_DEVICE_CONNECTION: ${{secrets.TEST_DATA_UAT_CLOUD_ROUTER_2_VIRTUAL_DEVICE_CONNECTION}}
-      TEST_DATA_UAT_STREAM_DATADOG_SUBSCRIPTION: ${{ secrets.TEST_DATA_UAT_STREAM_DATADOG_SUBSCRIPTION }}
-      TEST_DATA_UAT_STREAM_MSTEAMS_SUBSCRIPTION: ${{ secrets.TEST_DATA_UAT_STREAM_MSTEAMS_SUBSCRIPTION }}
-      TEST_DATA_UAT_STREAM_PAGERDUTY_SUBSCRIPTION: ${{ secrets.TEST_DATA_UAT_STREAM_PAGERDUTY_SUBSCRIPTION }}
-      TEST_DATA_UAT_STREAM_SLACK_SUBSCRIPTION: ${{ secrets.TEST_DATA_UAT_STREAM_SLACK_SUBSCRIPTION }}
-      TEST_DATA_UAT_STREAM_SPLUNK_SUBSCRIPTION: ${{ secrets.TEST_DATA_UAT_STREAM_SPLUNK_SUBSCRIPTION }}
-      TEST_DATA_UAT_STREAM_MULTIPLE_SUBSCRIPTIONS_AND_ATTACHMENT: ${{ secrets.TEST_DATA_UAT_STREAM_MULTIPLE_SUBSCRIPTIONS_AND_ATTACHMENT }}
-      TEST_DATA_UAT_VIRTUAL_DEVICE_2_AWS_CONNECTION: ${{secrets.TEST_DATA_UAT_VIRTUAL_DEVICE_2_AWS_CONNECTION}}
       TEST_DATA_UAT_PORT_2_PORT_CONNECTION_STS: ${{ secrets.TEST_DATA_UAT_PORT_2_PORT_CONNECTION_STS }}
 
     steps:
@@ -128,7 +113,7 @@ jobs:
           git clone -b fabric-sts-support https://github.com/equinix/terraform-provider-equinix.git
           cd terraform-provider-equinix
           make build -o terraform-provider-equinix
-          
+
           PLUGIN_DIR="$HOME/.terraform.d/plugins/developer.equinix.com/terraform/equinix/9.0.0/linux_amd64"
           mkdir -p "$PLUGIN_DIR"
           mv terraform-provider-equinix "$PLUGIN_DIR/terraform-provider-equinix"
@@ -136,16 +121,58 @@ jobs:
 
       - name: UAT PFCR tests STS creds
         timeout-minutes: 180
-        env:
-          TF_ACC: "1"
-          TF_ACC_FABRIC_CONNECTIONS_TEST_DATA: ${{ secrets.TF_ACC_FABRIC_CONNECTIONS_TEST_DATA }}
-          TF_ACC_FABRIC_DEDICATED_PORTS: ${{ secrets.TF_ACC_FABRIC_DEDICATED_PORTS }}
-          TF_VAR_sts_source_token: ${{ steps.get_id_token.outputs.id_token }}
-          TF_VAR_sts_auth_scope: ${{ secrets.EQUINIX_STS_AUTH_SCOPE_PFCR }}
-          METAL_AUTH_TOKEN: ${{ secrets.METAL_AUTH_TOKEN }}
         run: |
           echo $TEST_DATA_UAT_PORT_2_PORT_CONNECTION_STS >> "./examples/port-2-port-connection-sts-token/terraform.tfvars.json"
-          go test ./tests/uat/uat_sanity_suite_test.go -v -run ^TestPort2PortCreateConnection_STS_PFCR$     
+          go test ./tests/uat/uat_sanity_suite_test.go -v -run ^TestPort2PortCreateConnection_STS_PFCR$    
+
+  test-PFCR:
+    name: Setup UAT PFCR Tests
+    runs-on: ubuntu-latest
+    env:
+      TF_VAR_equinix_client_id: ${{ secrets.EQUINIX_CLIENT_ID_PFCR }}
+      TF_VAR_equinix_client_secret: ${{ secrets.EQUINIX_CLIENT_SECRET_PFCR }}
+      EQUINIX_API_ENDPOINT: "https://uatapi.equinix.com"
+      TEST_DATA_UAT_PORT_2_AWS_CONNECTION: ${{ secrets.TEST_DATA_UAT_PORT_2_AWS_CONNECTION }}
+      TEST_DATA_UAT_PORT_2_AZURE_CONNECTION: ${{ secrets.TEST_DATA_UAT_PORT_2_AZURE_CONNECTION }}
+      TEST_DATA_UAT_PORT_2_IBM2_CONNECTION: ${{ secrets.TEST_DATA_UAT_PORT_2_IBM2_CONNECTION }}
+      TEST_DATA_UAT_PORT_2_PORT_CONNECTION: ${{ secrets.TEST_DATA_UAT_PORT_2_PORT_CONNECTION }}
+      TEST_DATA_UAT_PORT_2_PRIVATE_SERVICE_PROFILE_CONNECTION: ${{ secrets.TEST_DATA_UAT_PORT_2_PRIVATE_SERVICE_PROFILE_CONNECTION }}
+      TEST_DATA_UAT_PORT_2_PUBLIC_SERVICE_PROFILE_CONNECTION: ${{ secrets.TEST_DATA_UAT_PORT_2_PUBLIC_SERVICE_PROFILE_CONNECTION }}
+      TEST_DATA_UAT_CLOUD_ROUTER_2_AWS_CONNECTION: ${{secrets.TEST_DATA_UAT_CLOUD_ROUTER_2_AWS_CONNECTION}}
+      TEST_DATA_UAT_CLOUD_ROUTER_2_AZURE_CONNECTION: ${{secrets.TEST_DATA_UAT_CLOUD_ROUTER_2_AZURE_CONNECTION}}
+      TEST_DATA_UAT_CLOUD_ROUTER_2_PORT_ROUTING_PROTOCOL_AND_ROUTE_FILTER_CONNECTION: ${{secrets.TEST_DATA_UAT_CLOUD_ROUTER_2_PORT_ROUTING_PROTOCOL_AND_ROUTE_FILTER_CONNECTION}}
+      TEST_DATA_UAT_CLOUD_ROUTER_2_SERVICE_PROFILE_CONNECTION: ${{secrets.TEST_DATA_UAT_CLOUD_ROUTER_2_SERVICE_PROFILE_CONNECTION}}
+      TEST_DATA_UAT_CLOUD_ROUTER_2_WAN_CONNECTION: ${{secrets.TEST_DATA_UAT_CLOUD_ROUTER_2_WAN_CONNECTION}}
+      TEST_DATA_UAT_CLOUD_ROUTER_2_VIRTUAL_DEVICE_CONNECTION: ${{secrets.TEST_DATA_UAT_CLOUD_ROUTER_2_VIRTUAL_DEVICE_CONNECTION}}
+      TEST_DATA_UAT_STREAM_DATADOG_SUBSCRIPTION: ${{ secrets.TEST_DATA_UAT_STREAM_DATADOG_SUBSCRIPTION }}
+      TEST_DATA_UAT_STREAM_MSTEAMS_SUBSCRIPTION: ${{ secrets.TEST_DATA_UAT_STREAM_MSTEAMS_SUBSCRIPTION }}
+      TEST_DATA_UAT_STREAM_PAGERDUTY_SUBSCRIPTION: ${{ secrets.TEST_DATA_UAT_STREAM_PAGERDUTY_SUBSCRIPTION }}
+      TEST_DATA_UAT_STREAM_SLACK_SUBSCRIPTION: ${{ secrets.TEST_DATA_UAT_STREAM_SLACK_SUBSCRIPTION }}
+      TEST_DATA_UAT_STREAM_SPLUNK_SUBSCRIPTION: ${{ secrets.TEST_DATA_UAT_STREAM_SPLUNK_SUBSCRIPTION }}
+      TEST_DATA_UAT_STREAM_MULTIPLE_SUBSCRIPTIONS_AND_ATTACHMENT: ${{ secrets.TEST_DATA_UAT_STREAM_MULTIPLE_SUBSCRIPTIONS_AND_ATTACHMENT }}
+      TEST_DATA_UAT_VIRTUAL_DEVICE_2_AWS_CONNECTION: ${{secrets.TEST_DATA_UAT_VIRTUAL_DEVICE_2_AWS_CONNECTION}}
+      TEST_DATA_UAT_PORT_2_PORT_CONNECTION_STS: ${{ secrets.TEST_DATA_UAT_PORT_2_PORT_CONNECTION_STS }}
+
+    steps:
+      - name: Check out code into the Go module directory
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.ref }}
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: './go.mod'
+        id: go
+
+      - name: Get dependencies
+        run: |
+          go mod download
+
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: ${{ matrix.terraform }}
+          terraform_wrapper: false
 
       - name: Setup Variables Files
         run: |
