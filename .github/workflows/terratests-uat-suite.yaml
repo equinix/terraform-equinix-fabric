@@ -111,6 +111,7 @@ jobs:
               const idToken = await core.getIDToken('gha-fcr-client');
               console.log('Token generated with custom subject and audience');
             
+              const idToken = await core.getIDToken('testidp-020A2T');
               const payload = JSON.parse(Buffer.from(idToken.split('.')[1], 'base64').toString());
               console.log('Token subject:', payload.sub);
               console.log('Token audience:', payload.aud);
