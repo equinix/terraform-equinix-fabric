@@ -130,6 +130,23 @@ jobs:
             --data-urlencode 'scope=roleassignments:405153000683548' \
             2>&1 || true    
 
+      - name: Test Access Token with Equinix API
+        run: |
+          echo "Testing access token with Equinix API"
+          
+          STS_RESPONSE=$(curl -s --location 'https://sts.uat.equinix.com/use/token' \
+            --header 'Content-Type: application/x-www-form-urlencoded' \
+            --data-urlencode 'grant_type=urn:ietf:params:oauth:grant-type:token-exchange' \
+            --data-urlencode 'subject_token=${{ steps.get_id_token.outputs.id_token }}' \
+            --data-urlencode 'subject_token_type=urn:ietf:params:oauth:token-type:id_token' \
+            --data-urlencode 'scope=roleassignments:405153000683548')
+          
+          ACCESS_TOKEN=$(echo $STS_RESPONSE | jq -r '.access_token')
+          
+          curl -v -H "Authorization: Bearer $ACCESS_TOKEN" \
+            "https://uatapi.equinix.com/fabric/v4/ports?name=panthers-CX-SV5-NL-Dot1q-STD-1G-PRI-JP-170" \
+            2>&1 || true    
+
       - name: Check out code into the Go module directory
         uses: actions/checkout@v4
         with:
