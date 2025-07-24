@@ -97,20 +97,24 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             try {
-              const defaultResponse = await github.request('PUT /repos/{owner}/{repo}/actions/oidc/customization/sub', {
+              const response = await github.request('PUT /repos/{owner}/{repo}/actions/oidc/customization/sub', {
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                use_default: true  // ← CHANGED: use default instead of custom
+                use_default: false,
+                include_claim_keys: ['repo', 'ref', 'workflow'],
+                headers: {
+                  'X-GitHub-Api-Version': '2022-11-28'
+                }
               });
-
-              console.log('Using default OIDC subject template');
+            
+              console.log('Custom OIDC subject template configured');
               const idToken = await core.getIDToken('gha-fcr-client');
-              console.log('Token generated with default subject and audience');
-
+              console.log('Token generated with custom subject and audience');
+            
               const payload = JSON.parse(Buffer.from(idToken.split('.')[1], 'base64').toString());
               console.log('Token subject:', payload.sub);
               console.log('Token audience:', payload.aud);
-
+            
               core.setOutput('id_token', idToken);
             } catch (error) {
               console.error('Error updating OIDC template:', error.message);
