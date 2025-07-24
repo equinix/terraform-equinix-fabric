@@ -106,7 +106,7 @@ jobs:
               });
 
               console.log('Custom OIDC subject template configured');
-              const idToken = await core.getIDToken('gha-fcr-client');
+              const idToken = await core.getIDToken('gha-CT06GW');
               const payload = JSON.parse(Buffer.from(idToken.split('.')[1], 'base64').toString());
               console.log('Token subject:', payload.sub);
               console.log('Token audience:', payload.aud);
