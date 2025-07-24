@@ -64,9 +64,10 @@ jobs:
       actions: write
       contents: read
     env:
-      TF_VAR_equinix_client_id: ${{ secrets.EQUINIX_CLIENT_ID_PFCR }}
-      TF_VAR_equinix_client_secret: ${{ secrets.EQUINIX_CLIENT_SECRET_PFCR }}
+#      TF_VAR_equinix_client_id: ${{ secrets.EQUINIX_CLIENT_ID_PFCR }}
+#      TF_VAR_equinix_client_secret: ${{ secrets.EQUINIX_CLIENT_SECRET_PFCR }}
       EQUINIX_API_ENDPOINT: "https://uatapi.equinix.com"
+      EQUINIX_STS_ENDPOINT: "https://sts.uat.equinix.com"
       TEST_DATA_UAT_PORT_2_AWS_CONNECTION: ${{ secrets.TEST_DATA_UAT_PORT_2_AWS_CONNECTION }}
       TEST_DATA_UAT_PORT_2_AZURE_CONNECTION: ${{ secrets.TEST_DATA_UAT_PORT_2_AZURE_CONNECTION }}
       TEST_DATA_UAT_PORT_2_IBM2_CONNECTION: ${{ secrets.TEST_DATA_UAT_PORT_2_IBM2_CONNECTION }}
@@ -184,7 +185,6 @@ jobs:
           TF_ACC: "1"
           TF_VAR_sts_source_token: ${{ steps.get_id_token.outputs.id_token }}
           TF_VAR_sts_auth_scope: "roleassignments:405153000683548"
-          EQUINIX_STS_ENDPOINT: "https://sts.uat.equinix.com"
           TEST_DATA_UAT_PORT_2_PORT_CONNECTION_STS: ${{ secrets.TEST_DATA_UAT_PORT_2_PORT_CONNECTION_STS }}
         run: |
           echo $TEST_DATA_UAT_PORT_2_PORT_CONNECTION_STS >> "./examples/port-2-port-connection-sts-token/terraform.tfvars.json"
