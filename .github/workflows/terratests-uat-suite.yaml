@@ -68,11 +68,6 @@ jobs:
 #      TF_VAR_equinix_client_secret: ${{ secrets.EQUINIX_CLIENT_SECRET_PFCR }}
       EQUINIX_API_ENDPOINT: "https://uatapi.equinix.com"
       EQUINIX_STS_ENDPOINT: "https://sts.uat.equinix.com"
-
-      TF_VAR_sts_source_token: ${{ steps.get_id_token.outputs.id_token }}
-      TF_VAR_sts_auth_scope: "roleassignments:405153000683548"
-      TEST_DATA_UAT_PORT_2_PORT_CONNECTION_STS: ${{ secrets.TEST_DATA_UAT_PORT_2_PORT_CONNECTION_STS }}
-
       TEST_DATA_UAT_PORT_2_AWS_CONNECTION: ${{ secrets.TEST_DATA_UAT_PORT_2_AWS_CONNECTION }}
       TEST_DATA_UAT_PORT_2_AZURE_CONNECTION: ${{ secrets.TEST_DATA_UAT_PORT_2_AZURE_CONNECTION }}
       TEST_DATA_UAT_PORT_2_IBM2_CONNECTION: ${{ secrets.TEST_DATA_UAT_PORT_2_IBM2_CONNECTION }}
@@ -92,6 +87,7 @@ jobs:
       TEST_DATA_UAT_STREAM_SPLUNK_SUBSCRIPTION: ${{ secrets.TEST_DATA_UAT_STREAM_SPLUNK_SUBSCRIPTION }}
       TEST_DATA_UAT_STREAM_MULTIPLE_SUBSCRIPTIONS_AND_ATTACHMENT: ${{ secrets.TEST_DATA_UAT_STREAM_MULTIPLE_SUBSCRIPTIONS_AND_ATTACHMENT }}
       TEST_DATA_UAT_VIRTUAL_DEVICE_2_AWS_CONNECTION: ${{secrets.TEST_DATA_UAT_VIRTUAL_DEVICE_2_AWS_CONNECTION}}
+      TEST_DATA_UAT_PORT_2_PORT_CONNECTION_STS: ${{ secrets.TEST_DATA_UAT_PORT_2_PORT_CONNECTION_STS }}
 
     steps:
       - id: get_id_token
@@ -186,6 +182,9 @@ jobs:
 
       - name: UAT PFCR tests STS creds
         timeout-minutes: 180
+        env:
+          TF_VAR_sts_source_token: ${{ steps.get_id_token.outputs.id_token }}
+          TF_VAR_sts_auth_scope: "roleassignments:405153000683548"
         run: |
           echo $TEST_DATA_UAT_PORT_2_PORT_CONNECTION_STS >> "./examples/port-2-port-connection-sts-token/terraform.tfvars.json"
           go test ./tests/uat/uat_sanity_suite_test.go -v -run ^TestPort2PortCreateConnection_STS_PFCR$     
