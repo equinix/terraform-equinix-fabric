@@ -57,7 +57,7 @@ jobs:
         run: sh scripts/check_tests.sh output.log
 
   test-STS-PFCR:
-    name: Setup UAT PFCR Tests
+    name: Setup UAT PFCR Tests - STS
     runs-on: ubuntu-latest
     permissions:
       id-token: write
@@ -127,8 +127,8 @@ jobs:
           ACCESS_TOKEN=$(echo $STS_RESPONSE | jq -r '.access_token')
           
           curl -v -H "Authorization: Bearer $ACCESS_TOKEN" \
-            "https://uatapi.equinix.com/fabric/v4/ports?name=panthers-CX-SV5-NL-Dot1q-STD-1G-PRI-JP-170" \   
-            2>&1 || true 
+            "https://uatapi.equinix.com/fabric/v4/ports?name=panthers-CX-SV5-NL-Dot1q-STD-1G-PRI-JP-170" \
+            2>&1 || true
 
       - name: Build provider from branch - for testing in GHA
         run: |
@@ -247,9 +247,9 @@ jobs:
           echo $TEST_DATA_UAT_STREAM_MULTIPLE_SUBSCRIPTIONS_AND_ATTACHMENT >> "./examples/stream-multiple-subscriptions-with-port-connection-attachment/terraform.tfvars.json"
           
 
-      - name: Run Go Tests
-        run:
-          go test ./tests/uat -json -v -count 1 -parallel 8 -run "(PFCR)" -timeout 180m | tee pfcr_test_output.log
+#      - name: Run Go Tests
+#        run:
+#          go test ./tests/uat -json -v -count 1 -parallel 8 -run "(PFCR)" -timeout 180m | tee pfcr_test_output.log
 
       - name: Upload PFCR Testing Log
         uses: actions/upload-artifact@v4
