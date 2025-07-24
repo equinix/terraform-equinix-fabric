@@ -178,7 +178,31 @@ jobs:
           PLUGIN_DIR="$HOME/.terraform.d/plugins/developer.equinix.com/terraform/equinix/9.0.0/linux_amd64"
           mkdir -p "$PLUGIN_DIR"
           mv terraform-provider-equinix "$PLUGIN_DIR/terraform-provider-equinix"
-          chmod +x "$PLUGIN_DIR/terraform-provider-equinix"          
+          chmod +x "$PLUGIN_DIR/terraform-provider-equinix"    
+
+      - name: Debug Terraform STS Flow
+        env:
+          TF_VAR_sts_source_token: ${{ steps.get_id_token.outputs.id_token }}
+          TF_VAR_sts_auth_scope: "roleassignments:405153000683548"
+        run: |
+          cd ./examples/port-2-port-connection-sts-token
+          
+          echo "=== Terraform Variables ==="
+          echo "STS scope: $TF_VAR_sts_auth_scope"
+          
+          echo "=== Test STS exchange before Terraform ==="
+          curl -s -w "\nHTTP Status: %{http_code}\n" \
+            --location 'https://sts.uat.equinix.com/use/token' \
+            --data-urlencode 'grant_type=urn:ietf:params:oauth:grant-type:token-exchange' \
+            --data-urlencode "subject_token=$TF_VAR_sts_source_token" \
+            --data-urlencode 'subject_token_type=urn:ietf:params:oauth:token-type:id_token' \
+            --data-urlencode 'scope=roleassignments:405153000683548'
+          
+          echo "=== Terraform Init ==="
+          terraform init
+          
+          echo "=== Terraform Plan (to see what auth it uses) ==="
+          TF_LOG=DEBUG terraform plan 2>&1 | grep -E "(auth|token|client)" || true     
 
       - name: UAT PFCR tests STS creds
         timeout-minutes: 180
