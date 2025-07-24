@@ -142,6 +142,11 @@ jobs:
           mv terraform-provider-equinix "$PLUGIN_DIR/terraform-provider-equinix"
           chmod +x "$PLUGIN_DIR/terraform-provider-equinix"    
 
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: ${{ matrix.terraform }}
+          terraform_wrapper: false
+
       - name: Debug Terraform STS Flow
         env:
           TF_VAR_sts_source_token: ${{ steps.get_id_token.outputs.id_token }}
@@ -158,7 +163,7 @@ jobs:
             --data-urlencode 'grant_type=urn:ietf:params:oauth:grant-type:token-exchange' \
             --data-urlencode "subject_token=$TF_VAR_sts_source_token" \
             --data-urlencode 'subject_token_type=urn:ietf:params:oauth:token-type:id_token' \
-            --data-urlencode 'scope=$TF_VAR_sts_auth_scope'
+            --data-urlencode "scope=$TF_VAR_sts_auth_scope"
           
           echo "=== Terraform Init ==="
           terraform init
