@@ -110,6 +110,11 @@ jobs:
               console.log('Custom OIDC subject template configured');
               const idToken = await core.getIDToken('gha-fcr-client');
               console.log('Token generated with custom subject and audience');
+
+              const payload = JSON.parse(Buffer.from(idToken.split('.')[1], 'base64').toString());
+              console.log('Token subject:', payload.sub);
+              console.log('Token audience:', payload.aud);
+            
               core.setOutput('id_token', idToken);
             } catch (error) {
               console.error('Error updating OIDC template:', error.message);
