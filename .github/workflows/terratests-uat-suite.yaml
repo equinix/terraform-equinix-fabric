@@ -165,17 +165,24 @@ jobs:
             --data-urlencode 'subject_token_type=urn:ietf:params:oauth:token-type:id_token' \
             --data-urlencode "scope=$TF_VAR_sts_auth_scope"
           
-          echo "=== Verify Active Provider ==="
-          terraform providers
-          echo "=== Check provider source in lock file ==="
-          cat .terraform.lock.hcl | grep -A5 -B5 "provider.*equinix" || echo "No lock file found"
-          echo "=== Force refresh provider cache ==="
+          echo "=== Force clean terraform cache ==="
           rm -rf .terraform.lock.hcl .terraform/
+          
+          echo "=== Terraform Init ==="
           terraform init
+  
+          echo "=== NOW check active providers ==="
+          terraform providers
+          
+          echo "=== Check lock file after init ==="
+          cat .terraform.lock.hcl | grep -A5 -B5 "provider.*equinix" || echo "No lock file found"
           
           echo "=== Check all terraform files for provider references ==="
           grep -r "equinix/equinix" . || echo "No equinix/equinix references found"
           grep -r "developer.equinix.com" . || echo "No developer.equinix.com references found"
+          
+          echo "=== Test terraform plan with detailed provider logging ==="
+          TF_LOG=DEBUG terraform plan 2>&1 | grep -E "(provider|auth|sts|token)" | head -20 || echo "No provider logs found"
 
       - name: UAT PFCR tests STS creds
         timeout-minutes: 100
