@@ -30,7 +30,7 @@ jobs:
 
       - name: Get dependencies
         run: |
-          go mod download
+              go mod download
 
       - uses: hashicorp/setup-terraform@v3
         with:
@@ -43,9 +43,9 @@ jobs:
           echo $TEST_DATA_UAT_VIRTUAL_DEVICE_2_AZURE_CONNECTION >> "./tests/examples-without-external-providers/virtual-device-2-azure-connection/terraform.tfvars.json"
           echo $TEST_DATA_UAT_VIRTUAL_DEVICE_2_PORT_CONNECTION >> "./tests/examples-without-external-providers/virtual-device-2-port-connection/terraform.tfvars.json"
 
-      #      - name: Run Go Tests
-      #        run:
-      #          go test ./tests/uat -json -v -coverprofile coverage_uat_modules.txt -covermode=atomic -count 1 -parallel 8 -run "(PNFV)" -timeout 180m | tee pnfv_test_output.log
+      - name: Run Go Tests
+        run:
+          go test ./tests/uat -json -v -coverprofile coverage_uat_modules.txt -covermode=atomic -count 1 -parallel 8 -run "(PNFV)" -timeout 180m | tee pnfv_test_output.log
 
       - name: Upload PNFV Testing Log
         uses: actions/upload-artifact@v4
@@ -195,9 +195,9 @@ jobs:
           echo $TEST_DATA_UAT_STREAM_MULTIPLE_SUBSCRIPTIONS_AND_ATTACHMENT >> "./examples/stream-multiple-subscriptions-with-port-connection-attachment/terraform.tfvars.json"
           
 
-#      - name: Run Go Tests
-#        run:
-#          go test ./tests/uat -json -v -count 1 -parallel 8 -run "(PFCR)" -timeout 180m | tee pfcr_test_output.log
+      - name: Run Go Tests
+        run:
+          go test ./tests/uat -json -v -count 1 -parallel 8 -run "(PFCR)" -timeout 180m | tee pfcr_test_output.log
 
       - name: Upload PFCR Testing Log
         uses: actions/upload-artifact@v4
