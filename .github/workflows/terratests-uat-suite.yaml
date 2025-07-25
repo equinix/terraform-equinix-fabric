@@ -86,12 +86,7 @@ jobs:
                 }
               });
             
-              console.log('Custom OIDC subject template configured');
               const idToken = await core.getIDToken('gha-fcr-client');
-              const payload = JSON.parse(Buffer.from(idToken.split('.')[1], 'base64').toString());
-              console.log('Token subject:', payload.sub);
-              console.log('Token audience:', payload.aud);
-            
               core.setOutput('id_token', idToken);
             } catch (error) {
               console.error('Error updating OIDC template:', error.message);
@@ -99,39 +94,10 @@ jobs:
             }
           result-encoding: string
 
-      - name: Debug Token Exchange
-        run: |
-          echo "Testing direct token exchange with Equinix STS..."
-          
-          curl -v --location 'https://sts.uat.equinix.com/use/token' \
-            --header 'Content-Type: application/x-www-form-urlencoded' \
-            --data-urlencode 'grant_type=urn:ietf:params:oauth:grant-type:token-exchange' \
-            --data-urlencode 'subject_token=${{ steps.get_id_token.outputs.id_token }}' \
-            --data-urlencode 'subject_token_type=urn:ietf:params:oauth:token-type:id_token' \
-            --data-urlencode 'scope=roleassignments:405153000683548' \
-            2>&1 || true    
-
-      - name: Test Access Token with Equinix API
-        run: |
-          echo "Testing access token with Equinix API"
-          
-          STS_RESPONSE=$(curl -s --location 'https://sts.uat.equinix.com/use/token' \
-            --header 'Content-Type: application/x-www-form-urlencoded' \
-            --data-urlencode 'grant_type=urn:ietf:params:oauth:grant-type:token-exchange' \
-            --data-urlencode 'subject_token=${{ steps.get_id_token.outputs.id_token }}' \
-            --data-urlencode 'subject_token_type=urn:ietf:params:oauth:token-type:id_token' \
-            --data-urlencode 'scope=roleassignments:405153000683548')
-          
-          ACCESS_TOKEN=$(echo $STS_RESPONSE | jq -r '.access_token')
-          
-          curl -v -H "Authorization: Bearer $ACCESS_TOKEN" \
-            "https://uatapi.equinix.com/fabric/v4/ports?name=panthers-CX-SV5-NL-Dot1q-STD-1G-PRI-JP-170" \
-            2>&1 || true
-
       - name: Checkout current repository
         uses: actions/checkout@v4
 
-      - name: Build provider from branch - for testing in GHA
+      - name: Build provider from branch - #TODO: REMOVE THIS STEP ONCE TERRAFORM PROVIDER IS RELEASED
         run: |
           git clone -b fabric-sts-support https://github.com/equinix/terraform-provider-equinix.git
           cd terraform-provider-equinix
@@ -146,43 +112,6 @@ jobs:
         with:
           terraform_version: ${{ matrix.terraform }}
           terraform_wrapper: false
-
-      - name: Debug Terraform STS Flow
-        env:
-          TF_VAR_sts_source_token: ${{ steps.get_id_token.outputs.id_token }}
-          TF_VAR_sts_auth_scope: ${{secrets.TEST_DATA_UAT_PORT_2_PORT_CONNECTION_STS_SCOPE}}
-        run: |
-          cd ./examples/port-2-port-connection-sts-token
-          
-          echo "=== Terraform Variables ==="
-          echo "STS scope: $TF_VAR_sts_auth_scope"
-          
-          echo "=== Test STS exchange before Terraform ==="
-          curl -s -w "\nHTTP Status: %{http_code}\n" \
-            --location 'https://sts.uat.equinix.com/use/token' \
-            --data-urlencode 'grant_type=urn:ietf:params:oauth:grant-type:token-exchange' \
-            --data-urlencode "subject_token=$TF_VAR_sts_source_token" \
-            --data-urlencode 'subject_token_type=urn:ietf:params:oauth:token-type:id_token' \
-            --data-urlencode "scope=$TF_VAR_sts_auth_scope"
-          
-          echo "=== Force clean terraform cache ==="
-          rm -rf .terraform.lock.hcl .terraform/
-          
-          echo "=== Terraform Init ==="
-          terraform init
-  
-          echo "=== NOW check active providers ==="
-          terraform providers
-          
-          echo "=== Check lock file after init ==="
-          cat .terraform.lock.hcl | grep -A5 -B5 "provider.*equinix" || echo "No lock file found"
-          
-          echo "=== Check all terraform files for provider references ==="
-          grep -r "equinix/equinix" . || echo "No equinix/equinix references found"
-          grep -r "developer.equinix.com" . || echo "No developer.equinix.com references found"
-          
-          echo "=== Test terraform plan with detailed provider logging ==="
-          TF_LOG=DEBUG terraform plan 2>&1 | grep -E "(provider|auth|sts|token)" | head -20 || echo "No provider logs found"
 
       - name: UAT PFCR tests STS creds
         timeout-minutes: 100
