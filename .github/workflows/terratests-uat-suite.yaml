@@ -117,7 +117,7 @@ jobs:
         timeout-minutes: 100
         env:
           TF_VAR_sts_source_token: ${{ steps.get_id_token.outputs.id_token }}
-          TF_VAR_sts_auth_scope: ${{secrets.TEST_DATA_UAT_PORT_2_PORT_CONNECTION_STS_SCOPE}}
+          TF_VAR_sts_auth_scope: ${{secrets.TEST_DATA_UAT_STS_AUTH_SCOPE}}
         run: |
           echo $TEST_DATA_UAT_PORT_2_PORT_CONNECTION_STS >> "./examples/port-2-port-connection-sts-token/terraform.tfvars.json"
           go test ./tests/uat/uat_sanity_suite_test.go -v -run ^TestPort2PortCreateConnection_STS_PFCR$   
