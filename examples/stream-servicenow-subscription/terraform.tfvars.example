@@ -4,23 +4,13 @@ equinix_client_secret = "<MyEquinixSecret>"
 stream_name        = "EmergingNetworksStream"
 stream_description = "Source for Equinix Events/Metrics/Alerts"
 
-datadog_name            = "DatadogSub"
-datadog_description     = "Destination for Equinix Events/Metrics/Alerts"
-datadog_enabled         = true
-datadog_host            = "<customer_specific_host>"
-datadog_api_key         = "<datadog_api_key>"
-datadog_application_key = "<datadog_application_key>"
-datadog_filters = [{
-  property = "/type"
-  operator = "LIKE"
-  values = [
-    "equinix.fabric.connection%"
-  ]
-}]
-datadog_event_exceptions  = ["equinix.fabric.connection.route_filter.pending_bgp_configuration"]
-datadog_event_selections  = ["equinix.fabric.router.*"]
-datadog_metric_exceptions = ["equinix.fabric.connection.*"]
-datadog_metric_selections = ["equinix.fabric.port.*"]
-datadog_event_uri         = "<datadog_event_uri>"
-datadog_metric_uri        = "<datadog_metric_uri>"
-
+servicenow_name              = "ServicenowSub"
+servicenow_description       = "Destination for Equinix Events/Metrics/Alerts"
+servicenow_enabled           = true
+servicenow_host              = "<customer_specific_host>"
+servicenow_event_exceptions  = ["equinix.fabric.connection.route_filter.pending_bgp_configuration"]
+servicenow_event_selections  = ["equinix.fabric.router.*"]
+servicenow_metric_exceptions = ["equinix.fabric.connection.*"]
+servicenow_metric_selections = ["equinix.fabric.port.*"]
+servicenow_username          = "<username>"
+servicenow_password          = "<password>"

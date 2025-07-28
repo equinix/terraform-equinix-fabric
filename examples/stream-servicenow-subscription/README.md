@@ -2,7 +2,7 @@
 
 This example shows how to leverage the [Fabric Stream Module
 ](https://registry.terraform.io/modules/equinix/fabric/equinix/latest/submodules/streaming-observability)
-to create a Fabric Stream and a Datadog Fabric Stream Subscription.
+to create a Fabric Stream and a Servicenow Fabric Stream Subscription.
 
 It leverages the Equinix Terraform Provider and the Fabric Stream Module
 to set up the stream and subscription based on the parameters you have provided to

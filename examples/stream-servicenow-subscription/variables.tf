@@ -46,20 +46,40 @@ variable "servicenow_event_selections" {
   type        = list(string)
   default     = []
 }
+variable "servicenow_metric_exceptions" {
+  description = "Events to exclude from the possibilities available to the stream for the Subscription"
+  type        = list(string)
+  default     = []
+}
+variable "servicenow_metric_selections" {
+  description = "Events to include from the possibilities available to the stream for the Subscription"
+  type        = list(string)
+  default     = []
+}
 variable "servicenow_host" {
   description = "ServiceNow Host for the streaming messages destination"
   type        = string
-  default = ""
+  default     = ""
 }
 variable "servicenow_username" {
   description = "ServiceNow Username for the streaming messages destination"
   type        = string
-  default = ""
+  default     = ""
 }
 variable "servicenow_password" {
   description = "ServiceNow Password for the streaming messages destination"
   type        = string
-  default = ""
+  default     = ""
+}
+variable "servicenow_filters" {
+  description = "Filters for the Servicenow Subscription"
+  type = list(object({
+    property = string,
+    operator = string,
+    values   = list(string),
+    or       = optional(bool),
+  }))
+  default = []
 }
 
 

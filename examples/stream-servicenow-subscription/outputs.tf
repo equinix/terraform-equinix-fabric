@@ -6,3 +6,4 @@ output "stream" {
 #   value     = module.stream_servicenow_subscription.servicenow_subscription
 #   sensitive = true
 # }
+//Add another output here
