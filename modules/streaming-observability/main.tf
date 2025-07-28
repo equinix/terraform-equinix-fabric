@@ -159,4 +159,32 @@ resource "equinix_fabric_stream_subscription" "msteams" {
   }
 }
 
-
+# Stream Subscription for ServiceNow --------------------------------------
+resource "equinix_fabric_stream_subscription" "servicenow" {
+  count       = var.servicenow_host != "" ? 1 : 0
+  type        = "STREAM_SUBSCRIPTION"
+  name        = var.servicenow_name
+  description = var.servicenow_description
+  stream_id   = local.second_stream ? equinix_fabric_stream.stream2[0].id : equinix_fabric_stream.stream1.id
+  enabled     = var.servicenow_enabled
+  event_selector = {
+    include = var.servicenow_event_selections != [] ? var.servicenow_event_selections : null
+    except  = var.servicenow_event_exceptions != [] ? var.servicenow_event_exceptions : null
+  }
+  metric_selector = {
+    include = var.servicenow_metric_selections != [] ? var.servicenow_metric_selections : null
+    except  = var.servicenow_metric_exceptions != [] ? var.servicenow_metric_exceptions : null
+  }
+  sink = {
+    type = "SERVICENOW"
+    host = var.servicenow_host
+    settings = {
+      source = var.servicenow_source
+    }
+    credential = {
+      type = "USERNAME_PASSWORD"
+      username = var.servicenow_username
+      password = var. servicenow_password
+    }
+  }
+}
