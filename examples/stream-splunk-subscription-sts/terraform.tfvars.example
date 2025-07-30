@@ -1,0 +1,25 @@
+equinix_client_id     = "<MyEquinixClientId>"
+equinix_client_secret = "<MyEquinixSecret>"
+
+stream_name        = "EmergingNetworksStream"
+stream_description = "Source for Equinix Events/Metrics/Alerts"
+
+splunk_name         = "splunkSub"
+splunk_description  = "Destination for Equinix Events/Metrics/Alerts"
+splunk_enabled      = true
+splunk_uri          = "<customer_specific_uri>"
+splunk_access_token = "<customer_splunk_access_token"
+splunk_filters = [{
+  property = "/type"
+  operator = "LIKE"
+  values = [
+    "equinix.fabric.connection%"
+  ]
+}]
+splunk_event_exceptions  = ["equinix.fabric.connection.route_filter.pending_bgp_configuration"]
+splunk_event_selections  = ["equinix.fabric.router.*"]
+splunk_metric_exceptions = ["equinix.fabric.connection.*"]
+splunk_metric_selections = ["equinix.fabric.port.*"]
+splunk_source            = "<splunk_source>"
+splunk_event_index       = "<splunk_event_index>"
+splunk_metric_index      = "<splunk_metric_index>"
