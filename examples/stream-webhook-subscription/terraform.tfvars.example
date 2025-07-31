@@ -1,0 +1,22 @@
+equinix_client_id     = "<MyEquinixClientId>"
+equinix_client_secret = "<MyEquinixSecret>"
+
+stream_name        = "EmergingNetworksStream"
+stream_description = "Source for Equinix Events/Metrics/Alerts"
+
+webhook_name              = "webhookSub"
+webhook_description       = "Destination for Equinix Events/Metrics/Alerts"
+webhook_enabled           = true
+webhook_filters = [{
+  property = "/type"
+  operator = "LIKE"
+  values = [
+    "equinix.fabric.connection%"
+  ]
+}]
+webhook_event_exceptions  = ["equinix.fabric.connection.route_filter.pending_bgp_configuration"]
+webhook_event_selections  = ["equinix.fabric.router.*"]
+webhook_metric_exceptions = ["equinix.fabric.connection.*"]
+webhook_metric_selections = ["equinix.fabric.port.*"]
+webhook_uri               = "<webhook_uri>"
+

@@ -318,3 +318,124 @@ variable "stream_name" {
   description = "Name (and name prefix) for the created stream(s) in the module"
   type        = string
 }
+variable "servicenow_name" {
+  description = "Name of the Servicenow Equinix Subscription Resource"
+  type        = string
+  default     = ""
+}
+variable "servicenow_description" {
+  description = "Description of the created stream(s) for servicenow in the module"
+  type        = string
+  default     = ""
+}
+variable "servicenow_enabled" {
+  description = "Boolean value indicating enablement of the Splunk Subscription"
+  type        = string
+  default     = ""
+}
+variable "servicenow_event_selections" {
+  description = "Events to include from the possibilities available to the stream for the Subscription"
+  type        = list(string)
+  default     = []
+}
+variable "servicenow_event_exceptions" {
+  description = "Events to exclude from the possibilities available to the stream for the Subscription"
+  type        = list(string)
+  default     = []
+}
+variable "servicenow_metric_selections" {
+  description = "Metrics to include from the possibilities available to the stream for the Subscription"
+  type        = list(string)
+  default     = []
+}
+variable "servicenow_metric_exceptions" {
+  description = "Metrics to exclude from the possibilities available to the stream for the Subscription"
+  type        = list(string)
+  default     = []
+}
+variable "servicenow_host" {
+  description = "Servicenow Sink Hostname"
+  type        = string
+  default     = ""
+}
+variable "servicenow_source" {
+  description = "Name of the created Servicenow Source for the destination of the streaming messages"
+  type        = string
+  default     = ""
+}
+variable "servicenow_username" {
+  description = "Username for Servicenow App"
+  type        = string
+  default     = ""
+  sensitive   = true
+}
+variable "servicenow_password" {
+  description = "Password for Servicenow App"
+  type        = string
+  default     = ""
+  sensitive   = true
+}
+variable "webhook_event_uri" {
+  description = "URI endpoint for webhook events"
+  type        = string
+  default     = ""
+  sensitive   = true
+}
+variable "webhook_uri" {
+  description = "URI endpoint for webhook"
+  type        = string
+  default     = ""
+  sensitive   = true
+}
+variable "webhook_name" {
+  description = "Name of the Webhook Equinix Subscription Resource"
+  type        = string
+  default     = "webhook-subscription"
+}
+variable "webhook_description" {
+  description = "Description of the webhook subscription"
+  type        = string
+  default     = "Webhook stream subscription"
+}
+variable "webhook_enabled" {
+  description = "Boolean value indicating enablement of the Webhook Subscription"
+  type        = bool
+  default     = true
+}
+variable "webhook_event_selections" {
+  description = "List of event types to include for webhook"
+  type        = list(string)
+  default     = []
+}
+variable "webhook_event_exceptions" {
+  description = "List of event types to exclude for webhook"
+  type        = list(string)
+  default     = []
+}
+variable "webhook_metric_selections" {
+  description = "List of metric types to include for webhook"
+  type        = list(string)
+  default     = []
+}
+variable "webhook_metric_exceptions" {
+  description = "List of metric types to exclude for webhook"
+  type        = list(string)
+  default     = []
+}
+variable "webhook_format" {
+  description = "Format for webhook payload"
+  type        = string
+  default     = "JSON"
+}
+variable "webhook_metric_uri" {
+  description = "URI endpoint for webhook metrics"
+  type        = string
+  default     = ""
+  sensitive   = true
+}
+variable "webhook_api_key" {
+  description = "API Key for Webhook account"
+  type        = string
+  default     = ""
+  sensitive   = true
+}

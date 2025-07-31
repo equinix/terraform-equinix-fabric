@@ -1,12 +1,13 @@
 
 # Conditional logic determining if a second stream should be created to allow for the total count of subscriptions
 locals {
+  webhook_count = (var.webhook_event_uri != "" || var.webhook_metric_uri != "") ? 1 : 0
   number_of_subscriptions = [
-    for sub in [var.splunk_uri, var.slack_uri, var.pagerduty_host, var.msteams_uri, var.datadog_host] : sub if sub != ""
+    for sub in [var.splunk_uri, var.slack_uri, var.pagerduty_host, var.msteams_uri, var.datadog_host, var.servicenow_host] : sub if sub != ""
   ]
-  second_stream = length(local.number_of_subscriptions) > 3 ? true : false
+  total_subscriptions = length(local.number_of_subscriptions) + local.webhook_count
+  second_stream = local.total_subscriptions > 3 ? true : false
 }
-
 
 # Stream Creation -----------------------------------------------------
 resource "equinix_fabric_stream" "stream1" {
@@ -185,6 +186,32 @@ resource "equinix_fabric_stream_subscription" "servicenow" {
       type = "USERNAME_PASSWORD"
       username = var.servicenow_username
       password = var. servicenow_password
+    }
+  }
+}
+
+# Stream Subscription for Webhook --------------------------------------
+resource "equinix_fabric_stream_subscription" "webhook" {
+  count       = local.webhook_count
+  type        = "STREAM_SUBSCRIPTION"
+  name        = var.webhook_name
+  description = var.webhook_description
+  stream_id   = local.second_stream ? equinix_fabric_stream.stream2[0].id : equinix_fabric_stream.stream1.id
+  enabled = var.webhook_enabled
+  event_selector = {
+    include = var.webhook_event_selections != [] ? var.webhook_event_selections : null
+    except  = var.webhook_event_exceptions != [] ? var.webhook_event_exceptions : null
+  }
+  metric_selector = {
+    include = var.webhook_metric_selections != [] ? var.webhook_metric_selections : null
+    except  = var.webhook_metric_exceptions != [] ? var.webhook_metric_exceptions : null
+  }
+  sink = {
+    type = "WEBHOOK"
+    settings = {
+      format     = var.webhook_format
+      event_uri  = var.webhook_event_uri != "" ? var.webhook_event_uri : null
+      metric_uri = var.webhook_metric_uri != "" ? var.webhook_metric_uri : null
     }
   }
 }
