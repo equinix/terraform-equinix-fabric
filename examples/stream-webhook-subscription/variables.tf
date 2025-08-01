@@ -80,5 +80,3 @@ variable "webhook_filters" {
   default = []
 }
 
-
-
