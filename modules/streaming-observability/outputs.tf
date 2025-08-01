@@ -37,3 +37,10 @@ output "servicenow_subscription" {
   value     = var.servicenow_host != "" ? equinix_fabric_stream_subscription.servicenow[0] : null
   sensitive = true
 }
+
+output "webhook_subscription" {
+  value     = var.servicenow_host != "" ? equinix_fabric_stream_subscription.webhook[0] : null
+  sensitive = true
+}
+
+

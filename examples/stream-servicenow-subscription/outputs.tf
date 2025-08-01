@@ -1,9 +1,9 @@
 output "stream" {
-  value     = module.stream_servicenow_subscription.first_stream
+  value     = module.stream_servicenow_subscription.first_stream.id
   sensitive = true
 }
-# output "servicenow_subscription" {
-#   value     = module.stream_servicenow_subscription.servicenow_subscription
-#   sensitive = true
-# }
-//Add another output here
+
+output "stream_subscription" {
+  value     = module.stream_servicenow_subscription.servicenow_subscription
+  sensitive = true
+}
