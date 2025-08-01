@@ -9,7 +9,7 @@ import (
 	"net/http"
 )
 
-func testCloudRouters() error {
+func testSweepCloudRouters() error {
 	var errs []error
 	log.Printf("[DEBUG] Sweeping Fabric Cloud Routers")
 	ctx := context.Background()

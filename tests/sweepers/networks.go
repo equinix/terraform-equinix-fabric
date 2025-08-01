@@ -9,7 +9,7 @@ import (
 	"net/http"
 )
 
-func testNetworks() error {
+func testSweepNetworks() error {
 	var errs []error
 	log.Printf("[DEBUG] Sweeping Fabric Networks")
 	ctx := context.Background()
