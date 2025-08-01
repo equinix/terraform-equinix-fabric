@@ -18,5 +18,5 @@ webhook_event_exceptions  = ["equinix.fabric.connection.route_filter.pending_bgp
 webhook_event_selections  = ["equinix.fabric.router.*"]
 webhook_metric_exceptions = ["equinix.fabric.connection.*"]
 webhook_metric_selections = ["equinix.fabric.port.*"]
-webhook_uri               = "<webhook_uri>"
-
+webhook_event_uri         = "<webhook_event_uri>"
+webhook_metric_uri        = "<webhook_metric_uri>"
