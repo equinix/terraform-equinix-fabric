@@ -164,12 +164,12 @@ jobs:
           pip3 install junit2html
 
       - name: Download PNFV Test Logs
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: pnfv_test_logs
 
       - name: Download PFCR Test Logs
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: pfcr_test_logs
 
