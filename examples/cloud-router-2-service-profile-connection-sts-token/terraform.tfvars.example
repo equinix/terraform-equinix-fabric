@@ -1,0 +1,14 @@
+sts_source_token                = "<STSSourceToken>"
+sts_auth_scope                  = "<STSAuthScope>"
+
+connection_name                 = "fcr_2_sp"
+connection_type                 = "IP_VC"
+notifications_type              = "ALL"
+notifications_emails            = ["example@equinix.com","test1@equinix.com"]
+purchase_order_number           = "1-323292"
+bandwidth                       = 50
+aside_fcr_uuid                  = "<Primary Fabric Cloud router UUID>"
+zside_ap_type                   = "SP"
+zside_ap_profile_type           = "L2_PROFILE"
+zside_location                  = "SV"
+zside_fabric_sp_name            = "Ajith Ops User QnQ"
