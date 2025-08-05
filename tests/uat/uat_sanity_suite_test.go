@@ -307,3 +307,17 @@ func TestCloudRouter2VirtualDeviceCreateConnection_PFCR(t *testing.T) {
 	output := terraform.Output(t, terraformOptions, "FCR_VD_Connection")
 	assert.NotNil(t, output)
 }
+
+func TestPort2PortCreateConnection_STS_PFCR(t *testing.T) {
+
+	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
+		TerraformDir: "../../examples/port-2-port-connection-sts-token",
+	})
+
+	defer terraform.Destroy(t, terraformOptions)
+	t.Parallel()
+
+	terraform.InitAndApply(t, terraformOptions)
+	output := terraform.Output(t, terraformOptions, "port_connection_id")
+	assert.NotNil(t, output)
+}
