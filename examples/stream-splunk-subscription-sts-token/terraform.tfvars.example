@@ -1,14 +1,14 @@
-equinix_client_id     = "<MyEquinixClientId>"
-equinix_client_secret = "<MyEquinixSecret>"
+sts_source_token         = "<STSSourceToken>"
+sts_auth_scope           = "<STSAuthScope>"
 
-stream_name        = "EmergingNetworksStream"
-stream_description = "Source for Equinix Events/Metrics/Alerts"
+stream_name              = "EmergingNetworksStream"
+stream_description       = "Source for Equinix Events/Metrics/Alerts"
 
-splunk_name         = "splunkSub"
-splunk_description  = "Destination for Equinix Events/Metrics/Alerts"
-splunk_enabled      = true
-splunk_uri          = "<customer_specific_uri>"
-splunk_access_token = "<customer_splunk_access_token"
+splunk_name              = "splunkSub"
+splunk_description       = "Destination for Equinix Events/Metrics/Alerts"
+splunk_enabled           = true
+splunk_uri               = "<customer_specific_uri>"
+splunk_access_token      = "<customer_splunk_access_token"
 splunk_filters = [{
   property = "/type"
   operator = "LIKE"
