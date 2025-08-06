@@ -2,10 +2,11 @@
 # Conditional logic determining if a second stream should be created to allow for the total count of subscriptions
 locals {
   webhook_count = (var.webhook_event_uri != "" || var.webhook_metric_uri != "") ? 1 : 0
+  grafana_count = (var.grafana_event_uri != "" || var.grafana_metric_uri != "") ? 1 : 0
   number_of_subscriptions = [
     for sub in [var.splunk_uri, var.slack_uri, var.pagerduty_host, var.msteams_uri, var.datadog_host, var.servicenow_host] : sub if sub != ""
   ]
-  total_subscriptions = length(local.number_of_subscriptions) + local.webhook_count
+  total_subscriptions = length(local.number_of_subscriptions) + local.webhook_count + local.grafana_count
   second_stream = local.total_subscriptions > 3 ? true : false
 }
 
@@ -212,6 +213,32 @@ resource "equinix_fabric_stream_subscription" "webhook" {
       format     = var.webhook_format
       event_uri  = var.webhook_event_uri != "" ? var.webhook_event_uri : null
       metric_uri = var.webhook_metric_uri != "" ? var.webhook_metric_uri : null
+    }
+  }
+}
+
+# Stream Subscription for Grafana --------------------------------------
+resource "equinix_fabric_stream_subscription" "grafana" {
+  count       = local.grafana_count
+  type        = "STREAM_SUBSCRIPTION"
+  name        = var.grafana_name
+  description = var.grafana_description
+  stream_id   = local.second_stream ? equinix_fabric_stream.stream2[0].id : equinix_fabric_stream.stream1.id
+  enabled     = var.grafana_enabled
+  event_selector = {
+    include = var.grafana_event_selections != [] ? var.grafana_event_selections : null
+    except  = var.grafana_event_exceptions != [] ? var.grafana_event_exceptions : null
+  }
+  metric_selector = {
+    include = var.grafana_metric_selections != [] ? var.grafana_metric_selections : null
+    except  = var.grafana_metric_exceptions != [] ? var.grafana_metric_exceptions : null
+  }
+  sink = {
+    type = "WEBHOOK"
+    settings = {
+      format     = var.grafana_format
+      event_uri  = var.grafana_event_uri != "" ? var.grafana_event_uri : null
+      metric_uri = var.grafana_metric_uri != "" ? var.grafana_metric_uri : null
     }
   }
 }

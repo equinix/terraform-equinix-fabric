@@ -39,8 +39,11 @@ output "servicenow_subscription" {
 }
 
 output "webhook_subscription" {
-  value     = var.servicenow_host != "" ? equinix_fabric_stream_subscription.webhook[0] : null
+  value     = var.webhook_event_uri != "" ? equinix_fabric_stream_subscription.webhook[0] : null
   sensitive = true
 }
 
-
+output "grafana_subscription" {
+  value     = var.grafana_event_uri != "" ? equinix_fabric_stream_subscription.grafana[0] : null
+  sensitive = true
+}

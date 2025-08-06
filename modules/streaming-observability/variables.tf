@@ -381,12 +381,6 @@ variable "webhook_event_uri" {
   default     = ""
   sensitive   = true
 }
-variable "webhook_uri" {
-  description = "URI endpoint for webhook"
-  type        = string
-  default     = ""
-  sensitive   = true
-}
 variable "webhook_name" {
   description = "Name of the Webhook Equinix Subscription Resource"
   type        = string
@@ -433,8 +427,54 @@ variable "webhook_metric_uri" {
   default     = ""
   sensitive   = true
 }
-variable "webhook_api_key" {
-  description = "API Key for Webhook account"
+variable "grafana_event_uri" {
+  description = "URI endpoint for grafana events"
+  type        = string
+  default     = ""
+  sensitive   = true
+}
+variable "grafana_name" {
+  description = "Name of the Grafana Equinix Subscription Resource"
+  type        = string
+  default     = "grafana-subscription"
+}
+variable "grafana_description" {
+  description = "Description of the grafana subscription"
+  type        = string
+  default     = "Grafana stream subscription"
+}
+variable "grafana_enabled" {
+  description = "Boolean value indicating enablement of the Grafana Subscription"
+  type        = bool
+  default     = true
+}
+variable "grafana_event_selections" {
+  description = "List of event types to include for grafana"
+  type        = list(string)
+  default     = []
+}
+variable "grafana_event_exceptions" {
+  description = "List of event types to exclude for grafana"
+  type        = list(string)
+  default     = []
+}
+variable "grafana_metric_selections" {
+  description = "List of metric types to include for grafana"
+  type        = list(string)
+  default     = []
+}
+variable "grafana_metric_exceptions" {
+  description = "List of metric types to exclude for grafana"
+  type        = list(string)
+  default     = []
+}
+variable "grafana_format" {
+  description = "Format for grafana payload"
+  type        = string
+  default     = "JSON"
+}
+variable "grafana_metric_uri" {
+  description = "URI endpoint for grafana metrics"
   type        = string
   default     = ""
   sensitive   = true
