@@ -67,7 +67,7 @@ variable "webhook_metric_selections" {
 variable "webhook_format" {
   description = "Format of the webhook messages"
   type        = string
-  default     = ""
+  default     = null
 }
 variable "webhook_filters" {
   description = "Filters for the Servicenow Subscription"
