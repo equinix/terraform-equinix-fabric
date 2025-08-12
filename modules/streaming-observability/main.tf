@@ -8,6 +8,8 @@ locals {
   ]
   total_subscriptions = length(local.number_of_subscriptions) + local.webhook_count + local.grafana_count
   second_stream = local.total_subscriptions > 3 ? true : false
+  third_stream  = local.total_subscriptions > 6 ? true : false
+
 }
 
 # Stream Creation -----------------------------------------------------
@@ -21,6 +23,13 @@ resource "equinix_fabric_stream" "stream2" {
   count       = local.second_stream ? 1 : 0
   type        = "TELEMETRY_STREAM"
   name        = join("-", [var.stream_name, "2"])
+  description = var.stream_description
+}
+
+resource "equinix_fabric_stream" "stream3" {
+  count       = local.third_stream ? 1 : 0
+  type        = "TELEMETRY_STREAM"
+  name        = join("-", [var.stream_name, "3"])
   description = var.stream_description
 }
 
@@ -167,7 +176,9 @@ resource "equinix_fabric_stream_subscription" "servicenow" {
   type        = "STREAM_SUBSCRIPTION"
   name        = var.servicenow_name
   description = var.servicenow_description
-  stream_id   = local.second_stream ? equinix_fabric_stream.stream2[0].id : equinix_fabric_stream.stream1.id
+  stream_id = (local.third_stream ? equinix_fabric_stream.stream3[0].id :
+      local.second_stream ? equinix_fabric_stream.stream2[0].id :
+      equinix_fabric_stream.stream1.id)
   enabled     = var.servicenow_enabled
   event_selector = {
     include = var.servicenow_event_selections != [] ? var.servicenow_event_selections : null
@@ -223,7 +234,9 @@ resource "equinix_fabric_stream_subscription" "grafana" {
   type        = "STREAM_SUBSCRIPTION"
   name        = var.grafana_name
   description = var.grafana_description
-  stream_id   = local.second_stream ? equinix_fabric_stream.stream2[0].id : equinix_fabric_stream.stream1.id
+  stream_id = (local.third_stream ? equinix_fabric_stream.stream3[0].id :
+      local.second_stream ? equinix_fabric_stream.stream2[0].id :
+      equinix_fabric_stream.stream1.id)
   enabled     = var.grafana_enabled
   event_selector = {
     include = var.grafana_event_selections != [] ? var.grafana_event_selections : null

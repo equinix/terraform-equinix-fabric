@@ -67,7 +67,7 @@ variable "grafana_metric_selections" {
 variable "grafana_format" {
   description = "Format for grafana payload"
   type        = string
-  default     = "JSON"
+  default     = null
 }
 variable "grafana_filters" {
   description = "Filters for the Grafana Subscription"
