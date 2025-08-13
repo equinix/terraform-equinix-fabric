@@ -316,8 +316,8 @@ func TestStreamServicenowSubscription_PFCR(t *testing.T) {
 	defer terraform.Destroy(t, terraformOptions)
 
 	terraform.InitAndApply(t, terraformOptions)
-	//output := terraform.Output(t, terraformOptions, "servicenow_subscription")
-	//assert.NotNil(t, output)
+	output := terraform.Output(t, terraformOptions, "servicenow_subscription")
+	assert.NotNil(t, output)
 }
 
 func TestStreamWebhookSubscription_PFCR(t *testing.T) {
