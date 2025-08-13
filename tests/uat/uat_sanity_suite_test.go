@@ -307,3 +307,39 @@ func TestCloudRouter2VirtualDeviceCreateConnection_PFCR(t *testing.T) {
 	output := terraform.Output(t, terraformOptions, "FCR_VD_Connection")
 	assert.NotNil(t, output)
 }
+
+func TestStreamServicenowSubscription_PFCR(t *testing.T) {
+	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
+		TerraformDir: "../../examples/stream-servicenow-subscription",
+	})
+
+	defer terraform.Destroy(t, terraformOptions)
+
+	terraform.InitAndApply(t, terraformOptions)
+	//output := terraform.Output(t, terraformOptions, "servicenow_subscription")
+	//assert.NotNil(t, output)
+}
+
+func TestStreamWebhookSubscription_PFCR(t *testing.T) {
+	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
+		TerraformDir: "../../examples/stream-webhook-subscription",
+	})
+
+	defer terraform.Destroy(t, terraformOptions)
+
+	terraform.InitAndApply(t, terraformOptions)
+	output := terraform.Output(t, terraformOptions, "webhook_subscription")
+	assert.NotNil(t, output)
+}
+
+func TestStreamGrafanaSubscription_PFCR(t *testing.T) {
+	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
+		TerraformDir: "../../examples/stream-grafana-subscription",
+	})
+
+	defer terraform.Destroy(t, terraformOptions)
+
+	terraform.InitAndApply(t, terraformOptions)
+	output := terraform.Output(t, terraformOptions, "grafana_subscription")
+	assert.NotNil(t, output)
+}
