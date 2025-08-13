@@ -3,6 +3,11 @@ output "first_stream" {
   sensitive = true
 }
 
+output "second_stream" {
+  value     = local.second_stream ? equinix_fabric_stream.stream2[0] : null
+  sensitive = true
+}
+
 output "third_stream" {
   value     = local.third_stream ? equinix_fabric_stream.stream3[0] : null
   sensitive = true

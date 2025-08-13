@@ -20,3 +20,4 @@ webhook_metric_exceptions = ["equinix.fabric.connection.*"]
 webhook_metric_selections = ["equinix.fabric.port.*"]
 webhook_event_uri         = "<webhook_event_uri>"
 webhook_metric_uri        = "<webhook_metric_uri>"
+webhook_format            = "<webhook_format>"
