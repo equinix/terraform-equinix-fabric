@@ -1,12 +1,16 @@
 
 # Conditional logic determining if a second stream should be created to allow for the total count of subscriptions
 locals {
+  webhook_count = (var.webhook_event_uri != "" || var.webhook_metric_uri != "") ? 1 : 0
+  grafana_count = (var.grafana_event_uri != "" || var.grafana_metric_uri != "") ? 1 : 0
   number_of_subscriptions = [
-    for sub in [var.splunk_uri, var.slack_uri, var.pagerduty_host, var.msteams_uri, var.datadog_host] : sub if sub != ""
+    for sub in [var.splunk_uri, var.slack_uri, var.pagerduty_host, var.msteams_uri, var.datadog_host, var.servicenow_host] : sub if sub != ""
   ]
-  second_stream = length(local.number_of_subscriptions) > 3 ? true : false
-}
+  total_subscriptions = length(local.number_of_subscriptions) + local.webhook_count + local.grafana_count
+  second_stream = local.total_subscriptions > 3 ? true : false
+  third_stream  = local.total_subscriptions > 6 ? true : false
 
+}
 
 # Stream Creation -----------------------------------------------------
 resource "equinix_fabric_stream" "stream1" {
@@ -19,6 +23,13 @@ resource "equinix_fabric_stream" "stream2" {
   count       = local.second_stream ? 1 : 0
   type        = "TELEMETRY_STREAM"
   name        = join("-", [var.stream_name, "2"])
+  description = var.stream_description
+}
+
+resource "equinix_fabric_stream" "stream3" {
+  count       = local.third_stream ? 1 : 0
+  type        = "TELEMETRY_STREAM"
+  name        = join("-", [var.stream_name, "3"])
   description = var.stream_description
 }
 
@@ -159,4 +170,88 @@ resource "equinix_fabric_stream_subscription" "msteams" {
   }
 }
 
+# Stream Subscription for ServiceNow --------------------------------------
+resource "equinix_fabric_stream_subscription" "servicenow" {
+  count       = var.servicenow_host != "" ? 1 : 0
+  type        = "STREAM_SUBSCRIPTION"
+  name        = var.servicenow_name
+  description = var.servicenow_description
+  stream_id = (local.third_stream ? equinix_fabric_stream.stream3[0].id :
+      local.second_stream ? equinix_fabric_stream.stream2[0].id :
+      equinix_fabric_stream.stream1.id)
+  enabled     = var.servicenow_enabled
+  event_selector = {
+    include = var.servicenow_event_selections != [] ? var.servicenow_event_selections : null
+    except  = var.servicenow_event_exceptions != [] ? var.servicenow_event_exceptions : null
+  }
+  metric_selector = {
+    include = var.servicenow_metric_selections != [] ? var.servicenow_metric_selections : null
+    except  = var.servicenow_metric_exceptions != [] ? var.servicenow_metric_exceptions : null
+  }
+  sink = {
+    type = "SERVICENOW"
+    host = var.servicenow_host
+    settings = {
+      source = var.servicenow_source
+    }
+    credential = {
+      type = "USERNAME_PASSWORD"
+      username = var.servicenow_username
+      password = var. servicenow_password
+    }
+  }
+}
 
+# Stream Subscription for Webhook --------------------------------------
+resource "equinix_fabric_stream_subscription" "webhook" {
+  count       = local.webhook_count
+  type        = "STREAM_SUBSCRIPTION"
+  name        = var.webhook_name
+  description = var.webhook_description
+  stream_id   = local.second_stream ? equinix_fabric_stream.stream2[0].id : equinix_fabric_stream.stream1.id
+  enabled = var.webhook_enabled
+  event_selector = {
+    include = var.webhook_event_selections != [] ? var.webhook_event_selections : null
+    except  = var.webhook_event_exceptions != [] ? var.webhook_event_exceptions : null
+  }
+  metric_selector = {
+    include = var.webhook_metric_selections != [] ? var.webhook_metric_selections : null
+    except  = var.webhook_metric_exceptions != [] ? var.webhook_metric_exceptions : null
+  }
+  sink = {
+    type = "WEBHOOK"
+    settings = {
+      format     = var.webhook_format
+      event_uri  = var.webhook_event_uri != "" ? var.webhook_event_uri : null
+      metric_uri = var.webhook_metric_uri != "" ? var.webhook_metric_uri : null
+    }
+  }
+}
+
+# Stream Subscription for Grafana --------------------------------------
+resource "equinix_fabric_stream_subscription" "grafana" {
+  count       = local.grafana_count
+  type        = "STREAM_SUBSCRIPTION"
+  name        = var.grafana_name
+  description = var.grafana_description
+  stream_id = (local.third_stream ? equinix_fabric_stream.stream3[0].id :
+      local.second_stream ? equinix_fabric_stream.stream2[0].id :
+      equinix_fabric_stream.stream1.id)
+  enabled     = var.grafana_enabled
+  event_selector = {
+    include = var.grafana_event_selections != [] ? var.grafana_event_selections : null
+    except  = var.grafana_event_exceptions != [] ? var.grafana_event_exceptions : null
+  }
+  metric_selector = {
+    include = var.grafana_metric_selections != [] ? var.grafana_metric_selections : null
+    except  = var.grafana_metric_exceptions != [] ? var.grafana_metric_exceptions : null
+  }
+  sink = {
+    type = "WEBHOOK"
+    settings = {
+      format     = var.grafana_format
+      event_uri  = var.grafana_event_uri != "" ? var.grafana_event_uri : null
+      metric_uri = var.grafana_metric_uri != "" ? var.grafana_metric_uri : null
+    }
+  }
+}

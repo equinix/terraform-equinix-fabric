@@ -8,6 +8,11 @@ output "second_stream" {
   sensitive = true
 }
 
+output "third_stream" {
+  value     = local.third_stream ? equinix_fabric_stream.stream3[0] : null
+  sensitive = true
+}
+
 output "splunk_subscription" {
   value     = var.splunk_uri != "" ? equinix_fabric_stream_subscription.splunk[0] : null
   sensitive = true
@@ -30,5 +35,20 @@ output "pagerduty_subscription" {
 
 output "datadog_subscription" {
   value     = var.datadog_host != "" ? equinix_fabric_stream_subscription.datadog[0] : null
+  sensitive = true
+}
+
+output "servicenow_subscription" {
+  value     = var.servicenow_host != "" ? equinix_fabric_stream_subscription.servicenow[0] : null
+  sensitive = true
+}
+
+output "webhook_subscription" {
+  value     = var.webhook_event_uri != "" ? equinix_fabric_stream_subscription.webhook[0] : null
+  sensitive = true
+}
+
+output "grafana_subscription" {
+  value     = var.grafana_event_uri != "" ? equinix_fabric_stream_subscription.grafana[0] : null
   sensitive = true
 }
