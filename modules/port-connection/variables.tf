@@ -151,3 +151,8 @@ variable "additional_info" {
   type        = list(object({ key = string, value = string }))
   default     = []
 }
+variable "role" {
+  description = "Role of network"
+  type        = string
+  default     = ""
+}

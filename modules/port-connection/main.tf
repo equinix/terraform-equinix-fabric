@@ -120,6 +120,7 @@ resource "equinix_fabric_connection" "primary_port_connection" {
         network {
           uuid = var.zside_network_uuid
         }
+        role = contains(["EVPTREE_VC", "EPTREE_VC"], var.connection_type) && var.role != "" ? var.role : null
       }
     }
   }
@@ -231,6 +232,7 @@ resource "equinix_fabric_connection" "secondary_port_connection" {
         network {
           uuid = var.zside_network_uuid
         }
+        role = var.role
       }
     }
   }
