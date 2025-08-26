@@ -3,7 +3,7 @@ output "port_connection" {
   sensitive = true
 }
 
-output "port_connection_id" {
+output "port_2_network_connection_id" {
   value = module.create_port_2_network_connection.primary_connection_id
 }
 
