@@ -1,0 +1,16 @@
+equinix_client_id     = "MyEquinixClientId"
+equinix_client_secret = "MyEquinixSecret"
+
+connection_name       = "Port2Port"
+connection_type       = "EVPL_VC"
+notifications_type    = "ALL"
+notifications_emails  = ["example@equinix.com", "test1@equinix.com"]
+bandwidth             = 50
+purchase_order_number = "1-323292"
+term_length           = 12
+aside_port_name       = "ops-user100-CX-SV5-NL-Qinq-STD-1G-SEC-JP-190"
+aside_location        = "DC"
+aside_vlan_tag        = "1976"
+zside_ap_type         = "NETWORK"
+zside_network_uuid    = "0a7c6e03-5d9a-4dfd-bb46-a6fa3fbde231"
+role                  = "LEAF"
