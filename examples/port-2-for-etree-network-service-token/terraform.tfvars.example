@@ -1,14 +1,34 @@
 equinix_client_id      = "<MyEquinixClientId>"
 equinix_client_secret  = "<MyEquinixSecret>"
 
+#Etree Network
+network_name          = "EVPTreeNetwork"
+network_type          = "EVPTREE"
+scope                 = "LOCAL"
+notifications_type    = "ALL"
+notifications_emails  = ["example@equinix.com", "test1@equinix.com"]
+project_id            = "345250818654"
+
 #Service Token
 service_token_type                  = "VC_TOKEN"
 service_token_name                  = "Terra_Test_Token"
-service_token_description           = "Zside VD Token Test"
-service_token_expiration_date_time  = "2024-12-29T06:43:49.980Z"
+service_token_description           = "Zside Etree Network Service Token"
+service_token_expiration_date_time  = "2025-10-29T06:43:49.980Z"
 notifications_type                  = "ALL"
 notifications_emails                = ["example@equinix.com"]
-connection_type                     = "EVPL_VC"
+connection_type                     = "EVPTREE_VC"
 supported_bandwidths                = [50,100, 500, 1000]
 zside_ap_type                       = "NETWORK"
 zside_network_uuid                  = "<Network_UUID>"
+
+#Connection
+connection_name          = "Port2Port"
+connection_type          = "EVPL_VC"
+notifications_type       = "ALL"
+notifications_emails     = ["example@equinix.com", "test1@equinix.com"]
+bandwidth                = 50
+purchase_order_number    = "1-323292"
+term_length              = 12
+aside_port_name          = "ops-user100-CX-SV5-NL-Qinq-STD-1G-SEC-JP-190"
+aside_vlan_tag           = "1976"
+zside_service_token_uuid = "Service_Token_UUID"

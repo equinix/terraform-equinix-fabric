@@ -82,18 +82,9 @@ variable "aside_port_name" {
   description = "Equinix A-Side Port Name"
   type        = string
 }
-variable "aside_location" {
-  description = "Aside metro code"
-  type        = string
-}
 variable "aside_vlan_tag" {
   description = "Vlan Tag information, outer vlanSTag for QINQ connections"
   type        = string
-}
-variable "aside_vlan_inner_tag" {
-  description = "Vlan Inner Tag information, inner vlanCTag for QINQ connections"
-  type        = string
-  default     = ""
 }
 variable "additional_info" {
   description = "Additional info parameters. It's a list of maps containing 'key' and 'value' keys with their corresponding values."
@@ -107,11 +98,6 @@ variable "aside_ap_type" {
 }
 variable "project_id" {
   description = "Subscriber-assigned project ID"
-  type        = string
-  default     = ""
-}
-variable "aside_network_uuid" {
-  description = "Equinix Network UUID"
   type        = string
   default     = ""
 }
