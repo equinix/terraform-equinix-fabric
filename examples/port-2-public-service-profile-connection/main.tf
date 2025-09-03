@@ -14,7 +14,7 @@ module "create_port_2_public_sp_connection" {
   purchase_order_number = var.purchase_order_number
 
   # A-side
-  aside_port_name = equinix_fabric_port.order.name
+  aside_port_name = var.aside_port_name
   aside_vlan_tag  = var.aside_vlan_tag
 
   # Z-side
