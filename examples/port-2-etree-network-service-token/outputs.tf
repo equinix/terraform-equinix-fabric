@@ -1,3 +1,9 @@
+output "etree_network" {
+  value = equinix_fabric_network.etree_network
+}
+output "etree_network_id" {
+  value = equinix_fabric_network.etree_network.id
+}
 output "service_token_id" {
   value = equinix_fabric_service_token.service-token.id
 }
