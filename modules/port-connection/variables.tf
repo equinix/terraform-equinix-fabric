@@ -152,7 +152,7 @@ variable "additional_info" {
   default     = []
 }
 variable "role" {
-  description = "Role of network"
+  description = "Role of ETree network"
   type        = string
   default     = ""
 }

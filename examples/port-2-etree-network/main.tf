@@ -3,6 +3,19 @@ provider "equinix" {
   client_secret = var.equinix_client_secret
 }
 
+resource "equinix_fabric_network" "etree_network" {
+  name  = var.network_name
+  type  = var.network_type
+  scope = var.network_scope
+  notifications {
+    type   = var.notifications_type
+    emails = var.notifications_emails
+  }
+  project {
+    project_id = var.project_id
+  }
+}
+
 module "create_port_2_network_connection" {
   source = "../../modules/port-connection"
 
@@ -20,6 +33,6 @@ module "create_port_2_network_connection" {
 
   # Z-side
   zside_ap_type       = var.zside_ap_type
-  zside_network_uuid  = var.zside_network_uuid
+  zside_network_uuid  = equinix_fabric_network.etree_network.id
   role                = var.role
 }

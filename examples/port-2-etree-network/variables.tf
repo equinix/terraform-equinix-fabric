@@ -8,12 +8,16 @@ variable "equinix_client_secret" {
   type        = string
   sensitive   = true
 }
-variable "connection_name" {
-  description = "Connection name. An alpha-numeric 24 characters string which can include only hyphens and underscores"
+variable "network_type" {
+  description = "Equinix A-Side Network Type"
   type        = string
 }
-variable "connection_type" {
-  description = "Defines the connection type like VG_VC, EVPL_VC, EPL_VC, EC_VC, IP_VC, ACCESS_EPL_VC"
+variable "network_name" {
+  description = "Equinix Network Name"
+  type        = string
+}
+variable "network_scope" {
+  description = "Equinix Network Scope"
   type        = string
 }
 variable "notifications_type" {
@@ -24,6 +28,19 @@ variable "notifications_type" {
 variable "notifications_emails" {
   description = "Array of contact emails"
   type        = list(string)
+}
+variable "project_id" {
+  description = "Subscriber-assigned project ID"
+  type        = string
+  default     = ""
+}
+variable "connection_name" {
+  description = "Connection name. An alpha-numeric 24 characters string which can include only hyphens and underscores"
+  type        = string
+}
+variable "connection_type" {
+  description = "Defines the connection type like VG_VC, EVPL_VC, EPL_VC, EC_VC, IP_VC, ACCESS_EPL_VC"
+  type        = string
 }
 variable "bandwidth" {
   description = "Connection bandwidth in Mbps"
@@ -68,3 +85,4 @@ variable "role" {
     description = "Role of network"
     type        = string
 }
+
