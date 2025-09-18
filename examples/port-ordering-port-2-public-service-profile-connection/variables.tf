@@ -58,3 +58,125 @@ variable "zside_sp_name" {
   description = "Equinix Service Profile Name"
   type        = string
 }
+variable "physical_ports_type" {
+  description = "Physical ports type"
+  type        = string
+  default     = "1000BASE_LX"
+}
+
+variable "port_type" {
+  description = "Port type"
+  type        = string
+  default     = "XF_PORT"
+}
+
+variable "port_name" {
+  description = "Port name"
+  type        = string
+  default     = "panthers-CX-SV5-NL-Dot1q-STD-1G-PRI-JP-170"
+}
+
+variable "physical_ports_speed" {
+  description = "Physical ports speed"
+  type        = number
+  default     = 1000
+}
+
+variable "connectivity_source_type" {
+  description = "Connectivity source type"
+  type        = string
+  default     = "COLO"
+}
+variable "account_number" {
+  description = "Account number"
+  type        = string
+}
+variable "org_id" {
+  description = "Organization ID"
+  type        = string
+}
+variable "organization_name" {
+  description = "Organization name"
+  type        = string
+}
+variable "ucm_id" {
+  description = "UCM ID"
+  type        = string
+}
+variable "global_cust_id" {
+  description = "Global customer ID"
+  type        = string
+}
+variable "metro_code" {
+  description = "Metro code"
+  type        = string
+}
+variable "ibx" {
+  description = "IBX"
+  type        = string
+}
+variable "demarcation_point_ibx" {
+  description = "Demarcation point IBX"
+  type        = string
+}
+variable "tag_protocol_id" {
+  description = "Tag protocol ID"
+  type        = string
+}
+variable "product_part" {
+  description = "Product part"
+  type        = string
+}
+variable "interface_name" {
+  description = "Interface name"
+  type        = string
+}
+variable "physical_port_id" {
+  description = "Physical port ID"
+  type        = string
+}
+variable "cross_connect_id" {
+  description = "Cross connect ID"
+  type        = string
+}
+variable "cabinet_number" {
+  description = "Cabinet number"
+  type        = string
+}
+variable "system_name" {
+  description = "System name"
+  type        = string
+}
+variable "cage_unique_space_id" {
+  description = "Cage unique space ID"
+  type        = string
+}
+variable "cabinet_unique_space_id" {
+  description = "Cabinet unique space ID"
+  type        = string
+}
+variable "patch_panel" {
+  description = "Patch panel"
+  type        = string
+}
+variable "patch_panel_name" {
+  description = "Patch panel name"
+  type        = string
+}
+variable "patch_panel_portA" {
+  description = "Patch panel port A"
+  type        = string
+}
+variable "patch_panel_portB" {
+  description = "Patch panel port B"
+  type        = string
+}
+variable "project_id" {
+  description = "Project ID"
+  type        = string
+}
+variable "registered_user" {
+  description = "Registered user for notifications"
+  type        = string
+}
+

@@ -1,10 +1,6 @@
 locals {
-  # Pre calculation to determine if port uuid is passed or name. If both throw an error saying that only one can be used,
-  # and to use uuid if leveraging the port order resource before using the port connection module.
-  # Name can only be used for previously created port outside of terraform.
-  # Find out which is passed when they aren't both given. Use the correct data source based on that.
 
-  # Validation - count how many inputs are provided
+  # Count how many inputs are provided
   port_input_count = length([
     for input in [var.aside_port_name, var.aside_port_uuid] : input if input != null && input != ""
   ])

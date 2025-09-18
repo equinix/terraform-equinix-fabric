@@ -4,32 +4,32 @@ provider "equinix" {
 }
 
 resource "equinix_fabric_port" "order" {
-  physical_ports_type = "1000BASE_LX"
+  physical_ports_type = var.physical_ports_type
   type = "XF_PORT"
-  name = "panthers-CX-SV5-NL-Dot1q-STD-1G-PRI-JP-170"
-  physical_ports_speed = 1000
+  name = var.port_name
+  physical_ports_speed = var.physical_ports_speed
   connectivity_source_type = "COLO"
   project = {
-    project_id = "33ec651f-cc99-48e0-94d3-47466899cdc7"
+    project_id = var.project_id
   }
   order = {
-    purchase_order = ""
+    purchase_order = var.purchase_order_number
   }
   account = {
-    account_number = 201257
-    org_id = 91955
-    organization_name = "ops-user100-201257."
-    ucm_id = "CF9FFD1D-2B19-42cb-B05C-AA9D46B7AA0F"
-    global_cust_id = "0017i000011X2MVAA0"
+    account_number = var.account_number
+    org_id = var.org_id
+    organization_name = var.organization_name
+    ucm_id = var.ucm_id
+    global_cust_id = var.global_cust_id
   }
   location = {
     region     = "AMER"
     metro_name = "Silicon Valley"
-    metro_code = "SV"
-    ibx = "SV5"
+    metro_code = var.metro_code
+    ibx = var.ibx
   }
 
-  demarcation_point_ibx = "SV5"
+  demarcation_point_ibx = var.demarcation_point_ibx
   redundancy = {
     priority = "PRIMARY"
   }
@@ -43,7 +43,7 @@ resource "equinix_fabric_port" "order" {
     view_port_permission = true
     place_vc_order_permission = true
     product_code = "CX"
-    product_part = "ECX00001.PROD"
+    product_part = var.product_part
     package_type = "STANDARD"
     shared_port_type = false
   }
@@ -53,25 +53,25 @@ resource "equinix_fabric_port" "order" {
         name = "ge-1/2/8"
       }
       type = "XF_PHYSICAL_PORT"
-      id = 1359471
+      id = var.physical_port_id
       state = "PROVISIONED"
       bandwidth = 0
-      uuid = "01892489-ce07-7962-b32e-092404043fa1"
+      uuid = var.physical_port_id
       tether = {
-        cross_connect_id = "ECX.03.00000850"
-        cabinet_number = "Demarc"
-        system_name = "SV5:01:003033"
+        cross_connect_id = var.cross_connect_id
+        cabinet_number = var.cabinet_number
+        system_name = var.system_name
         patch_panel = " "
         ibx = "SV5"
       }
       demarcation_point = {
-        cage_unique_space_id = "SV5:01:003033"
-        cabinet_unique_space_id = "Demarc"
+        cage_unique_space_id = var.cage_unique_space_id
+        cabinet_unique_space_id = var.cabinet_unique_space_id
         connector_type = "SC"
-        patch_panel = "PP:Demarc:00003033"
-        patch_panel_name = "PP:Demarc:00003033"
-        patch_panel_portA = "13"
-        patch_panel_portB = "14"
+        patch_panel = var.patch_panel
+        patch_panel_name = var.patch_panel_name
+        patch_panel_portA = var.patch_panel_portA
+        patch_panel_portB = var.patch_panel_portB
         ibx = "SV5"
       }
       settings = {
@@ -88,13 +88,13 @@ resource "equinix_fabric_port" "order" {
     {
       type = "TECHNICAL"
       registered_users = [
-        "panthersfcr"
+        var.registered_user
       ]
     },
     {
       type = "NOTIFICATION"
       registered_users = [
-        "panthersfcr"
+        var.registered_user
       ]
     }
   ]
