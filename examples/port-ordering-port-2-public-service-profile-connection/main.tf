@@ -4,7 +4,6 @@ provider "equinix" {
 }
 
 resource "equinix_fabric_port" "order" {
-  physical_ports_type = var.physical_ports_type
   type = "XF_PORT"
   name = var.port_name
   physical_ports_speed = var.physical_ports_speed
@@ -17,10 +16,6 @@ resource "equinix_fabric_port" "order" {
   }
   account = {
     account_number = var.account_number
-    org_id = var.org_id
-    organization_name = var.organization_name
-    ucm_id = var.ucm_id
-    global_cust_id = var.global_cust_id
   }
   location = {
     region     = "AMER"
@@ -28,7 +23,7 @@ resource "equinix_fabric_port" "order" {
     metro_code = var.metro_code
     ibx = var.ibx
   }
-
+  physical_ports_type = var.physical_ports_type
   demarcation_point_ibx = var.demarcation_point_ibx
   redundancy = {
     priority = "PRIMARY"
@@ -39,31 +34,16 @@ resource "equinix_fabric_port" "order" {
   }
   lag_enabled = false
   settings = {
-    buyout = false
-    view_port_permission = true
-    place_vc_order_permission = true
-    product_code = "CX"
-    product_part = var.product_part
     package_type = "STANDARD"
     shared_port_type = false
   }
   physical_ports = [
     {
-      interface = {
-        name = "ge-1/2/8"
-      }
       type = "XF_PHYSICAL_PORT"
       id = var.physical_port_id
       state = "PROVISIONED"
       bandwidth = 0
       uuid = var.physical_port_id
-      tether = {
-        cross_connect_id = var.cross_connect_id
-        cabinet_number = var.cabinet_number
-        system_name = var.system_name
-        patch_panel = " "
-        ibx = "SV5"
-      }
       demarcation_point = {
         cage_unique_space_id = var.cage_unique_space_id
         cabinet_unique_space_id = var.cabinet_unique_space_id
@@ -78,9 +58,6 @@ resource "equinix_fabric_port" "order" {
         shared_port_type = "NA"
         shared_port_product = "NA"
         package_type = "STANDARD"
-      }
-      operation = {
-        operational_status = "UP"
       }
     }
   ]

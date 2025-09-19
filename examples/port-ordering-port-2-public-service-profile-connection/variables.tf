@@ -64,12 +64,6 @@ variable "physical_ports_type" {
   default     = "1000BASE_LX"
 }
 
-variable "port_type" {
-  description = "Port type"
-  type        = string
-  default     = "XF_PORT"
-}
-
 variable "port_name" {
   description = "Port name"
   type        = string
@@ -95,18 +89,6 @@ variable "org_id" {
   description = "Organization ID"
   type        = string
 }
-variable "organization_name" {
-  description = "Organization name"
-  type        = string
-}
-variable "ucm_id" {
-  description = "UCM ID"
-  type        = string
-}
-variable "global_cust_id" {
-  description = "Global customer ID"
-  type        = string
-}
 variable "metro_code" {
   description = "Metro code"
   type        = string
@@ -123,28 +105,8 @@ variable "tag_protocol_id" {
   description = "Tag protocol ID"
   type        = string
 }
-variable "product_part" {
-  description = "Product part"
-  type        = string
-}
-variable "interface_name" {
-  description = "Interface name"
-  type        = string
-}
 variable "physical_port_id" {
   description = "Physical port ID"
-  type        = string
-}
-variable "cross_connect_id" {
-  description = "Cross connect ID"
-  type        = string
-}
-variable "cabinet_number" {
-  description = "Cabinet number"
-  type        = string
-}
-variable "system_name" {
-  description = "System name"
   type        = string
 }
 variable "cage_unique_space_id" {
