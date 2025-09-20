@@ -10,4 +10,272 @@ you see used in this example it will allow you to create a more specific use cas
 See example usage below for details on how to use this example.
 
 <!-- BEGIN_TF_DOCS -->
+## Equinix Fabric Developer Documentation
+
+To see the documentation for the APIs that the Fabric Terraform Provider is built on
+and to learn how to procure your own Client_Id and Client_Secret follow the link below:
+[Equinix Fabric Developer Portal](https://developer.equinix.com/docs?page=/dev-docs/fabric/overview)
+
+## Usage of Example as Terraform Module
+
+To provision this example directly as a usable module please use the *Provision Instructions* provided by Hashicorp
+in the upper right of this page and be sure to include at a minimum the required variables.
+
+## Usage of Example Locally or in Your Own Configuration
+
+*Note:* This example creates resources which cost money. Run 'terraform destroy' when you don't need these resources.
+
+To provision this example directly,
+you should clone the github repository for this module and run terraform within this directory:
+
+```bash
+git clone https://github.com/equinix/terraform-equinix-fabric.git
+cd terraform-equinix-fabric/examples/port-2-etree-network
+terraform init
+terraform apply
+```
+
+To use this example of the module in your own terraform configuration include the following:
+
+*NOTE: terraform.tfvars must be a separate file, but all other content can be placed together in main.tf if you prefer*
+
+terraform.tfvars (Replace these values with your own):
+```hcl
+equinix_client_id     = "MyEquinixClientId"
+equinix_client_secret = "MyEquinixSecret"
+
+#Etree Network
+network_name          = "EVPTreeNetwork"
+network_type          = "EVPTREE"
+scope                 = "LOCAL"
+notifications_type    = "ALL"
+notifications_emails  = ["example@equinix.com", "test1@equinix.com"]
+project_id            = "345250818654"
+
+#Connection
+connection_name       = "Port2Port"
+connection_type       = "EVPL_VC"
+notifications_type    = "ALL"
+notifications_emails  = ["example@equinix.com", "test1@equinix.com"]
+bandwidth             = 50
+purchase_order_number = "1-323292"
+aside_port_name       = "ops-user100-CX-SV5-NL-Qinq-STD-1G-SEC-JP-190"
+aside_location        = "DC"
+aside_vlan_tag        = "1976"
+zside_ap_type         = "NETWORK"
+zside_network_uuid    = "0a7c6e03-5d9a-4dfd-bb46-a6fa3fbde231"
+role                  = "LEAF"
+```
+
+versions.tf
+```hcl
+terraform {
+  required_version = ">= 1.5.4"
+  required_providers {
+    equinix = {
+      source  = "equinix/equinix"
+      version = ">= 4.2.0"
+    }
+  }
+}
+```
+
+variables.tf
+ ```hcl
+variable "equinix_client_id" {
+  description = "Equinix client ID (consumer key), obtained after registering app in the developer platform"
+  type        = string
+  sensitive   = true
+}
+variable "equinix_client_secret" {
+  description = "Equinix client secret ID (consumer secret), obtained after registering app in the developer platform"
+  type        = string
+  sensitive   = true
+}
+variable "network_type" {
+  description = "Equinix A-Side Network Type"
+  type        = string
+}
+variable "network_name" {
+  description = "Equinix Network Name"
+  type        = string
+}
+variable "network_scope" {
+  description = "Equinix Network Scope"
+  type        = string
+}
+variable "notifications_type" {
+  description = "Notification Type - ALL is the only type currently supported"
+  type        = string
+  default     = "ALL"
+}
+variable "notifications_emails" {
+  description = "Array of contact emails"
+  type        = list(string)
+}
+variable "project_id" {
+  description = "Subscriber-assigned project ID"
+  type        = string
+  default     = ""
+}
+variable "connection_name" {
+  description = "Connection name. An alpha-numeric 24 characters string which can include only hyphens and underscores"
+  type        = string
+}
+variable "connection_type" {
+  description = "Defines the connection type like VG_VC, EVPL_VC, EPL_VC, EC_VC, IP_VC, ACCESS_EPL_VC"
+  type        = string
+}
+variable "bandwidth" {
+  description = "Connection bandwidth in Mbps"
+  type        = number
+}
+variable "purchase_order_number" {
+  description = "Purchase order number"
+  type        = string
+  default     = ""
+}
+variable "aside_port_name" {
+  description = "Equinix A-Side Port Name"
+  type        = string
+}
+variable "aside_location" {
+  description = "Aside metro code"
+  type        = string
+}
+variable "aside_vlan_tag" {
+  description = "Vlan Tag information, outer vlanSTag for QINQ connections"
+  type        = string
+}
+variable "zside_ap_type" {
+  description = "Access point type - COLO, VD, VG, SP, IGW, SUBNET, GW, NETWORK"
+  type        = string
+}
+variable "zside_network_uuid" {
+  description = "Equinix Network UUID"
+  type        = string
+}
+variable "role" {
+    description = "Role of network"
+    type        = string
+}
+
+```
+
+outputs.tf
+```hcl
+output "etree_network" {
+  value = equinix_fabric_network.etree_network
+}
+output "etree_network_id" {
+  value = equinix_fabric_network.etree_network.id
+}
+output "port_connection" {
+  value = module.create_port_2_network_connection.primary_connection
+  sensitive = true
+}
+output "port_2_network_connection_id" {
+  value = module.create_port_2_network_connection.primary_connection_id
+}
+
+```
+
+main.tf
+```hcl
+provider "equinix" {
+  client_id     = var.equinix_client_id
+  client_secret = var.equinix_client_secret
+}
+
+resource "equinix_fabric_network" "etree_network" {
+  name  = var.network_name
+  type  = var.network_type
+  scope = var.network_scope
+  notifications {
+    type   = var.notifications_type
+    emails = var.notifications_emails
+  }
+  project {
+    project_id = var.project_id
+  }
+}
+
+module "create_port_2_network_connection" {
+  source = "equinix/fabric/equinix//modules/port-connection"
+
+  connection_name       = var.connection_name
+  connection_type       = var.connection_type
+  notifications_type    = var.notifications_type
+  notifications_emails  = var.notifications_emails
+  bandwidth             = var.bandwidth
+  purchase_order_number = var.purchase_order_number
+
+  # A-side
+  aside_port_name = var.aside_port_name
+  aside_vlan_tag  = var.aside_vlan_tag
+  aside_location  = var.aside_location
+
+  # Z-side
+  zside_ap_type       = var.zside_ap_type
+  zside_network_uuid  = equinix_fabric_network.etree_network.id
+  role                = var.role
+}
+```
+
+## Requirements
+
+| Name | Version |
+|------|---------|
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.5.4 |
+| <a name="requirement_equinix"></a> [equinix](#requirement\_equinix) | >= 4.2.0 |
+
+## Providers
+
+| Name | Version |
+|------|---------|
+| <a name="provider_equinix"></a> [equinix](#provider\_equinix) | >= 4.2.0 |
+
+## Modules
+
+| Name | Source | Version |
+|------|--------|---------|
+| <a name="module_create_port_2_network_connection"></a> [create\_port\_2\_network\_connection](#module\_create\_port\_2\_network\_connection) | equinix/fabric/equinix//modules/port-connection | n/a |
+
+## Resources
+
+| Name | Type |
+|------|------|
+| [equinix_fabric_network.etree_network](https://registry.terraform.io/providers/equinix/equinix/latest/docs/resources/fabric_network) | resource |
+
+## Inputs
+
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| <a name="input_aside_location"></a> [aside\_location](#input\_aside\_location) | Aside metro code | `string` | n/a | yes |
+| <a name="input_aside_port_name"></a> [aside\_port\_name](#input\_aside\_port\_name) | Equinix A-Side Port Name | `string` | n/a | yes |
+| <a name="input_aside_vlan_tag"></a> [aside\_vlan\_tag](#input\_aside\_vlan\_tag) | Vlan Tag information, outer vlanSTag for QINQ connections | `string` | n/a | yes |
+| <a name="input_bandwidth"></a> [bandwidth](#input\_bandwidth) | Connection bandwidth in Mbps | `number` | n/a | yes |
+| <a name="input_connection_name"></a> [connection\_name](#input\_connection\_name) | Connection name. An alpha-numeric 24 characters string which can include only hyphens and underscores | `string` | n/a | yes |
+| <a name="input_connection_type"></a> [connection\_type](#input\_connection\_type) | Defines the connection type like VG\_VC, EVPL\_VC, EPL\_VC, EC\_VC, IP\_VC, ACCESS\_EPL\_VC | `string` | n/a | yes |
+| <a name="input_equinix_client_id"></a> [equinix\_client\_id](#input\_equinix\_client\_id) | Equinix client ID (consumer key), obtained after registering app in the developer platform | `string` | n/a | yes |
+| <a name="input_equinix_client_secret"></a> [equinix\_client\_secret](#input\_equinix\_client\_secret) | Equinix client secret ID (consumer secret), obtained after registering app in the developer platform | `string` | n/a | yes |
+| <a name="input_network_name"></a> [network\_name](#input\_network\_name) | Equinix Network Name | `string` | n/a | yes |
+| <a name="input_network_scope"></a> [network\_scope](#input\_network\_scope) | Equinix Network Scope | `string` | n/a | yes |
+| <a name="input_network_type"></a> [network\_type](#input\_network\_type) | Equinix A-Side Network Type | `string` | n/a | yes |
+| <a name="input_notifications_emails"></a> [notifications\_emails](#input\_notifications\_emails) | Array of contact emails | `list(string)` | n/a | yes |
+| <a name="input_notifications_type"></a> [notifications\_type](#input\_notifications\_type) | Notification Type - ALL is the only type currently supported | `string` | `"ALL"` | no |
+| <a name="input_project_id"></a> [project\_id](#input\_project\_id) | Subscriber-assigned project ID | `string` | `""` | no |
+| <a name="input_purchase_order_number"></a> [purchase\_order\_number](#input\_purchase\_order\_number) | Purchase order number | `string` | `""` | no |
+| <a name="input_role"></a> [role](#input\_role) | Role of network | `string` | n/a | yes |
+| <a name="input_zside_ap_type"></a> [zside\_ap\_type](#input\_zside\_ap\_type) | Access point type - COLO, VD, VG, SP, IGW, SUBNET, GW, NETWORK | `string` | n/a | yes |
+| <a name="input_zside_network_uuid"></a> [zside\_network\_uuid](#input\_zside\_network\_uuid) | Equinix Network UUID | `string` | n/a | yes |
+
+## Outputs
+
+| Name | Description |
+|------|-------------|
+| <a name="output_etree_network"></a> [etree\_network](#output\_etree\_network) | n/a |
+| <a name="output_etree_network_id"></a> [etree\_network\_id](#output\_etree\_network\_id) | n/a |
+| <a name="output_port_2_network_connection_id"></a> [port\_2\_network\_connection\_id](#output\_port\_2\_network\_connection\_id) | n/a |
+| <a name="output_port_connection"></a> [port\_connection](#output\_port\_connection) | n/a |
 <!-- END_TF_DOCS -->
