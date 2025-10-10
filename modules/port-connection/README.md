@@ -184,6 +184,11 @@ variable "additional_info" {
   type        = list(object({ key = string, value = string }))
   default     = []
 }
+variable "role" {
+  description = "Role of ETree network"
+  type        = string
+  default     = ""
+}
 ```
 
  #outputs.tf
@@ -329,6 +334,7 @@ resource "equinix_fabric_connection" "primary_port_connection" {
         network {
           uuid = var.zside_network_uuid
         }
+        role = var.role != "" ? var.role : null
       }
     }
   }
@@ -440,6 +446,7 @@ resource "equinix_fabric_connection" "secondary_port_connection" {
         network {
           uuid = var.zside_network_uuid
         }
+        role = var.role != "" ? var.role : null
       }
     }
   }
@@ -502,6 +509,7 @@ No modules.
 | <a name="input_notifications_type"></a> [notifications\_type](#input\_notifications\_type) | Notification Type - ALL is the only type currently supported | `string` | `"ALL"` | no |
 | <a name="input_project_id"></a> [project\_id](#input\_project\_id) | Subscriber-assigned project ID | `string` | `""` | no |
 | <a name="input_purchase_order_number"></a> [purchase\_order\_number](#input\_purchase\_order\_number) | Purchase order number | `string` | `""` | no |
+| <a name="input_role"></a> [role](#input\_role) | Role of ETree network | `string` | `""` | no |
 | <a name="input_secondary_bandwidth"></a> [secondary\_bandwidth](#input\_secondary\_bandwidth) | Connection bandwidth in Mbps for the secondary connection | `number` | `0` | no |
 | <a name="input_secondary_connection_name"></a> [secondary\_connection\_name](#input\_secondary\_connection\_name) | Secondary Connection name. An alpha-numeric 24 characters string which can include only hyphens and underscores | `string` | `""` | no |
 | <a name="input_term_length"></a> [term\_length](#input\_term\_length) | Order Term Length | `number` | `0` | no |

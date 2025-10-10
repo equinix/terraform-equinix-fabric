@@ -122,15 +122,6 @@ variable "aside_port_name" {
   description = "Equinix A-Side Port Name"
   type        = string
 }
-variable "aside_vlan_tag" {
-  description = "Vlan Tag information, outer vlanSTag for QINQ connections"
-  type        = string
-}
-variable "aside_vlan_inner_tag" {
-  description = "Vlan Inner Tag information, inner vlanCTag for QINQ connections"
-  type        = string
-  default     = ""
-}
 variable "zside_ap_type" {
   description = "Access point type - COLO, VD, VG, SP, IGW, SUBNET, GW"
   type        = string
@@ -195,7 +186,7 @@ output "port_2_ptp_connection_id" {
   value = module.create_port_2_precision_time_ptp_service_profile.primary_connection_id
 }
 
-output "ntp_ept_resource_id" {
+output "ptp_ept_resource_id" {
   value = equinix_fabric_precision_time_service.ptp.id
 }
 ```
@@ -205,6 +196,15 @@ main.tf
 provider "equinix" {
   client_id     = var.equinix_client_id
   client_secret = var.equinix_client_secret
+}
+
+resource "random_integer" "random_vlan_tag" {
+  min = 50
+  max = 2549
+}
+
+output "random_vlan_tag" {
+  value = random_integer.random_vlan_tag.result
 }
 
 module "create_port_2_precision_time_ptp_service_profile" {
@@ -219,7 +219,7 @@ module "create_port_2_precision_time_ptp_service_profile" {
 
   # A-side
   aside_port_name = var.aside_port_name
-  aside_vlan_tag  = var.aside_vlan_tag
+  aside_vlan_tag  = tostring(random_integer.random_vlan_tag.result)
 
   # Z-side
   zside_ap_type         = var.zside_ap_type
@@ -261,6 +261,7 @@ resource "equinix_fabric_precision_time_service" "ptp" {
 | Name | Version |
 |------|---------|
 | <a name="provider_equinix"></a> [equinix](#provider\_equinix) | >= 3.5.0 |
+| <a name="provider_random"></a> [random](#provider\_random) | n/a |
 
 ## Modules
 
@@ -273,14 +274,13 @@ resource "equinix_fabric_precision_time_service" "ptp" {
 | Name | Type |
 |------|------|
 | [equinix_fabric_precision_time_service.ptp](https://registry.terraform.io/providers/equinix/equinix/latest/docs/resources/fabric_precision_time_service) | resource |
+| [random_integer.random_vlan_tag](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/integer) | resource |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_aside_port_name"></a> [aside\_port\_name](#input\_aside\_port\_name) | Equinix A-Side Port Name | `string` | n/a | yes |
-| <a name="input_aside_vlan_inner_tag"></a> [aside\_vlan\_inner\_tag](#input\_aside\_vlan\_inner\_tag) | Vlan Inner Tag information, inner vlanCTag for QINQ connections | `string` | `""` | no |
-| <a name="input_aside_vlan_tag"></a> [aside\_vlan\_tag](#input\_aside\_vlan\_tag) | Vlan Tag information, outer vlanSTag for QINQ connections | `string` | n/a | yes |
 | <a name="input_bandwidth"></a> [bandwidth](#input\_bandwidth) | Connection bandwidth in Mbps | `number` | n/a | yes |
 | <a name="input_connection_name"></a> [connection\_name](#input\_connection\_name) | Connection name. An alpha-numeric 24 characters string which can include only hyphens and underscores | `string` | n/a | yes |
 | <a name="input_connection_type"></a> [connection\_type](#input\_connection\_type) | Defines the connection type like VG\_VC, EVPL\_VC, EPL\_VC, EC\_VC, IP\_VC, ACCESS\_EPL\_VC | `string` | n/a | yes |
@@ -305,6 +305,7 @@ resource "equinix_fabric_precision_time_service" "ptp" {
 
 | Name | Description |
 |------|-------------|
-| <a name="output_ntp_ept_resource_id"></a> [ntp\_ept\_resource\_id](#output\_ntp\_ept\_resource\_id) | n/a |
 | <a name="output_port_2_ptp_connection_id"></a> [port\_2\_ptp\_connection\_id](#output\_port\_2\_ptp\_connection\_id) | n/a |
+| <a name="output_ptp_ept_resource_id"></a> [ptp\_ept\_resource\_id](#output\_ptp\_ept\_resource\_id) | n/a |
+| <a name="output_random_vlan_tag"></a> [random\_vlan\_tag](#output\_random\_vlan\_tag) | n/a |
 <!-- END_TF_DOCS -->
