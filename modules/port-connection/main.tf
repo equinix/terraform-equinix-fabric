@@ -248,3 +248,15 @@ resource "equinix_fabric_connection" "secondary_port_connection" {
     }
   }
 }
+
+check "port_name_uuid_mutual_exclusion" {
+  assert {
+    condition     = !(var.zside_port_name != "" && var.zside_port_uuid != "")
+    error_message = "ERROR: Cannot set both zside_port_name and zside_port_uuid. Please set only one."
+  }
+
+  assert {
+    condition     = !(var.aside_port_name != "" && var.aside_port_uuid != "")
+    error_message = "ERROR: Cannot set both aside_port_name and aside_port_uuid. Please set only one."
+  }
+}

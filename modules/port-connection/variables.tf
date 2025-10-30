@@ -44,11 +44,6 @@ variable "term_length" {
   type        = number
   default     = 0
 }
-variable "aside_port_name" {
-  description = "Equinix A-Side Port Name; your tagging must match the encapsulation type of the port (DOT1Q or QINQ)"
-  type        = string
-  default = ""
-}
 variable "aside_secondary_port_name" {
   description = "Equinix A-Side Port Name; your tagging must match the encapsulation type of the port (DOT1Q or QINQ)"
   type        = string
@@ -103,11 +98,6 @@ variable "zside_sp_name" {
   type        = string
   default     = ""
 }
-variable "zside_port_name" {
-  description = "Equinix Z-Side Port Name"
-  type        = string
-  default     = ""
-}
 variable "zside_seller_region" {
   description = "Access point seller region"
   type        = string
@@ -158,7 +148,7 @@ variable "role" {
   default     = ""
 }
 variable "aside_port_uuid" {
-  description = "Equinix A-Side Port UUID; use this instead of aside_port_name. Only one of aside_port_name or aside_port_uuid can be set.\nNOTE: Do not set both aside_port_name and aside_port_uuid."
+  description = "Equinix A-Side Port UUID; use this instead of aside_port_name. Only one of aside_port_name or aside_port_uuid can be set."
   type        = string
   default     = ""
 }
@@ -166,4 +156,15 @@ variable "zside_port_uuid" {
   description = "Equinix Z-Side Port UUID; use this instead of aside_port_name"
   type        = string
   default     = ""
+}
+variable "zside_port_name" {
+  description = "Equinix Z-Side Port Name"
+  type        = string
+  default     = ""
+}
+
+variable "aside_port_name" {
+  description = "Equinix A-Side Port Name; your tagging must match the encapsulation type of the port (DOT1Q or QINQ)"
+  type        = string
+  default = ""
 }
