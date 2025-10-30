@@ -106,11 +106,3 @@ variable "registered_user" {
   description = "Registered user for notifications"
   type        = string
 }
-variable "interface_type" {
-  description = "Interface type"
-  type        = string
-}
-variable "device_name" {
-  description = "Device Name"
-  type        = string
-}

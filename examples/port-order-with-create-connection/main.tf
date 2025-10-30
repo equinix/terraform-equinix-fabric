@@ -30,14 +30,8 @@ resource "equinix_fabric_port" "order" {
     package_type = "STANDARD"
     shared_port_type = false
   }
-  device = {
-    name = var.device_name
-  }
   physical_ports = [
     {
-      interface = {
-        type = var.interface_type
-      }
       type = "XF_PHYSICAL_PORT"
       demarcation_point = {
         cage_unique_space_id = var.cage_unique_space_id
@@ -99,7 +93,6 @@ module "create_port_2_public_sp_connection" {
 
   # A-side
   aside_port_uuid = equinix_fabric_port.order.id
-  # aside_port_uuid = "c4d9350e-7787-787d-1ce0-306a5c00a600"
   aside_vlan_tag  = var.aside_vlan_tag
 
   # Z-side
@@ -108,25 +101,3 @@ module "create_port_2_public_sp_connection" {
   zside_location        = var.zside_location
   zside_sp_name         = var.zside_sp_name
 }
-
-# module "create_port_2_public_sp_connection" {
-#   # depends_on = [null_resource.port_active_check]
-#   source = "../../modules/port-connection"
-#
-#   connection_name       = var.connection_name
-#   connection_type       = var.connection_type
-#   notifications_type    = var.notifications_type
-#   notifications_emails  = var.notifications_emails
-#   bandwidth             = var.bandwidth
-#   purchase_order_number = var.purchase_order_number
-#
-#   # A-side
-#   # aside_port_uuid = equinix_fabric_port.order.id
-#   aside_port_uuid = "c4d9350e-7787-787d-1ce0-306a5c00a600"
-#   aside_vlan_tag  = var.aside_vlan_tag
-#
-#   # Z-side
-#   zside_port_uuid = "c4d9350e-7760-760d-1ce0-306a5c00a600"
-#   zside_ap_type   = "COLO"
-#   zside_vlan_tag  = 578
-# }
