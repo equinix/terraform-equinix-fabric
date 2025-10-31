@@ -146,6 +146,9 @@ jobs:
       TEST_DATA_UAT_STREAM_PAGERDUTY_SUBSCRIPTION: ${{ secrets.TEST_DATA_UAT_STREAM_PAGERDUTY_SUBSCRIPTION }}
       TEST_DATA_UAT_STREAM_SLACK_SUBSCRIPTION: ${{ secrets.TEST_DATA_UAT_STREAM_SLACK_SUBSCRIPTION }}
       TEST_DATA_UAT_STREAM_SPLUNK_SUBSCRIPTION: ${{ secrets.TEST_DATA_UAT_STREAM_SPLUNK_SUBSCRIPTION }}
+      TEST_DATA_UAT_STREAM_SERVICENOW_SUBSCRIPTION: ${{ secrets.TEST_DATA_UAT_STREAM_SERVICENOW_SUBSCRIPTION }}
+      TEST_DATA_UAT_STREAM_WEBHOOK_SUBSCRIPTION: ${{ secrets.TEST_DATA_UAT_STREAM_WEBHOOK_SUBSCRIPTION }}
+      TEST_DATA_UAT_STREAM_GRAFANA_SUBSCRIPTION: ${{ secrets.TEST_DATA_UAT_STREAM_GRAFANA_SUBSCRIPTION }}
       TEST_DATA_UAT_STREAM_MULTIPLE_SUBSCRIPTIONS_AND_ATTACHMENT: ${{ secrets.TEST_DATA_UAT_STREAM_MULTIPLE_SUBSCRIPTIONS_AND_ATTACHMENT }}
       TEST_DATA_UAT_VIRTUAL_DEVICE_2_AWS_CONNECTION: ${{secrets.TEST_DATA_UAT_VIRTUAL_DEVICE_2_AWS_CONNECTION}}
 
@@ -192,6 +195,9 @@ jobs:
           echo $TEST_DATA_UAT_STREAM_PAGERDUTY_SUBSCRIPTION >> "./examples/stream-pagerduty-subscription/terraform.tfvars.json"
           echo $TEST_DATA_UAT_STREAM_SLACK_SUBSCRIPTION >> "./examples/stream-slack-subscription/terraform.tfvars.json"
           echo $TEST_DATA_UAT_STREAM_SPLUNK_SUBSCRIPTION >> "./examples/stream-splunk-subscription/terraform.tfvars.json"
+          echo $TEST_DATA_UAT_STREAM_SERVICENOW_SUBSCRIPTION >> "./examples/stream-servicenow-subscription/terraform.tfvars.json"
+          echo $TEST_DATA_UAT_STREAM_WEBHOOK_SUBSCRIPTION >> "./examples/stream-webhook-subscription/terraform.tfvars.json"
+          echo $TEST_DATA_UAT_STREAM_GRAFANA_SUBSCRIPTION >> "./examples/stream-grafana-subscription/terraform.tfvars.json"
           echo $TEST_DATA_UAT_STREAM_MULTIPLE_SUBSCRIPTIONS_AND_ATTACHMENT >> "./examples/stream-multiple-subscriptions-with-port-connection-attachment/terraform.tfvars.json"
           
 
