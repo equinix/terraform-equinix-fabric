@@ -52,3 +52,27 @@ module "cloud_router_azure_connection" {
   zside_peering_type          = var.zside_peering_type
   zside_fabric_sp_name        = var.zside_fabric_sp_name
 }
+resource "azurerm_express_route_circuit_peering" "fcr2azure_peering" {
+  peering_type                  = "MicrosoftPeering"
+  express_route_circuit_name    = azurerm_express_route_circuit.fcr2azure.name
+  resource_group_name           = azurerm_resource_group.fcr2azure.name
+  peer_asn                      = 100
+  primary_peer_address_prefix   = "123.0.0.0/30"
+  secondary_peer_address_prefix = "123.0.0.4/30"
+  ipv4_enabled                  = true
+  vlan_id                       = 325
+
+  microsoft_peering_config {
+    advertised_public_prefixes = ["123.1.0.0/24"]
+  }
+
+  ipv6 {
+    primary_peer_address_prefix   = "2002:db01::/126"
+    secondary_peer_address_prefix = "2003:db01::/126"
+    enabled                       = true
+
+    microsoft_peering {
+      advertised_public_prefixes = ["2002:db01::/126"]
+    }
+  }
+}
