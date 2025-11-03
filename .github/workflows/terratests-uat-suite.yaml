@@ -97,17 +97,6 @@ jobs:
       - name: Checkout current repository
         uses: actions/checkout@v4
 
-      - name: Build provider from branch - #TODO: REMOVE THIS STEP ONCE TERRAFORM PROVIDER IS RELEASED
-        run: |
-          git clone -b fabric-sts-support https://github.com/equinix/terraform-provider-equinix.git
-          cd terraform-provider-equinix
-          make build -o terraform-provider-equinix
-          
-          PLUGIN_DIR="$HOME/.terraform.d/plugins/developer.equinix.com/terraform/equinix/9.0.0/linux_amd64"
-          mkdir -p "$PLUGIN_DIR"
-          mv terraform-provider-equinix "$PLUGIN_DIR/terraform-provider-equinix"
-          chmod +x "$PLUGIN_DIR/terraform-provider-equinix"    
-
       - uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: ${{ matrix.terraform }}
