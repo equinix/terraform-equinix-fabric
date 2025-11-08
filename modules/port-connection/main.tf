@@ -1,14 +1,17 @@
 data "equinix_fabric_ports" "aside_port" {
   filter {
-    name = var.aside_port_name != "" ? var.aside_port_name : null
-    uuid = var.aside_port_uuid != "" ? var.aside_port_uuid : null
+    property = var.aside_port_name != "" ? "/name" : "/uuid"
+    operator = "="
+    value    = var.aside_port_name != "" ? var.aside_port_name : var.aside_port_uuid
   }
 }
 
 data "equinix_fabric_ports" "aside_secondary_port" {
   count = var.aside_secondary_port_name != "" ? 1 : 0
   filter {
-    name = var.aside_secondary_port_name
+    property = "/name"
+    operator = "="
+    value    = var.aside_secondary_port_name
   }
 }
 
@@ -24,8 +27,9 @@ data "equinix_fabric_service_profiles" "zside_sp" {
 data "equinix_fabric_ports" "zside_port" {
   count = var.zside_ap_type == "COLO" ? 1 : 0
   filter {
-    name = var.zside_port_name != "" ? var.zside_port_name : null
-    uuid = var.zside_port_uuid != "" ? var.zside_port_uuid : null
+    property = var.zside_port_name != "" ? "/name" : "/uuid"
+    operator = "="
+    value    = var.zside_port_name != "" ? var.zside_port_name : var.zside_port_uuid
   }
 }
 
