@@ -44,6 +44,10 @@ variable "term_length" {
   type        = number
   default     = 0
 }
+variable "aside_port_name" {
+  description = "Equinix A-Side Port Name; your tagging must match the encapsulation type of the port (DOT1Q or QINQ)"
+  type        = string
+}
 variable "aside_secondary_port_name" {
   description = "Equinix A-Side Port Name; your tagging must match the encapsulation type of the port (DOT1Q or QINQ)"
   type        = string
@@ -95,6 +99,11 @@ variable "zside_location" {
 }
 variable "zside_sp_name" {
   description = "Equinix Service Profile Name"
+  type        = string
+  default     = ""
+}
+variable "zside_port_name" {
+  description = "Equinix Z-Side Port Name"
   type        = string
   default     = ""
 }
@@ -156,15 +165,4 @@ variable "zside_port_uuid" {
   description = "Equinix Z-Side Port UUID; use this instead of aside_port_name"
   type        = string
   default     = ""
-}
-variable "zside_port_name" {
-  description = "Equinix Z-Side Port Name"
-  type        = string
-  default     = ""
-}
-
-variable "aside_port_name" {
-  description = "Equinix A-Side Port Name; your tagging must match the encapsulation type of the port (DOT1Q or QINQ)"
-  type        = string
-  default = ""
 }
