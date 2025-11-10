@@ -1,0 +1,15 @@
+equinix_client_id      = "MyEquinixClientId"
+equinix_client_secret  = "MyEquinixSecret"
+
+connection_name       = "Port2PublicSP"
+connection_type       = "EVPL_VC"
+notifications_type    = "ALL"
+notifications_emails  = ["example@equinix.com"]
+bandwidth             = 50
+purchase_order_number = "1-323292"
+aside_port_name       = "test-port-name"
+aside_vlan_tag        = "2019"
+zside_ap_type         = "SP"
+zside_ap_profile_type = "L2_PROFILE"
+zside_location        = "SV"
+zside_sp_name         = "TestSPName"

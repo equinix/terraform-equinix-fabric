@@ -58,4 +58,3 @@ variable "zside_sp_name" {
   description = "Service Profile name. An alpha-numeric 24 characters string which can include only hyphens and underscores"
   type        = string
 }
-
