@@ -6,7 +6,7 @@ provider "equinix" {
 resource "equinix_fabric_port" "order" {
   type = "XF_PORT"
   physical_ports_speed = var.physical_ports_speed
-  connectivity_source_type = "COLO"
+  connectivity_source_type = var.connectivity_source_type
   project = {
     project_id = var.project_id
   }
