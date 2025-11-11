@@ -64,7 +64,6 @@ variable "physical_ports_speed" {
   type        = number
   default     = 1000
 }
-
 variable "connectivity_source_type" {
   description = "Connectivity source type"
   type        = string
