@@ -106,3 +106,41 @@ variable "registered_user" {
   description = "Registered user for notifications"
   type        = string
 }
+variable "physical_ports_count" {
+  description = "Physical ports count"
+  type        = number
+  default     = 1
+}
+variable "tag_protocol_id" {
+    description = "Tag protocol ID"
+    type        = string
+}
+variable "connector_type" {
+    description = "Connector type"
+    type        = string
+}
+variable "package_type" {
+    description = "Package type"
+    type        = string
+    default     = "STANDARD"
+}
+variable "priority" {
+    description = "Redundancy priority"
+    type        = string
+}
+variable "encapsulation_type" {
+    description = "Encapsulation type"
+    type        = string
+}
+variable "lag_enabled" {
+    description = "LAG enabled"
+    type        = bool
+}
+variable "shared_port_type" {
+    description = "Shared port type"
+    type        = bool
+}
+variable "type" {
+    description = "Physical port type"
+    type        = string
+}

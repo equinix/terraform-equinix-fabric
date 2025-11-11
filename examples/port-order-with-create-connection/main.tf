@@ -19,26 +19,26 @@ resource "equinix_fabric_port" "order" {
   physical_ports_type = var.physical_ports_type
   demarcation_point_ibx = var.demarcation_point_ibx
   redundancy = {
-    priority = "PRIMARY"
+    priority = var.priority
   }
   encapsulation = {
-    type = "DOT1Q"
-    tag_protocol_id = "0x8100"
+    type = var.encapsulation_type
+    tag_protocol_id = var.tag_protocol_id
   }
-  lag_enabled = false
+  lag_enabled = var.lag_enabled
   settings = {
-    package_type = "STANDARD"
-    shared_port_type = false
+    package_type = var.package_type
+    shared_port_type = var.shared_port_type
   }
   physical_ports = [
     {
-      type = "XF_PHYSICAL_PORT"
+      type = var.type
       demarcation_point = {
         cage_unique_space_id = var.cage_unique_space_id
         cabinet_unique_space_id = var.cabinet_unique_space_id
-        connector_type = "SC"
+        connector_type = var.connector_type
         patch_panel = var.patch_panel
-        ibx = "MX1"
+        ibx = var.ibx
       }
     }
   ]
@@ -56,7 +56,7 @@ resource "equinix_fabric_port" "order" {
       ]
     }
   ]
-  physical_ports_count = 1
+  physical_ports_count = var.physical_ports_count
 }
 
 resource "time_sleep" "wait_for_activation" {
