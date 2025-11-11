@@ -1,0 +1,34 @@
+equinix_client_id      = "MyEquinixClientId"
+equinix_client_secret  = "MyEquinixSecret"
+
+physical_ports_type         = "1000BASE_LX"
+physical_ports_speed        = 1000
+connectivity_source_type    = "COLO"
+account_number              = "1234567"
+metro_code                  = "SV"
+ibx                         = "SV1"
+demarcation_point_ibx       = "SV1"
+cage_unique_space_id        = "CAGE-001"
+cabinet_unique_space_id     = "CAB-001"
+patch_panel                 = "PP-01"
+project_id                  = "project-001"
+registered_user             = "user@example.com"
+physical_ports_count        = 1
+tag_protocol_id             = "0x8100"
+connector_type              = "SC"
+package_type                = "STANDARD"
+priority                    = "PRIMARY"
+encapsulation_type          = "DOT1Q"
+
+connection_name       = "PortOrderCreateConnection"
+connection_type       = "EVPL_VC"
+notifications_type    = "ALL"
+notifications_emails  = ["example@equinix.com"]
+bandwidth             = 50
+purchase_order_number = "PO-123456"
+aside_vlan_tag        = 2000
+
+zside_ap_type         = "SP"
+zside_ap_profile_type = "L2_PROFILE"
+zside_location        = "SV"
+zside_sp_name         = "Test-SP"
