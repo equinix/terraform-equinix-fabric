@@ -23,7 +23,7 @@ terraform {
   required_providers {
     equinix = {
       source  = "equinix/equinix"
-      version = ">= 4.7.0"
+      version = ">= 4.9.0"
     }
   }
 }
@@ -80,6 +80,7 @@ variable "term_length" {
 variable "aside_port_name" {
   description = "Equinix A-Side Port Name; your tagging must match the encapsulation type of the port (DOT1Q or QINQ)"
   type        = string
+  default     = ""
 }
 variable "aside_secondary_port_name" {
   description = "Equinix A-Side Port Name; your tagging must match the encapsulation type of the port (DOT1Q or QINQ)"
@@ -189,6 +190,16 @@ variable "role" {
   type        = string
   default     = ""
 }
+variable "aside_port_uuid" {
+  description = "Equinix A-Side Port UUID; use this instead of aside_port_name. Only one of aside_port_name or aside_port_uuid can be set."
+  type        = string
+  default     = ""
+}
+variable "zside_port_uuid" {
+  description = "Equinix Z-Side Port UUID; use this instead of aside_port_name"
+  type        = string
+  default     = ""
+}
 ```
 
  #outputs.tf
@@ -213,15 +224,19 @@ output "secondary_connection_id" {
  #main.tf
 ```hcl
 data "equinix_fabric_ports" "aside_port" {
-  filters {
-    name = var.aside_port_name
+  filter {
+    property = var.aside_port_name != "" ? "/name" : "/uuid"
+    operator = "="
+    value    = var.aside_port_name != "" ? var.aside_port_name : var.aside_port_uuid
   }
 }
 
 data "equinix_fabric_ports" "aside_secondary_port" {
   count = var.aside_secondary_port_name != "" ? 1 : 0
-  filters {
-    name = var.aside_secondary_port_name
+  filter {
+    property = "/name"
+    operator = "="
+    value    = var.aside_secondary_port_name
   }
 }
 
@@ -236,8 +251,10 @@ data "equinix_fabric_service_profiles" "zside_sp" {
 
 data "equinix_fabric_ports" "zside_port" {
   count = var.zside_ap_type == "COLO" ? 1 : 0
-  filters {
-    name = var.zside_port_name
+  filter {
+    property = var.zside_port_name != "" ? "/name" : "/uuid"
+    operator = "="
+    value    = var.zside_port_name != "" ? var.zside_port_name : var.zside_port_uuid
   }
 }
 
@@ -460,6 +477,18 @@ resource "equinix_fabric_connection" "secondary_port_connection" {
     }
   }
 }
+
+check "port_name_uuid_mutual_exclusion" {
+  assert {
+    condition     = !(var.zside_port_name != "" && var.zside_port_uuid != "")
+    error_message = "ERROR: Cannot set both zside_port_name and zside_port_uuid. Please set only one."
+  }
+
+  assert {
+    condition     = !(var.aside_port_name != "" && var.aside_port_uuid != "")
+    error_message = "ERROR: Cannot set both aside_port_name and aside_port_uuid. Please set only one."
+  }
+}
 ```
 
 ## Requirements
@@ -467,13 +496,13 @@ resource "equinix_fabric_connection" "secondary_port_connection" {
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.5.4 |
-| <a name="requirement_equinix"></a> [equinix](#requirement\_equinix) | >= 4.7.0 |
+| <a name="requirement_equinix"></a> [equinix](#requirement\_equinix) | >= 4.9.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_equinix"></a> [equinix](#provider\_equinix) | >= 4.7.0 |
+| <a name="provider_equinix"></a> [equinix](#provider\_equinix) | >= 4.9.0 |
 
 ## Modules
 
@@ -496,7 +525,8 @@ No modules.
 |------|-------------|------|---------|:--------:|
 | <a name="input_additional_info"></a> [additional\_info](#input\_additional\_info) | Additional info parameters. It's a list of maps containing 'key' and 'value' keys with their corresponding values. | `list(object({ key = string, value = string }))` | `[]` | no |
 | <a name="input_aside_location"></a> [aside\_location](#input\_aside\_location) | Aside metro code | `string` | `""` | no |
-| <a name="input_aside_port_name"></a> [aside\_port\_name](#input\_aside\_port\_name) | Equinix A-Side Port Name; your tagging must match the encapsulation type of the port (DOT1Q or QINQ) | `string` | n/a | yes |
+| <a name="input_aside_port_name"></a> [aside\_port\_name](#input\_aside\_port\_name) | Equinix A-Side Port Name; your tagging must match the encapsulation type of the port (DOT1Q or QINQ) | `string` | `""` | no |
+| <a name="input_aside_port_uuid"></a> [aside\_port\_uuid](#input\_aside\_port\_uuid) | Equinix A-Side Port UUID; use this instead of aside\_port\_name. Only one of aside\_port\_name or aside\_port\_uuid can be set. | `string` | `""` | no |
 | <a name="input_aside_secondary_port_name"></a> [aside\_secondary\_port\_name](#input\_aside\_secondary\_port\_name) | Equinix A-Side Port Name; your tagging must match the encapsulation type of the port (DOT1Q or QINQ) | `string` | `""` | no |
 | <a name="input_aside_secondary_vlan_inner_tag"></a> [aside\_secondary\_vlan\_inner\_tag](#input\_aside\_secondary\_vlan\_inner\_tag) | Secondary VLan Tag information for QINQ connections | `string` | `""` | no |
 | <a name="input_aside_secondary_vlan_tag"></a> [aside\_secondary\_vlan\_tag](#input\_aside\_secondary\_vlan\_tag) | Secondary VLan Tag information for DOT1Q connections, and the outer VLan tag for QINQ connections) | `string` | `""` | no |
@@ -520,6 +550,7 @@ No modules.
 | <a name="input_zside_network_uuid"></a> [zside\_network\_uuid](#input\_zside\_network\_uuid) | Equinix Network UUID | `string` | `""` | no |
 | <a name="input_zside_peering_type"></a> [zside\_peering\_type](#input\_zside\_peering\_type) | Zside Access Point Peering type. Available values; PRIVATE, MICROSOFT, PUBLIC, MANUAL | `string` | `""` | no |
 | <a name="input_zside_port_name"></a> [zside\_port\_name](#input\_zside\_port\_name) | Equinix Z-Side Port Name | `string` | `""` | no |
+| <a name="input_zside_port_uuid"></a> [zside\_port\_uuid](#input\_zside\_port\_uuid) | Equinix Z-Side Port UUID; use this instead of aside\_port\_name | `string` | `""` | no |
 | <a name="input_zside_secondary_vlan_inner_tag"></a> [zside\_secondary\_vlan\_inner\_tag](#input\_zside\_secondary\_vlan\_inner\_tag) | Secondary Inner VLan tag for QINQ connections | `string` | `""` | no |
 | <a name="input_zside_secondary_vlan_tag"></a> [zside\_secondary\_vlan\_tag](#input\_zside\_secondary\_vlan\_tag) | Secondary VLan Tag information for DOT1Q connections, and the outer VLan tag for QINQ connections | `string` | `""` | no |
 | <a name="input_zside_seller_region"></a> [zside\_seller\_region](#input\_zside\_seller\_region) | Access point seller region | `string` | `""` | no |
