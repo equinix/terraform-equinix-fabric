@@ -121,3 +121,26 @@ variable "azure_environment" {
   description = "The Cloud environment which should be used for Service Key"
   type        = string
 }
+variable "peering_type" {
+  description = "Peering type"
+  type        = string
+  default     = ""
+}
+variable "peer_asn" {
+  description = "Peer asn number"
+  type        = number
+}
+variable "peering_vlan_id" {
+  description = "VLAN ID to establish this peering on"
+  type        = number
+}
+variable "primary_peer_address_prefix" {
+  description = "Subnet for the primary link"
+  type        = string
+  default     = ""
+}
+variable "secondary_peer_address_prefix" {
+  description = "Subnet for the secondary link"
+  type        = string
+  default     = ""
+}

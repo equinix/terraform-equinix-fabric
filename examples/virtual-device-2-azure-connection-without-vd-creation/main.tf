@@ -8,7 +8,6 @@ provider "azurerm" {
   client_secret   = var.azure_client_secret
   tenant_id       = var.azure_tenant_id
   subscription_id = var.azure_subscription_id
-
 }
 
 #Azure Provider
@@ -55,4 +54,29 @@ module "create_virtual_device_2_azure_connection" {
   zside_ap_profile_type       = var.zside_ap_profile_type
   zside_location              = var.zside_location
   zside_sp_name               = var.zside_sp_name
+}
+resource "azurerm_express_route_circuit_peering" "example" {
+  peering_type                  = var.peering_type
+  express_route_circuit_name    = azurerm_express_route_circuit.vd2azure.name
+  resource_group_name           = azurerm_resource_group.vd2azure.name
+  peer_asn                      = var.peer_asn
+  primary_peer_address_prefix   = var.primary_peer_address_prefix
+  secondary_peer_address_prefix = var.secondary_peer_address_prefix
+  ipv4_enabled                  = true
+  vlan_id                       = var.peering_vlan_id
+
+  microsoft_peering_config {
+    advertised_public_prefixes = ["203.0.113.0/24"]
+  }
+
+  ipv6 {
+    primary_peer_address_prefix   = "2002:db01::/126"
+    secondary_peer_address_prefix = "2003:db01::/126"
+    enabled                       = true
+
+    microsoft_peering {
+      advertised_public_prefixes = ["2002:db01::/126"]
+    }
+  }
+  depends_on = [module.create_virtual_device_2_azure_connection]
 }

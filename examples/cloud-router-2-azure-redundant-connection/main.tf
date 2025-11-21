@@ -55,6 +55,30 @@ module "cloud_router_azure_redundant_connection" {
 
   #Secondary-Connection
   secondary_connection_name = var.secondary_connection_name
-  secondary_bandwidth       = azurerm_express_route_circuit.fcr2azure.service_key
-  aside_sec_fcr_uuid        = var.aside_sec_fcr_uuid
+  secondary_bandwidth       = var.secondary_bandwidth
+}
+resource "azurerm_express_route_circuit_peering" "example" {
+  peering_type                  = var.peering_type
+  express_route_circuit_name    = azurerm_express_route_circuit.fcr2azure.name
+  resource_group_name           = azurerm_resource_group.fcr2azure.name
+  peer_asn                      = var.peer_asn
+  primary_peer_address_prefix   = var.primary_peer_address_prefix
+  secondary_peer_address_prefix = var.secondary_peer_address_prefix
+  ipv4_enabled                  = true
+  vlan_id                       = var.peering_vlan_id
+
+  microsoft_peering_config {
+    advertised_public_prefixes = ["203.0.113.0/24"]
+  }
+
+  ipv6 {
+    primary_peer_address_prefix   = "2002:db01::/126"
+    secondary_peer_address_prefix = "2003:db01::/126"
+    enabled                       = true
+
+    microsoft_peering {
+      advertised_public_prefixes = ["2002:db01::/126"]
+    }
+  }
+  depends_on = [module.cloud_router_azure_redundant_connection]
 }
