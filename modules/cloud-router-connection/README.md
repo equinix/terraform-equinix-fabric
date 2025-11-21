@@ -24,7 +24,7 @@ terraform {
   required_providers {
     equinix = {
       source  = "equinix/equinix"
-      version = ">= 2.9.0"
+      version = ">= 4.7.0"
     }
   }
 }
@@ -430,13 +430,13 @@ resource "equinix_fabric_connection" "secondary_cloud_router_connection" {
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.5.4 |
-| <a name="requirement_equinix"></a> [equinix](#requirement\_equinix) | >= 2.9.0 |
+| <a name="requirement_equinix"></a> [equinix](#requirement\_equinix) | >= 4.7.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_equinix"></a> [equinix](#provider\_equinix) | >= 2.9.0 |
+| <a name="provider_equinix"></a> [equinix](#provider\_equinix) | >= 4.7.0 |
 
 ## Modules
 

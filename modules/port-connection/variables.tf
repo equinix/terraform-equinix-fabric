@@ -47,6 +47,7 @@ variable "term_length" {
 variable "aside_port_name" {
   description = "Equinix A-Side Port Name; your tagging must match the encapsulation type of the port (DOT1Q or QINQ)"
   type        = string
+  default     = ""
 }
 variable "aside_secondary_port_name" {
   description = "Equinix A-Side Port Name; your tagging must match the encapsulation type of the port (DOT1Q or QINQ)"
@@ -150,4 +151,19 @@ variable "additional_info" {
   description = "Additional info parameters. It's a list of maps containing 'key' and 'value' keys with their corresponding values."
   type        = list(object({ key = string, value = string }))
   default     = []
+}
+variable "role" {
+  description = "Role of ETree network"
+  type        = string
+  default     = ""
+}
+variable "aside_port_uuid" {
+  description = "Equinix A-Side Port UUID; use this instead of aside_port_name. Only one of aside_port_name or aside_port_uuid can be set."
+  type        = string
+  default     = ""
+}
+variable "zside_port_uuid" {
+  description = "Equinix Z-Side Port UUID; use this instead of aside_port_name"
+  type        = string
+  default     = ""
 }

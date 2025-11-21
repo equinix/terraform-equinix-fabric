@@ -1,0 +1,23 @@
+equinix_client_id     = "<MyEquinixClientId>"
+equinix_client_secret = "<MyEquinixSecret>"
+
+stream_name        = "EmergingNetworksStream"
+stream_description = "Source for Equinix Events/Metrics/Alerts"
+
+grafana_name              = "grafanaSub"
+grafana_description       = "Destination for Equinix Events/Metrics/Alerts"
+grafana_enabled           = true
+grafana_filters = [{
+  property = "/type"
+  operator = "LIKE"
+  values = [
+    "equinix.fabric.connection%"
+  ]
+}]
+grafana_event_exceptions  = ["equinix.fabric.connection.route_filter.pending_bgp_configuration"]
+grafana_event_selections  = ["equinix.fabric.router.*"]
+grafana_metric_exceptions = ["equinix.fabric.connection.*"]
+grafana_metric_selections = ["equinix.fabric.port.*"]
+grafana_event_uri         = "<grafana_event_uri>"
+grafana_metric_uri        = "<grafana_metric_uri>"
+grafana_format            = "<grafana_format>"

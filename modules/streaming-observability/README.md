@@ -33,7 +33,7 @@ terraform {
   required_providers {
     equinix = {
       source  = "equinix/equinix"
-      version = ">= 3.4.0"
+      version = ">= 4.1.0"
     }
   }
 }
@@ -361,6 +361,167 @@ variable "stream_name" {
   description = "Name (and name prefix) for the created stream(s) in the module"
   type        = string
 }
+variable "servicenow_name" {
+  description = "Name of the Servicenow Equinix Subscription Resource"
+  type        = string
+  default     = ""
+}
+variable "servicenow_description" {
+  description = "Description of the created stream(s) for servicenow in the module"
+  type        = string
+  default     = ""
+}
+variable "servicenow_enabled" {
+  description = "Boolean value indicating enablement of the Splunk Subscription"
+  type        = string
+  default     = ""
+}
+variable "servicenow_event_selections" {
+  description = "Events to include from the possibilities available to the stream for the Subscription"
+  type        = list(string)
+  default     = []
+}
+variable "servicenow_event_exceptions" {
+  description = "Events to exclude from the possibilities available to the stream for the Subscription"
+  type        = list(string)
+  default     = []
+}
+variable "servicenow_metric_selections" {
+  description = "Metrics to include from the possibilities available to the stream for the Subscription"
+  type        = list(string)
+  default     = []
+}
+variable "servicenow_metric_exceptions" {
+  description = "Metrics to exclude from the possibilities available to the stream for the Subscription"
+  type        = list(string)
+  default     = []
+}
+variable "servicenow_host" {
+  description = "Servicenow Sink Hostname"
+  type        = string
+  default     = ""
+}
+variable "servicenow_source" {
+  description = "Name of the created Servicenow Source for the destination of the streaming messages"
+  type        = string
+  default     = ""
+}
+variable "servicenow_username" {
+  description = "Username for Servicenow App"
+  type        = string
+  default     = ""
+  sensitive   = true
+}
+variable "servicenow_password" {
+  description = "Password for Servicenow App"
+  type        = string
+  default     = ""
+  sensitive   = true
+}
+variable "webhook_event_uri" {
+  description = "URI endpoint for webhook events"
+  type        = string
+  default     = ""
+  sensitive   = true
+}
+variable "webhook_name" {
+  description = "Name of the Webhook Equinix Subscription Resource"
+  type        = string
+  default     = "webhook-subscription"
+}
+variable "webhook_description" {
+  description = "Description of the webhook subscription"
+  type        = string
+  default     = "Webhook stream subscription"
+}
+variable "webhook_enabled" {
+  description = "Boolean value indicating enablement of the Webhook Subscription"
+  type        = bool
+  default     = true
+}
+variable "webhook_event_selections" {
+  description = "List of event types to include for webhook"
+  type        = list(string)
+  default     = []
+}
+variable "webhook_event_exceptions" {
+  description = "List of event types to exclude for webhook"
+  type        = list(string)
+  default     = []
+}
+variable "webhook_metric_selections" {
+  description = "List of metric types to include for webhook"
+  type        = list(string)
+  default     = []
+}
+variable "webhook_metric_exceptions" {
+  description = "List of metric types to exclude for webhook"
+  type        = list(string)
+  default     = []
+}
+variable "webhook_format" {
+  description = "Format for webhook payload"
+  type        = string
+  default     = "JSON"
+}
+variable "webhook_metric_uri" {
+  description = "URI endpoint for webhook metrics"
+  type        = string
+  default     = ""
+  sensitive   = true
+}
+variable "grafana_event_uri" {
+  description = "URI endpoint for grafana events"
+  type        = string
+  default     = ""
+  sensitive   = true
+}
+variable "grafana_name" {
+  description = "Name of the Grafana Equinix Subscription Resource"
+  type        = string
+  default     = "grafana-subscription"
+}
+variable "grafana_description" {
+  description = "Description of the grafana subscription"
+  type        = string
+  default     = "Grafana stream subscription"
+}
+variable "grafana_enabled" {
+  description = "Boolean value indicating enablement of the Grafana Subscription"
+  type        = bool
+  default     = true
+}
+variable "grafana_event_selections" {
+  description = "List of event types to include for grafana"
+  type        = list(string)
+  default     = []
+}
+variable "grafana_event_exceptions" {
+  description = "List of event types to exclude for grafana"
+  type        = list(string)
+  default     = []
+}
+variable "grafana_metric_selections" {
+  description = "List of metric types to include for grafana"
+  type        = list(string)
+  default     = []
+}
+variable "grafana_metric_exceptions" {
+  description = "List of metric types to exclude for grafana"
+  type        = list(string)
+  default     = []
+}
+variable "grafana_format" {
+  description = "Format for grafana payload"
+  type        = string
+  default     = "JSON"
+}
+variable "grafana_metric_uri" {
+  description = "URI endpoint for grafana metrics"
+  type        = string
+  default     = ""
+  sensitive   = true
+}
 ```
 
  #outputs.tf
@@ -372,6 +533,11 @@ output "first_stream" {
 
 output "second_stream" {
   value     = local.second_stream ? equinix_fabric_stream.stream2[0] : null
+  sensitive = true
+}
+
+output "third_stream" {
+  value     = local.third_stream ? equinix_fabric_stream.stream3[0] : null
   sensitive = true
 }
 
@@ -399,6 +565,21 @@ output "datadog_subscription" {
   value     = var.datadog_host != "" ? equinix_fabric_stream_subscription.datadog[0] : null
   sensitive = true
 }
+
+output "servicenow_subscription" {
+  value     = var.servicenow_host != "" ? equinix_fabric_stream_subscription.servicenow[0] : null
+  sensitive = true
+}
+
+output "webhook_subscription" {
+  value     = var.webhook_event_uri != "" ? equinix_fabric_stream_subscription.webhook[0] : null
+  sensitive = true
+}
+
+output "grafana_subscription" {
+  value     = var.grafana_event_uri != "" ? equinix_fabric_stream_subscription.grafana[0] : null
+  sensitive = true
+}
 ```
 
  #main.tf
@@ -406,12 +587,16 @@ output "datadog_subscription" {
 
 # Conditional logic determining if a second stream should be created to allow for the total count of subscriptions
 locals {
+  webhook_count = (var.webhook_event_uri != "" || var.webhook_metric_uri != "") ? 1 : 0
+  grafana_count = (var.grafana_event_uri != "" || var.grafana_metric_uri != "") ? 1 : 0
   number_of_subscriptions = [
-    for sub in [var.splunk_uri, var.slack_uri, var.pagerduty_host, var.msteams_uri, var.datadog_host] : sub if sub != ""
+    for sub in [var.splunk_uri, var.slack_uri, var.pagerduty_host, var.msteams_uri, var.datadog_host, var.servicenow_host] : sub if sub != ""
   ]
-  second_stream = length(local.number_of_subscriptions) > 3 ? true : false
-}
+  total_subscriptions = length(local.number_of_subscriptions) + local.webhook_count + local.grafana_count
+  second_stream = local.total_subscriptions > 3 ? true : false
+  third_stream  = local.total_subscriptions > 6 ? true : false
 
+}
 
 # Stream Creation -----------------------------------------------------
 resource "equinix_fabric_stream" "stream1" {
@@ -427,6 +612,13 @@ resource "equinix_fabric_stream" "stream2" {
   description = var.stream_description
 }
 
+resource "equinix_fabric_stream" "stream3" {
+  count       = local.third_stream ? 1 : 0
+  type        = "TELEMETRY_STREAM"
+  name        = join("-", [var.stream_name, "3"])
+  description = var.stream_description
+}
+
 # Stream Subscription for Splunk --------------------------------------
 resource "equinix_fabric_stream_subscription" "splunk" {
   count       = var.splunk_uri != "" ? 1 : 0
@@ -435,7 +627,6 @@ resource "equinix_fabric_stream_subscription" "splunk" {
   description = var.splunk_description
   stream_id   = equinix_fabric_stream.stream1.id
   enabled     = var.splunk_enabled
-  filters     = var.splunk_filters != [] ? var.splunk_filters : null
   event_selector = {
     include = var.splunk_event_selections != [] ? var.splunk_event_selections : null
     except  = var.splunk_event_exceptions != [] ? var.splunk_event_exceptions : null
@@ -467,7 +658,6 @@ resource "equinix_fabric_stream_subscription" "slack" {
   description = var.slack_description
   stream_id   = equinix_fabric_stream.stream1.id
   enabled     = var.slack_enabled
-  filters     = var.slack_filters != [] ? var.slack_filters : null
   event_selector = {
     include = var.slack_event_selections != [] ? var.slack_event_selections : null
     except  = var.slack_event_exceptions != [] ? var.slack_event_exceptions : null
@@ -490,7 +680,6 @@ resource "equinix_fabric_stream_subscription" "pagerduty" {
   description = var.pagerduty_description
   stream_id   = equinix_fabric_stream.stream1.id
   enabled     = var.pagerduty_enabled
-  filters     = var.pagerduty_filters != [] ? var.pagerduty_filters : null
   event_selector = {
     include = var.pagerduty_event_selections != [] ? var.pagerduty_event_selections : null
     except  = var.pagerduty_event_exceptions != [] ? var.pagerduty_event_exceptions : null
@@ -521,7 +710,6 @@ resource "equinix_fabric_stream_subscription" "datadog" {
   description = var.datadog_description
   stream_id   = local.second_stream ? equinix_fabric_stream.stream2[0].id : equinix_fabric_stream.stream1.id
   enabled     = var.datadog_enabled
-  filters     = var.datadog_filters != [] ? var.datadog_filters : null
   event_selector = {
     include = var.datadog_event_selections != [] ? var.datadog_event_selections : null
     except  = var.datadog_event_exceptions != [] ? var.datadog_event_exceptions : null
@@ -554,7 +742,6 @@ resource "equinix_fabric_stream_subscription" "msteams" {
   description = var.msteams_description
   stream_id   = local.second_stream ? equinix_fabric_stream.stream2[0].id : equinix_fabric_stream.stream1.id
   enabled     = var.msteams_enabled
-  filters     = var.msteams_filters != [] ? var.msteams_filters : null
   event_selector = {
     include = var.msteams_event_selections != [] ? var.msteams_event_selections : null
     except  = var.msteams_event_exceptions != [] ? var.msteams_event_exceptions : null
@@ -569,7 +756,91 @@ resource "equinix_fabric_stream_subscription" "msteams" {
   }
 }
 
+# Stream Subscription for ServiceNow --------------------------------------
+resource "equinix_fabric_stream_subscription" "servicenow" {
+  count       = var.servicenow_host != "" ? 1 : 0
+  type        = "STREAM_SUBSCRIPTION"
+  name        = var.servicenow_name
+  description = var.servicenow_description
+  stream_id = (local.third_stream ? equinix_fabric_stream.stream3[0].id :
+      local.second_stream ? equinix_fabric_stream.stream2[0].id :
+      equinix_fabric_stream.stream1.id)
+  enabled     = var.servicenow_enabled
+  event_selector = {
+    include = var.servicenow_event_selections != [] ? var.servicenow_event_selections : null
+    except  = var.servicenow_event_exceptions != [] ? var.servicenow_event_exceptions : null
+  }
+  metric_selector = {
+    include = var.servicenow_metric_selections != [] ? var.servicenow_metric_selections : null
+    except  = var.servicenow_metric_exceptions != [] ? var.servicenow_metric_exceptions : null
+  }
+  sink = {
+    type = "SERVICENOW"
+    host = var.servicenow_host
+    settings = {
+      source = var.servicenow_source
+    }
+    credential = {
+      type = "USERNAME_PASSWORD"
+      username = var.servicenow_username
+      password = var. servicenow_password
+    }
+  }
+}
 
+# Stream Subscription for Webhook --------------------------------------
+resource "equinix_fabric_stream_subscription" "webhook" {
+  count       = local.webhook_count
+  type        = "STREAM_SUBSCRIPTION"
+  name        = var.webhook_name
+  description = var.webhook_description
+  stream_id   = local.second_stream ? equinix_fabric_stream.stream2[0].id : equinix_fabric_stream.stream1.id
+  enabled = var.webhook_enabled
+  event_selector = {
+    include = var.webhook_event_selections != [] ? var.webhook_event_selections : null
+    except  = var.webhook_event_exceptions != [] ? var.webhook_event_exceptions : null
+  }
+  metric_selector = {
+    include = var.webhook_metric_selections != [] ? var.webhook_metric_selections : null
+    except  = var.webhook_metric_exceptions != [] ? var.webhook_metric_exceptions : null
+  }
+  sink = {
+    type = "WEBHOOK"
+    settings = {
+      format     = var.webhook_format
+      event_uri  = var.webhook_event_uri != "" ? var.webhook_event_uri : null
+      metric_uri = var.webhook_metric_uri != "" ? var.webhook_metric_uri : null
+    }
+  }
+}
+
+# Stream Subscription for Grafana --------------------------------------
+resource "equinix_fabric_stream_subscription" "grafana" {
+  count       = local.grafana_count
+  type        = "STREAM_SUBSCRIPTION"
+  name        = var.grafana_name
+  description = var.grafana_description
+  stream_id = (local.third_stream ? equinix_fabric_stream.stream3[0].id :
+      local.second_stream ? equinix_fabric_stream.stream2[0].id :
+      equinix_fabric_stream.stream1.id)
+  enabled     = var.grafana_enabled
+  event_selector = {
+    include = var.grafana_event_selections != [] ? var.grafana_event_selections : null
+    except  = var.grafana_event_exceptions != [] ? var.grafana_event_exceptions : null
+  }
+  metric_selector = {
+    include = var.grafana_metric_selections != [] ? var.grafana_metric_selections : null
+    except  = var.grafana_metric_exceptions != [] ? var.grafana_metric_exceptions : null
+  }
+  sink = {
+    type = "WEBHOOK"
+    settings = {
+      format     = var.grafana_format
+      event_uri  = var.grafana_event_uri != "" ? var.grafana_event_uri : null
+      metric_uri = var.grafana_metric_uri != "" ? var.grafana_metric_uri : null
+    }
+  }
+}
 ```
 
 ## Requirements
@@ -577,13 +848,13 @@ resource "equinix_fabric_stream_subscription" "msteams" {
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.5.4 |
-| <a name="requirement_equinix"></a> [equinix](#requirement\_equinix) | >= 3.4.0 |
+| <a name="requirement_equinix"></a> [equinix](#requirement\_equinix) | >= 4.1.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_equinix"></a> [equinix](#provider\_equinix) | >= 3.4.0 |
+| <a name="provider_equinix"></a> [equinix](#provider\_equinix) | >= 4.1.0 |
 
 ## Modules
 
@@ -595,11 +866,15 @@ No modules.
 |------|------|
 | [equinix_fabric_stream.stream1](https://registry.terraform.io/providers/equinix/equinix/latest/docs/resources/fabric_stream) | resource |
 | [equinix_fabric_stream.stream2](https://registry.terraform.io/providers/equinix/equinix/latest/docs/resources/fabric_stream) | resource |
+| [equinix_fabric_stream.stream3](https://registry.terraform.io/providers/equinix/equinix/latest/docs/resources/fabric_stream) | resource |
 | [equinix_fabric_stream_subscription.datadog](https://registry.terraform.io/providers/equinix/equinix/latest/docs/resources/fabric_stream_subscription) | resource |
+| [equinix_fabric_stream_subscription.grafana](https://registry.terraform.io/providers/equinix/equinix/latest/docs/resources/fabric_stream_subscription) | resource |
 | [equinix_fabric_stream_subscription.msteams](https://registry.terraform.io/providers/equinix/equinix/latest/docs/resources/fabric_stream_subscription) | resource |
 | [equinix_fabric_stream_subscription.pagerduty](https://registry.terraform.io/providers/equinix/equinix/latest/docs/resources/fabric_stream_subscription) | resource |
+| [equinix_fabric_stream_subscription.servicenow](https://registry.terraform.io/providers/equinix/equinix/latest/docs/resources/fabric_stream_subscription) | resource |
 | [equinix_fabric_stream_subscription.slack](https://registry.terraform.io/providers/equinix/equinix/latest/docs/resources/fabric_stream_subscription) | resource |
 | [equinix_fabric_stream_subscription.splunk](https://registry.terraform.io/providers/equinix/equinix/latest/docs/resources/fabric_stream_subscription) | resource |
+| [equinix_fabric_stream_subscription.webhook](https://registry.terraform.io/providers/equinix/equinix/latest/docs/resources/fabric_stream_subscription) | resource |
 
 ## Inputs
 
@@ -618,6 +893,16 @@ No modules.
 | <a name="input_datadog_metric_selections"></a> [datadog\_metric\_selections](#input\_datadog\_metric\_selections) | Metrics to include from the possibilities available to the stream for the Subscription | `list(string)` | `[]` | no |
 | <a name="input_datadog_metric_uri"></a> [datadog\_metric\_uri](#input\_datadog\_metric\_uri) | Datadog App URI for receiving streamed metrics | `string` | `""` | no |
 | <a name="input_datadog_name"></a> [datadog\_name](#input\_datadog\_name) | Name of the Datadog Subscription Equinix Resource | `string` | `""` | no |
+| <a name="input_grafana_description"></a> [grafana\_description](#input\_grafana\_description) | Description of the grafana subscription | `string` | `"Grafana stream subscription"` | no |
+| <a name="input_grafana_enabled"></a> [grafana\_enabled](#input\_grafana\_enabled) | Boolean value indicating enablement of the Grafana Subscription | `bool` | `true` | no |
+| <a name="input_grafana_event_exceptions"></a> [grafana\_event\_exceptions](#input\_grafana\_event\_exceptions) | List of event types to exclude for grafana | `list(string)` | `[]` | no |
+| <a name="input_grafana_event_selections"></a> [grafana\_event\_selections](#input\_grafana\_event\_selections) | List of event types to include for grafana | `list(string)` | `[]` | no |
+| <a name="input_grafana_event_uri"></a> [grafana\_event\_uri](#input\_grafana\_event\_uri) | URI endpoint for grafana events | `string` | `""` | no |
+| <a name="input_grafana_format"></a> [grafana\_format](#input\_grafana\_format) | Format for grafana payload | `string` | `"JSON"` | no |
+| <a name="input_grafana_metric_exceptions"></a> [grafana\_metric\_exceptions](#input\_grafana\_metric\_exceptions) | List of metric types to exclude for grafana | `list(string)` | `[]` | no |
+| <a name="input_grafana_metric_selections"></a> [grafana\_metric\_selections](#input\_grafana\_metric\_selections) | List of metric types to include for grafana | `list(string)` | `[]` | no |
+| <a name="input_grafana_metric_uri"></a> [grafana\_metric\_uri](#input\_grafana\_metric\_uri) | URI endpoint for grafana metrics | `string` | `""` | no |
+| <a name="input_grafana_name"></a> [grafana\_name](#input\_grafana\_name) | Name of the Grafana Equinix Subscription Resource | `string` | `"grafana-subscription"` | no |
 | <a name="input_msteams_description"></a> [msteams\_description](#input\_msteams\_description) | Description for the MSTeams Subscription Resource | `string` | `""` | no |
 | <a name="input_msteams_enabled"></a> [msteams\_enabled](#input\_msteams\_enabled) | Boolean value enabling MSTeams Sink Subscription | `string` | `""` | no |
 | <a name="input_msteams_event_exceptions"></a> [msteams\_event\_exceptions](#input\_msteams\_event\_exceptions) | Events to exclude from the possibilities available to the stream for the Subscription | `list(string)` | `[]` | no |
@@ -639,6 +924,17 @@ No modules.
 | <a name="input_pagerduty_metric_exceptions"></a> [pagerduty\_metric\_exceptions](#input\_pagerduty\_metric\_exceptions) | Metrics to exclude from the possibilities available to the stream for the Subscription | `list(string)` | `[]` | no |
 | <a name="input_pagerduty_metric_selections"></a> [pagerduty\_metric\_selections](#input\_pagerduty\_metric\_selections) | Metrics to include from the possibilities available to the stream for the Subscription | `list(string)` | `[]` | no |
 | <a name="input_pagerduty_name"></a> [pagerduty\_name](#input\_pagerduty\_name) | Name of the PagerDuty Equinix Subscription Resource | `string` | `""` | no |
+| <a name="input_servicenow_description"></a> [servicenow\_description](#input\_servicenow\_description) | Description of the created stream(s) for servicenow in the module | `string` | `""` | no |
+| <a name="input_servicenow_enabled"></a> [servicenow\_enabled](#input\_servicenow\_enabled) | Boolean value indicating enablement of the Splunk Subscription | `string` | `""` | no |
+| <a name="input_servicenow_event_exceptions"></a> [servicenow\_event\_exceptions](#input\_servicenow\_event\_exceptions) | Events to exclude from the possibilities available to the stream for the Subscription | `list(string)` | `[]` | no |
+| <a name="input_servicenow_event_selections"></a> [servicenow\_event\_selections](#input\_servicenow\_event\_selections) | Events to include from the possibilities available to the stream for the Subscription | `list(string)` | `[]` | no |
+| <a name="input_servicenow_host"></a> [servicenow\_host](#input\_servicenow\_host) | Servicenow Sink Hostname | `string` | `""` | no |
+| <a name="input_servicenow_metric_exceptions"></a> [servicenow\_metric\_exceptions](#input\_servicenow\_metric\_exceptions) | Metrics to exclude from the possibilities available to the stream for the Subscription | `list(string)` | `[]` | no |
+| <a name="input_servicenow_metric_selections"></a> [servicenow\_metric\_selections](#input\_servicenow\_metric\_selections) | Metrics to include from the possibilities available to the stream for the Subscription | `list(string)` | `[]` | no |
+| <a name="input_servicenow_name"></a> [servicenow\_name](#input\_servicenow\_name) | Name of the Servicenow Equinix Subscription Resource | `string` | `""` | no |
+| <a name="input_servicenow_password"></a> [servicenow\_password](#input\_servicenow\_password) | Password for Servicenow App | `string` | `""` | no |
+| <a name="input_servicenow_source"></a> [servicenow\_source](#input\_servicenow\_source) | Name of the created Servicenow Source for the destination of the streaming messages | `string` | `""` | no |
+| <a name="input_servicenow_username"></a> [servicenow\_username](#input\_servicenow\_username) | Username for Servicenow App | `string` | `""` | no |
 | <a name="input_slack_description"></a> [slack\_description](#input\_slack\_description) | Description of the Slack Equinix Subscription Resource | `string` | `""` | no |
 | <a name="input_slack_enabled"></a> [slack\_enabled](#input\_slack\_enabled) | Boolean value indicating enablement of the Slack Subscription Resource | `string` | `""` | no |
 | <a name="input_slack_event_exceptions"></a> [slack\_event\_exceptions](#input\_slack\_event\_exceptions) | Events to exclude from the possibilities available to the stream for the Subscription | `list(string)` | `[]` | no |
@@ -663,6 +959,16 @@ No modules.
 | <a name="input_splunk_uri"></a> [splunk\_uri](#input\_splunk\_uri) | URI for the streaming messages to be sent to for Splunk | `string` | `""` | no |
 | <a name="input_stream_description"></a> [stream\_description](#input\_stream\_description) | Description of the created stream(s) in the module | `string` | n/a | yes |
 | <a name="input_stream_name"></a> [stream\_name](#input\_stream\_name) | Name (and name prefix) for the created stream(s) in the module | `string` | n/a | yes |
+| <a name="input_webhook_description"></a> [webhook\_description](#input\_webhook\_description) | Description of the webhook subscription | `string` | `"Webhook stream subscription"` | no |
+| <a name="input_webhook_enabled"></a> [webhook\_enabled](#input\_webhook\_enabled) | Boolean value indicating enablement of the Webhook Subscription | `bool` | `true` | no |
+| <a name="input_webhook_event_exceptions"></a> [webhook\_event\_exceptions](#input\_webhook\_event\_exceptions) | List of event types to exclude for webhook | `list(string)` | `[]` | no |
+| <a name="input_webhook_event_selections"></a> [webhook\_event\_selections](#input\_webhook\_event\_selections) | List of event types to include for webhook | `list(string)` | `[]` | no |
+| <a name="input_webhook_event_uri"></a> [webhook\_event\_uri](#input\_webhook\_event\_uri) | URI endpoint for webhook events | `string` | `""` | no |
+| <a name="input_webhook_format"></a> [webhook\_format](#input\_webhook\_format) | Format for webhook payload | `string` | `"JSON"` | no |
+| <a name="input_webhook_metric_exceptions"></a> [webhook\_metric\_exceptions](#input\_webhook\_metric\_exceptions) | List of metric types to exclude for webhook | `list(string)` | `[]` | no |
+| <a name="input_webhook_metric_selections"></a> [webhook\_metric\_selections](#input\_webhook\_metric\_selections) | List of metric types to include for webhook | `list(string)` | `[]` | no |
+| <a name="input_webhook_metric_uri"></a> [webhook\_metric\_uri](#input\_webhook\_metric\_uri) | URI endpoint for webhook metrics | `string` | `""` | no |
+| <a name="input_webhook_name"></a> [webhook\_name](#input\_webhook\_name) | Name of the Webhook Equinix Subscription Resource | `string` | `"webhook-subscription"` | no |
 
 ## Outputs
 
@@ -670,9 +976,13 @@ No modules.
 |------|-------------|
 | <a name="output_datadog_subscription"></a> [datadog\_subscription](#output\_datadog\_subscription) | n/a |
 | <a name="output_first_stream"></a> [first\_stream](#output\_first\_stream) | n/a |
+| <a name="output_grafana_subscription"></a> [grafana\_subscription](#output\_grafana\_subscription) | n/a |
 | <a name="output_msteams_subscription"></a> [msteams\_subscription](#output\_msteams\_subscription) | n/a |
 | <a name="output_pagerduty_subscription"></a> [pagerduty\_subscription](#output\_pagerduty\_subscription) | n/a |
 | <a name="output_second_stream"></a> [second\_stream](#output\_second\_stream) | n/a |
+| <a name="output_servicenow_subscription"></a> [servicenow\_subscription](#output\_servicenow\_subscription) | n/a |
 | <a name="output_slack_subscription"></a> [slack\_subscription](#output\_slack\_subscription) | n/a |
 | <a name="output_splunk_subscription"></a> [splunk\_subscription](#output\_splunk\_subscription) | n/a |
+| <a name="output_third_stream"></a> [third\_stream](#output\_third\_stream) | n/a |
+| <a name="output_webhook_subscription"></a> [webhook\_subscription](#output\_webhook\_subscription) | n/a |
 <!-- END_TF_DOCS -->
