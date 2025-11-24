@@ -314,6 +314,10 @@ resource "equinix_fabric_connection" "secondary_virtual_device_connection" {
   order {
     purchase_order_number = var.purchase_order_number != "" ? var.purchase_order_number : null
   }
+  redundancy {
+    priority = "SECONDARY"
+    group    = one(equinix_fabric_connection.virtual_device_connection.redundancy).group
+  }
 
   additional_info = var.additional_info != [] ? var.additional_info : null
 

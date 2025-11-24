@@ -53,9 +53,10 @@ jobs:
           terraform_wrapper: false
 
       - name: Install jq
-        run: | 
-              sudo apt-get install jq
-              sudo apt-get install -y libxml2-utils
+        run: |
+          sudo apt-get update
+          sudo apt-get install jq
+          sudo apt-get install -y libxml2-utils
 
       - name: Setup Variables Files
         run: |

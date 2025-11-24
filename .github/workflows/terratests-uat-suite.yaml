@@ -56,6 +56,61 @@ jobs:
       - name: Check if Tests are passed
         run: sh scripts/check_tests.sh output.log
 
+  test-STS-PFCR:
+    name: Setup UAT PFCR Tests - STS
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      actions: write
+      contents: read
+    env:
+      EQUINIX_API_ENDPOINT: "https://uatapi.equinix.com"
+      EQUINIX_STS_ENDPOINT: "https://sts.uat.equinix.com"
+      TEST_DATA_UAT_PORT_2_PORT_CONNECTION_STS: ${{ secrets.TEST_DATA_UAT_PORT_2_PORT_CONNECTION_STS }}
+
+    steps:
+      - id: get_id_token
+        name: Get GitHub OIDC Token for PFCR
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            try {
+              const response = await github.request('PUT /repos/{owner}/{repo}/actions/oidc/customization/sub', {
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                use_default: false,
+                include_claim_keys: ['workflow'],
+                headers: {
+                  'X-GitHub-Api-Version': '2022-11-28'
+                }
+              });
+            
+              const idToken = await core.getIDToken('gha-fcr-client');
+              core.setOutput('id_token', idToken);
+            } catch (error) {
+              console.error('Error updating OIDC template:', error.message);
+              core.setFailed(`Failed to update OIDC template: ${error.message}`);
+            }
+          result-encoding: string
+
+      - name: Checkout current repository
+        uses: actions/checkout@v4
+
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: ${{ matrix.terraform }}
+          terraform_wrapper: false
+
+      - name: UAT PFCR tests STS creds
+        timeout-minutes: 100
+        env:
+          TF_VAR_sts_source_token: ${{ steps.get_id_token.outputs.id_token }}
+          TF_VAR_sts_auth_scope: ${{secrets.TEST_DATA_UAT_STS_AUTH_SCOPE}}
+        run: |
+          echo $TEST_DATA_UAT_PORT_2_PORT_CONNECTION_STS >> "./examples/port-2-port-connection-sts-token/terraform.tfvars.json"
+          go test ./tests/uat/uat_sanity_suite_test.go -v -run ^TestPort2PortCreateConnection_STS_PFCR$   
+
   test-PFCR:
     name: Setup UAT PFCR Tests
     runs-on: ubuntu-latest

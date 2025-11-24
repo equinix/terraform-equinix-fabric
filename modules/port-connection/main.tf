@@ -38,8 +38,10 @@ data "equinix_fabric_port" "aside_port_by_uuid" {
 
 data "equinix_fabric_ports" "aside_secondary_port" {
   count = var.aside_secondary_port_name != "" ? 1 : 0
-  filters {
-    name = var.aside_secondary_port_name
+  filter {
+    property = "/name"
+    operator = "="
+    value    = var.aside_secondary_port_name
   }
 }
 
@@ -54,8 +56,10 @@ data "equinix_fabric_service_profiles" "zside_sp" {
 
 data "equinix_fabric_ports" "zside_port" {
   count = var.zside_ap_type == "COLO" ? 1 : 0
-  filters {
-    name = var.zside_port_name
+  filter {
+    property = var.zside_port_name != "" ? "/name" : "/uuid"
+    operator = "="
+    value    = var.zside_port_name != "" ? var.zside_port_name : var.zside_port_uuid
   }
 }
 
@@ -157,6 +161,7 @@ resource "equinix_fabric_connection" "primary_port_connection" {
         network {
           uuid = var.zside_network_uuid
         }
+        role = var.role != "" ? var.role : null
       }
     }
   }
@@ -268,6 +273,7 @@ resource "equinix_fabric_connection" "secondary_port_connection" {
         network {
           uuid = var.zside_network_uuid
         }
+        role = var.role != "" ? var.role : null
       }
     }
   }
@@ -279,5 +285,17 @@ resource "equinix_fabric_connection" "secondary_port_connection" {
         uuid = var.zside_service_token_uuid
       }
     }
+  }
+}
+
+check "port_name_uuid_mutual_exclusion" {
+  assert {
+    condition     = !(var.zside_port_name != "" && var.zside_port_uuid != "")
+    error_message = "ERROR: Cannot set both zside_port_name and zside_port_uuid. Please set only one."
+  }
+
+  assert {
+    condition     = !(var.aside_port_name != "" && var.aside_port_uuid != "")
+    error_message = "ERROR: Cannot set both aside_port_name and aside_port_uuid. Please set only one."
   }
 }
