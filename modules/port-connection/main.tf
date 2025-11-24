@@ -1,9 +1,39 @@
-data "equinix_fabric_ports" "aside_port" {
-  filter {
-    property = var.aside_port_name != "" ? "/name" : "/uuid"
-    operator = "="
-    value    = var.aside_port_name != "" ? var.aside_port_name : var.aside_port_uuid
+locals {
+
+  # Count how many inputs are provided
+  port_input_count = length([
+    for input in [var.aside_port_name, var.aside_port_uuid] : input if input != null && input != ""
+  ])
+
+  # Determine which method to use
+  use_port_name = var.aside_port_name != null && var.aside_port_name != "" && (var.aside_port_uuid == null || var.aside_port_uuid == "")
+  use_port_uuid = var.aside_port_uuid != null && var.aside_port_uuid != "" && (var.aside_port_name == null || var.aside_port_name == "")
+}
+
+# Validation check
+resource "null_resource" "aside_port_validation" {
+  count = local.port_input_count != 1 ? 1 : 0
+
+  lifecycle {
+    precondition {
+      condition     = local.port_input_count == 1
+      error_message = "Error: You must provide exactly one of 'aside_port_name' or 'aside_port_uuid', not both or neither.\n\nGuidelines:\n- Use 'aside_port_uuid' when leveraging the port order resource using the port connection module\n- Use 'aside_port_name' only for previously created ports\n\nProvided: aside_port_name='${var.aside_port_name}', aside_port_uuid='${var.aside_port_uuid}'"
+    }
   }
+}
+
+# Data source for port by name
+data "equinix_fabric_ports" "aside_port_by_name" {
+  count = local.use_port_name ? 1 : 0
+  filters {
+    name = var.aside_port_name
+  }
+}
+
+# Data source for port by UUID
+data "equinix_fabric_port" "aside_port_by_uuid" {
+  count = local.use_port_uuid ? 1 : 0
+  uuid  = var.aside_port_uuid
 }
 
 data "equinix_fabric_ports" "aside_secondary_port" {
@@ -34,6 +64,13 @@ data "equinix_fabric_ports" "zside_port" {
 }
 
 resource "equinix_fabric_connection" "primary_port_connection" {
+  lifecycle {
+    precondition {
+      condition     = local.port_input_count == 1
+      error_message = "Error: You must provide exactly one of 'aside_port_name' or 'aside_port_uuid', not both or neither.\n\nGuidelines:\n- Use 'aside_port_uuid' when leveraging the port order resource using the port connection module\n- Use 'aside_port_name' only for previously created ports\n\nProvided: aside_port_name='${var.aside_port_name}', aside_port_uuid='${var.aside_port_uuid}'"
+    }
+  }
+
   name = var.connection_name
   type = var.connection_type
   notifications {
@@ -59,18 +96,16 @@ resource "equinix_fabric_connection" "primary_port_connection" {
     access_point {
       type = "COLO"
       port {
-        uuid = data.equinix_fabric_ports.aside_port.data.0.uuid
+        uuid = local.use_port_uuid ? data.equinix_fabric_port.aside_port_by_uuid[0].uuid : data.equinix_fabric_ports.aside_port_by_name[0].data.0.uuid
       }
       location {
         metro_code = var.aside_location != "" ? var.aside_location : null
       }
       link_protocol {
-        type       = one(data.equinix_fabric_ports.aside_port.data.0.encapsulation).type
-        vlan_tag   = one(data.equinix_fabric_ports.aside_port.data.0.encapsulation).type == "DOT1Q" ? var.aside_vlan_tag : null
-        vlan_s_tag = one(data.equinix_fabric_ports.aside_port.data.0.encapsulation).type == "QINQ" ? var.aside_vlan_tag : null
-
-        # This is adding ctag for any connection that is QINQ Aside AND not COLO on Zside OR when COLO on Zside is not QINQ Encapsulation Type
-        vlan_c_tag = one(data.equinix_fabric_ports.aside_port.data.0.encapsulation).type == "QINQ" && (var.zside_ap_type != "COLO" || (var.zside_ap_type == "COLO" ? one(data.equinix_fabric_ports.zside_port[0].data.0.encapsulation).type != "QINQ" : false)) ? var.aside_vlan_inner_tag : null
+        type       = local.use_port_uuid ? one(data.equinix_fabric_port.aside_port_by_uuid[0].encapsulation).type : one(data.equinix_fabric_ports.aside_port_by_name[0].data.0.encapsulation).type
+        vlan_tag   = (local.use_port_uuid ? one(data.equinix_fabric_port.aside_port_by_uuid[0].encapsulation).type : one(data.equinix_fabric_ports.aside_port_by_name[0].data.0.encapsulation).type) == "DOT1Q" ? var.aside_vlan_tag : null
+        vlan_s_tag = (local.use_port_uuid ? one(data.equinix_fabric_port.aside_port_by_uuid[0].encapsulation).type : one(data.equinix_fabric_ports.aside_port_by_name[0].data.0.encapsulation).type) == "QINQ" ? var.aside_vlan_tag : null
+        vlan_c_tag = (local.use_port_uuid ? one(data.equinix_fabric_port.aside_port_by_uuid[0].encapsulation).type : one(data.equinix_fabric_ports.aside_port_by_name[0].data.0.encapsulation).type) == "QINQ" && (var.zside_ap_type != "COLO" || (var.zside_ap_type == "COLO" ? one(data.equinix_fabric_ports.zside_port[0].data.0.encapsulation).type != "QINQ" : false)) ? var.aside_vlan_inner_tag : null
       }
     }
   }
@@ -108,7 +143,7 @@ resource "equinix_fabric_connection" "primary_port_connection" {
           type       = one(data.equinix_fabric_ports.zside_port[0].data.0.encapsulation).type
           vlan_tag   = one(data.equinix_fabric_ports.zside_port[0].data.0.encapsulation).type == "DOT1Q" ? var.zside_vlan_tag : null
           vlan_s_tag = one(data.equinix_fabric_ports.zside_port[0].data.0.encapsulation).type == "QINQ" ? var.zside_vlan_tag : null
-          vlan_c_tag = one(data.equinix_fabric_ports.zside_port[0].data.0.encapsulation).type == "QINQ" && one(data.equinix_fabric_ports.aside_port.data.0.encapsulation).type != "QINQ" ? var.zside_vlan_inner_tag : null
+          vlan_c_tag = one(data.equinix_fabric_ports.zside_port[0].data.0.encapsulation).type == "QINQ" && (local.use_port_uuid ? one(data.equinix_fabric_port.aside_port_by_uuid[0].encapsulation).type : one(data.equinix_fabric_ports.aside_port_by_name[0].data.0.encapsulation).type) != "QINQ" ? var.zside_vlan_inner_tag : null
         }
         location {
           metro_code = var.zside_location
@@ -220,7 +255,7 @@ resource "equinix_fabric_connection" "secondary_port_connection" {
           type       = one(data.equinix_fabric_ports.zside_port[0].data.0.encapsulation).type
           vlan_tag   = one(data.equinix_fabric_ports.zside_port[0].data.0.encapsulation).type == "DOT1Q" ? var.zside_secondary_vlan_tag : null
           vlan_s_tag = one(data.equinix_fabric_ports.zside_port[0].data.0.encapsulation).type == "QINQ" ? var.zside_secondary_vlan_inner_tag : null
-          vlan_c_tag = one(data.equinix_fabric_ports.zside_port[0].data.0.encapsulation).type == "QINQ" && one(data.equinix_fabric_ports.aside_port.data.0.encapsulation).type != "QINQ" ? var.zside_secondary_vlan_inner_tag : null
+          vlan_c_tag = one(data.equinix_fabric_ports.zside_port[0].data.0.encapsulation).type == "QINQ" && (local.use_port_uuid ? one(data.equinix_fabric_port.aside_port_by_uuid[0].encapsulation).type : one(data.equinix_fabric_ports.aside_port_by_name[0].data.0.encapsulation).type) != "QINQ" ? var.zside_secondary_vlan_inner_tag : null
         }
         location {
           metro_code = var.zside_location

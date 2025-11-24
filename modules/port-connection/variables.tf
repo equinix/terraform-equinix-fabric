@@ -49,6 +49,11 @@ variable "aside_port_name" {
   type        = string
   default     = ""
 }
+variable "aside_port_uuid" {
+  description = "Equinix A-Side Port UUID"
+  type        = string
+  default     = ""
+}
 variable "aside_secondary_port_name" {
   description = "Equinix A-Side Port Name; your tagging must match the encapsulation type of the port (DOT1Q or QINQ)"
   type        = string
