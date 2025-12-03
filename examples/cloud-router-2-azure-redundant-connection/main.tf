@@ -67,18 +67,10 @@ resource "azurerm_express_route_circuit_peering" "example" {
   ipv4_enabled                  = true
   vlan_id                       = var.peering_vlan_id
 
-  microsoft_peering_config {
-    advertised_public_prefixes = ["203.0.113.0/24"]
-  }
-
   ipv6 {
     primary_peer_address_prefix   = "2002:db01::/126"
     secondary_peer_address_prefix = "2003:db01::/126"
     enabled                       = true
-
-    microsoft_peering {
-      advertised_public_prefixes = ["2002:db01::/126"]
-    }
   }
   depends_on = [module.cloud_router_azure_redundant_connection]
 }
