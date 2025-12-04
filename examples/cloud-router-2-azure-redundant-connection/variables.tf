@@ -30,6 +30,10 @@ variable "bandwidth" {
   description = "Connection bandwidth in Mbps"
   type        = number
 }
+variable "secondary_bandwidth" {
+  description = "Connection secondary bandwidth in Mbps"
+  type        = number
+}
 variable "purchase_order_number" {
   description = "Purchase order number"
   type        = string
@@ -132,4 +136,26 @@ variable "azure_environment" {
   description = "The Cloud environment which should be used for Service Key"
   type        = string
 }
-
+variable "peering_type" {
+  description = "Peering type"
+  type        = string
+  default     = ""
+}
+variable "peer_asn" {
+  description = "Peer asn number"
+  type        = number
+}
+variable "peering_vlan_id" {
+  description = "VLAN ID to establish this peering on"
+  type        = number
+}
+variable "primary_peer_address_prefix" {
+  description = "Subnet for the primary link"
+  type        = string
+  default     = ""
+}
+variable "secondary_peer_address_prefix" {
+  description = "Subnet for the secondary link"
+  type        = string
+  default     = ""
+}
