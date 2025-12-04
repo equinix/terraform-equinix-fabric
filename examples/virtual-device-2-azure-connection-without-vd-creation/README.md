@@ -205,6 +205,29 @@ variable "zside_peering_type" {
   description = "Zside Access Point Peering type. Available values; PRIVATE, MICROSOFT, PUBLIC, MANUAL"
   type        = string
 }
+variable "peering_type" {
+  description = "Peering type"
+  type        = string
+  default     = ""
+}
+variable "peer_asn" {
+  description = "Peer asn number"
+  type        = number
+}
+variable "peering_vlan_id" {
+  description = "VLAN ID to establish this peering on"
+  type        = number
+}
+variable "primary_peer_address_prefix" {
+  description = "Subnet for the primary link"
+  type        = string
+  default     = ""
+}
+variable "secondary_peer_address_prefix" {
+  description = "Subnet for the secondary link"
+  type        = string
+  default     = ""
+}
 ```
 
 outputs.tf
@@ -231,7 +254,6 @@ provider "azurerm" {
   client_secret   = var.azure_client_secret
   tenant_id       = var.azure_tenant_id
   subscription_id = var.azure_subscription_id
-
 }
 
 #Azure Provider
@@ -279,6 +301,23 @@ module "create_virtual_device_2_azure_connection" {
   zside_location              = var.zside_location
   zside_sp_name               = var.zside_sp_name
 }
+resource "azurerm_express_route_circuit_peering" "example" {
+  peering_type                  = var.peering_type
+  express_route_circuit_name    = azurerm_express_route_circuit.vd2azure.name
+  resource_group_name           = azurerm_resource_group.vd2azure.name
+  peer_asn                      = var.peer_asn
+  primary_peer_address_prefix   = var.primary_peer_address_prefix
+  secondary_peer_address_prefix = var.secondary_peer_address_prefix
+  ipv4_enabled                  = true
+  vlan_id                       = var.peering_vlan_id
+
+  ipv6 {
+    primary_peer_address_prefix   = "2002:db01::/126"
+    secondary_peer_address_prefix = "2003:db01::/126"
+    enabled                       = true
+  }
+  depends_on = [module.create_virtual_device_2_azure_connection]
+}
 ```
 
 ## Requirements
@@ -305,6 +344,7 @@ module "create_virtual_device_2_azure_connection" {
 | Name | Type |
 |------|------|
 | [azurerm_express_route_circuit.vd2azure](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/express_route_circuit) | resource |
+| [azurerm_express_route_circuit_peering.example](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/express_route_circuit_peering) | resource |
 | [azurerm_resource_group.vd2azure](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group) | resource |
 
 ## Inputs
@@ -332,7 +372,12 @@ module "create_virtual_device_2_azure_connection" {
 | <a name="input_equinix_client_secret"></a> [equinix\_client\_secret](#input\_equinix\_client\_secret) | Equinix client secret ID (consumer secret), obtained after registering app in the developer platform | `string` | n/a | yes |
 | <a name="input_notifications_emails"></a> [notifications\_emails](#input\_notifications\_emails) | Array of contact emails | `list(string)` | n/a | yes |
 | <a name="input_notifications_type"></a> [notifications\_type](#input\_notifications\_type) | Notification Type - ALL is the only type currently supported | `string` | `"ALL"` | no |
+| <a name="input_peer_asn"></a> [peer\_asn](#input\_peer\_asn) | Peer asn number | `number` | n/a | yes |
+| <a name="input_peering_type"></a> [peering\_type](#input\_peering\_type) | Peering type | `string` | `""` | no |
+| <a name="input_peering_vlan_id"></a> [peering\_vlan\_id](#input\_peering\_vlan\_id) | VLAN ID to establish this peering on | `number` | n/a | yes |
+| <a name="input_primary_peer_address_prefix"></a> [primary\_peer\_address\_prefix](#input\_primary\_peer\_address\_prefix) | Subnet for the primary link | `string` | `""` | no |
 | <a name="input_purchase_order_number"></a> [purchase\_order\_number](#input\_purchase\_order\_number) | Purchase order number | `string` | `""` | no |
+| <a name="input_secondary_peer_address_prefix"></a> [secondary\_peer\_address\_prefix](#input\_secondary\_peer\_address\_prefix) | Subnet for the secondary link | `string` | `""` | no |
 | <a name="input_zside_ap_profile_type"></a> [zside\_ap\_profile\_type](#input\_zside\_ap\_profile\_type) | Service profile type - L2\_PROFILE, L3\_PROFILE, ECIA\_PROFILE, ECMC\_PROFILE | `string` | n/a | yes |
 | <a name="input_zside_ap_type"></a> [zside\_ap\_type](#input\_zside\_ap\_type) | Access point type - COLO, VD, VG, SP, IGW, SUBNET, GW | `string` | n/a | yes |
 | <a name="input_zside_location"></a> [zside\_location](#input\_zside\_location) | Access point metro code | `string` | n/a | yes |
