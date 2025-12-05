@@ -69,8 +69,8 @@ resource "equinix_fabric_connection" "primary_cloud_router_connection" {
       access_point {
         type               = var.zside_ap_type
         authentication_key = var.zside_ap_authentication_key
-        seller_region      = var.zside_seller_region
-        peering_type       = var.zside_peering_type
+        seller_region      = var.zside_seller_region != "" ? var.zside_seller_region : null
+        peering_type       = var.zside_peering_type != "" ? var.zside_peering_type : null
         profile {
           type = var.zside_ap_profile_type
           uuid = data.equinix_fabric_service_profiles.zside[0].id
@@ -180,8 +180,8 @@ resource "equinix_fabric_connection" "secondary_cloud_router_connection" {
       access_point {
         type               = var.zside_ap_type
         authentication_key = var.zside_ap_authentication_key
-        seller_region      = var.zside_seller_region
-        peering_type       = var.zside_peering_type
+        seller_region      = var.zside_seller_region != "" ? var.zside_seller_region : null
+        peering_type       = var.zside_peering_type != "" ? var.zside_peering_type : null
         profile {
           type = var.zside_ap_profile_type
           uuid = data.equinix_fabric_service_profiles.zside[0].id
