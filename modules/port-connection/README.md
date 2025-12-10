@@ -195,11 +195,6 @@ variable "role" {
   type        = string
   default     = ""
 }
-variable "aside_port_uuid" {
-  description = "Equinix A-Side Port UUID; use this instead of aside_port_name. Only one of aside_port_name or aside_port_uuid can be set."
-  type        = string
-  default     = ""
-}
 variable "zside_port_uuid" {
   description = "Equinix Z-Side Port UUID; use this instead of aside_port_name"
   type        = string
@@ -569,7 +564,7 @@ No modules.
 | <a name="input_additional_info"></a> [additional\_info](#input\_additional\_info) | Additional info parameters. It's a list of maps containing 'key' and 'value' keys with their corresponding values. | `list(object({ key = string, value = string }))` | `[]` | no |
 | <a name="input_aside_location"></a> [aside\_location](#input\_aside\_location) | Aside metro code | `string` | `""` | no |
 | <a name="input_aside_port_name"></a> [aside\_port\_name](#input\_aside\_port\_name) | Equinix A-Side Port Name; your tagging must match the encapsulation type of the port (DOT1Q or QINQ) | `string` | `""` | no |
-| <a name="input_aside_port_uuid"></a> [aside\_port\_uuid](#input\_aside\_port\_uuid) | Equinix A-Side Port UUID; use this instead of aside\_port\_name. Only one of aside\_port\_name or aside\_port\_uuid can be set. | `string` | `""` | no |
+| <a name="input_aside_port_uuid"></a> [aside\_port\_uuid](#input\_aside\_port\_uuid) | Equinix A-Side Port UUID | `string` | `""` | no |
 | <a name="input_aside_secondary_port_name"></a> [aside\_secondary\_port\_name](#input\_aside\_secondary\_port\_name) | Equinix A-Side Port Name; your tagging must match the encapsulation type of the port (DOT1Q or QINQ) | `string` | `""` | no |
 | <a name="input_aside_secondary_vlan_inner_tag"></a> [aside\_secondary\_vlan\_inner\_tag](#input\_aside\_secondary\_vlan\_inner\_tag) | Secondary VLan Tag information for QINQ connections | `string` | `""` | no |
 | <a name="input_aside_secondary_vlan_tag"></a> [aside\_secondary\_vlan\_tag](#input\_aside\_secondary\_vlan\_tag) | Secondary VLan Tag information for DOT1Q connections, and the outer VLan tag for QINQ connections) | `string` | `""` | no |
