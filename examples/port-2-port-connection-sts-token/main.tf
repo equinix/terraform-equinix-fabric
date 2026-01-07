@@ -1,6 +1,6 @@
 provider "equinix" {
-  sts_source_token = var.sts_source_token
-  sts_auth_scope = var.sts_auth_scope
+  token_exchange_subject_token = var.sts_source_token
+  token_exchange_scope = var.sts_auth_scope
 }
 
 module "create_port_2_port_connection" {
@@ -14,12 +14,12 @@ module "create_port_2_port_connection" {
   purchase_order_number = var.purchase_order_number
 
   # A-side
-  aside_port_name = var.aside_port_name
+  aside_port_uuid = var.aside_port_uuid
   aside_vlan_tag  = var.aside_vlan_tag
 
   # Z-side
   zside_ap_type   = var.zside_ap_type
-  zside_port_name = var.zside_port_name
+  zside_port_uuid = var.zside_port_uuid
   zside_vlan_tag  = var.zside_vlan_tag
   zside_location  = var.zside_location
 }
