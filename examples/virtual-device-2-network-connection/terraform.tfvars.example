@@ -1,0 +1,15 @@
+equinix_client_id     = "<MyEquinixClientId>"
+equinix_client_secret = "<MyEquinixSecret>"
+
+bandwidth                   = 50
+connection_name             = "VD_2_Network"
+connection_type             = "EVPLAN_VC"
+notifications_type          = "ALL"
+notifications_emails        = ["example@equinix.com"]
+purchase_order_number       = "1-323292"
+
+aside_vd_type               = "EDGE"
+aside_vd_uuid               = "<Virtua_Device_UUID>"
+zside_ap_type               = "NETWORK"
+zside_network_uuid          = "<Network_UUID>"
+project_id                  = "<MyEquinixProjectID>"
