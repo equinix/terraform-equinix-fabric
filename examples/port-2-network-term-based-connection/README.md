@@ -45,7 +45,7 @@ equinix_client_id     = "MyEquinixClientId"
 equinix_client_secret = "MyEquinixSecret"
 
 connection_name       = "Port2Port"
-connection_type       = "EVPLAN_VC"
+connection_type       = "EVPL_VC"
 notifications_type    = "ALL"
 notifications_emails  = ["example@equinix.com", "test1@equinix.com"]
 bandwidth             = 50
