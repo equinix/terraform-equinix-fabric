@@ -17,6 +17,9 @@ resource "equinix_fabric_stream" "stream1" {
   type        = "TELEMETRY_STREAM"
   name        = var.stream_name
   description = var.stream_description
+  project = {
+    project_id = var.project_id
+  }
 }
 
 resource "equinix_fabric_stream" "stream2" {
@@ -24,6 +27,9 @@ resource "equinix_fabric_stream" "stream2" {
   type        = "TELEMETRY_STREAM"
   name        = join("-", [var.stream_name, "2"])
   description = var.stream_description
+  project = {
+    project_id = var.project_id
+  }
 }
 
 resource "equinix_fabric_stream" "stream3" {
@@ -31,6 +37,9 @@ resource "equinix_fabric_stream" "stream3" {
   type        = "TELEMETRY_STREAM"
   name        = join("-", [var.stream_name, "3"])
   description = var.stream_description
+  project = {
+    project_id = var.project_id
+  }
 }
 
 # Stream Subscription for Splunk --------------------------------------

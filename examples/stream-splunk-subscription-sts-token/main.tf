@@ -1,6 +1,6 @@
 provider "equinix" {
-  sts_source_token = var.sts_source_token
-  sts_auth_scope = var.sts_auth_scope
+  token_exchange_subject_token = var.sts_source_token
+  token_exchange_scope = var.sts_auth_scope
 }
 
 module "stream_splunk_subscription" {
@@ -8,6 +8,7 @@ module "stream_splunk_subscription" {
 
   stream_name        = var.stream_name
   stream_description = var.stream_description
+  project_id = var.project_id
 
   splunk_enabled           = var.splunk_enabled
   splunk_access_token      = var.splunk_access_token
