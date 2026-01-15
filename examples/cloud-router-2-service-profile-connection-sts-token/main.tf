@@ -3,7 +3,7 @@ provider "equinix" {
   token_exchange_scope = var.sts_auth_scope
 }
 
-resource "equinix_fabric_cloud_router" "this" {
+resource "equinix_fabric_cloud_router" "test_router" {
   type = var.cloud_router_type
   name = var.cloud_router_name
   location {
@@ -38,7 +38,7 @@ module "cloud_router_sp_connection" {
   purchase_order_number = var.purchase_order_number
 
   #Aside
-  aside_fcr_uuid = equinix_fabric_cloud_router.this.id
+  aside_fcr_uuid = equinix_fabric_cloud_router.test_router.id
 
   #Zside
   zside_ap_type         = var.zside_ap_type

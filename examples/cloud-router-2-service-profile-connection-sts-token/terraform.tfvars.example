@@ -40,7 +40,7 @@ route_filter_rules = [
   {
     name = "rule_2",
     prefix = "192.168.1.0/24",
-    prefix_match = "or_longer",
+    prefix_match = "orlonger",
     description = "second rule on route filter"
   }
 ]
