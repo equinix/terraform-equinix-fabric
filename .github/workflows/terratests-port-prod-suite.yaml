@@ -133,4 +133,5 @@ jobs:
                     *Workflow:* ${{ github.workflow }}           
                     *Status:* ${{ job.status }}
                     *Results:* ${{ steps.slack_message.outputs.message }}
-                    *Triggered by:* <@${{ github.actor }}>        
+                    *Triggered by:* <@${{ github.actor }}>
+                    *Responsibility:* <@U06QU7NE0G7>
