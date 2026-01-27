@@ -44,17 +44,49 @@ terraform.tfvars (Replace these values with your own):
 sts_source_token                = "<STSSourceToken>"
 sts_auth_scope                  = "<STSAuthScope>"
 
+cloud_router_type       = "XF_ROUTER"
+cloud_router_name       = "terra_fcr"
+cloud_router_metro_code = "SV"
+cloud_router_package    = "STANDARD"
+
+account_number          = "<equinix_Account_number>"
+project_id              = "<project_id>"
+
 connection_name                 = "fcr_2_sp"
 connection_type                 = "IP_VC"
 notifications_type              = "ALL"
 notifications_emails            = ["example@equinix.com","test1@equinix.com"]
 purchase_order_number           = "1-323292"
 bandwidth                       = 50
-aside_fcr_uuid                  = "<Primary Fabric Cloud router UUID>"
 zside_ap_type                   = "SP"
 zside_ap_profile_type           = "L2_PROFILE"
 zside_location                  = "SV"
 zside_fabric_sp_name            = "Ajith Ops User QnQ"
+
+routing_protocol_direct_ipv4_ip     = "190.1.1.1/30"
+routing_protocol_direct_rp_name     = "DIRECT_RP"
+routing_protocol_bgp_rp_name        = "BGP_RP"
+routing_protocol_bgp_customer_asn   = "100"
+routing_protocol_bgp_ipv4_ip        =  "190.1.1.2"
+
+route_filter_direction = "INBOUND"
+route_filter_policy_name = "rf_policy_PFCR"
+route_filter_policy_type = "BGP_IPv4_PREFIX_FILTER"
+
+route_filter_rules = [
+  {
+    name = "rule_1",
+    prefix = "192.168.0.0/24",
+    prefix_match = "exact",
+    description = "first rule on route filter"
+  },
+  {
+    name = "rule_2",
+    prefix = "192.168.1.0/24",
+    prefix_match = "orlonger",
+    description = "second rule on route filter"
+  }
+]
 ```
 
 versions.tf
@@ -104,10 +136,6 @@ variable "purchase_order_number" {
   type        = string
   default     = ""
 }
-variable "aside_fcr_uuid" {
-  description = "Equinix-assigned Fabric Cloud Router identifier"
-  type        = string
-}
 variable "zside_ap_type" {
   description = "Access point type - COLO, VD, VG, SP, IGW, SUBNET, GW"
   type        = string
@@ -138,6 +166,78 @@ variable "sts_auth_scope" {
   type        = string
   sensitive   = true
 }
+variable "cloud_router_name" {
+  description = "Name of the cloud router created for the connection"
+  type        = string
+}
+
+variable "cloud_router_type" {
+  description = "Type of the cloud router created for the connection"
+  type        = string
+}
+
+variable "cloud_router_metro_code" {
+  description = "Name of the cloud router created for the connection"
+  type        = string
+}
+
+variable "cloud_router_package" {
+  description = "Package of the cloud router created for the connection"
+  type        = string
+}
+
+variable "project_id" {
+  description = "Id of the Fabric Project for the resources to be created in"
+  type        = string
+}
+
+variable "account_number" {
+  description = "Account number for the cloud router creation"
+  type        = number
+}
+variable "routing_protocol_direct_rp_name" {
+  description = "Name of the Direct Routing Protocol Added to the Cloud Router Connection"
+  type = string
+}
+variable "routing_protocol_direct_ipv4_ip" {
+  description = "Ipv4 Ip address for Cloud Router Direct Routing Protocol"
+  type = string
+}
+variable "routing_protocol_bgp_rp_name" {
+  description = "Ipv4 Ip address for Cloud Router Bgp Routing Protocol"
+}
+variable "routing_protocol_bgp_ipv4_ip" {
+  description = "Ipv4 Ip address for Cloud Router Direct Routing Protocol"
+  type = string
+}
+variable "routing_protocol_bgp_customer_asn" {
+  description = "Customer ASN number for BGP Routing Protocol"
+  type = number
+}
+variable "route_filter_direction" {
+  description = "Direction of the route filtering [INBOUND or OUTBOUND]"
+  type        = string
+}
+
+variable "route_filter_policy_name" {
+  description = "Name of the route filter policy that will be created in this module"
+  type        = string
+}
+
+variable "route_filter_policy_type" {
+  description = "Type of the route filter policy. Should be one of: BGP_IPv4_PREFIX_FILTER, BGP_IPv6_PREFIX_FILTER"
+  type        = string
+}
+
+variable "route_filter_rules" {
+  description = "List of route filter rules to add to the created route filter policy"
+  type = list(object({
+    prefix       = string,
+    name         = optional(string),
+    description  = optional(string),
+    prefix_match = optional(string),
+  }))
+}
 ```
 
 outputs.tf
@@ -155,8 +255,32 @@ output "service_profile_connection_id" {
 main.tf
 ```hcl
 provider "equinix" {
-  sts_source_token = var.sts_source_token
-  sts_auth_scope = var.sts_auth_scope
+  token_exchange_subject_token = var.sts_source_token
+  token_exchange_scope = var.sts_auth_scope
+}
+
+resource "equinix_fabric_cloud_router" "test_router" {
+  type = var.cloud_router_type
+  name = var.cloud_router_name
+  location {
+    metro_code = var.cloud_router_metro_code
+  }
+  package {
+    code = var.cloud_router_package
+  }
+  order {
+    purchase_order_number = var.purchase_order_number
+  }
+  notifications {
+    type   = var.notifications_type
+    emails = var.notifications_emails
+  }
+  project {
+    project_id = var.project_id
+  }
+  account {
+    account_number = var.account_number
+  }
 }
 
 module "cloud_router_sp_connection" {
@@ -170,13 +294,36 @@ module "cloud_router_sp_connection" {
   purchase_order_number = var.purchase_order_number
 
   #Aside
-  aside_fcr_uuid = var.aside_fcr_uuid
+  aside_fcr_uuid = equinix_fabric_cloud_router.test_router.id
 
   #Zside
   zside_ap_type         = var.zside_ap_type
   zside_ap_profile_type = var.zside_ap_profile_type
   zside_location        = var.zside_location
   zside_fabric_sp_name  = var.zside_fabric_sp_name
+}
+
+module "cloud_router_connection_routing_protocols" {
+  source = "equinix/fabric/equinix//modules/cloud-router-routing-protocols"
+  connection_uuid = module.cloud_router_sp_connection.primary_connection_id
+  direct_rp_name = var.routing_protocol_direct_rp_name
+  direct_equinix_ipv4_ip = var.routing_protocol_direct_ipv4_ip
+  bgp_rp_name = var.routing_protocol_bgp_rp_name
+  bgp_customer_peer_ipv4 = var.routing_protocol_bgp_ipv4_ip
+  bgp_customer_asn = var.routing_protocol_bgp_customer_asn
+}
+
+module "cloud_router_route_filters" {
+  depends_on = [ module.cloud_router_connection_routing_protocols ]
+  source                            = "equinix/fabric/equinix//modules/cloud-router-route-filters"
+  connection_id                     = module.cloud_router_sp_connection.primary_connection_id
+  connection_route_filter_direction = var.route_filter_direction
+
+  route_filter_policy_name       = var.route_filter_policy_name
+  route_filter_policy_project_id = var.project_id
+  route_filter_policy_type       = var.route_filter_policy_type
+
+  route_filter_rules = var.route_filter_rules
 }
 ```
 
@@ -190,29 +337,49 @@ module "cloud_router_sp_connection" {
 
 ## Providers
 
-No providers.
+| Name | Version |
+|------|---------|
+| <a name="provider_equinix"></a> [equinix](#provider\_equinix) | >= 4.7.0 |
 
 ## Modules
 
 | Name | Source | Version |
 |------|--------|---------|
+| <a name="module_cloud_router_connection_routing_protocols"></a> [cloud\_router\_connection\_routing\_protocols](#module\_cloud\_router\_connection\_routing\_protocols) | equinix/fabric/equinix//modules/cloud-router-routing-protocols | n/a |
+| <a name="module_cloud_router_route_filters"></a> [cloud\_router\_route\_filters](#module\_cloud\_router\_route\_filters) | equinix/fabric/equinix//modules/cloud-router-route-filters | n/a |
 | <a name="module_cloud_router_sp_connection"></a> [cloud\_router\_sp\_connection](#module\_cloud\_router\_sp\_connection) | equinix/fabric/equinix//modules/cloud-router-connection | n/a |
 
 ## Resources
 
-No resources.
+| Name | Type |
+|------|------|
+| [equinix_fabric_cloud_router.test_router](https://registry.terraform.io/providers/equinix/equinix/latest/docs/resources/fabric_cloud_router) | resource |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_aside_fcr_uuid"></a> [aside\_fcr\_uuid](#input\_aside\_fcr\_uuid) | Equinix-assigned Fabric Cloud Router identifier | `string` | n/a | yes |
+| <a name="input_account_number"></a> [account\_number](#input\_account\_number) | Account number for the cloud router creation | `number` | n/a | yes |
 | <a name="input_bandwidth"></a> [bandwidth](#input\_bandwidth) | Connection bandwidth in Mbps | `number` | n/a | yes |
+| <a name="input_cloud_router_metro_code"></a> [cloud\_router\_metro\_code](#input\_cloud\_router\_metro\_code) | Name of the cloud router created for the connection | `string` | n/a | yes |
+| <a name="input_cloud_router_name"></a> [cloud\_router\_name](#input\_cloud\_router\_name) | Name of the cloud router created for the connection | `string` | n/a | yes |
+| <a name="input_cloud_router_package"></a> [cloud\_router\_package](#input\_cloud\_router\_package) | Package of the cloud router created for the connection | `string` | n/a | yes |
+| <a name="input_cloud_router_type"></a> [cloud\_router\_type](#input\_cloud\_router\_type) | Type of the cloud router created for the connection | `string` | n/a | yes |
 | <a name="input_connection_name"></a> [connection\_name](#input\_connection\_name) | Connection name. An alpha-numeric 24 characters string which can include only hyphens and underscores | `string` | n/a | yes |
 | <a name="input_connection_type"></a> [connection\_type](#input\_connection\_type) | Defines the connection type like VG\_VC, EVPL\_VC, EPL\_VC, EC\_VC, IP\_VC, ACCESS\_EPL\_VC | `string` | `""` | no |
 | <a name="input_notifications_emails"></a> [notifications\_emails](#input\_notifications\_emails) | Array of contact emails | `list(string)` | n/a | yes |
 | <a name="input_notifications_type"></a> [notifications\_type](#input\_notifications\_type) | Notification Type - ALL is the only type currently supported | `string` | `"ALL"` | no |
+| <a name="input_project_id"></a> [project\_id](#input\_project\_id) | Id of the Fabric Project for the resources to be created in | `string` | n/a | yes |
 | <a name="input_purchase_order_number"></a> [purchase\_order\_number](#input\_purchase\_order\_number) | Purchase order number | `string` | `""` | no |
+| <a name="input_route_filter_direction"></a> [route\_filter\_direction](#input\_route\_filter\_direction) | Direction of the route filtering [INBOUND or OUTBOUND] | `string` | n/a | yes |
+| <a name="input_route_filter_policy_name"></a> [route\_filter\_policy\_name](#input\_route\_filter\_policy\_name) | Name of the route filter policy that will be created in this module | `string` | n/a | yes |
+| <a name="input_route_filter_policy_type"></a> [route\_filter\_policy\_type](#input\_route\_filter\_policy\_type) | Type of the route filter policy. Should be one of: BGP\_IPv4\_PREFIX\_FILTER, BGP\_IPv6\_PREFIX\_FILTER | `string` | n/a | yes |
+| <a name="input_route_filter_rules"></a> [route\_filter\_rules](#input\_route\_filter\_rules) | List of route filter rules to add to the created route filter policy | <pre>list(object({<br>    prefix       = string,<br>    name         = optional(string),<br>    description  = optional(string),<br>    prefix_match = optional(string),<br>  }))</pre> | n/a | yes |
+| <a name="input_routing_protocol_bgp_customer_asn"></a> [routing\_protocol\_bgp\_customer\_asn](#input\_routing\_protocol\_bgp\_customer\_asn) | Customer ASN number for BGP Routing Protocol | `number` | n/a | yes |
+| <a name="input_routing_protocol_bgp_ipv4_ip"></a> [routing\_protocol\_bgp\_ipv4\_ip](#input\_routing\_protocol\_bgp\_ipv4\_ip) | Ipv4 Ip address for Cloud Router Direct Routing Protocol | `string` | n/a | yes |
+| <a name="input_routing_protocol_bgp_rp_name"></a> [routing\_protocol\_bgp\_rp\_name](#input\_routing\_protocol\_bgp\_rp\_name) | Ipv4 Ip address for Cloud Router Bgp Routing Protocol | `any` | n/a | yes |
+| <a name="input_routing_protocol_direct_ipv4_ip"></a> [routing\_protocol\_direct\_ipv4\_ip](#input\_routing\_protocol\_direct\_ipv4\_ip) | Ipv4 Ip address for Cloud Router Direct Routing Protocol | `string` | n/a | yes |
+| <a name="input_routing_protocol_direct_rp_name"></a> [routing\_protocol\_direct\_rp\_name](#input\_routing\_protocol\_direct\_rp\_name) | Name of the Direct Routing Protocol Added to the Cloud Router Connection | `string` | n/a | yes |
 | <a name="input_sts_auth_scope"></a> [sts\_auth\_scope](#input\_sts\_auth\_scope) | Equinix STS Source Token Authentication Scope in the format: roleassignments:{rootOrg} | `string` | n/a | yes |
 | <a name="input_sts_source_token"></a> [sts\_source\_token](#input\_sts\_source\_token) | Equinix STS Source Token, the ID token generated using: python -m oidcsim idtoken --sub {username} | `string` | n/a | yes |
 | <a name="input_zside_ap_profile_type"></a> [zside\_ap\_profile\_type](#input\_zside\_ap\_profile\_type) | Service profile type - L2\_PROFILE, L3\_PROFILE, ECIA\_PROFILE, ECMC\_PROFILE | `string` | `"L2_PROFILE"` | no |
