@@ -1,6 +1,7 @@
 provider "equinix" {
-  client_id     = var.equinix_client_id
-  client_secret = var.equinix_client_secret
+  client_id            = var.equinix_client_id
+  client_secret        = var.equinix_client_secret
+  equinix_api_endpoint = "https://uatapi.equinix.com"
 }
 
 module "routing_protocols" {
