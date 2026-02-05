@@ -1,0 +1,22 @@
+equinix_client_id      = "MyEquinixClientId"
+equinix_client_secret  = "MyEquinixSecret"
+
+connection_name             = "FCR_2_alibaba"
+connection_type             = "IP_VC"
+notifications_type          = "ALL"
+notifications_emails        = ["example@equinix.com"]
+bandwidth                   = 50
+purchase_order_number       = "1-323292"
+aside_fcr_uuid              = "<Fabric Cloud Router UUID>"
+zside_ap_type               = "SP"
+zside_ap_authentication_key = "<Alibaba Auth Key>"
+zside_ap_profile_type       = "L2_PROFILE"
+zside_location              = "SY"
+zside_sp_name               = "Alibaba Cloud Express Connect"
+zside_seller_region         = "ap-southeast-2"
+
+routing_protocol_direct_ipv4_ip     = "190.1.1.1/30"
+routing_protocol_direct_rp_name     = "DIRECT_RP"
+routing_protocol_bgp_rp_name        = "BGP_RP"
+routing_protocol_bgp_customer_asn   = "100"
+routing_protocol_bgp_ipv4_ip        =  "190.1.1.2"
