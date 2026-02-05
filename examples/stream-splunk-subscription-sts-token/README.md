@@ -174,6 +174,11 @@ variable "sts_auth_scope" {
   type        = string
   sensitive   = true
 }
+variable "project_id" {
+  description = "Project ID where the streams will be created"
+  type        = string
+  default     = ""
+}
 ```
 
 outputs.tf
@@ -192,8 +197,8 @@ output "splunk_subscription" {
 main.tf
 ```hcl
 provider "equinix" {
-  sts_source_token = var.sts_source_token
-  sts_auth_scope = var.sts_auth_scope
+  token_exchange_subject_token = var.sts_source_token
+  token_exchange_scope = var.sts_auth_scope
 }
 
 module "stream_splunk_subscription" {
@@ -201,6 +206,7 @@ module "stream_splunk_subscription" {
 
   stream_name        = var.stream_name
   stream_description = var.stream_description
+  project_id = var.project_id
 
   splunk_enabled           = var.splunk_enabled
   splunk_access_token      = var.splunk_access_token
@@ -242,6 +248,7 @@ No resources.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_project_id"></a> [project\_id](#input\_project\_id) | Project ID where the streams will be created | `string` | `""` | no |
 | <a name="input_splunk_access_token"></a> [splunk\_access\_token](#input\_splunk\_access\_token) | Credential for Splunk Sink Subscription | `string` | `""` | no |
 | <a name="input_splunk_description"></a> [splunk\_description](#input\_splunk\_description) | Description of the Splunk Equinix Subscription Resource | `string` | `""` | no |
 | <a name="input_splunk_enabled"></a> [splunk\_enabled](#input\_splunk\_enabled) | Boolean value indicating enablement of the Splunk Subscription | `string` | `""` | no |

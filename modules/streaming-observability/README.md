@@ -522,6 +522,11 @@ variable "grafana_metric_uri" {
   default     = ""
   sensitive   = true
 }
+variable "project_id" {
+  description = "Project ID where the streams will be created"
+  type        = string
+  default     = ""
+}
 ```
 
  #outputs.tf
@@ -603,6 +608,9 @@ resource "equinix_fabric_stream" "stream1" {
   type        = "TELEMETRY_STREAM"
   name        = var.stream_name
   description = var.stream_description
+  project = {
+    project_id = var.project_id
+  }
 }
 
 resource "equinix_fabric_stream" "stream2" {
@@ -610,6 +618,9 @@ resource "equinix_fabric_stream" "stream2" {
   type        = "TELEMETRY_STREAM"
   name        = join("-", [var.stream_name, "2"])
   description = var.stream_description
+  project = {
+    project_id = var.project_id
+  }
 }
 
 resource "equinix_fabric_stream" "stream3" {
@@ -617,6 +628,9 @@ resource "equinix_fabric_stream" "stream3" {
   type        = "TELEMETRY_STREAM"
   name        = join("-", [var.stream_name, "3"])
   description = var.stream_description
+  project = {
+    project_id = var.project_id
+  }
 }
 
 # Stream Subscription for Splunk --------------------------------------
@@ -924,6 +938,7 @@ No modules.
 | <a name="input_pagerduty_metric_exceptions"></a> [pagerduty\_metric\_exceptions](#input\_pagerduty\_metric\_exceptions) | Metrics to exclude from the possibilities available to the stream for the Subscription | `list(string)` | `[]` | no |
 | <a name="input_pagerduty_metric_selections"></a> [pagerduty\_metric\_selections](#input\_pagerduty\_metric\_selections) | Metrics to include from the possibilities available to the stream for the Subscription | `list(string)` | `[]` | no |
 | <a name="input_pagerduty_name"></a> [pagerduty\_name](#input\_pagerduty\_name) | Name of the PagerDuty Equinix Subscription Resource | `string` | `""` | no |
+| <a name="input_project_id"></a> [project\_id](#input\_project\_id) | Project ID where the streams will be created | `string` | `""` | no |
 | <a name="input_servicenow_description"></a> [servicenow\_description](#input\_servicenow\_description) | Description of the created stream(s) for servicenow in the module | `string` | `""` | no |
 | <a name="input_servicenow_enabled"></a> [servicenow\_enabled](#input\_servicenow\_enabled) | Boolean value indicating enablement of the Splunk Subscription | `string` | `""` | no |
 | <a name="input_servicenow_event_exceptions"></a> [servicenow\_event\_exceptions](#input\_servicenow\_event\_exceptions) | Events to exclude from the possibilities available to the stream for the Subscription | `list(string)` | `[]` | no |

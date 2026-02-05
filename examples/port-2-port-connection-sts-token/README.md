@@ -50,10 +50,10 @@ notifications_type    = "ALL"
 notifications_emails  = ["example@equinix.com", "test1@equinix.com"]
 bandwidth             = 50
 purchase_order_number = "1-226892"
-aside_port_name       = "test-port-1"
+aside_port_uuid       = "<Fabric Aside Port UUID>"
 aside_vlan_tag        = "1976"
 zside_ap_type         = "COLO"
-zside_port_name       = "test-port-2"
+zside_port_uuid       = "<Fabric Zside Port UUID>"
 zside_vlan_tag        = "3711"
 zside_location        = "SV"
 ```
@@ -108,9 +108,10 @@ variable "purchase_order_number" {
   type        = string
   default     = ""
 }
-variable "aside_port_name" {
-  description = "Equinix A-Side Port Name"
+variable "aside_port_uuid" {
+  description = "Equinix A-Side Port UUID"
   type        = string
+  default = ""
 }
 variable "aside_vlan_tag" {
   description = "Vlan Tag information, outer vlanSTag for QINQ connections"
@@ -129,9 +130,10 @@ variable "zside_location" {
   description = "Access point metro code"
   type        = string
 }
-variable "zside_port_name" {
-  description = "Equinix Port Name"
+variable "zside_port_uuid" {
+  description = "Equinix Port UUID"
   type        = string
+  default     = ""
 }
 variable "zside_vlan_tag" {
   description = "Vlan Tag information, outer vlanSTag for QINQ connections"
@@ -154,8 +156,8 @@ output "port_connection_id" {
 main.tf
 ```hcl
 provider "equinix" {
-  sts_source_token = var.sts_source_token
-  sts_auth_scope = var.sts_auth_scope
+  token_exchange_subject_token = var.sts_source_token
+  token_exchange_scope = var.sts_auth_scope
 }
 
 module "create_port_2_port_connection" {
@@ -169,12 +171,12 @@ module "create_port_2_port_connection" {
   purchase_order_number = var.purchase_order_number
 
   # A-side
-  aside_port_name = var.aside_port_name
+  aside_port_uuid = var.aside_port_uuid
   aside_vlan_tag  = var.aside_vlan_tag
 
   # Z-side
   zside_ap_type   = var.zside_ap_type
-  zside_port_name = var.zside_port_name
+  zside_port_uuid = var.zside_port_uuid
   zside_vlan_tag  = var.zside_vlan_tag
   zside_location  = var.zside_location
 }
@@ -204,7 +206,7 @@ No resources.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_aside_port_name"></a> [aside\_port\_name](#input\_aside\_port\_name) | Equinix A-Side Port Name | `string` | n/a | yes |
+| <a name="input_aside_port_uuid"></a> [aside\_port\_uuid](#input\_aside\_port\_uuid) | Equinix A-Side Port UUID | `string` | `""` | no |
 | <a name="input_aside_vlan_inner_tag"></a> [aside\_vlan\_inner\_tag](#input\_aside\_vlan\_inner\_tag) | Vlan Inner Tag information, inner vlanCTag for QINQ connections | `string` | `""` | no |
 | <a name="input_aside_vlan_tag"></a> [aside\_vlan\_tag](#input\_aside\_vlan\_tag) | Vlan Tag information, outer vlanSTag for QINQ connections | `string` | n/a | yes |
 | <a name="input_bandwidth"></a> [bandwidth](#input\_bandwidth) | Connection bandwidth in Mbps | `number` | n/a | yes |
@@ -217,7 +219,7 @@ No resources.
 | <a name="input_sts_source_token"></a> [sts\_source\_token](#input\_sts\_source\_token) | Equinix STS Source Token, the ID token generated using: python -m oidcsim idtoken --sub {username} | `string` | n/a | yes |
 | <a name="input_zside_ap_type"></a> [zside\_ap\_type](#input\_zside\_ap\_type) | Access point type - COLO, VD, VG, SP, IGW, SUBNET, GW | `string` | n/a | yes |
 | <a name="input_zside_location"></a> [zside\_location](#input\_zside\_location) | Access point metro code | `string` | n/a | yes |
-| <a name="input_zside_port_name"></a> [zside\_port\_name](#input\_zside\_port\_name) | Equinix Port Name | `string` | n/a | yes |
+| <a name="input_zside_port_uuid"></a> [zside\_port\_uuid](#input\_zside\_port\_uuid) | Equinix Port UUID | `string` | `""` | no |
 | <a name="input_zside_vlan_tag"></a> [zside\_vlan\_tag](#input\_zside\_vlan\_tag) | Vlan Tag information, outer vlanSTag for QINQ connections | `string` | n/a | yes |
 
 ## Outputs
