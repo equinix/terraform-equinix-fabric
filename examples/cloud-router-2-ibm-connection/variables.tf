@@ -106,3 +106,22 @@ variable "ibm_gateway_metered" {
   type        = bool
   default     = true
 }
+variable "routing_protocol_direct_rp_name" {
+  description = "Name of the Direct Routing Protocol Added to the Cloud Router Connection"
+  type        = string
+}
+variable "routing_protocol_direct_ipv4_ip" {
+  description = "Ipv4 Ip address for Cloud Router Direct Routing Protocol"
+  type        = string
+}
+variable "routing_protocol_bgp_rp_name" {
+  description = "Ipv4 Ip address for Cloud Router Bgp Routing Protocol"
+}
+variable "routing_protocol_bgp_ipv4_ip" {
+  description = "Ipv4 Ip address for Cloud Router Direct Routing Protocol"
+  type        = string
+}
+variable "routing_protocol_bgp_customer_asn" {
+  description = "Customer ASN number for BGP Routing Protocol"
+  type        = number
+}

@@ -53,3 +53,19 @@ resource "ibm_dl_gateway_action" "test_dl_gateway_action" {
   metered        = var.ibm_gateway_metered
   resource_group = data.ibm_resource_group.rg.id
 }
+
+resource "time_sleep" "wait_provider_approval" {
+  depends_on      = [module.create_fcr_2_ibm2_connection]
+  create_duration = "4m"
+}
+
+module "cloud_router_connection_routing_protocols" {
+  source                 = "../../modules/cloud-router-routing-protocols"
+  depends_on             = [resource.time_sleep.wait_dl_connection, data.ibm_dl_gateway.test_ibm_dl_gateway, data.ibm_resource_group.rg, resource.ibm_dl_gateway_action.test_dl_gateway_action, resource.time_sleep.wait_provider_approval]
+  connection_uuid        = module.create_fcr_2_ibm2_connection.primary_connection_id
+  direct_rp_name         = var.routing_protocol_direct_rp_name
+  direct_equinix_ipv4_ip = var.routing_protocol_direct_ipv4_ip
+  bgp_rp_name            = var.routing_protocol_bgp_rp_name
+  bgp_customer_peer_ipv4 = var.routing_protocol_bgp_ipv4_ip
+  bgp_customer_asn       = var.routing_protocol_bgp_customer_asn
+}
