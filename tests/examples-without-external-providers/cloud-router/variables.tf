@@ -46,3 +46,7 @@ variable "account_number" {
   type        = string
   sensitive   = true
 }
+variable "term_length" {
+  description = "Term length in months"
+  type        = number
+}

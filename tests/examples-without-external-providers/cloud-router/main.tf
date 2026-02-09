@@ -3,21 +3,22 @@ provider "equinix" {
   client_secret = var.equinix_client_secret
 }
 
-resource "equinix_fabric_cloud_router" "test"{
+resource "equinix_fabric_cloud_router" "test" {
   name = var.fcr_name
   type = var.fcr_type
-  notifications{
+  notifications {
     type   = var.notifications_type
     emails = var.notifications_emails
   }
   order {
     purchase_order_number = var.purchase_order_number
+    term_length           = var.term_length
   }
   location {
     metro_code = var.fcr_location
   }
   package {
-    code =var.fcr_package
+    code = var.fcr_package
   }
   project {
     project_id = var.project_id
