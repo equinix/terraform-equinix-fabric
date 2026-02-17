@@ -3,7 +3,7 @@ module github.com/equinix/terraform-equinix-fabric
 go 1.21
 
 require (
-	github.com/equinix/equinix-sdk-go v0.50.0
+	github.com/equinix/equinix-sdk-go v0.63.0
 	github.com/equinix/oauth2-go v1.0.0
 	github.com/gruntwork-io/terratest v0.48.2
 	github.com/hashicorp/go-retryablehttp v0.7.7
@@ -53,7 +53,7 @@ require (
 	golang.org/x/crypto v0.32.0 // indirect
 	golang.org/x/mod v0.18.0 // indirect
 	golang.org/x/net v0.34.0 // indirect
-	golang.org/x/oauth2 v0.24.0 // indirect
+	golang.org/x/oauth2 v0.26.0 // indirect
 	golang.org/x/sync v0.10.0 // indirect
 	golang.org/x/sys v0.29.0 // indirect
 	golang.org/x/text v0.21.0 // indirect
