@@ -199,7 +199,7 @@ func TestVirtualDevice2AzureCreateConnection_PNFV(t *testing.T) {
 func TestVirtualDevice2PortCreateConnection_PNFV(t *testing.T) {
 
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
-		TerraformDir: "../../tests/examples-without-external-providers/virtual-device-2-azure-connection",
+		TerraformDir: "../../tests/examples-without-external-providers/virtual-device-2-port-connection",
 	})
 
 	defer terraform.Destroy(t, terraformOptions)
@@ -319,9 +319,9 @@ func TestPort2PortCreateConnection_STS_PFCR(t *testing.T) {
 
 	terraform.InitAndApply(t, terraformOptions)
 	output := terraform.Output(t, terraformOptions, "port_connection_id")
-  assert.NotNil(t, output)
+	assert.NotNil(t, output)
 }
-  
+
 func TestStreamServicenowSubscription_PFCR(t *testing.T) {
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
 		TerraformDir: "../../examples/stream-servicenow-subscription",
