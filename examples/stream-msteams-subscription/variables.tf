@@ -68,3 +68,9 @@ variable "msteams_uri" {
   default     = ""
   sensitive   = true
 }
+
+variable "project_id" {
+  description = "Project ID where the streams will be created"
+  type        = string
+  default     = ""
+}

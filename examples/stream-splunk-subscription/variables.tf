@@ -8,6 +8,11 @@ variable "equinix_client_secret" {
   type        = string
   sensitive   = true
 }
+variable "project_id" {
+  description = "Equinix Project ID"
+  type        = string
+  default     = ""
+}
 
 variable "splunk_access_token" {
   description = "Credential for Splunk Sink Subscription"

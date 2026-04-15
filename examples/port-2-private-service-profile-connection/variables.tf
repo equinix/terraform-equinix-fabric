@@ -62,4 +62,10 @@ variable "zside_location" {
 variable "zside_sp_name" {
   description = "Equinix Service Profile Name"
   type        = string
+  default     = ""
+}
+variable "zside_sp_uuid" {
+  description = "Equinix Service Profile UUID - use instead of zside_sp_name for private service profiles"
+  type        = string
+  default     = ""
 }
