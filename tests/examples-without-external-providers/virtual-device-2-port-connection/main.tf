@@ -2,6 +2,11 @@ provider "equinix" {
   client_id     = var.equinix_client_id
   client_secret = var.equinix_client_secret
 }
+
+module "random_vlan_tag" {
+  source = "../../../modules/random-vlan-tag"
+}
+
 module "create_virtual_device_2_port_connection" {
   source = "../../../modules/virtual-device-connection"
 
@@ -18,7 +23,7 @@ module "create_virtual_device_2_port_connection" {
 
   # Z-side
   zside_ap_type   = var.zside_ap_type
-  zside_vlan_tag  = var.zside_vlan_tag
+  zside_vlan_tag  = module.random_vlan_tag.result_string
   zside_location  = var.zside_location
   zside_port_name = var.zside_port_name
 }

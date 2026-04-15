@@ -49,10 +49,6 @@ variable "zside_ap_type" {
   description = "Access point type - COLO, VD, VG, SP, IGW, SUBNET, GW"
   type        = string
 }
-variable "zside_vlan_tag" {
-  description = "VLan Tag information for DOT1Q connections, and the outer VLan tag for QINQ connections"
-  type        = string
-}
 variable "zside_location" {
   description = "Access point metro code"
   type        = string
