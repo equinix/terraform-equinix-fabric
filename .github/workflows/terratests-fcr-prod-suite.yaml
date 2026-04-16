@@ -124,7 +124,8 @@ jobs:
               - color: ${{ job.status == 'success' && 'good' || job.status == 'failure' && 'danger' || 'warning' }}
                 text: |
                     *Repository:* <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|${{ github.repository }}>
-                    *Workflow:* ${{ github.workflow }}           
+                    *Workflow:* ${{ github.workflow }}
+                    *Branch:* ${{ github.ref_name }}
                     *Status:* ${{ job.status }}
                     *Results:* ${{ steps.slack_message.outputs.message }}
                     *Triggered by:* <@${{ github.actor }}>
