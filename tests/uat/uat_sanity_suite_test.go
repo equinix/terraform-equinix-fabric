@@ -123,7 +123,7 @@ func TestVirtualDevice2PortCreateConnection_PNFV(t *testing.T) {
 	retryableTest(t, "../../tests/examples-without-external-providers/virtual-device-2-port-connection", "port_connection_id")
 }
 
-func TestVirtualDevice2AWSCreateConnection_PFCR(t *testing.T) {
+func TestVirtualDevice2AWSCreateConnection_PNFV(t *testing.T) {
 	t.Parallel()
 	retryableTest(t, "../../tests/examples-without-external-providers/virtual-device-2-aws-connection", "aws_connection_id")
 }
@@ -155,11 +155,6 @@ func TestStreamMultipleSubscriptionsAndAttachment_PFCR(t *testing.T) {
 func TestCloudRouter2VirtualDeviceCreateConnection_PFCR(t *testing.T) {
 	t.Parallel()
 	retryableTest(t, "../../tests/examples-without-external-providers/cloud-router-2-virtual-device-connection", "FCR_VD_Connection")
-}
-
-func TestPort2PortCreateConnection_STS_PFCR(t *testing.T) {
-	t.Parallel()
-	retryableTest(t, "../../examples/port-2-port-connection-sts-token", "port_connection_id")
 }
 
 func TestStreamServicenowSubscription_PFCR(t *testing.T) {

@@ -15,6 +15,7 @@ jobs:
       TEST_DATA_UAT_PORT_2_ALIBABA_CONNECTION: ${{ secrets.TEST_DATA_UAT_PORT_2_ALIBABA_CONNECTION }}
       TEST_DATA_UAT_VIRTUAL_DEVICE_2_AZURE_CONNECTION: ${{ secrets.TEST_DATA_UAT_VIRTUAL_DEVICE_2_AZURE_CONNECTION }}
       TEST_DATA_UAT_VIRTUAL_DEVICE_2_PORT_CONNECTION: ${{ secrets.TEST_DATA_UAT_VIRTUAL_DEVICE_2_PORT_CONNECTION }}
+      TEST_DATA_UAT_VIRTUAL_DEVICE_2_AWS_CONNECTION: ${{ secrets.TEST_DATA_UAT_VIRTUAL_DEVICE_2_AWS_CONNECTION }}
 
     steps:
       - name: Check out code into the Go module directory
@@ -42,6 +43,7 @@ jobs:
           echo $TEST_DATA_UAT_PORT_2_ALIBABA_CONNECTION >> "./examples/port-2-alibaba-connection/terraform.tfvars.json"
           echo $TEST_DATA_UAT_VIRTUAL_DEVICE_2_AZURE_CONNECTION >> "./tests/examples-without-external-providers/virtual-device-2-azure-connection/terraform.tfvars.json"
           echo $TEST_DATA_UAT_VIRTUAL_DEVICE_2_PORT_CONNECTION >> "./tests/examples-without-external-providers/virtual-device-2-port-connection/terraform.tfvars.json"
+          echo $TEST_DATA_UAT_VIRTUAL_DEVICE_2_AWS_CONNECTION >> "./tests/examples-without-external-providers/virtual-device-2-aws-connection/terraform.tfvars.json"
 
       - name: Run Go Tests
         run:
@@ -139,7 +141,6 @@ jobs:
       TEST_DATA_UAT_STREAM_WEBHOOK_SUBSCRIPTION: ${{ secrets.TEST_DATA_UAT_STREAM_WEBHOOK_SUBSCRIPTION }}
       TEST_DATA_UAT_STREAM_GRAFANA_SUBSCRIPTION: ${{ secrets.TEST_DATA_UAT_STREAM_GRAFANA_SUBSCRIPTION }}
       TEST_DATA_UAT_STREAM_MULTIPLE_SUBSCRIPTIONS_AND_ATTACHMENT: ${{ secrets.TEST_DATA_UAT_STREAM_MULTIPLE_SUBSCRIPTIONS_AND_ATTACHMENT }}
-      TEST_DATA_UAT_VIRTUAL_DEVICE_2_AWS_CONNECTION: ${{secrets.TEST_DATA_UAT_VIRTUAL_DEVICE_2_AWS_CONNECTION}}
 
     steps:
       - name: Check out code into the Go module directory
@@ -177,7 +178,6 @@ jobs:
           echo $TEST_DATA_UAT_CLOUD_ROUTER_2_SERVICE_PROFILE_CONNECTION >> "./examples/cloud-router-2-service-profile-connection/terraform.tfvars.json"
           echo $TEST_DATA_UAT_CLOUD_ROUTER_2_WAN_CONNECTION >> "./examples/cloud-router-2-wan-connection/terraform.tfvars.json"
           echo $TEST_DATA_UAT_CLOUD_ROUTER_2_VIRTUAL_DEVICE_CONNECTION >> "./examples/cloud-router-2-virtual-device-connection/terraform.tfvars.json"
-          echo $TEST_DATA_UAT_VIRTUAL_DEVICE_2_AWS_CONNECTION >> "./tests/examples-without-external-providers/virtual-device-2-aws-connection/terraform.tfvars.json"
           
           echo $TEST_DATA_UAT_STREAM_DATADOG_SUBSCRIPTION >> "./examples/stream-datadog-subscription/terraform.tfvars.json"
           echo $TEST_DATA_UAT_STREAM_MSTEAMS_SUBSCRIPTION >> "./examples/stream-msteams-subscription/terraform.tfvars.json"
