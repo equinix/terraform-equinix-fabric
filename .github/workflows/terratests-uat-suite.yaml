@@ -269,6 +269,13 @@ jobs:
           echo "message<<EOF" >> $GITHUB_OUTPUT
           echo "$message" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
+          
+          # Set color based on test errors (0 errors = green, otherwise red)
+          if [[ "$errors" -eq 0 ]]; then
+            echo "color=good" >> $GITHUB_OUTPUT
+          else
+            echo "color=danger" >> $GITHUB_OUTPUT
+          fi
 
       - name: Notify Slack
         uses: slackapi/slack-github-action@v2
@@ -280,12 +287,12 @@ jobs:
             channel: digin-panthers-gha-automation
 
             attachments:
-              - color: ${{ job.status == 'success' && 'good' || job.status == 'failure' && 'danger' || 'warning' }}
+              - color: ${{ steps.slack_message.outputs.color }}
                 text: |
                     *Repository:* <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|${{ github.repository }}>
                     *Workflow:* ${{ github.workflow }}
-                    *Branch:* ${{ github.ref_name }}
-                    *Status:* ${{ job.status }}
+                    *Branch:* ${{ github.event.pull_request.head.ref || github.ref_name }}
+                    *Status:* ${{ steps.slack_message.outputs.color == 'good' && 'success' || 'failure' }}
                     ${{ steps.slack_message.outputs.message }}
                     *Triggered by:* <@${{ github.actor }}>
                     *Responsibility:* <@U06QU7NE0G7>
