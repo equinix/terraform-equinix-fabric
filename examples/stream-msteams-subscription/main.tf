@@ -8,6 +8,7 @@ module "stream_msteams_subscription" {
 
   stream_name        = var.stream_name
   stream_description = var.stream_description
+  project_id         = var.project_id
 
   msteams_name              = var.msteams_name
   msteams_description       = var.msteams_description

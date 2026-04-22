@@ -46,7 +46,7 @@ data "equinix_fabric_ports" "aside_secondary_port" {
 }
 
 data "equinix_fabric_service_profiles" "zside_sp" {
-  count = var.zside_ap_type == "SP" ? 1 : 0
+  count = var.zside_ap_type == "SP" && var.zside_sp_name != "" ? 1 : 0
   filter {
     property = "/name"
     operator = "="
@@ -87,7 +87,7 @@ resource "equinix_fabric_connection" "primary_port_connection" {
   redundancy { priority = "PRIMARY" }
   order {
     purchase_order_number = var.purchase_order_number != "" ? var.purchase_order_number : null
-    term_length = var.term_length >= 1 ? var.term_length: null
+    term_length           = var.term_length >= 1 ? var.term_length : null
   }
 
   additional_info = var.additional_info != [] ? var.additional_info : null
@@ -120,7 +120,7 @@ resource "equinix_fabric_connection" "primary_port_connection" {
         seller_region      = var.zside_seller_region != "" ? var.zside_seller_region : null
         profile {
           type = var.zside_ap_profile_type
-          uuid = data.equinix_fabric_service_profiles.zside_sp[0].data.0.uuid
+          uuid = var.zside_sp_uuid != "" ? var.zside_sp_uuid : data.equinix_fabric_service_profiles.zside_sp[0].data.0.uuid
         }
         location {
           metro_code = var.zside_location
@@ -197,7 +197,7 @@ resource "equinix_fabric_connection" "secondary_port_connection" {
   }
   order {
     purchase_order_number = var.purchase_order_number != "" ? var.purchase_order_number : null
-    term_length = var.term_length >= 1 ? var.term_length: null
+    term_length           = var.term_length >= 1 ? var.term_length : null
   }
 
   additional_info = var.additional_info != [] ? var.additional_info : null
@@ -232,7 +232,7 @@ resource "equinix_fabric_connection" "secondary_port_connection" {
         seller_region      = var.zside_seller_region
         profile {
           type = var.zside_ap_profile_type
-          uuid = data.equinix_fabric_service_profiles.zside_sp[0].data.0.uuid
+          uuid = var.zside_sp_uuid != "" ? var.zside_sp_uuid : data.equinix_fabric_service_profiles.zside_sp[0].data.0.uuid
         }
         location {
           metro_code = var.zside_location

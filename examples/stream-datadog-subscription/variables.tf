@@ -89,3 +89,9 @@ variable "datadog_name" {
   type        = string
   default     = ""
 }
+
+variable "project_id" {
+  description = "Project ID where the streams will be created"
+  type        = string
+  default     = ""
+}

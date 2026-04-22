@@ -8,6 +8,7 @@ module "stream_datadog_subscription" {
 
   stream_name        = var.stream_name
   stream_description = var.stream_description
+  project_id         = var.project_id
 
   datadog_name              = var.datadog_name
   datadog_description       = var.datadog_description

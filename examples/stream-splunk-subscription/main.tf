@@ -8,6 +8,7 @@ module "stream_splunk_subscription" {
 
   stream_name        = var.stream_name
   stream_description = var.stream_description
+  project_id         = var.project_id
 
   splunk_enabled           = var.splunk_enabled
   splunk_access_token      = var.splunk_access_token

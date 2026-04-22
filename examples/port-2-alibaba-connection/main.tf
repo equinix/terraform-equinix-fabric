@@ -3,6 +3,10 @@ provider "equinix" {
   client_secret = var.equinix_client_secret
 }
 
+module "random_vlan_tag" {
+  source = "../../modules/random-vlan-tag"
+}
+
 module "create_port_2_alibaba_connection" {
   source = "../../modules/port-connection"
 
@@ -15,8 +19,8 @@ module "create_port_2_alibaba_connection" {
   project_id            = var.project_id
 
   # A-side
-  aside_port_name = var.aside_port_name
-  aside_vlan_tag  = var.aside_vlan_tag
+  aside_port_uuid = var.aside_port_uuid
+  aside_vlan_tag  = module.random_vlan_tag.result_string
 
   # Z-side
   zside_ap_type               = var.zside_ap_type

@@ -8,6 +8,7 @@ module "stream_pagerduty_subscription" {
 
   stream_name        = var.stream_name
   stream_description = var.stream_description
+  project_id         = var.project_id
 
   pagerduty_name              = var.pagerduty_name
   pagerduty_description       = var.pagerduty_description

@@ -8,6 +8,7 @@ module "stream_subscriptions" {
 
   stream_name        = var.stream_name
   stream_description = var.stream_description
+  project_id         = var.project_id
 
   slack_name              = var.slack_name
   slack_description       = var.slack_description

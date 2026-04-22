@@ -6,8 +6,9 @@ provider "equinix" {
 module "stream_grafana_subscription" {
   source = "../../modules/streaming-observability"
 
-  stream_name               = var.stream_name
-  stream_description        = var.stream_description
+  stream_name        = var.stream_name
+  stream_description = var.stream_description
+  project_id         = var.project_id
 
   grafana_name              = var.grafana_name
   grafana_description       = var.grafana_description

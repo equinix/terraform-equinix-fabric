@@ -22,4 +22,5 @@ module "create_port_2_private_sp_connection" {
   zside_ap_profile_type = var.zside_ap_profile_type
   zside_location        = var.zside_location
   zside_sp_name         = var.zside_sp_name
+  zside_sp_uuid         = var.zside_sp_uuid
 }

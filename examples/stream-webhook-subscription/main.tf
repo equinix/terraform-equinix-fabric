@@ -6,8 +6,9 @@ provider "equinix" {
 module "stream_webhook_subscription" {
   source = "../../modules/streaming-observability"
 
-  stream_name               = var.stream_name
-  stream_description        = var.stream_description
+  stream_name        = var.stream_name
+  stream_description = var.stream_description
+  project_id         = var.project_id
 
   webhook_name              = var.webhook_name
   webhook_description       = var.webhook_description
@@ -17,6 +18,6 @@ module "stream_webhook_subscription" {
   webhook_metric_exceptions = var.webhook_metric_exceptions
   webhook_metric_selections = var.webhook_metric_selections
   webhook_event_uri         = var.webhook_event_uri
-  webhook_metric_uri         = var.webhook_metric_uri
+  webhook_metric_uri        = var.webhook_metric_uri
   webhook_format            = var.webhook_format
 }

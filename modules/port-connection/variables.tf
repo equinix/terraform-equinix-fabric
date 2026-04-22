@@ -71,7 +71,7 @@ variable "aside_vlan_tag" {
 variable "aside_secondary_vlan_tag" {
   description = "Secondary VLan Tag information for DOT1Q connections, and the outer VLan tag for QINQ connections)"
   type        = string
-  default = ""
+  default     = ""
 }
 variable "aside_vlan_inner_tag" {
   description = "VLan Tag information for QINQ connections"
@@ -105,6 +105,11 @@ variable "zside_location" {
 }
 variable "zside_sp_name" {
   description = "Equinix Service Profile Name"
+  type        = string
+  default     = ""
+}
+variable "zside_sp_uuid" {
+  description = "Equinix Service Profile UUID - use instead of zside_sp_name for private service profiles"
   type        = string
   default     = ""
 }
