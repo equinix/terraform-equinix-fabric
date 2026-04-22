@@ -170,6 +170,12 @@ variable "pagerduty_name" {
   type        = string
   default     = ""
 }
+
+variable "project_id" {
+  description = "Project ID where the streams will be created"
+  type        = string
+  default     = ""
+}
 ```
 
 outputs.tf
@@ -197,6 +203,7 @@ module "stream_pagerduty_subscription" {
 
   stream_name        = var.stream_name
   stream_description = var.stream_description
+  project_id         = var.project_id
 
   pagerduty_name              = var.pagerduty_name
   pagerduty_description       = var.pagerduty_description
@@ -252,6 +259,7 @@ No resources.
 | <a name="input_pagerduty_metric_exceptions"></a> [pagerduty\_metric\_exceptions](#input\_pagerduty\_metric\_exceptions) | Metrics to exclude from the possibilities available to the stream for the Subscription | `list(string)` | `[]` | no |
 | <a name="input_pagerduty_metric_selections"></a> [pagerduty\_metric\_selections](#input\_pagerduty\_metric\_selections) | Metrics to include from the possibilities available to the stream for the Subscription | `list(string)` | `[]` | no |
 | <a name="input_pagerduty_name"></a> [pagerduty\_name](#input\_pagerduty\_name) | Name of the PagerDuty Subscription Equinix Resource | `string` | `""` | no |
+| <a name="input_project_id"></a> [project\_id](#input\_project\_id) | Project ID where the streams will be created | `string` | `""` | no |
 | <a name="input_stream_description"></a> [stream\_description](#input\_stream\_description) | Description of the created stream(s) in the module | `string` | n/a | yes |
 | <a name="input_stream_name"></a> [stream\_name](#input\_stream\_name) | Name (and name prefix) for the created stream(s) in the module | `string` | n/a | yes |
 

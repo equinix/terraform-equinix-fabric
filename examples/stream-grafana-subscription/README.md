@@ -93,6 +93,11 @@ variable "equinix_client_secret" {
   type        = string
   sensitive   = true
 }
+variable "project_id" {
+  description = "Equinix Project ID"
+  type        = string
+  default     = ""
+}
 variable "stream_description" {
   description = "Description of the created stream(s) in the module"
   type        = string
@@ -190,8 +195,9 @@ provider "equinix" {
 module "stream_grafana_subscription" {
   source = "equinix/fabric/equinix//modules/streaming-observability"
 
-  stream_name               = var.stream_name
-  stream_description        = var.stream_description
+  stream_name        = var.stream_name
+  stream_description = var.stream_description
+  project_id         = var.project_id
 
   grafana_name              = var.grafana_name
   grafana_description       = var.grafana_description
@@ -245,6 +251,7 @@ No resources.
 | <a name="input_grafana_metric_selections"></a> [grafana\_metric\_selections](#input\_grafana\_metric\_selections) | Events to include from the possibilities available to the stream for the Subscription | `list(string)` | `[]` | no |
 | <a name="input_grafana_metric_uri"></a> [grafana\_metric\_uri](#input\_grafana\_metric\_uri) | URI for the streaming messages to be sent to for grafana | `string` | n/a | yes |
 | <a name="input_grafana_name"></a> [grafana\_name](#input\_grafana\_name) | Name of the grafana Equinix Subscription Resource | `string` | `""` | no |
+| <a name="input_project_id"></a> [project\_id](#input\_project\_id) | Equinix Project ID | `string` | `""` | no |
 | <a name="input_stream_description"></a> [stream\_description](#input\_stream\_description) | Description of the created stream(s) in the module | `string` | n/a | yes |
 | <a name="input_stream_name"></a> [stream\_name](#input\_stream\_name) | Name (and name prefix) for the created stream(s) in the module | `string` | n/a | yes |
 
