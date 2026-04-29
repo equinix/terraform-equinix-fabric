@@ -7,7 +7,7 @@ require (
 	github.com/equinix/oauth2-go v1.0.0
 	github.com/gruntwork-io/terratest v0.48.2
 	github.com/hashicorp/go-retryablehttp v0.7.7
-	github.com/stretchr/testify v1.10.0
+	github.com/stretchr/testify v1.11.1
 )
 
 require (
