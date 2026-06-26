@@ -258,9 +258,14 @@ resource "equinix_fabric_stream_subscription" "grafana" {
   sink = {
     type = "WEBHOOK"
     settings = {
-      format     = var.grafana_format
+      format     = "OPENTELEMETRY"
       event_uri  = var.grafana_event_uri != "" ? var.grafana_event_uri : null
       metric_uri = var.grafana_metric_uri != "" ? var.grafana_metric_uri : null
+    }
+
+    credential = {
+        type    = "API_KEY"
+        api_key = var.grafana_api_key
     }
   }
 }

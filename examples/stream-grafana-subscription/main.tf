@@ -19,5 +19,5 @@ module "stream_grafana_subscription" {
   grafana_metric_selections = var.grafana_metric_selections
   grafana_event_uri         = var.grafana_event_uri
   grafana_metric_uri        = var.grafana_metric_uri
-  grafana_format            = var.grafana_format
+  grafana_api_key           = var.grafana_api_key
 }

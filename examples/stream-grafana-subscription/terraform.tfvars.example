@@ -20,4 +20,3 @@ grafana_metric_exceptions = ["equinix.fabric.connection.*"]
 grafana_metric_selections = ["equinix.fabric.port.*"]
 grafana_event_uri         = "<grafana_event_uri>"
 grafana_metric_uri        = "<grafana_metric_uri>"
-grafana_format            = "<grafana_format>"

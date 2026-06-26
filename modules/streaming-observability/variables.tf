@@ -472,6 +472,7 @@ variable "grafana_format" {
   description = "Format for grafana payload"
   type        = string
   default     = "JSON"
+  deprecated = "No longer required to be provided"
 }
 variable "grafana_metric_uri" {
   description = "URI endpoint for grafana metrics"
@@ -483,4 +484,10 @@ variable "project_id" {
   description = "Project ID where the streams will be created"
   type        = string
   default     = ""
+}
+variable "grafana_api_key" {
+  description = "API Key for Grafana account"
+  type        = string
+  default     = ""
+  sensitive   = true
 }
