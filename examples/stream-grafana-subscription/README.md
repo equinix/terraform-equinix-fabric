@@ -65,7 +65,6 @@ grafana_metric_exceptions = ["equinix.fabric.connection.*"]
 grafana_metric_selections = ["equinix.fabric.port.*"]
 grafana_event_uri         = "<grafana_event_uri>"
 grafana_metric_uri        = "<grafana_metric_uri>"
-grafana_format            = "<grafana_format>"
 ```
 
 versions.tf
@@ -92,6 +91,11 @@ variable "equinix_client_secret" {
   description = "Equinix client secret ID (consumer secret), obtained after registering app in the developer platform"
   type        = string
   sensitive   = true
+}
+variable "project_id" {
+  description = "Equinix Project ID"
+  type        = string
+  default     = ""
 }
 variable "stream_description" {
   description = "Description of the created stream(s) in the module"
@@ -153,6 +157,7 @@ variable "grafana_format" {
   description = "Format for grafana payload"
   type        = string
   default     = null
+  deprecated  = "No longer required to be provided"
 }
 variable "grafana_filters" {
   description = "Filters for the Grafana Subscription"
@@ -165,6 +170,11 @@ variable "grafana_filters" {
   default = []
 }
 
+variable "grafana_api_key" {
+  description = "API Key for Grafana account"
+  type        = string
+  sensitive   = true
+}
 ```
 
 outputs.tf
@@ -190,8 +200,9 @@ provider "equinix" {
 module "stream_grafana_subscription" {
   source = "equinix/fabric/equinix//modules/streaming-observability"
 
-  stream_name               = var.stream_name
-  stream_description        = var.stream_description
+  stream_name        = var.stream_name
+  stream_description = var.stream_description
+  project_id         = var.project_id
 
   grafana_name              = var.grafana_name
   grafana_description       = var.grafana_description
@@ -202,7 +213,7 @@ module "stream_grafana_subscription" {
   grafana_metric_selections = var.grafana_metric_selections
   grafana_event_uri         = var.grafana_event_uri
   grafana_metric_uri        = var.grafana_metric_uri
-  grafana_format            = var.grafana_format
+  grafana_api_key           = var.grafana_api_key
 }
 ```
 
@@ -233,6 +244,7 @@ No resources.
 |------|-------------|------|---------|:--------:|
 | <a name="input_equinix_client_id"></a> [equinix\_client\_id](#input\_equinix\_client\_id) | Equinix client ID (consumer key), obtained after registering app in the developer platform | `string` | n/a | yes |
 | <a name="input_equinix_client_secret"></a> [equinix\_client\_secret](#input\_equinix\_client\_secret) | Equinix client secret ID (consumer secret), obtained after registering app in the developer platform | `string` | n/a | yes |
+| <a name="input_grafana_api_key"></a> [grafana\_api\_key](#input\_grafana\_api\_key) | API Key for Grafana account | `string` | n/a | yes |
 | <a name="input_grafana_description"></a> [grafana\_description](#input\_grafana\_description) | Description for the grafana Subscription Resource | `string` | `""` | no |
 | <a name="input_grafana_enabled"></a> [grafana\_enabled](#input\_grafana\_enabled) | Boolean value enabling grafana Sink Subscription | `string` | `""` | no |
 | <a name="input_grafana_event_exceptions"></a> [grafana\_event\_exceptions](#input\_grafana\_event\_exceptions) | Events to exclude from the possibilities available to the stream for the Subscription | `list(string)` | `[]` | no |
@@ -245,6 +257,7 @@ No resources.
 | <a name="input_grafana_metric_selections"></a> [grafana\_metric\_selections](#input\_grafana\_metric\_selections) | Events to include from the possibilities available to the stream for the Subscription | `list(string)` | `[]` | no |
 | <a name="input_grafana_metric_uri"></a> [grafana\_metric\_uri](#input\_grafana\_metric\_uri) | URI for the streaming messages to be sent to for grafana | `string` | n/a | yes |
 | <a name="input_grafana_name"></a> [grafana\_name](#input\_grafana\_name) | Name of the grafana Equinix Subscription Resource | `string` | `""` | no |
+| <a name="input_project_id"></a> [project\_id](#input\_project\_id) | Equinix Project ID | `string` | `""` | no |
 | <a name="input_stream_description"></a> [stream\_description](#input\_stream\_description) | Description of the created stream(s) in the module | `string` | n/a | yes |
 | <a name="input_stream_name"></a> [stream\_name](#input\_stream\_name) | Name (and name prefix) for the created stream(s) in the module | `string` | n/a | yes |
 

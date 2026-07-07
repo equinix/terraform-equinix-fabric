@@ -151,6 +151,12 @@ variable "msteams_uri" {
   default     = ""
   sensitive   = true
 }
+
+variable "project_id" {
+  description = "Project ID where the streams will be created"
+  type        = string
+  default     = ""
+}
 ```
 
 outputs.tf
@@ -178,6 +184,7 @@ module "stream_msteams_subscription" {
 
   stream_name        = var.stream_name
   stream_description = var.stream_description
+  project_id         = var.project_id
 
   msteams_name              = var.msteams_name
   msteams_description       = var.msteams_description
@@ -227,6 +234,7 @@ No resources.
 | <a name="input_msteams_metric_selections"></a> [msteams\_metric\_selections](#input\_msteams\_metric\_selections) | Metrics to include from the possibilities available to the stream for the Subscription | `list(string)` | `[]` | no |
 | <a name="input_msteams_name"></a> [msteams\_name](#input\_msteams\_name) | Name of the Microsoft Teams Subscription Equinix Resource | `string` | `""` | no |
 | <a name="input_msteams_uri"></a> [msteams\_uri](#input\_msteams\_uri) | Microsoft Teams URI for destination of streaming messages | `string` | `""` | no |
+| <a name="input_project_id"></a> [project\_id](#input\_project\_id) | Project ID where the streams will be created | `string` | `""` | no |
 | <a name="input_stream_description"></a> [stream\_description](#input\_stream\_description) | Description of the created stream(s) in the module | `string` | n/a | yes |
 | <a name="input_stream_name"></a> [stream\_name](#input\_stream\_name) | Name (and name prefix) for the created stream(s) in the module | `string` | n/a | yes |
 
