@@ -73,6 +73,7 @@ variable "grafana_format" {
   description = "Format for grafana payload"
   type        = string
   default     = null
+  deprecated  = "No longer required to be provided"
 }
 variable "grafana_filters" {
   description = "Filters for the Grafana Subscription"
@@ -85,3 +86,8 @@ variable "grafana_filters" {
   default = []
 }
 
+variable "grafana_api_key" {
+  description = "API Key for Grafana account"
+  type        = string
+  sensitive   = true
+}
