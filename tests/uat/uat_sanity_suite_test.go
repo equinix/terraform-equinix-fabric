@@ -28,16 +28,14 @@ func writeEnvToFile(envVar, filePath string) error {
 
 // retryableTest wraps a terraform test with retry logic
 func retryableTest(t *testing.T, terraformDir string, tfvarEnv string, outputName string) {
-	var terraformOptions *terraform.Options
+	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
+			TerraformDir: terraformDir,
+	})
 
 	writeEnvToFile(tfvarEnv, terraformDir+"/terraform.tfvars.json")
 
 	description := "Running terraform test with retry"
 	retry.DoWithRetry(t, description, maxRetries, sleepBetween, func() (string, error) {
-		terraformOptions = terraform.WithDefaultRetryableErrors(t, &terraform.Options{
-			TerraformDir: terraformDir,
-		})
-
 		// Clean up any previous state
 		terraform.Init(t, terraformOptions)
 
