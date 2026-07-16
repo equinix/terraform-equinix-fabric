@@ -118,18 +118,18 @@ jobs:
 
       - name: Run Go Tests
         run:
-          go test ./tests/prod -json -v -count 1 -parallel 8 -run "(DIGP)" -timeout 180m | tee prod_suite_all.log
+          go test ./tests/prod -json -v -count 1 -parallel 8 -run "(DIGP)" -timeout 180m | tee all_prod_suite.log
 
       - name: Create HTML Testing Report
         run: |
-          go-junit-report -parser gojson -in prod_suite_all.log  > prod_suite_all.xml && python3 -m junit2htmlreport prod_suite_all.xml prod_suite_all.html
+          go-junit-report -parser gojson -in all_prod_suite.log  > all_prod_suite.xml && python3 -m junit2htmlreport all_prod_suite.xml all_prod_suite.html
 
       - name: Prepare slack message
         id: slack_message
         if: always()
         shell: bash
         run: |
-          xml_file=$(find . -type f -name '*prod_suite.xml' | head -n 1)
+          xml_file="all_prod_suite.xml"
           
           if [[ -z "$xml_file" ]]; then
             echo "No file ending with prod_suite.xml found."
@@ -147,11 +147,11 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: Prod Suite ALL Terraform Modules Testing Report
-          path: prod_suite_all.html
+          path: all_prod_suite.html
           compression-level: 0
 
       - name: Check if Tests are passed
-        run: sh scripts/check_tests.sh *suite_all.log
+        run: sh scripts/check_tests.sh all_prod_suite.log
 
       - name: Notify Slack
         uses: slackapi/slack-github-action@v2
