@@ -38,13 +38,6 @@ jobs:
           terraform_version: ${{ matrix.terraform }}
           terraform_wrapper: false
 
-      - name: Setup Variables Files
-        run: |
-          echo $TEST_DATA_UAT_PORT_2_ALIBABA_CONNECTION >> "./examples/port-2-alibaba-connection/terraform.tfvars.json"
-          echo $TEST_DATA_UAT_VIRTUAL_DEVICE_2_AZURE_CONNECTION >> "./tests/examples-without-external-providers/virtual-device-2-azure-connection/terraform.tfvars.json"
-          echo $TEST_DATA_UAT_VIRTUAL_DEVICE_2_PORT_CONNECTION >> "./tests/examples-without-external-providers/virtual-device-2-port-connection/terraform.tfvars.json"
-          echo $TEST_DATA_UAT_VIRTUAL_DEVICE_2_AWS_CONNECTION >> "./tests/examples-without-external-providers/virtual-device-2-aws-connection/terraform.tfvars.json"
-
       - name: Run Go Tests
         run:
           go test ./tests/uat -json -v -coverprofile coverage_uat_modules.txt -covermode=atomic -count 1 -parallel 8 -run "(PNFV)" -timeout 180m | tee pnfv_test_output.log
@@ -110,7 +103,6 @@ jobs:
           TF_VAR_sts_source_token: ${{ steps.get_id_token.outputs.id_token }}
           TF_VAR_sts_auth_scope: ${{secrets.TEST_DATA_UAT_STS_AUTH_SCOPE}}
         run: |
-          echo $TEST_DATA_UAT_PORT_2_PORT_CONNECTION_STS >> "./examples/port-2-port-connection-sts-token/terraform.tfvars.json"
           go test ./tests/uat/uat_sanity_suite_test.go -v -run ^TestPort2PortCreateConnection_STS_PFCR$   
 
   test-PFCR:
@@ -162,34 +154,6 @@ jobs:
         with:
           terraform_version: ${{ matrix.terraform }}
           terraform_wrapper: false
-
-      - name: Setup Variables Files
-        run: |
-          echo $TEST_DATA_UAT_PORT_2_AWS_CONNECTION >> "./tests/examples-without-external-providers/port-2-aws-connection/terraform.tfvars.json"
-          echo $TEST_DATA_UAT_PORT_2_AZURE_CONNECTION >> "./tests/examples-without-external-providers/port-2-azure-connection/terraform.tfvars.json"
-          echo $TEST_DATA_UAT_PORT_2_IBM2_CONNECTION >> "./tests/examples-without-external-providers/port-2-ibm2-connection/terraform.tfvars.json"
-          echo $TEST_DATA_UAT_PORT_2_PORT_CONNECTION >> "./examples/port-2-port-connection/terraform.tfvars.json"
-          echo $TEST_DATA_UAT_PORT_2_PRIVATE_SERVICE_PROFILE_CONNECTION >> "./examples/port-2-private-service-profile-connection/terraform.tfvars.json"
-          echo $TEST_DATA_UAT_PORT_2_PUBLIC_SERVICE_PROFILE_CONNECTION >> "./examples/port-2-public-service-profile-connection/terraform.tfvars.json"   
-
-          echo $TEST_DATA_UAT_CLOUD_ROUTER_2_AWS_CONNECTION >> "./tests/examples-without-external-providers/cloud-router-2-aws-connection/terraform.tfvars.json"
-          echo $TEST_DATA_UAT_CLOUD_ROUTER_2_AZURE_CONNECTION >> "./tests/examples-without-external-providers/cloud-router-2-azure-connection/terraform.tfvars.json"
-          echo $TEST_DATA_UAT_CLOUD_ROUTER_2_PORT_ROUTING_PROTOCOL_AND_ROUTE_FILTER_CONNECTION  >> "./tests/examples-without-external-providers/cloud-router-2-port-connection-with-routing-protocols-and-route-filters/terraform.tfvars.json"
-          echo $TEST_DATA_UAT_CLOUD_ROUTER_2_VIRTUAL_DEVICE_CONNECTION >> "./tests/examples-without-external-providers/cloud-router-2-virtual-device-connection/terraform.tfvars.json"
-
-          echo $TEST_DATA_UAT_CLOUD_ROUTER_2_SERVICE_PROFILE_CONNECTION >> "./examples/cloud-router-2-service-profile-connection/terraform.tfvars.json"
-          echo $TEST_DATA_UAT_CLOUD_ROUTER_2_WAN_CONNECTION >> "./examples/cloud-router-2-wan-connection/terraform.tfvars.json"
-          
-          echo $TEST_DATA_UAT_STREAM_DATADOG_SUBSCRIPTION >> "./examples/stream-datadog-subscription/terraform.tfvars.json"
-          echo $TEST_DATA_UAT_STREAM_MSTEAMS_SUBSCRIPTION >> "./examples/stream-msteams-subscription/terraform.tfvars.json"
-          echo $TEST_DATA_UAT_STREAM_PAGERDUTY_SUBSCRIPTION >> "./examples/stream-pagerduty-subscription/terraform.tfvars.json"
-          echo $TEST_DATA_UAT_STREAM_SLACK_SUBSCRIPTION >> "./examples/stream-slack-subscription/terraform.tfvars.json"
-          echo $TEST_DATA_UAT_STREAM_SPLUNK_SUBSCRIPTION >> "./examples/stream-splunk-subscription/terraform.tfvars.json"
-          echo $TEST_DATA_UAT_STREAM_SERVICENOW_SUBSCRIPTION >> "./examples/stream-servicenow-subscription/terraform.tfvars.json"
-          echo $TEST_DATA_UAT_STREAM_WEBHOOK_SUBSCRIPTION >> "./examples/stream-webhook-subscription/terraform.tfvars.json"
-          echo $TEST_DATA_UAT_STREAM_GRAFANA_SUBSCRIPTION >> "./examples/stream-grafana-subscription/terraform.tfvars.json"
-          echo $TEST_DATA_UAT_STREAM_MULTIPLE_SUBSCRIPTIONS_AND_ATTACHMENT >> "./examples/stream-multiple-subscriptions-with-port-connection-attachment/terraform.tfvars.json"
-          
 
       - name: Run Go Tests
         run:
