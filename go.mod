@@ -1,6 +1,6 @@
 module github.com/equinix/terraform-equinix-fabric
 
-go 1.21
+go 1.26
 
 require (
 	github.com/equinix/equinix-sdk-go v0.50.0
