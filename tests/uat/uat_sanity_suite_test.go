@@ -78,6 +78,11 @@ func TestPort2PortCreateConnection_PFCR(t *testing.T) {
 	retryableTest(t, "../../examples/port-2-port-connection", "port_connection_id")
 }
 
+func TestPort2PortCreateConnection_STS_PFCR(t *testing.T) {
+	t.Parallel()
+	retryableTest(t, "../../examples/port-2-port-connection-sts-token", "port_connection_id")
+}
+
 func TestPort2PrivateServiceProfileCreateConnection_PFCR(t *testing.T) {
 	t.Parallel()
 	retryableTest(t, "../../examples/port-2-private-service-profile-connection", "private_sp_connection_id")
