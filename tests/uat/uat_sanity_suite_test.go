@@ -29,8 +29,8 @@ func writeEnvToFile(envVar, filePath string) error {
 // retryableTest wraps a terraform test with retry logic
 func retryableTest(t *testing.T, terraformDir string, tfvarEnv string, outputName string) {
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
-			TerraformDir: terraformDir,
-			NoColor: true,
+		TerraformDir: terraformDir,
+		NoColor:      true,
 	})
 
 	writeEnvToFile(tfvarEnv, terraformDir+"/terraform.tfvars.json")
