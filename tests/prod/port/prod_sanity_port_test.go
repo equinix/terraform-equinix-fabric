@@ -1,153 +1,39 @@
-package prod
+package port
 
 import (
-	"github.com/equinix/terraform-equinix-fabric/tests/sweepers"
-	"github.com/gruntwork-io/terratest/modules/terraform"
-	"github.com/stretchr/testify/assert"
-	"os"
 	"testing"
+
+	"github.com/equinix/terraform-equinix-fabric/tests/prod"
 )
 
-func TestMain(m *testing.M) {
-	code := m.Run()
-	sweepers.RunTestSweepers()
-	os.Exit(code)
-}
-
-func TestPort2AlibabaCreateConnection_DIGP(t *testing.T) {
-
-	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
-		TerraformDir: "../../../examples/port-2-alibaba-connection",
-	})
-
-	defer terraform.Destroy(t, terraformOptions)
-	t.Parallel()
-
-	terraform.InitAndApply(t, terraformOptions)
-	output := terraform.Output(t, terraformOptions, "alibaba_connection_id")
-	assert.NotNil(t, output)
-}
-
-func TestPort2AwsCreateConnection_DIGP(t *testing.T) {
-
-	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
-		TerraformDir: "../../../tests/examples-without-external-providers/port-2-aws-connection",
-	})
-
-	defer terraform.Destroy(t, terraformOptions)
-	t.Parallel()
-
-	terraform.InitAndApply(t, terraformOptions)
-	output := terraform.Output(t, terraformOptions, "aws_connection_id")
-	assert.NotNil(t, output)
-}
-
-func TestPort2AzureCreateConnection_DIGP(t *testing.T) {
-
-	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
-		TerraformDir: "../../../examples/port-2-azure-connection",
-	})
-
-	defer terraform.Destroy(t, terraformOptions)
-	t.Parallel()
-
-	terraform.InitAndApply(t, terraformOptions)
-	output := terraform.Output(t, terraformOptions, "azure_connection_id")
-	assert.NotNil(t, output)
-}
-
-func TestPort2GoogleCreateConnection_DIGP(t *testing.T) {
-
-	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
-		TerraformDir: "../../../examples/port-2-google-connection",
-	})
-
-	defer terraform.Destroy(t, terraformOptions)
-	t.Parallel()
-
-	terraform.InitAndApply(t, terraformOptions)
-	output := terraform.Output(t, terraformOptions, "google_connection_id")
-	assert.NotNil(t, output)
-
-	terraformOptions = terraform.WithDefaultRetryableErrors(t, &terraform.Options{
-		Vars: map[string]interface{}{
-			"bandwidth": 100,
-		},
-		TerraformDir: "../../../examples/port-2-google-connection",
-	})
-	terraform.Apply(t, terraformOptions)
-}
-
-func TestPort2OracleCreateConnection_DIGP(t *testing.T) {
-
-	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
-		TerraformDir: "../../../examples/port-2-oracle-connection",
-	})
-
-	defer terraform.Destroy(t, terraformOptions)
-	t.Parallel()
-
-	terraform.InitAndApply(t, terraformOptions)
-	output := terraform.Output(t, terraformOptions, "oracle_connection_id")
-	assert.NotNil(t, output)
-}
-
-func TestPort2PortCreateConnection_DIGP(t *testing.T) {
-
-	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
-		TerraformDir: "../../../examples/port-2-port-connection",
-	})
-
-	defer terraform.Destroy(t, terraformOptions)
-	t.Parallel()
-
-	terraform.InitAndApply(t, terraformOptions)
-	output := terraform.Output(t, terraformOptions, "port_connection_id")
-	assert.NotNil(t, output)
-
-	terraformOptions = terraform.WithDefaultRetryableErrors(t, &terraform.Options{
-		Vars: map[string]interface{}{
+func TestPortDIGP(t *testing.T) {
+	tests := []struct {
+		name       string
+		dir        string
+		env        string
+		output     string
+		updateVars map[string]any
+	}{
+		{"Port2Alibaba", "../../../examples/port-2-alibaba-connection", "TEST_DATA_PROD_PORT_2_ALIBABA_CONNECTION", "alibaba_connection_id", nil},
+		{"Port2Aws", "../../../tests/examples-without-external-providers/port-2-aws-connection", "TEST_DATA_PROD_PORT_2_AWS_CONNECTION", "aws_connection_id", nil},
+		{"Port2Azure", "../../../examples/port-2-azure-connection", "TEST_DATA_PROD_PORT_2_AZURE_CONNECTION", "azure_connection_id", nil},
+		{"Port2Google", "../../../examples/port-2-google-connection", "TEST_DATA_PROD_PORT_2_GOOGLE_CONNECTION", "google_connection_id", map[string]any{"bandwidth": 100}},
+		{"Port2Oracle", "../../../examples/port-2-oracle-connection", "TEST_DATA_PROD_PORT_2_ORACLE_CONNECTION", "oracle_connection_id", nil},
+		{"Port2PrivateSP", "../../../examples/port-2-private-service-profile-connection", "TEST_DATA_PROD_PORT_2_PRIVATE_SERVICE_PROFILE_CONNECTION", "private_sp_connection_id", nil},
+		{"Port2Port", "../../../examples/port-2-port-connection", "TEST_DATA_PROD_PORT_2_PORT_CONNECTION", "port_connection_id", map[string]any{
 			"connection_name": "P2Port_Name_Update",
 			"bandwidth":       100,
-		},
-		TerraformDir: "../../../examples/port-2-port-connection",
-	})
-	terraform.Apply(t, terraformOptions)
-}
-
-func TestPort2PrivateServiceProfileCreateConnection_DIGP(t *testing.T) {
-
-	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
-		TerraformDir: "../../../examples/port-2-private-service-profile-connection",
-	})
-
-	defer terraform.Destroy(t, terraformOptions)
-	t.Parallel()
-
-	terraform.InitAndApply(t, terraformOptions)
-	output := terraform.Output(t, terraformOptions, "private_sp_connection_id")
-	assert.NotNil(t, output)
-}
-
-func TestPort2WanCreateConnection_DIGP(t *testing.T) {
-
-	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
-		TerraformDir: "../../../tests/examples-without-external-providers/port-2-wan-connection",
-	})
-
-	defer terraform.Destroy(t, terraformOptions)
-	t.Parallel()
-
-	terraform.InitAndApply(t, terraformOptions)
-	output := terraform.Output(t, terraformOptions, "wan_connection_id")
-	assert.NotNil(t, output)
-
-	terraformOptions = terraform.WithDefaultRetryableErrors(t, &terraform.Options{
-		Vars: map[string]interface{}{
+		}},
+		{"Port2Wan", "../../../tests/examples-without-external-providers/port-2-wan-connection", "TEST_DATA_PROD_PORT_2_WAN_CONNECTION", "wan_connection_id", map[string]any{
 			"connection_name": "P2WAN_Name_Update",
 			"bandwidth":       50,
-		},
-		TerraformDir: "../../../tests/examples-without-external-providers/port-2-wan-connection",
-	})
-	terraform.Apply(t, terraformOptions)
+		}},
+	}
+
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			t.Parallel()
+			prod.RunTest(t, test.dir, test.env, test.output, test.updateVars)
+		})
+	}
 }
