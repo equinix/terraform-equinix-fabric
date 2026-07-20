@@ -62,6 +62,8 @@ func retryableTest(t *testing.T, terraformDir string, tfvarEnv string, outputNam
 
 func TestMain(m *testing.M) {
 	code := m.Run()
-	sweepers.RunTestSweepers()
+	if os.Getenv("SWEEP_TARGETS") != "" {
+		sweepers.RunTestSweepers()
+	}
 	os.Exit(code)
 }
