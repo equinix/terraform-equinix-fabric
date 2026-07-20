@@ -34,6 +34,11 @@ variable "purchase_order_number" {
   type        = string
   default     = ""
 }
+variable "aside_port_name" {
+  description = "Equinix A-Side Port name"
+  type        = string
+  default = ""
+}
 variable "aside_port_uuid" {
   description = "Equinix A-Side Port UUID"
   type        = string
@@ -60,6 +65,11 @@ variable "zside_port_uuid" {
   description = "Equinix Port UUID"
   type        = string
   default     = ""
+}
+variable "zside_port_name" {
+  description = "Equinix Z-Side Port name"
+  type        = string
+  default = ""
 }
 variable "zside_vlan_tag" {
   description = "Vlan Tag information, outer vlanSTag for QINQ connections"

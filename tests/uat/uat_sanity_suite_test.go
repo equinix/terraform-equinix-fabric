@@ -33,7 +33,9 @@ func retryableTest(t *testing.T, terraformDir string, tfvarEnv string, outputNam
 		NoColor:      true,
 	})
 
-	writeEnvToFile(tfvarEnv, terraformDir+"/terraform.tfvars.json")
+	if err := writeEnvToFile(tfvarEnv, terraformDir+"/terraform.tfvars.json"); err != nil {
+		t.Fatalf("Unable to create tfvars file %s", err)
+	}
 
 	description := "Running terraform test with retry"
 	retry.DoWithRetry(t, description, maxRetries, sleepBetween, func() (string, error) {

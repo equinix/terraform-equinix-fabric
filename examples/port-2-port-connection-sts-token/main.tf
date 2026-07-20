@@ -15,11 +15,13 @@ module "create_port_2_port_connection" {
 
   # A-side
   aside_port_uuid = var.aside_port_uuid
+  aside_port_name = var.aside_port_name
   aside_vlan_tag  = var.aside_vlan_tag
 
   # Z-side
   zside_ap_type   = var.zside_ap_type
   zside_port_uuid = var.zside_port_uuid
+  zside_port_name = var.zside_port_name
   zside_vlan_tag  = var.zside_vlan_tag
   zside_location  = var.zside_location
 }

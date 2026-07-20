@@ -103,7 +103,8 @@ jobs:
           TF_VAR_sts_source_token: ${{ steps.get_id_token.outputs.id_token }}
           TF_VAR_sts_auth_scope: ${{secrets.TEST_DATA_UAT_STS_AUTH_SCOPE}}
         run: |
-          go test ./tests/uat/uat_sanity_suite_test.go -v -run ^TestPort2PortCreateConnection_STS_PFCR$   
+          export TEST_DATA_UAT_PORT_2_PORT_CONNECTION_STS=$(jq ". + {sts_source_token: \"$TF_VAR_sts_source_token\", sts_auth_scope: \"$TF_VAR_sts_auth_scope\"}" <<< "$TEST_DATA_UAT_PORT_2_PORT_CONNECTION_STS")
+          go test ./tests/uat -v -run TestSTSPFCR
 
   test-PFCR:
     name: Setup UAT PFCR Tests

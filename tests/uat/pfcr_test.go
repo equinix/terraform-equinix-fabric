@@ -5,7 +5,6 @@ import (
 )
 
 func TestPFCR(t *testing.T) {
-
 	tests := []struct {
 		name   string
 		dir    string
@@ -16,7 +15,6 @@ func TestPFCR(t *testing.T) {
 		{"Port2Azure", "../../tests/examples-without-external-providers/port-2-azure-connection", "TEST_DATA_UAT_PORT_2_AZURE_CONNECTION", "azure_connection_id"},
 		{"Port2Ibm2", "../../tests/examples-without-external-providers/port-2-ibm2-connection", "TEST_DATA_UAT_PORT_2_IBM2_CONNECTION", "ibm2_connection_id"},
 		{"Port2Port", "../../examples/port-2-port-connection", "TEST_DATA_UAT_PORT_2_PORT_CONNECTION", "port_connection_id"},
-		{"Port2PortSTS", "../../examples/port-2-port-connection-sts-token", "TEST_DATA_UAT_PORT_2_PORT_CONNECTION", "port_connection_id"},
 		{"Port2PrivateSP", "../../examples/port-2-private-service-profile-connection", "TEST_DATA_UAT_PORT_2_PRIVATE_SERVICE_PROFILE_CONNECTION", "private_sp_connection_id"},
 		{"Port2PublicSP", "../../examples/port-2-public-service-profile-connection", "TEST_DATA_UAT_PORT_2_PUBLIC_SERVICE_PROFILE_CONNECTION", "public_sp_connection_id"},
 		{"FCR2Aws", "../../tests/examples-without-external-providers/cloud-router-2-aws-connection", "TEST_DATA_UAT_CLOUD_ROUTER_2_AWS_CONNECTION", "aws_connection_id"},
@@ -56,4 +54,8 @@ func TestPFCR(t *testing.T) {
 			retryableTest(t, test.dir, test.env, test.output)
 		})
 	}
+}
+
+func TestSTSPFCR(t *testing.T) {
+	retryableTest(t, "../../examples/port-2-port-connection-sts-token", "TEST_DATA_UAT_PORT_2_PORT_CONNECTION_STS", "port_connection_id")
 }
