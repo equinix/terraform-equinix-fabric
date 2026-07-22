@@ -1,0 +1,108 @@
+name: Process test results
+
+inputs:
+  test-log:
+    default: 'test_output.log'
+    required: false
+    type: string
+  slack-token:
+    required: true
+    type: string
+
+runs:
+  using: composite
+  steps:
+    - name: Check if tests are passed
+      id : results
+      shell: bash
+      run: |
+        test_passed=$(grep --count '"Action":"pass".*"Test":' ${{ inputs.test-log }} || true)
+        echo "test_passed=$test_passed" >> "$GITHUB_OUTPUT"
+
+        test_failed=$(grep --count '"Action":"fail".*"Test":' ${{ inputs.test-log }} || true)
+        echo "test_failed=$test_failed" >> "$GITHUB_OUTPUT"
+
+        echo "test_total=$((test_passed+test_failed))" >> "$GITHUB_OUTPUT"
+
+        failing_tests=$(
+          grep '"Action":"fail"' ${{ inputs.test-log }} \
+          | grep -o '"Test":".*,' \
+          | cut -d '"' -f 4 \
+          | paste -sd ',' - || true
+        )
+
+        echo "failing_tests=$failing_tests" >> "$GITHUB_OUTPUT"
+
+    - uses: actions/setup-go@v7
+      with:
+        go-version-file: './go.mod'
+
+    - name: Get dependencies
+      shell: bash
+      run: go mod download
+
+    - name: Set up Python3
+      uses: actions/setup-python@v7
+      with:
+        python-version: '3.13'
+
+    - name: Get dependencies
+      shell: bash
+      run: |
+        go install github.com/thogarty/go-junit-report/v2@latest
+        pip3 install junit2html
+
+    - name: Create HTML Testing Report
+      shell: bash
+      run: |
+        go-junit-report -parser gojson -in ${{ inputs.test-log }} > report.xml && python3 -m junit2htmlreport report.xml report.html
+
+    - name: Upload HTML Testing Report
+      uses: actions/upload-artifact@v7
+      with:
+        name: Testing Report
+        path: report.html
+        compression-level: 0
+
+    - name: Notify Slack
+      uses: slackapi/slack-github-action@v4
+      if: always()
+      with:
+        method: chat.postMessage
+        token: ${{ inputs.slack-token }}
+        payload: |
+          channel: digin-panthers-gha-automation
+
+          attachments:
+            - color: ${{ steps.results.outputs.test_failed == 0 && 'good' || 'danger' }}
+              text: |
+                  *Repository:* <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|${{ github.repository }}>
+                  *Workflow:* ${{ github.workflow }}
+                  *Branch:* ${{ github.ref_name }}
+                  *Status:* ${{ steps.results.outputs.test_failed == 0 && 'Pass' || 'Fail' }}
+                  *Results:* ${{ steps.results.outputs.test_passed }} / ${{ steps.results.outputs.test_total }}
+                  *Failing tests:* ${{ steps.results.outputs.failing_tests }} 
+                  *Triggered by:* <@${{ github.actor }}>
+                  *Responsibility:* <@U06QU7NE0G7>
+
+    - name: Check if Tests are passed
+      shell: bash
+      run: |
+        if [ ${{ steps.results.outputs.test_failed }} -gt 0 ]; then
+          echo "## :x: Tests - FAILED" >> $GITHUB_STEP_SUMMARY
+        else
+          echo "## :white_check_mark: Tests - ALL PASSED" >> $GITHUB_STEP_SUMMARY
+        fi
+
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "| Metric | Count |" >> $GITHUB_STEP_SUMMARY
+        echo "|--------|-------|" >> $GITHUB_STEP_SUMMARY
+        echo "| :white_check_mark: Passed | ${{ steps.results.outputs.test_passed }} |" >> $GITHUB_STEP_SUMMARY
+        echo "| :x: Failed | ${{ steps.results.outputs.test_failed }} |" >> $GITHUB_STEP_SUMMARY
+        echo "| **Total** | **${{ steps.results.outputs.test_total }}** |" >> $GITHUB_STEP_SUMMARY
+        
+        if [ ${{ steps.results.outputs.test_failed }} -gt 0 ]; then
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Failed Tests" >> $GITHUB_STEP_SUMMARY
+          echo "${{ steps.results.outputs.failing_tests }}" >> $GITHUB_STEP_SUMMARY
+        fi

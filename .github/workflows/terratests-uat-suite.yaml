@@ -19,38 +19,12 @@ jobs:
       TEST_DATA_UAT_VIRTUAL_DEVICE_2_AWS_CONNECTION: ${{ secrets.TEST_DATA_UAT_VIRTUAL_DEVICE_2_AWS_CONNECTION }}
 
     steps:
-      - name: Check out code into the Go module directory
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v7
+      - uses: ./.github/actions/run-test
         with:
-          ref: ${{ github.event.pull_request.head.sha || github.ref }}
-
-      - name: Set up Go
-        uses: actions/setup-go@v5
-        with:
-          go-version-file: './go.mod'
-        id: go
-
-      - name: Get dependencies
-        run: |
-              go mod download
-
-      - uses: hashicorp/setup-terraform@v3
-        with:
-          terraform_version: ${{ matrix.terraform }}
-          terraform_wrapper: false
-
-      - name: Run Go Tests
-        run:
-          go test ./tests/uat -json -v -coverprofile coverage_uat_modules.txt -covermode=atomic -count 1 -parallel 8 -run TestPNFV -timeout 180m | tee pnfv_test_output.log
-
-      - name: Upload PNFV Testing Log
-        uses: actions/upload-artifact@v4
-        with:
-          name: pnfv_test_logs
-          path: pnfv_test_output.log
-
-      - name: Check if Tests are passed
-        run: sh scripts/check_tests.sh pnfv_test_output.log
+          test-filter: TestPNFV
+          test-dir: ./tests/uat
+          test-log: pnfv_test.log
 
   test-STS-PFCR:
     name: Setup UAT PFCR Tests - STS
@@ -65,6 +39,7 @@ jobs:
       TEST_DATA_UAT_PORT_2_PORT_CONNECTION_STS: ${{ secrets.TEST_DATA_UAT_PORT_2_PORT_CONNECTION_STS }}
 
     steps:
+      - uses: actions/checkout@v7
       - id: get_id_token
         name: Get GitHub OIDC Token for PFCR
         uses: actions/github-script@v6
@@ -90,22 +65,21 @@ jobs:
             }
           result-encoding: string
 
-      - name: Checkout current repository
-        uses: actions/checkout@v4
-
-      - uses: hashicorp/setup-terraform@v3
-        with:
-          terraform_version: ${{ matrix.terraform }}
-          terraform_wrapper: false
-
-      - name: UAT PFCR tests STS creds
+      - name: Setup env
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y jq
+          export TEST_DATA_UAT_PORT_2_PORT_CONNECTION_STS=$(jq ". + {sts_source_token: \"$TF_VAR_sts_source_token\", sts_auth_scope: \"$TF_VAR_sts_auth_scope\"}" <<< "$TEST_DATA_UAT_PORT_2_PORT_CONNECTION_STS")
+      - uses: ./.github/actions/run-test
         timeout-minutes: 100
+        with:
+          test-log: sts_test.log
+          test-filter: TestSTSPFCR
+          test-dir: ./tests/uat
         env:
           TF_VAR_sts_source_token: ${{ steps.get_id_token.outputs.id_token }}
           TF_VAR_sts_auth_scope: ${{secrets.TEST_DATA_UAT_STS_AUTH_SCOPE}}
-        run: |
-          export TEST_DATA_UAT_PORT_2_PORT_CONNECTION_STS=$(jq ". + {sts_source_token: \"$TF_VAR_sts_source_token\", sts_auth_scope: \"$TF_VAR_sts_auth_scope\"}" <<< "$TEST_DATA_UAT_PORT_2_PORT_CONNECTION_STS")
-          go test ./tests/uat -v -run TestSTSPFCR
+
 
   test-PFCR:
     name: Setup UAT PFCR Tests
@@ -138,38 +112,13 @@ jobs:
       TEST_DATA_UAT_STREAM_MULTIPLE_SUBSCRIPTIONS_AND_ATTACHMENT: ${{ secrets.TEST_DATA_UAT_STREAM_MULTIPLE_SUBSCRIPTIONS_AND_ATTACHMENT }}
 
     steps:
-      - name: Check out code into the Go module directory
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v7
+      - uses: ./.github/actions/run-test
+        timeout-minutes: 100
         with:
-          ref: ${{ github.event.pull_request.head.sha || github.ref }}
-
-      - name: Set up Go
-        uses: actions/setup-go@v5
-        with:
-          go-version-file: './go.mod'
-        id: go
-
-      - name: Get dependencies
-        run: |
-          go mod download
-
-      - uses: hashicorp/setup-terraform@v3
-        with:
-          terraform_version: ${{ matrix.terraform }}
-          terraform_wrapper: false
-
-      - name: Run Go Tests
-        run:
-          go test ./tests/uat -json -v -count 1 -parallel 8 -run TestPFCR -timeout 180m | tee pfcr_test_output.log
-
-      - name: Upload PFCR Testing Log
-        uses: actions/upload-artifact@v4
-        with:
-          name: pfcr_test_logs
-          path: pfcr_test_output.log
-
-      - name: Check if Tests are passed
-        run: sh scripts/check_tests.sh pfcr_test_output.log
+          test-log: pfcr_test.log
+          test-filter: TestPFCR
+          test-dir: ./tests/uat
 
   upload-test-report:
     name: Upload Testing Report
@@ -178,89 +127,24 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Set up Go
-        uses: actions/setup-go@v5
-        id: go
-
-      - name: Set up Python3
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.13'
-
-      - name: Get dependencies
-        run: |
-          go install github.com/thogarty/go-junit-report/v2@latest
-          pip3 install junit2html
-
-      - name: Install jq and xml tools
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y jq libxml2-utils
+      - uses: actions/checkout@v7
 
       - name: Download PNFV Test Logs
         uses: actions/download-artifact@v4
         with:
-          name: pnfv_test_logs
+          name: pnfv_test.log
 
       - name: Download PFCR Test Logs
         uses: actions/download-artifact@v4
         with:
-          name: pfcr_test_logs
+          name: pfcr_test.log
 
-      - name: Create HTML Testing Report
+      - name: Combine test logs
         run: |
-          cat pfcr_test_output.log pnfv_test_output.log > uat_sanity_report.log
-          go-junit-report -parser gojson -in uat_sanity_report.log  > uat_sanity_report.xml && python3 -m junit2htmlreport uat_sanity_report.xml uat_sanity_report.html
+          cat pfcr_test.log pnfv_test.log > uat_sanity_report.log
+          ls -la
 
-      - name: Upload HTML Testing Report
-        uses: actions/upload-artifact@v4
+      - uses: ./.github/actions/process-report
         with:
-          name: UAT Terraform Modules Testing Report
-          path: uat_sanity_report.html
-          compression-level: 0
-
-      - name: Prepare slack message
-        id: slack_message
-        if: always()
-        shell: bash
-        run: |
-          xml_file="uat_sanity_report.xml"
-          
-          if [[ ! -f "$xml_file" ]]; then
-            echo "No uat_sanity_report.xml file found."
-            exit 1
-          fi
-          
-          tests=$(xmllint --xpath 'string(//testsuite/@tests)' "$xml_file")
-          errors=$(xmllint --xpath 'string(//testsuite/@failures)' "$xml_file")
-          message="*Results:* $((tests-errors)) Passed, $errors Errors"
-          echo "message<<EOF" >> $GITHUB_OUTPUT
-          echo "$message" >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
-          
-          # Set color based on test errors (0 errors = green, otherwise red)
-          if [[ "$errors" -eq 0 ]]; then
-            echo "color=good" >> $GITHUB_OUTPUT
-          else
-            echo "color=danger" >> $GITHUB_OUTPUT
-          fi
-
-      - name: Notify Slack
-        uses: slackapi/slack-github-action@v2
-        if: always()
-        with:
-          method: chat.postMessage
-          token: ${{ secrets.SLACK_ACCESS_TOKEN }}
-          payload: |
-            channel: digin-panthers-gha-automation
-
-            attachments:
-              - color: ${{ steps.slack_message.outputs.color }}
-                text: |
-                    *Repository:* <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|${{ github.repository }}>
-                    *Workflow:* ${{ github.workflow }}
-                    *Branch:* ${{ github.event.pull_request.head.ref || github.ref_name }}
-                    *Status:* ${{ steps.slack_message.outputs.color == 'good' && 'success' || 'failure' }}
-                    ${{ steps.slack_message.outputs.message }}
-                    *Triggered by:* <@${{ github.actor }}>
-                    *Responsibility:* <@U06QU7NE0G7>
+          test-log: uat_sanity_report.log
+          slack-token: ${{ secrets.SLACK_ACCESS_TOKEN }}

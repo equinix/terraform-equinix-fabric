@@ -1,0 +1,42 @@
+name: Run test
+
+inputs:
+  test-filter:
+    description: 'Test filter for go test -run flag'
+    default: 'Test'
+    required: false
+    type: string
+  test-dir:
+    required: true
+    type: string
+  test-log:
+    description: 'Name for test log output'
+    default: 'test_output.log'
+    required: false
+    type: string
+
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-go@v7
+      with:
+        go-version-file: './go.mod'
+
+    - name: Get dependencies
+      shell: bash
+      run: go mod download
+
+    - uses: hashicorp/setup-terraform@v4
+      with:
+        terraform_wrapper: false
+
+    - name: Run Go Tests
+      shell: bash
+      run:
+        go test ${{ inputs.test-dir }} -json -v -coverprofile coverage_uat_modules.txt -covermode=atomic -count 1 -parallel 8 -run ${{ inputs.test-filter }} -timeout 180m | tee ${{ inputs.test-log }} 
+
+    - uses: actions/upload-artifact@v7
+      if: always()
+      with:
+        name: ${{ inputs.test-log }}
+        path: ${{ inputs.test-log }}
