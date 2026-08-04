@@ -1,125 +1,41 @@
 package prod
 
 import (
-	"github.com/equinix/terraform-equinix-fabric/tests/sweepers"
-	"github.com/gruntwork-io/terratest/modules/terraform"
-	"github.com/stretchr/testify/assert"
-	"os"
 	"testing"
+
+	"github.com/equinix/terraform-equinix-fabric/tests/prod"
 )
 
-func TestMain(m *testing.M) {
-	code := m.Run()
-	sweepers.RunTestSweepers()
-	os.Exit(code)
-}
-
-func TestCloudRouterCreate_DIGP(t *testing.T) {
-
-	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
-		TerraformDir: "../../../tests/examples-without-external-providers/cloud-router",
-	})
-
-	defer terraform.Destroy(t, terraformOptions)
-	t.Parallel()
-
-	terraform.InitAndApply(t, terraformOptions)
-	output := terraform.Output(t, terraformOptions, "cloud_router_id")
-	assert.NotNil(t, output)
-
-	terraformOptions = terraform.WithDefaultRetryableErrors(t, &terraform.Options{
-		Vars: map[string]interface{}{
+func TestCloudRouterDIGP(t *testing.T) {
+	tests := []struct {
+		name       string
+		dir        string
+		env        string
+		output     string
+		updateVars map[string]any
+	}{
+		{"CreateFCR", "../../../tests/examples-without-external-providers/cloud-router", "TEST_DATA_PROD_CLOUD_ROUTER", "cloud_router_id", map[string]any{
 			"fcr_name": "FCR_Name_Update",
-		},
-		TerraformDir: "../../../tests/examples-without-external-providers/cloud-router",
-	})
-	terraform.Apply(t, terraformOptions)
-}
-
-func TestCloudRouter2AwsCreateConnection_DIGP(t *testing.T) {
-
-	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
-		TerraformDir: "../../../tests/examples-without-external-providers/cloud-router-2-aws-connection",
-	})
-
-	defer terraform.Destroy(t, terraformOptions)
-	t.Parallel()
-
-	terraform.InitAndApply(t, terraformOptions)
-	output := terraform.Output(t, terraformOptions, "aws_connection_id")
-	assert.NotNil(t, output)
-}
-
-func TestCloudRouter2AzureCreateConnection_DIGP(t *testing.T) {
-
-	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
-		TerraformDir: "../../../examples/cloud-router-2-azure-connection",
-	})
-
-	defer terraform.Destroy(t, terraformOptions)
-	t.Parallel()
-
-	terraform.InitAndApply(t, terraformOptions)
-	output := terraform.Output(t, terraformOptions, "azure_connection_id")
-	assert.NotNil(t, output)
-}
-
-func  TestCloudRouter2PortRoutingProtocolAndRouteFilterCreateConnection_DIGP(t *testing.T) {
-
-	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
-		TerraformDir: "../../../tests/examples-without-external-providers/cloud-router-2-port-connection-with-routing-protocols-and-route-filters",
-	})
-
-	defer terraform.Destroy(t, terraformOptions)
-	t.Parallel()
-
-	terraform.InitAndApply(t, terraformOptions)
-	output := terraform.Output(t, terraformOptions, "port_connection_id")
-	assert.NotNil(t, output)
-
-	terraformOptions = terraform.WithDefaultRetryableErrors(t, &terraform.Options{
-		Vars: map[string]interface{}{
-			"connection_name": "FCR2Port_Name_Update",
-			"bandwidth":       100,
-		},
-		TerraformDir: "../../../tests/examples-without-external-providers/cloud-router-2-port-connection-with-routing-protocols-and-route-filters",
-	})
-	terraform.Apply(t, terraformOptions)
-}
-
-func TestCloudRouter2ServiceProfileCreateConnection_DIGP(t *testing.T) {
-
-	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
-		TerraformDir: "../../../examples/cloud-router-2-service-profile-connection",
-	})
-
-	defer terraform.Destroy(t, terraformOptions)
-	t.Parallel()
-
-	terraform.InitAndApply(t, terraformOptions)
-	output := terraform.Output(t, terraformOptions, "service_profile_connection_id")
-	assert.NotNil(t, output)
-}
-
-func TestCloudRouter2WanCreateConnection_DIGP(t *testing.T) {
-
-	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
-		TerraformDir: "../../../examples/cloud-router-2-wan-connection",
-	})
-
-	defer terraform.Destroy(t, terraformOptions)
-	t.Parallel()
-
-	terraform.InitAndApply(t, terraformOptions)
-	output := terraform.Output(t, terraformOptions, "wan_connection_id")
-	assert.NotNil(t, output)
-
-	terraformOptions = terraform.WithDefaultRetryableErrors(t, &terraform.Options{
-		Vars: map[string]interface{}{
+		}},
+		{"FCR2Aws", "../../../tests/examples-without-external-providers/cloud-router-2-aws-connection", "TEST_DATA_PROD_CLOUD_ROUTER_2_AWS_CONNECTION", "aws_connection_id", nil},
+		{"FCR2Azure", "../../../examples/cloud-router-2-azure-connection", "TEST_DATA_PROD_CLOUD_ROUTER_2_AZURE_CONNECTION", "azure_connection_id", nil},
+		{"FCR2PortWithRP+RF", "../../../tests/examples-without-external-providers/cloud-router-2-port-connection-with-routing-protocols-and-route-filters", "TEST_DATA_PROD_CLOUD_ROUTER_2_PORT_ROUTING_PROTOCOL_AND_ROUTE_FILTER_CONNECTION", "port_connection_id",
+			map[string]any{
+				"connection_name": "FCR2Port_Name_Update",
+				"bandwidth":       100,
+			}},
+		{"FCR2SP", "../../../examples/cloud-router-2-service-profile-connection", "TEST_DATA_PROD_CLOUD_ROUTER_2_SERVICE_PROFILE_CONNECTION", "service_profile_connection_id", nil},
+		{"FCR2VD", "../../../tests/examples-without-external-providers/cloud-router-2-virtual-device-connection", "TEST_DATA_PROD_CLOUD_ROUTER_2_VIRTUAL_DEVICE_CONNECTION", "FCR_VD_Connection", nil},
+		{"FCR2Wan", "../../../examples/cloud-router-2-wan-connection", "TEST_DATA_PROD_CLOUD_ROUTER_2_WAN_CONNECTION", "wan_connection_id", map[string]any{
 			"connection_name": "FCR2WAN_Name_Update",
 			"bandwidth":       50,
-		},
-		TerraformDir: "../../../examples/cloud-router-2-wan-connection",
-	})
-	terraform.Apply(t, terraformOptions)
+		}},
+	}
+
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			t.Parallel()
+			prod.RunTest(t, test.dir, test.env, test.output, test.updateVars)
+		})
+	}
 }

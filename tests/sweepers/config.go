@@ -35,6 +35,9 @@ var (
 )
 
 func isSweepableFabricTestResource(resourceName string) bool {
+	if sweepTargets := os.Getenv("SWEEP_TARGETS"); sweepTargets != "" {
+		return strings.HasSuffix(resourceName, "_"+sweepTargets)
+	}
 	for _, suffix := range fabricTestResourceSuffixes {
 		if strings.HasSuffix(resourceName, suffix) {
 			return true

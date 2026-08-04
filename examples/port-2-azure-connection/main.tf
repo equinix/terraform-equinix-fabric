@@ -65,9 +65,17 @@ resource "azurerm_express_route_circuit_peering" "example" {
   vlan_id                       = var.peering_vlan_id
 
   ipv6 {
-    primary_peer_address_prefix   = "2002:db01::/126"
-    secondary_peer_address_prefix = "2003:db01::/126"
+    primary_peer_address_prefix   = "2422:db01::/126"
+    secondary_peer_address_prefix = "2423:db01::/126"
     enabled                       = true
+    microsoft_peering {
+      advertised_public_prefixes = ["2422:db01::/126"]
+    }
   }
+
+  microsoft_peering_config {
+    advertised_public_prefixes = ["142.1.0.0/24"]
+  }
+
   depends_on = [module.create_port_2_azure_connection]
 }

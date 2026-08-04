@@ -22,103 +22,17 @@ jobs:
       message: ${{ steps.slack_message.outputs.message }}
 
     steps:
-      - name: Check out code into the Go module directory
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - name: Set up Go
-        uses: actions/setup-go@v5
+      - uses: ./.github/actions/run-test
+        continue-on-error: true
         with:
-          go-version-file: './go.mod'
-        id: go
+          test-dir: ./tests/prod/virtual-device
 
-      - name: Set up Python3
-        uses: actions/setup-python@v5
+      - name: Run Sweepers
+        run: |
+          go run ./tests/sweepers/cmd
+
+      - uses: ./.github/actions/process-report
         with:
-          python-version: '3.13'
-
-      - name: Get dependencies
-        run: |
-          go mod download
-          go install github.com/thogarty/go-junit-report/v2@latest
-          pip3 install junit2html
-
-      - uses: hashicorp/setup-terraform@v3
-        with:
-          terraform_version: ${{ matrix.terraform }}
-          terraform_wrapper: false
-
-      - name: Install jq
-        run: |
-          sudo apt-get update
-          sudo apt-get install jq
-          sudo apt-get install -y libxml2-utils
-
-      - name: Setup Variables Files
-        run: |
-          TIMESTAMP=$(date +"%m%d%M%S")
-          SUFFIX="_DIGP"
-          echo $TEST_DATA_PROD_VIRTUAL_DEVICE_2_WAN_CONNECTION >> "./tests/examples-without-external-providers/virtual-device-2-wan-connection/terraform.tfvars.json"
-          jq --arg timestamp "$TIMESTAMP" '.connection_name = ($timestamp + "_" + .connection_name)' ./tests/examples-without-external-providers/virtual-device-2-wan-connection/terraform.tfvars.json > ./tests/examples-without-external-providers/virtual-device-2-wan-connection/tmp.test.json && mv ./tests/examples-without-external-providers/virtual-device-2-wan-connection/tmp.test.json ./tests/examples-without-external-providers/virtual-device-2-wan-connection/terraform.tfvars.json
-          echo $TEST_DATA_PROD_VIRTUAL_DEVICE_2_AZURE_CONNECTION >> "./examples/virtual-device-2-azure-connection-without-vd-creation/terraform.tfvars.json"
-          jq --arg timestamp "$TIMESTAMP" '.connection_name = ($timestamp + "_" + .connection_name)' ./examples/virtual-device-2-azure-connection-without-vd-creation/terraform.tfvars.json > ./examples/virtual-device-2-azure-connection-without-vd-creation/tmp.test.json && mv ./examples/virtual-device-2-azure-connection-without-vd-creation/tmp.test.json ./examples/virtual-device-2-azure-connection-without-vd-creation/terraform.tfvars.json
-          echo $TEST_DATA_PROD_VIRTUAL_DEVICE_2_PORT_CONNECTION >> "./tests/examples-without-external-providers/virtual-device-2-port-connection/terraform.tfvars.json"
-          jq --arg timestamp "$TIMESTAMP" '.connection_name = ($timestamp + "_" + .connection_name)' ./tests/examples-without-external-providers/virtual-device-2-port-connection/terraform.tfvars.json > ./tests/examples-without-external-providers/virtual-device-2-port-connection/tmp.test.json && mv ./tests/examples-without-external-providers/virtual-device-2-port-connection/tmp.test.json ./tests/examples-without-external-providers/virtual-device-2-port-connection/terraform.tfvars.json
-          echo $TEST_DATA_PROD_VIRTUAL_DEVICE_2_AWS_CONNECTION >> "./tests/examples-without-external-providers/virtual-device-2-aws-connection/terraform.tfvars.json"
-          jq --arg timestamp "$TIMESTAMP" '.connection_name = ($timestamp + "_" + .connection_name)' ./tests/examples-without-external-providers/virtual-device-2-aws-connection/terraform.tfvars.json > ./tests/examples-without-external-providers/virtual-device-2-aws-connection/tmp.test.json && mv ./tests/examples-without-external-providers/virtual-device-2-aws-connection/tmp.test.json ./tests/examples-without-external-providers/virtual-device-2-aws-connection/terraform.tfvars.json
-
-      - name: Run Go Tests
-        run:
-          go test ./tests/prod/virtual-device -json -v -count 1 -parallel 8 -run "(DIGP)" -timeout 180m | tee vd_prod_suite.log
-
-      - name: Create HTML Testing Report
-        run: |
-          go-junit-report -parser gojson -in vd_prod_suite.log  > vd_prod_suite.xml && python3 -m junit2htmlreport vd_prod_suite.xml vd_prod_suite.html
-
-      - name: Prepare slack message
-        id: slack_message
-        if: always()
-        shell: bash
-        run: |
-          xml_file=$(find . -type f -name '*prod_suite.xml' | head -n 1)
-          
-          if [[ -z "$xml_file" ]]; then
-            echo "No file ending with prod_suite.xml found."
-          exit 1
-          fi
-          
-          tests=$(xmllint --xpath 'string(//testsuite/@tests)' "$xml_file")
-          errors=$(xmllint --xpath 'string(//testsuite/@failures)' "$xml_file")
-          message="*Results:* $((tests-errors)) Passed, $errors Errors"
-          echo "message<<EOF" >> $GITHUB_OUTPUT
-          echo "$message" >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
-
-      - name: Upload HTML Testing Report
-        uses: actions/upload-artifact@v4
-        with:
-          name: Virtual Device Prod Suite Terraform Modules Testing Report
-          path: vd_prod_suite.html
-          compression-level: 0
-
-      - name: Check if Tests are passed
-        run: sh scripts/check_tests.sh *suite.log
-
-      - name: Notify Slack
-        uses: slackapi/slack-github-action@v2
-        if: always()
-        with:
-          method: chat.postMessage
-          token: ${{ secrets.SLACK_ACCESS_TOKEN }}
-          payload: |
-            channel: digin-panthers-gha-automation
-
-            attachments:
-              - color: ${{ job.status == 'success' && 'good' || job.status == 'failure' && 'danger' || 'warning' }}
-                text: |
-                    *Repository:* <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|${{ github.repository }}>
-                    *Workflow:* ${{ github.workflow }}
-                    *Branch:* ${{ github.ref_name }}
-                    *Status:* ${{ job.status }}
-                    *Results:* ${{ steps.slack_message.outputs.message }}
-                    *Triggered by:* <@${{ github.actor }}>
-                    *Responsibility:* <@U06QU7NE0G7>
+          slack-token: ${{ secrets.SLACK_ACCESS_TOKEN }}
