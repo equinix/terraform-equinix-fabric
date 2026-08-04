@@ -20,7 +20,6 @@ module "create_port_2_alibaba_connection" {
 
   # A-side
   aside_port_uuid = var.aside_port_uuid
-  aside_port_name = var.aside_port_name
   aside_vlan_tag  = module.random_vlan_tag.result_string
 
   # Z-side
