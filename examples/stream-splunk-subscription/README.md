@@ -95,6 +95,11 @@ variable "equinix_client_secret" {
   type        = string
   sensitive   = true
 }
+variable "project_id" {
+  description = "Equinix Project ID"
+  type        = string
+  default     = ""
+}
 
 variable "splunk_access_token" {
   description = "Credential for Splunk Sink Subscription"
@@ -202,6 +207,7 @@ module "stream_splunk_subscription" {
 
   stream_name        = var.stream_name
   stream_description = var.stream_description
+  project_id         = var.project_id
 
   splunk_enabled           = var.splunk_enabled
   splunk_access_token      = var.splunk_access_token
@@ -246,6 +252,7 @@ No resources.
 |------|-------------|------|---------|:--------:|
 | <a name="input_equinix_client_id"></a> [equinix\_client\_id](#input\_equinix\_client\_id) | Equinix client ID (consumer key), obtained after registering app in the developer platform | `string` | n/a | yes |
 | <a name="input_equinix_client_secret"></a> [equinix\_client\_secret](#input\_equinix\_client\_secret) | Equinix client secret ID (consumer secret), obtained after registering app in the developer platform | `string` | n/a | yes |
+| <a name="input_project_id"></a> [project\_id](#input\_project\_id) | Equinix Project ID | `string` | `""` | no |
 | <a name="input_splunk_access_token"></a> [splunk\_access\_token](#input\_splunk\_access\_token) | Credential for Splunk Sink Subscription | `string` | `""` | no |
 | <a name="input_splunk_description"></a> [splunk\_description](#input\_splunk\_description) | Description of the Splunk Equinix Subscription Resource | `string` | `""` | no |
 | <a name="input_splunk_enabled"></a> [splunk\_enabled](#input\_splunk\_enabled) | Boolean value indicating enablement of the Splunk Subscription | `string` | `""` | no |

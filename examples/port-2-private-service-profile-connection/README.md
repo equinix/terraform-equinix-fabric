@@ -137,6 +137,12 @@ variable "zside_location" {
 variable "zside_sp_name" {
   description = "Equinix Service Profile Name"
   type        = string
+  default     = ""
+}
+variable "zside_sp_uuid" {
+  description = "Equinix Service Profile UUID - use instead of zside_sp_name for private service profiles"
+  type        = string
+  default     = ""
 }
 ```
 
@@ -178,6 +184,7 @@ module "create_port_2_private_sp_connection" {
   zside_ap_profile_type = var.zside_ap_profile_type
   zside_location        = var.zside_location
   zside_sp_name         = var.zside_sp_name
+  zside_sp_uuid         = var.zside_sp_uuid
 }
 ```
 
@@ -220,7 +227,8 @@ No resources.
 | <a name="input_zside_ap_profile_type"></a> [zside\_ap\_profile\_type](#input\_zside\_ap\_profile\_type) | Service profile type - L2\_PROFILE, L3\_PROFILE, ECIA\_PROFILE, ECMC\_PROFILE | `string` | n/a | yes |
 | <a name="input_zside_ap_type"></a> [zside\_ap\_type](#input\_zside\_ap\_type) | Access point type - COLO, VD, VG, SP, IGW, SUBNET, GW | `string` | n/a | yes |
 | <a name="input_zside_location"></a> [zside\_location](#input\_zside\_location) | Access point metro code | `string` | n/a | yes |
-| <a name="input_zside_sp_name"></a> [zside\_sp\_name](#input\_zside\_sp\_name) | Equinix Service Profile Name | `string` | n/a | yes |
+| <a name="input_zside_sp_name"></a> [zside\_sp\_name](#input\_zside\_sp\_name) | Equinix Service Profile Name | `string` | `""` | no |
+| <a name="input_zside_sp_uuid"></a> [zside\_sp\_uuid](#input\_zside\_sp\_uuid) | Equinix Service Profile UUID - use instead of zside\_sp\_name for private service profiles | `string` | `""` | no |
 
 ## Outputs
 

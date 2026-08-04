@@ -179,6 +179,11 @@ variable "equinix_client_secret" {
   type        = string
   sensitive   = true
 }
+variable "project_id" {
+  description = "Equinix Project ID"
+  type        = string
+  default     = ""
+}
 variable "stream_description" {
   description = "Description of the created stream(s) in the module"
   type        = string
@@ -626,6 +631,7 @@ module "stream_subscriptions" {
 
   stream_name        = var.stream_name
   stream_description = var.stream_description
+  project_id         = var.project_id
 
   slack_name              = var.slack_name
   slack_description       = var.slack_description
@@ -799,6 +805,7 @@ resource "equinix_fabric_stream_attachment" "port_connection_on_stream2" {
 | <a name="input_pagerduty_metric_exceptions"></a> [pagerduty\_metric\_exceptions](#input\_pagerduty\_metric\_exceptions) | Metrics to exclude from the possibilities available to the stream for the Subscription | `list(string)` | `[]` | no |
 | <a name="input_pagerduty_metric_selections"></a> [pagerduty\_metric\_selections](#input\_pagerduty\_metric\_selections) | Metrics to include from the possibilities available to the stream for the Subscription | `list(string)` | `[]` | no |
 | <a name="input_pagerduty_name"></a> [pagerduty\_name](#input\_pagerduty\_name) | Name of the PagerDuty Subscription Equinix Resource | `string` | `""` | no |
+| <a name="input_project_id"></a> [project\_id](#input\_project\_id) | Equinix Project ID | `string` | `""` | no |
 | <a name="input_purchase_order_number"></a> [purchase\_order\_number](#input\_purchase\_order\_number) | Purchase order number | `string` | `""` | no |
 | <a name="input_slack_description"></a> [slack\_description](#input\_slack\_description) | Description of the slack Subscription | `string` | `""` | no |
 | <a name="input_slack_enabled"></a> [slack\_enabled](#input\_slack\_enabled) | Boolean value enabling slack Subscription | `string` | `""` | no |
