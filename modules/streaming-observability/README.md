@@ -515,6 +515,7 @@ variable "grafana_format" {
   description = "Format for grafana payload"
   type        = string
   default     = "JSON"
+  deprecated = "No longer required to be provided"
 }
 variable "grafana_metric_uri" {
   description = "URI endpoint for grafana metrics"
@@ -526,6 +527,12 @@ variable "project_id" {
   description = "Project ID where the streams will be created"
   type        = string
   default     = ""
+}
+variable "grafana_api_key" {
+  description = "API Key for Grafana account"
+  type        = string
+  default     = ""
+  sensitive   = true
 }
 ```
 
@@ -849,9 +856,14 @@ resource "equinix_fabric_stream_subscription" "grafana" {
   sink = {
     type = "WEBHOOK"
     settings = {
-      format     = var.grafana_format
+      format     = "OPENTELEMETRY"
       event_uri  = var.grafana_event_uri != "" ? var.grafana_event_uri : null
       metric_uri = var.grafana_metric_uri != "" ? var.grafana_metric_uri : null
+    }
+
+    credential = {
+        type    = "API_KEY"
+        api_key = var.grafana_api_key
     }
   }
 }
@@ -907,6 +919,7 @@ No modules.
 | <a name="input_datadog_metric_selections"></a> [datadog\_metric\_selections](#input\_datadog\_metric\_selections) | Metrics to include from the possibilities available to the stream for the Subscription | `list(string)` | `[]` | no |
 | <a name="input_datadog_metric_uri"></a> [datadog\_metric\_uri](#input\_datadog\_metric\_uri) | Datadog App URI for receiving streamed metrics | `string` | `""` | no |
 | <a name="input_datadog_name"></a> [datadog\_name](#input\_datadog\_name) | Name of the Datadog Subscription Equinix Resource | `string` | `""` | no |
+| <a name="input_grafana_api_key"></a> [grafana\_api\_key](#input\_grafana\_api\_key) | API Key for Grafana account | `string` | `""` | no |
 | <a name="input_grafana_description"></a> [grafana\_description](#input\_grafana\_description) | Description of the grafana subscription | `string` | `"Grafana stream subscription"` | no |
 | <a name="input_grafana_enabled"></a> [grafana\_enabled](#input\_grafana\_enabled) | Boolean value indicating enablement of the Grafana Subscription | `bool` | `true` | no |
 | <a name="input_grafana_event_exceptions"></a> [grafana\_event\_exceptions](#input\_grafana\_event\_exceptions) | List of event types to exclude for grafana | `list(string)` | `[]` | no |
