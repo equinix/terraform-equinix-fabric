@@ -8,11 +8,6 @@ output "second_stream" {
   sensitive = true
 }
 
-output "splunk_subscription" {
-  value     = module.stream_subscriptions.splunk_subscription
-  sensitive = true
-}
-
 output "slack_subscription" {
   value     = module.stream_subscriptions.slack_subscription
   sensitive = true

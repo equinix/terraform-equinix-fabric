@@ -9,7 +9,7 @@ provider "azurerm" {
   tenant_id       = var.azure_tenant_id
   subscription_id = var.azure_subscription_id
 
-  skip_provider_registration = true
+  resource_provider_registrations = "none"
 }
 
 #Network Edge Module

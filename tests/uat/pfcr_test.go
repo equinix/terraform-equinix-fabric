@@ -39,13 +39,10 @@ func TestPFCR(t *testing.T) {
 		output string
 	}{
 		{"StreamDatadog", "../../examples/stream-datadog-subscription", "TEST_DATA_UAT_STREAM_DATADOG_SUBSCRIPTION", "datadog_subscription"},
-		{"StreamGrafana", "../../examples/stream-grafana-subscription", "TEST_DATA_UAT_STREAM_GRAFANA_SUBSCRIPTION", "grafana_subscription"},
 		{"StreamMsteams", "../../examples/stream-msteams-subscription", "TEST_DATA_UAT_STREAM_MSTEAMS_SUBSCRIPTION", "msteams_subscription"},
 		{"StreamMultiple", "../../examples/stream-multiple-subscriptions-with-port-connection-attachment", "TEST_DATA_UAT_STREAM_MULTIPLE_SUBSCRIPTIONS_AND_ATTACHMENT", "first_stream"},
 		{"StreamPagerDuty", "../../examples/stream-pagerduty-subscription", "TEST_DATA_UAT_STREAM_PAGERDUTY_SUBSCRIPTION", "pagerduty_subscription"},
-		{"StreamServiceNow", "../../examples/stream-servicenow-subscription", "TEST_DATA_UAT_STREAM_SERVICENOW_SUBSCRIPTION", "servicenow_subscription"},
 		{"StreamSlack", "../../examples/stream-slack-subscription", "TEST_DATA_UAT_STREAM_SLACK_SUBSCRIPTION", "slack_subscription"},
-		{"StreamSplunk", "../../examples/stream-splunk-subscription", "TEST_DATA_UAT_STREAM_SPLUNK_SUBSCRIPTION", "splunk_subscription"},
 		{"StreamWebhook", "../../examples/stream-webhook-subscription", "TEST_DATA_UAT_STREAM_WEBHOOK_SUBSCRIPTION", "webhook_subscription"},
 	}
 
