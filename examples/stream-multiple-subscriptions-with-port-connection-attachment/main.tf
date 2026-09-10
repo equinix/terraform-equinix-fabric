@@ -20,20 +20,6 @@ module "stream_subscriptions" {
   slack_metric_exceptions = var.slack_metric_exceptions
   slack_metric_selections = var.slack_metric_selections
 
-  splunk_enabled           = var.splunk_enabled
-  splunk_access_token      = var.splunk_access_token
-  splunk_name              = var.splunk_name
-  splunk_description       = var.splunk_description
-  splunk_uri               = var.splunk_uri
-  splunk_filters           = var.splunk_filters
-  splunk_event_exceptions  = var.splunk_event_exceptions
-  splunk_event_selections  = var.splunk_event_exceptions
-  splunk_metric_exceptions = var.splunk_metric_exceptions
-  splunk_metric_selections = var.splunk_metric_selections
-  splunk_source            = var.splunk_source
-  splunk_event_index       = var.splunk_event_index
-  splunk_metric_index      = var.splunk_metric_index
-
   msteams_name              = var.msteams_name
   msteams_description       = var.msteams_description
   msteams_enabled           = var.msteams_enabled
@@ -70,6 +56,17 @@ module "stream_subscriptions" {
   datadog_metric_selections = var.datadog_metric_selections
   datadog_event_uri         = var.datadog_event_uri
   datadog_metric_uri        = var.datadog_metric_uri
+
+  webhook_name              = var.webhook_name
+  webhook_description       = var.webhook_description
+  webhook_enabled           = var.webhook_enabled
+  webhook_event_exceptions  = var.webhook_event_exceptions
+  webhook_event_selections  = var.webhook_event_selections
+  webhook_metric_exceptions = var.webhook_metric_exceptions
+  webhook_metric_selections = var.webhook_metric_selections
+  webhook_event_uri         = var.webhook_event_uri
+  webhook_metric_uri        = var.webhook_metric_uri
+  webhook_format        = "CLOUDEVENT"
 }
 
 module "create_port_2_port_connection" {
