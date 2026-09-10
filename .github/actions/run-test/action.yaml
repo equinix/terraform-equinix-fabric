@@ -31,6 +31,26 @@ runs:
         terraform_wrapper: false
         terraform_version: 1.15.5
 
+    - uses: equinix/terraform-equinix-fabric/.github/actions/sweep@sweeper  
+      if: ${{ inputs.test-filter == 'TestPFCR' }}
+      env:
+        EQUINIX_API_CLIENTID: ${{ env.TF_VAR_equinix_client_id }}
+        EQUINIX_API_CLIENTSECRET: ${{ env.TF_VAR_equinix_client_secret }}
+        UAT_API_ENDPOINT: "https://uatapi.equinix.com"
+      with:
+        resource-identifier: 'PFCR'
+        project: '33ec651f-cc99-48e0-94d3-47466899cdc7'
+
+    - uses: equinix/terraform-equinix-fabric/.github/actions/sweep@sweeper  
+      if: ${{ inputs.test-filter == 'TestPFCR' }}
+      env:
+        EQUINIX_API_CLIENTID: ${{ env.TF_VAR_equinix_client_id }}
+        EQUINIX_API_CLIENTSECRET: ${{ env.TF_VAR_equinix_client_secret }}
+        UAT_API_ENDPOINT: "https://uatapi.equinix.com"
+      with:
+        resource-identifier: 'EmergingNetStream'
+        project: '291639000636552'
+
     - name: Run Go Tests
       shell: bash
       run:
