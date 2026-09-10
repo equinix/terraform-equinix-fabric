@@ -29,6 +29,7 @@ runs:
     - uses: hashicorp/setup-terraform@v4
       with:
         terraform_wrapper: false
+        terraform_version: 1.15.5
 
     - name: Run Go Tests
       shell: bash
