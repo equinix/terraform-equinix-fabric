@@ -20,4 +20,5 @@ module "routing_protocols" {
   bgp_enabled_ipv4       = var.bgp_enabled_ipv4
   bgp_customer_peer_ipv6 = var.bgp_customer_peer_ipv6
   bgp_enabled_ipv6       = var.bgp_enabled_ipv6
+  bgp_auth_key           = var.bgp_auth_key
 }
