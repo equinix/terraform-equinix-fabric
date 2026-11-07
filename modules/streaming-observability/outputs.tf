@@ -44,11 +44,11 @@ output "servicenow_subscription" {
 }
 
 output "webhook_subscription" {
-  value     = var.webhook_event_uri != "" ? equinix_fabric_stream_subscription.webhook[0] : null
+  value     = local.webhook_count > 0 ? equinix_fabric_stream_subscription.webhook[0] : null
   sensitive = true
 }
 
 output "grafana_subscription" {
-  value     = var.grafana_event_uri != "" ? equinix_fabric_stream_subscription.grafana[0] : null
+  value     = local.grafana_count > 0 ? equinix_fabric_stream_subscription.grafana[0] : null
   sensitive = true
 }
