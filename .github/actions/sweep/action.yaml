@@ -157,4 +157,6 @@ runs:
 
       sweep 'networks' '["ACTIVE"]'
 
+      sweep 'interconnects' '["PROVISIONED", "PROVISIONING"]' "no_wildcard"
+
       sweep_streams
