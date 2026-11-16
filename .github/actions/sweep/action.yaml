@@ -1,4 +1,10 @@
-name: Run sweeper
+name: Run sweeper (rate-limit aware)
+
+# Vendored from equinix/terraform-equinix-fabric/.github/actions/sweep@sweeper.
+# Differences from upstream: every API call goes through `api_call`, which
+# retries on HTTP 429/5xx (honouring Retry-After, else exponential backoff),
+# and deletes are issued one at a time with a pause between them instead of
+# being fired back-to-back.
 
 inputs:
   resource-identifier:
@@ -9,29 +15,39 @@ inputs:
     description: 'ID for the project to sweep on'
     required: true
     type: string
+  delete-delay-seconds:
+    description: 'Pause between consecutive API calls, to stay under the rate limit'
+    required: false
+    default: '2'
+  max-retries:
+    description: 'Retries per API call when rate-limited (HTTP 429) or on a 5xx'
+    required: false
+    default: '6'
 
 runs:
   using: composite
   steps:
-  # Manual checking, because https://stackoverflow.com/questions/68804484/why-are-required-inputs-to-github-actions-not-enforced
   - name: Check inputs
     shell: bash
+    env:
+      RESOURCE_IDENTIFIER: ${{ inputs.resource-identifier }}
+      PROJECT: ${{ inputs.project }}
     run: |
-      if [[ -z "${{inputs.resource-identifier}}" ]]; then
+      if [[ -z "$RESOURCE_IDENTIFIER" ]]; then
         echo "resource identifier not set"
         exit 1
       fi
 
-      if [[ -z "${{inputs.project}}" ]]; then
+      if [[ -z "$PROJECT" ]]; then
         echo "project not set"
         exit 1
       fi
-    
+
   - name: Authenticate
     id: auth
     shell: bash
     run: |
-        TOKEN=$(curl -X POST "${UAT_API_ENDPOINT}/oauth2/v1/token" \
+        TOKEN=$(curl --silent -X POST "${UAT_API_ENDPOINT}/oauth2/v1/token" \
           -H 'content-type: application/json' \
           --data-raw "{\"grant_type\":\"client_credentials\",\"client_id\": \"${EQUINIX_API_CLIENTID}\",\"client_secret\":\"${EQUINIX_API_CLIENTSECRET}\"}" \
           | jq -r '.access_token')
@@ -41,7 +57,43 @@ runs:
 
   - name: Sweep resources
     shell: bash
+    env:
+      RESOURCE_IDENTIFIER: ${{ inputs.resource-identifier }}
+      PROJECT: ${{ inputs.project }}
+      DELAY: ${{ inputs.delete-delay-seconds }}
+      MAX_RETRIES: ${{ inputs.max-retries }}
+      TOKEN: ${{ steps.auth.outputs.token }}
     run: |
+      # api_call <outfile> <curl args...>
+      # Runs curl, retrying on 429/5xx. Returns 0 on 2xx, 1 otherwise; the
+      # response body is left in <outfile>.
+      api_call() {
+        local out="$1"; shift
+        local attempt=0 code wait headers
+        headers=$(mktemp)
+
+        while true; do
+          code=$(curl --silent --output "$out" --dump-header "$headers" \
+                   --write-out '%{http_code}' -H "authorization: Bearer ${TOKEN}" "$@") || code=000
+
+          if [[ "$code" =~ ^2 ]]; then rm -f "$headers"; return 0; fi
+
+          if [[ "$code" == "429" || "$code" =~ ^5 || "$code" == "000" ]] && (( attempt < MAX_RETRIES )); then
+            wait=$(awk 'tolower($1)=="retry-after:" {gsub(/\r/,"",$2); print $2}' "$headers" | tail -n1)
+            if ! [[ "$wait" =~ ^[0-9]+$ ]]; then wait=$(( 5 * 2 ** attempt )); fi
+            (( wait > 120 )) && wait=120
+            attempt=$(( attempt + 1 ))
+            echo "  HTTP ${code}; retry ${attempt}/${MAX_RETRIES} in ${wait}s" >&2
+            sleep "$wait"
+            continue
+          fi
+
+          rm -f "$headers"
+          echo "  HTTP ${code}" >&2
+          return 1
+        done
+      }
+
       find_sweepable_resources() {
         resource="$1"
         states="$2"
@@ -50,28 +102,26 @@ runs:
 
         case $flag in
           no_name)
-            jq --compact-output -n --argjson states "$states" '{"filter":{"and":[{"property":"/state","operator":"IN","values":$states},{"property":"/project/projectId","operator":"IN","values":["${{ inputs.project }}"]}]},"pagination":{"offset":0,"limit":100},"sort":[{"property":"/changeLog/updatedDateTime","direction":"DESC"}]}' > payload
+            jq --compact-output -n --argjson states "$states" --arg project "$PROJECT" '{"filter":{"and":[{"property":"/state","operator":"IN","values":$states},{"property":"/project/projectId","operator":"IN","values":[$project]}]},"pagination":{"offset":0,"limit":100},"sort":[{"property":"/changeLog/updatedDateTime","direction":"DESC"}]}' > payload
             ;;
           no_wildcard)
-            name_filter="${{inputs.resource-identifier}}"
+            name_filter="$RESOURCE_IDENTIFIER"
             ;;&
           "")
-            name_filter="%${{inputs.resource-identifier}}%"
+            name_filter="%${RESOURCE_IDENTIFIER}%"
             ;;&
           *)
-            jq --compact-output -n --arg name $name_filter --argjson states "$states" '{"filter":{"and":[{"property":"/name","operator":"LIKE","values":[$name]}, {"property":"/state","operator":"IN","values":$states},{"property":"/project/projectId","operator":"IN","values":["${{ inputs.project }}"]}]},"pagination":{"offset":0,"limit":100},"sort":[{"property":"/changeLog/updatedDateTime","direction":"DESC"}]}' > payload
+            jq --compact-output -n --arg name "$name_filter" --arg project "$PROJECT" --argjson states "$states" '{"filter":{"and":[{"property":"/name","operator":"LIKE","values":[$name]}, {"property":"/state","operator":"IN","values":$states},{"property":"/project/projectId","operator":"IN","values":[$project]}]},"pagination":{"offset":0,"limit":100},"sort":[{"property":"/changeLog/updatedDateTime","direction":"DESC"}]}' > payload
             ;;
         esac
 
         echo "Sweeping $resource"
-        export ENDPOINT="fabric/v4/$resource"
+        ENDPOINT="fabric/v4/$resource"
 
-        if ! curl --silent --fail-with-body "${UAT_API_ENDPOINT}/{$ENDPOINT}/search${query}" \
+        if ! api_call response.json "${UAT_API_ENDPOINT}/${ENDPOINT}/search${query}" \
           -H 'accept: application/json' \
           -H 'content-type: application/json; charset=utf-8' \
-          -H "authorization: Bearer ${{steps.auth.outputs.token}}" \
-          --data @payload > response.json; then
-
+          --data @payload; then
             echo "List ${ENDPOINT} resource failed"
             jq < response.json
             return 1
@@ -79,66 +129,58 @@ runs:
 
         echo "API responded $(jq --raw-output '.pagination.total' < response.json) $resource"
 
-        jq -r '[.data[] | select(.name? and (.name | startswith("${{inputs.resource-identifier}}") or endswith("${{inputs.resource-identifier}}"))) | .uuid].[]' < response.json > uuids
+        jq -r --arg id "$RESOURCE_IDENTIFIER" '[.data[] | select(.name? and (.name | startswith($id) or endswith($id))) | .uuid][]' < response.json > uuids
       }
 
-
       sweep() {
-        find_sweepable_resources "$@"
+        find_sweepable_resources "$@" || return 0
 
-        xargs -I{} bash -c '
-            echo "Deleting ${ENDPOINT}/{}"
-
-            if ! curl --silent --fail-with-body -X DELETE "${UAT_API_ENDPOINT}/{$ENDPOINT}/{}" \
-              -H "authorization: Bearer ${{steps.auth.outputs.token}}" \
-              > delete_response.json; then
-
-              echo "Delete ${ENDPOINT} {} resource failed"
-              jq < delete_response.json
-            fi
-        ' < uuids
+        while IFS= read -r uuid; do
+          [[ -z "$uuid" ]] && continue
+          echo "Deleting ${ENDPOINT}/${uuid}"
+          if ! api_call delete_response.json -X DELETE "${UAT_API_ENDPOINT}/${ENDPOINT}/${uuid}"; then
+            echo "Delete ${ENDPOINT} ${uuid} resource failed"
+            jq < delete_response.json
+          fi
+          sleep "$DELAY"
+        done < uuids
       }
 
       sweep_streams() {
-        find_sweepable_resources 'streams' '["PROVISIONED","PROVISIONING","REPROVISIONING","NOT_DEPROVISIONED"]'
+        find_sweepable_resources 'streams' '["PROVISIONED","PROVISIONING","REPROVISIONING","NOT_DEPROVISIONED"]' || return 0
+        cp uuids stream_uuids
 
         while IFS= read -r uuid; do
-            echo "Deleting stream ${uuid}"
+          [[ -z "$uuid" ]] && continue
+          echo "Deleting stream ${uuid}"
 
-            if ! curl --silent --fail-with-body "${UAT_API_ENDPOINT}/fabric/v4/streams/${uuid}/subscriptions" \
-              -H 'accept: application/json' \
-              -H "authorization: Bearer ${{steps.auth.outputs.token}}" > subscriptions.json; then
+          if ! api_call subscriptions.json "${UAT_API_ENDPOINT}/fabric/v4/streams/${uuid}/subscriptions" \
+            -H 'accept: application/json'; then
+              echo "List subscriptions failed"
+              jq < subscriptions.json
+              continue
+          fi
 
-                echo "List subscriptions failed"
-                jq < subscriptions.json
-                return 1
-            fi
+          echo "API responded $(jq --raw-output '.pagination.total' < subscriptions.json) subscriptions"
 
-            echo "API responded $(jq --raw-output '.pagination.total' < subscriptions.json) subscriptions"
+          jq -r '.data | map(.uuid) | .[]' < subscriptions.json > subscription_uuids
 
-            jq '.data | map (.uuid) | .[]' < subscriptions.json > subscription_uuids
-
-            xargs -I{} bash -c '
-                uuid="$1"
-                echo "Deleting subscription {} on stream ${uuid}"
-
-                if ! curl --silent --fail-with-body -X DELETE "${UAT_API_ENDPOINT}/fabric/v4/streams/${uuid}/subscriptions/{}" \
-                  -H "authorization: Bearer ${{steps.auth.outputs.token}}" \
-                  > delete_response.json; then
-
-                  echo "Delete {} subscription failed"
-                  jq < delete_response.json
-                fi
-            ' _ "$uuid" < subscription_uuids
-
-            if ! curl --silent --fail-with-body -X DELETE "${UAT_API_ENDPOINT}/fabric/v4/streams/${uuid}" \
-              -H "authorization: Bearer ${{steps.auth.outputs.token}}" \
-              > delete_response.json; then
-
-              echo "Delete streams ${uuid} resource failed"
+          while IFS= read -r sub; do
+            [[ -z "$sub" ]] && continue
+            echo "Deleting subscription ${sub} on stream ${uuid}"
+            if ! api_call delete_response.json -X DELETE "${UAT_API_ENDPOINT}/fabric/v4/streams/${uuid}/subscriptions/${sub}"; then
+              echo "Delete ${sub} subscription failed"
               jq < delete_response.json
             fi
-        done < uuids
+            sleep "$DELAY"
+          done < subscription_uuids
+
+          if ! api_call delete_response.json -X DELETE "${UAT_API_ENDPOINT}/fabric/v4/streams/${uuid}"; then
+            echo "Delete streams ${uuid} resource failed"
+            jq < delete_response.json
+          fi
+          sleep "$DELAY"
+        done < stream_uuids
       }
 
       sweep 'connections' '["ACTIVE", "DRAFT", "PENDING", "PROVISIONING"]' "no_wildcard"
