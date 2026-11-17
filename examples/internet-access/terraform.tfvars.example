@@ -14,6 +14,10 @@ service_profile_uuid = "<ia_profile_uuid>"
 metro_code           = "MX"
 
 connection_name        = "tf-ia-connection"
+connection_type        = "IA_VC"
+zside_ap_type          = "SP"
+zside_ap_profile_type  = "IA_PROFILE"
+ip_block_type          = "IPV4_IP_BLOCK"
 connection_bandwidth   = 50
 notifications_emails   = ["example@equinix.com"]
 ip_block_prefix_length = 30

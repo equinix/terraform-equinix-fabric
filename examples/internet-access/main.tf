@@ -13,15 +13,15 @@ module "ia_connection" {
   count  = var.create ? 1 : 0
 
   connection_name       = var.connection_name
-  connection_type       = "IA_VC"
+  connection_type       = var.connection_type
   project_id            = var.project_id
   bandwidth             = var.connection_bandwidth
   notifications_emails  = var.notifications_emails
   aside_port_uuid       = var.port_uuid
   aside_vlan_tag        = module.vlan_tag[0].result_string
   aside_location        = var.metro_code
-  zside_ap_type         = "SP"
-  zside_ap_profile_type = "IA_PROFILE"
+  zside_ap_type         = var.zside_ap_type
+  zside_ap_profile_type = var.zside_ap_profile_type
   zside_sp_uuid         = var.service_profile_uuid
   zside_location        = var.metro_code
 }
@@ -31,6 +31,7 @@ module "ip_block" {
   count  = var.create ? 1 : 0
 
   project_id          = var.project_id
+  type                = var.ip_block_type
   prefix_length       = var.ip_block_prefix_length
   location_metro_code = var.metro_code
   account_number      = var.account_number

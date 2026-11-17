@@ -116,3 +116,23 @@ variable "ip_block_prefix_length" {
   description = "Prefix length of the IP block used as the customer route"
   type        = number
 }
+
+variable "connection_type" {
+  description = "Type of the connection to the Internet Access service, IA_VC"
+  type        = string
+}
+
+variable "zside_ap_type" {
+  description = "Z-side access point type of the connection, SP"
+  type        = string
+}
+
+variable "zside_ap_profile_type" {
+  description = "Z-side service profile type of the connection, IA_PROFILE"
+  type        = string
+}
+
+variable "ip_block_type" {
+  description = "Type of the IP block used as the customer route. One of: IPV4_IP_BLOCK, IPV6_IP_BLOCK"
+  type        = string
+}
