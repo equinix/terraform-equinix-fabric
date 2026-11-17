@@ -23,8 +23,10 @@ func RunTest(t *testing.T, terraformDir string, tfvarEnv string, outputName stri
 		NoColor:      true,
 	})
 
-	if err := writeEnvToFile(tfvarEnv, terraformDir+"/terraform.tfvars.json"); err != nil {
-		t.Fatalf("Unable to create tfvars file %s", err)
+	if tfvarEnv != "" {
+		if err := writeEnvToFile(tfvarEnv, terraformDir+"/terraform.tfvars.json"); err != nil {
+			t.Fatalf("Unable to create tfvars file %s", err)
+		}
 	}
 	defer terraform.Destroy(t, terraformOptions)
 

@@ -1,0 +1,33 @@
+equinix_client_id     = "<client_id>"
+equinix_client_secret = "<client_secret>"
+
+name                  = "tf-ia-service"
+type                  = "SINGLE_IA"
+project_id            = "<project_id>"
+account_number        = "<account_number>"
+billing_type          = "FIXED"
+bandwidth             = 100
+purchase_order_number = null
+
+port_uuid            = "<port_uuid>"
+service_profile_uuid = "<ia_profile_uuid>"
+metro_code           = "MX"
+
+connection_name        = "tf-ia-connection"
+connection_bandwidth   = 50
+notifications_emails   = ["example@equinix.com"]
+ip_block_prefix_length = 30
+
+routing_protocol_type = "DIRECT"
+asn_uuid              = null
+customer_asn          = null
+customer_asn_range    = null
+bgp_auth_key          = null
+export_policy         = null
+
+# BGP only
+# routing_protocol_type = "BGP"
+# asn_uuid              = "<equinix_fabric_asn uuid>"
+# customer_asn          = 65001
+# customer_asn_range    = "BITS_16"
+# export_policy         = "FULL"

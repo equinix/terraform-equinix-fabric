@@ -1,0 +1,26 @@
+name: terratests-prod-eia
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test-eia:
+    name: PROD EIA
+    runs-on: ubuntu-latest
+    env:
+      TF_VAR_equinix_client_id: ${{ secrets.EIA_PROD_EQUINIX_CLIENT_ID }}
+      TF_VAR_equinix_client_secret: ${{ secrets.EIA_PROD_EQUINIX_CLIENT_SECRET }}
+      EQUINIX_API_ENDPOINT: "https://api.equinix.com"
+      TF_VAR_create: "false"
+      TEST_DATA_PROD_ASN: ${{ secrets.TEST_DATA_PROD_ASN }}
+      TEST_DATA_PROD_IP_BLOCK: ${{ secrets.TEST_DATA_PROD_IP_BLOCK }}
+      TEST_DATA_PROD_INTERNET_ACCESS: ${{ secrets.TEST_DATA_PROD_INTERNET_ACCESS }}
+
+    steps:
+      - uses: actions/checkout@v7
+      - uses: ./.github/actions/run-test
+        timeout-minutes: 30
+        with:
+          test-log: prod_eia_test.log
+          test-filter: TestEIAPROD
+          test-dir: ./tests/prod/eia

@@ -1,0 +1,7 @@
+equinix_client_id     = "<client_id>"
+equinix_client_secret = "<client_secret>"
+
+project_id = "<project_id>"
+metro_code = "DC"
+range      = "16_BIT"
+type       = "PRIVATE_ASN"

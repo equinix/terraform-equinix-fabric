@@ -1,0 +1,8 @@
+equinix_client_id     = "<client_id>"
+equinix_client_secret = "<client_secret>"
+
+project_id     = "<project_id>"
+account_number = "<account_number>"
+metro_code     = "DC"
+type           = "IPV4_IP_BLOCK"
+prefix_length  = 30
