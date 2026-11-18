@@ -3,14 +3,45 @@ provider "equinix" {
   client_secret = var.equinix_client_secret
 }
 
-module "ip_block" {
-  source = "../../modules/ip-block"
+resource "equinix_fabric_ip_block" "this" {
+  count = var.create ? 1 : 0
 
-  create = var.create
+  type          = var.type
+  prefix_length = var.prefix_length
 
-  project_id          = var.project_id
-  type                = var.type
-  prefix_length       = var.prefix_length
-  location_metro_code = var.metro_code
-  account_number      = var.account_number
+  project = {
+    project_id = var.project_id
+  }
+
+  location = {
+    metro_code = var.metro_code
+  }
+
+  account = {
+    account_number = var.account_number
+  }
+}
+
+data "equinix_fabric_ip_blocks" "search" {
+  filter = {
+    property = "/project/projectId"
+    operator = "="
+    values   = [var.project_id]
+  }
+
+  pagination = {
+    limit  = 20
+    offset = 0
+  }
+
+  sort = {
+    property  = "/changeLog/createdDateTime"
+    direction = "DESC"
+  }
+
+  depends_on = [equinix_fabric_ip_block.this]
+}
+
+data "equinix_fabric_ip_block" "get" {
+  ip_block_id = var.create ? equinix_fabric_ip_block.this[0].uuid : data.equinix_fabric_ip_blocks.search.data[0].uuid
 }

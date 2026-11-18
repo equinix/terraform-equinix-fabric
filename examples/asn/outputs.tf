@@ -1,23 +1,23 @@
 output "asn_id" {
-  description = "UUID of the created ASN, confirmed by reading it back through the data source (get)"
-  value       = module.asn.get_uuid
+  description = "UUID of the ASN, confirmed by reading it back through the data source"
+  value       = data.equinix_fabric_asn.get.uuid
 }
 
 output "asn_number" {
-  description = "Autonomous System Number assigned by Equinix"
-  value       = module.asn.number
+  description = "Autonomous System Number"
+  value       = data.equinix_fabric_asn.get.number
 }
 
 output "asn_state" {
-  value = module.asn.get_state
+  value = data.equinix_fabric_asn.get.state
 }
 
 output "asn_search_total" {
   description = "Total number of ASNs returned by the search"
-  value       = module.asn.search_total
+  value       = data.equinix_fabric_asns.search.pagination.total
 }
 
 output "asn_search_uuids" {
   description = "UUIDs of the ASNs returned by the search"
-  value       = module.asn.search_uuids
+  value       = [for r in data.equinix_fabric_asns.search.data : r.uuid]
 }

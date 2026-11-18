@@ -3,13 +3,41 @@ provider "equinix" {
   client_secret = var.equinix_client_secret
 }
 
-module "asn" {
-  source = "../../modules/asn"
+resource "equinix_fabric_asn" "this" {
+  count = var.create ? 1 : 0
 
-  create = var.create
+  type  = var.type
+  range = var.range
 
-  project_id          = var.project_id
-  type                = var.type
-  location_metro_code = var.metro_code
-  range               = var.range
+  project = {
+    project_id = var.project_id
+  }
+
+  location = {
+    metro_code = var.metro_code
+  }
+}
+
+data "equinix_fabric_asns" "search" {
+  filter = {
+    property = "/state"
+    operator = "="
+    values   = ["PROVISIONED"]
+  }
+
+  pagination = {
+    limit  = 20
+    offset = 0
+  }
+
+  sort = {
+    property  = "/changeLog/createdDateTime"
+    direction = "DESC"
+  }
+
+  depends_on = [equinix_fabric_asn.this]
+}
+
+data "equinix_fabric_asn" "get" {
+  asn_id = var.create ? equinix_fabric_asn.this[0].uuid : data.equinix_fabric_asns.search.data[0].uuid
 }

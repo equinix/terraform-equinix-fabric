@@ -44,27 +44,3 @@ resource "equinix_fabric_internet_access_service" "this" {
     }]
   }
 }
-
-data "equinix_fabric_internet_access_service" "get" {
-  internet_access_service_id = var.create ? equinix_fabric_internet_access_service.this[0].uuid : data.equinix_fabric_internet_access_services.search.data[0].uuid
-}
-
-data "equinix_fabric_internet_access_services" "search" {
-  filter = {
-    property = var.search_filter_property
-    operator = var.search_filter_operator
-    values   = coalesce(var.search_filter_values, [var.project_id])
-  }
-
-  pagination = {
-    limit  = var.search_pagination_limit
-    offset = var.search_pagination_offset
-  }
-
-  sort = var.search_sort_property == null ? null : {
-    property  = var.search_sort_property
-    direction = var.search_sort_direction
-  }
-
-  depends_on = [equinix_fabric_internet_access_service.this]
-}

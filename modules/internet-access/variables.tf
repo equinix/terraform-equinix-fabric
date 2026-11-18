@@ -1,5 +1,5 @@
 variable "create" {
-  description = "Create the resource. When false nothing is created and get reads the first search result"
+  description = "Create the resource."
   type        = bool
   default     = true
 }
@@ -95,46 +95,4 @@ variable "customer_route_ip_block_uuids" {
   description = "UUIDs of IP blocks (equinix_fabric_ip_block) announced as customer routes"
   type        = list(string)
   default     = []
-}
-
-variable "search_filter_property" {
-  description = "Field name used in the search filter"
-  type        = string
-  default     = "/project/projectId"
-}
-
-variable "search_filter_operator" {
-  description = "Search filter operator"
-  type        = string
-  default     = "="
-}
-
-variable "search_filter_values" {
-  description = "Values of the search filter. Defaults to [project_id] when null."
-  type        = list(string)
-  default     = null
-}
-
-variable "search_pagination_limit" {
-  description = "Maximum number of search results per page (1-100)"
-  type        = number
-  default     = 20
-}
-
-variable "search_pagination_offset" {
-  description = "Index of the first search result"
-  type        = number
-  default     = 0
-}
-
-variable "search_sort_property" {
-  description = "Search sort property. Set to null to use the API default"
-  type        = string
-  default     = "/updatedAt"
-}
-
-variable "search_sort_direction" {
-  description = "Search sort direction: ASC or DESC"
-  type        = string
-  default     = "DESC"
 }

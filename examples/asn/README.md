@@ -2,7 +2,7 @@
 
 One flow covering the whole ASN lifecycle:
 
-Everything is done by one module (`modules/asn`):
+Everything is done directly with provider resources and data sources:
 
 1. **Create**
 2. **Get** it by UUID

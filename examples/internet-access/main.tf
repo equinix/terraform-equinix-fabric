@@ -26,15 +26,23 @@ module "ia_connection" {
   zside_location        = var.metro_code
 }
 
-module "ip_block" {
-  source = "../../modules/ip-block"
-  count  = var.create ? 1 : 0
+resource "equinix_fabric_ip_block" "this" {
+  count = var.create ? 1 : 0
 
-  project_id          = var.project_id
-  type                = var.ip_block_type
-  prefix_length       = var.ip_block_prefix_length
-  location_metro_code = var.metro_code
-  account_number      = var.account_number
+  type          = var.ip_block_type
+  prefix_length = var.ip_block_prefix_length
+
+  project = {
+    project_id = var.project_id
+  }
+
+  location = {
+    metro_code = var.metro_code
+  }
+
+  account = {
+    account_number = var.account_number
+  }
 }
 
 module "internet_access" {
@@ -58,6 +66,29 @@ module "internet_access" {
   bgp_auth_key       = var.bgp_auth_key
   export_policy      = var.export_policy
 
-  customer_route_ip_block_uuids = var.create ? [module.ip_block[0].uuid] : []
+  customer_route_ip_block_uuids = var.create ? [equinix_fabric_ip_block.this[0].uuid] : []
 }
 
+data "equinix_fabric_internet_access_services" "search" {
+  filter = {
+    property = "/project/projectId"
+    operator = "="
+    values   = [var.project_id]
+  }
+
+  pagination = {
+    limit  = 20
+    offset = 0
+  }
+
+  sort = {
+    property  = "/updatedAt"
+    direction = "DESC"
+  }
+
+  depends_on = [module.internet_access]
+}
+
+data "equinix_fabric_internet_access_service" "get" {
+  internet_access_service_id = var.create ? module.internet_access.uuid : data.equinix_fabric_internet_access_services.search.data[0].uuid
+}
