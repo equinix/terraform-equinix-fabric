@@ -45,28 +45,50 @@ resource "equinix_fabric_ip_block" "this" {
   }
 }
 
-module "internet_access" {
-  source = "../../modules/internet-access"
+resource "equinix_fabric_internet_access_service" "this" {
+  count = var.create ? 1 : 0
 
-  create = var.create
+  name      = var.name
+  type      = var.type
+  bandwidth = var.bandwidth
 
-  name                  = var.name
-  type                  = var.type
-  project_id            = var.project_id
-  account_number        = var.account_number
-  billing_type          = var.billing_type
-  bandwidth             = var.bandwidth
-  purchase_order_number = var.purchase_order_number
-  routing_protocol_type = var.routing_protocol_type
-  connection_uuids      = var.create ? [module.ia_connection[0].primary_connection.uuid] : []
+  project = {
+    project_id = var.project_id
+  }
 
-  asn_uuid           = var.asn_uuid
-  customer_asn       = var.customer_asn
-  customer_asn_range = var.customer_asn_range
-  bgp_auth_key       = var.bgp_auth_key
-  export_policy      = var.export_policy
+  account = {
+    account_number = var.account_number
+  }
 
-  customer_route_ip_block_uuids = var.create ? [equinix_fabric_ip_block.this[0].uuid] : []
+  billing = {
+    type = var.billing_type
+  }
+
+  order = var.purchase_order_number == null ? null : {
+    purchase_order_number = var.purchase_order_number
+  }
+
+  routing_protocol = {
+    type               = var.routing_protocol_type
+    customer_asn       = var.customer_asn
+    customer_asn_range = var.customer_asn_range
+    bgp_auth_key       = var.bgp_auth_key
+    export_policy      = var.export_policy
+
+    asn = var.asn_uuid == null ? null : {
+      uuid = var.asn_uuid
+    }
+
+    connections = [{
+      uuid = module.ia_connection[0].primary_connection.uuid
+    }]
+
+    customer_routes = [{
+      ip_block = {
+        uuid = equinix_fabric_ip_block.this[0].uuid
+      }
+    }]
+  }
 }
 
 data "equinix_fabric_internet_access_services" "search" {
@@ -86,9 +108,9 @@ data "equinix_fabric_internet_access_services" "search" {
     direction = "DESC"
   }
 
-  depends_on = [module.internet_access]
+  depends_on = [equinix_fabric_internet_access_service.this]
 }
 
 data "equinix_fabric_internet_access_service" "get" {
-  internet_access_service_id = var.create ? module.internet_access.uuid : data.equinix_fabric_internet_access_services.search.data[0].uuid
+  internet_access_service_id = var.create ? equinix_fabric_internet_access_service.this[0].uuid : data.equinix_fabric_internet_access_services.search.data[0].uuid
 }

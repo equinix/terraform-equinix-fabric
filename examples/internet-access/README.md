@@ -2,7 +2,7 @@
 
 One flow covering the Internet Access (EIA) service lifecycle:
 
-Create is done by `modules/internet-access`, get and search by data sources in the example:
+Everything is done directly with provider resources and data sources:
 
 1. **Create** the service.
 2. **Get** it by UUID.
