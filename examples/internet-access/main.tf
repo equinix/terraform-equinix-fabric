@@ -31,27 +31,3 @@ module "internet_access" {
   bgp_auth_key           = var.bgp_auth_key
   export_policy          = var.export_policy
 }
-
-data "equinix_fabric_internet_access_services" "search" {
-  filter = {
-    property = "/project/projectId"
-    operator = "="
-    values   = [var.project_id]
-  }
-
-  pagination = {
-    limit  = 20
-    offset = 0
-  }
-
-  sort = {
-    property  = "/updatedAt"
-    direction = "DESC"
-  }
-
-  depends_on = [module.internet_access]
-}
-
-data "equinix_fabric_internet_access_service" "get" {
-  internet_access_service_id = module.internet_access.uuid
-}
