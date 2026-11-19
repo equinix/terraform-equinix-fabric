@@ -1,25 +1,57 @@
-module "vlan_tag" {
-  source = "../random-vlan-tag"
+data "equinix_fabric_port" "aside_port" {
+  uuid = var.port_uuid
 }
 
-module "ia_connection" {
-  source = "../port-connection"
+resource "equinix_fabric_connection" "ia_vc" {
+  name      = var.connection_name
+  type      = var.connection_type
+  bandwidth = var.connection_bandwidth
 
-  connection_name       = var.connection_name
-  connection_type       = var.connection_type
-  project_id            = var.project_id
-  bandwidth             = var.connection_bandwidth
-  notifications_emails  = var.notifications_emails
-  aside_port_uuid       = var.port_uuid
-  aside_vlan_tag        = module.vlan_tag.result_string
-  aside_location        = var.metro_code
-  zside_ap_type         = var.zside_ap_type
-  zside_ap_profile_type = var.zside_ap_profile_type
-  zside_sp_uuid         = var.service_profile_uuid
-  zside_location        = var.metro_code
+  notifications {
+    type   = "ALL"
+    emails = var.notifications_emails
+  }
+
+  project {
+    project_id = var.project_id
+  }
+
+  redundancy {
+    priority = "PRIMARY"
+  }
+
+  a_side {
+    access_point {
+      type = "COLO"
+      port {
+        uuid = data.equinix_fabric_port.aside_port.uuid
+      }
+      location {
+        metro_code = var.metro_code
+      }
+      link_protocol {
+        type       = one(data.equinix_fabric_port.aside_port.encapsulation).type
+        vlan_tag   = one(data.equinix_fabric_port.aside_port.encapsulation).type == "DOT1Q" ? var.vlan_tag : null
+        vlan_s_tag = one(data.equinix_fabric_port.aside_port.encapsulation).type == "QINQ" ? var.vlan_tag : null
+      }
+    }
+  }
+
+  z_side {
+    access_point {
+      type = var.zside_ap_type
+      profile {
+        type = var.zside_ap_profile_type
+        uuid = var.service_profile_uuid
+      }
+      location {
+        metro_code = var.metro_code
+      }
+    }
+  }
 }
 
-resource "equinix_fabric_ip_block" "this" {
+resource "equinix_fabric_ip_block" "ip_block" {
   type          = var.ip_block_type
   prefix_length = var.ip_block_prefix_length
 
@@ -36,7 +68,7 @@ resource "equinix_fabric_ip_block" "this" {
   }
 }
 
-resource "equinix_fabric_internet_access_service" "this" {
+resource "equinix_fabric_internet_access_service" "internet_access_service" {
   name      = var.name
   type      = var.type
   bandwidth = var.bandwidth
@@ -69,12 +101,12 @@ resource "equinix_fabric_internet_access_service" "this" {
     }
 
     connections = [{
-      uuid = module.ia_connection.primary_connection.uuid
+      uuid = equinix_fabric_connection.ia_vc.uuid
     }]
 
     customer_routes = [{
       ip_block = {
-        uuid = equinix_fabric_ip_block.this.uuid
+        uuid = equinix_fabric_ip_block.ip_block.uuid
       }
     }]
   }

@@ -3,6 +3,10 @@ provider "equinix" {
   client_secret = var.equinix_client_secret
 }
 
+module "vlan_tag" {
+  source = "../../modules/random-vlan-tag"
+}
+
 module "internet_access" {
   source = "../../modules/internet-access"
 
@@ -14,6 +18,7 @@ module "internet_access" {
   bandwidth              = var.bandwidth
   purchase_order_number  = var.purchase_order_number
   routing_protocol_type  = var.routing_protocol_type
+  vlan_tag               = module.vlan_tag.result
   port_uuid              = var.port_uuid
   service_profile_uuid   = var.service_profile_uuid
   metro_code             = var.metro_code

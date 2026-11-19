@@ -118,3 +118,8 @@ variable "ip_block_type" {
   description = "Type of the IP block used as the customer route. One of: IPV4_IP_BLOCK, IPV6_IP_BLOCK"
   type        = string
 }
+
+variable "vlan_tag" {
+  description = "A-side VLAN tag of the IA_VC connection"
+  type        = number
+}
