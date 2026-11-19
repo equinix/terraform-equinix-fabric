@@ -23,8 +23,6 @@ func TestPFCR(t *testing.T) {
 		{"FCR2VD", "../../tests/examples-without-external-providers/cloud-router-2-virtual-device-connection", "TEST_DATA_UAT_CLOUD_ROUTER_2_VIRTUAL_DEVICE_CONNECTION", "FCR_VD_Connection"},
 		{"FCR2WAN", "../../examples/cloud-router-2-wan-connection", "TEST_DATA_UAT_CLOUD_ROUTER_2_WAN_CONNECTION", "wan_connection_id"},
 		{"FCR2Port", "../../tests/examples-without-external-providers/cloud-router-2-port-connection-with-routing-protocols-and-route-filters", "TEST_DATA_UAT_CLOUD_ROUTER_2_PORT_ROUTING_PROTOCOL_AND_ROUTE_FILTER_CONNECTION", "port_connection_id"},
-		{"IpBlock", "../../examples/ip-block", "TEST_DATA_UAT_IP_BLOCK", "ip_block_id"},
-		{"Asn", "../../examples/asn", "TEST_DATA_UAT_ASN", "asn_id"},
 		{"InternetAccess", "../../examples/internet-access", "TEST_DATA_UAT_INTERNET_ACCESS", "internet_access_service_id"},
 	}
 

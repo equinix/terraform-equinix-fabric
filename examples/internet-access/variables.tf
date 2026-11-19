@@ -101,12 +101,6 @@ variable "export_policy" {
 }
 
 
-variable "create" {
-  description = "Create the resource. When false the example only runs search and get on existing data"
-  type        = bool
-  default     = true
-}
-
 variable "notifications_emails" {
   description = "Emails notified about the Internet Access connection"
   type        = list(string)
