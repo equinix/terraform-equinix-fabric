@@ -242,7 +242,7 @@ provider "google" {
   region      = var.google_region
   project     = var.google_project_id
   zone        = var.google_zone
-  credentials = var.google_credentials_path
+  credentials = file(var.google_credentials_path)
 }
 
 resource "google_compute_network" "port-google" {

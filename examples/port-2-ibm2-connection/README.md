@@ -266,7 +266,7 @@ resource "time_sleep" "wait_dl_connection" {
 
 data "ibm_dl_gateway" "test_ibm_dl_gateway" {
   name        = var.connection_name
-  depends_on  = [time_sleep.wait_dl_connection]
+  depends_on  = [time_sleep.wait_dl_connection, module.create_port_2_ibm2_connection]
 }
 
 data "ibm_resource_group" "rg" {

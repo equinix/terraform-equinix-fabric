@@ -86,6 +86,11 @@ variable "equinix_client_secret" {
   type        = string
   sensitive   = true
 }
+variable "project_id" {
+  description = "Equinix Project ID"
+  type        = string
+  default     = ""
+}
 variable "stream_description" {
   description = "Description of the created stream(s) in the module"
   type        = string
@@ -186,8 +191,9 @@ provider "equinix" {
 module "stream_servicenow_subscription" {
   source = "equinix/fabric/equinix//modules/streaming-observability"
 
-  stream_name                  = var.stream_name
-  stream_description           = var.stream_description
+  stream_name        = var.stream_name
+  stream_description = var.stream_description
+  project_id         = var.project_id
 
   servicenow_name              = var.servicenow_name
   servicenow_description       = var.servicenow_description
@@ -229,6 +235,7 @@ No resources.
 |------|-------------|------|---------|:--------:|
 | <a name="input_equinix_client_id"></a> [equinix\_client\_id](#input\_equinix\_client\_id) | Equinix client ID (consumer key), obtained after registering app in the developer platform | `string` | n/a | yes |
 | <a name="input_equinix_client_secret"></a> [equinix\_client\_secret](#input\_equinix\_client\_secret) | Equinix client secret ID (consumer secret), obtained after registering app in the developer platform | `string` | n/a | yes |
+| <a name="input_project_id"></a> [project\_id](#input\_project\_id) | Equinix Project ID | `string` | `""` | no |
 | <a name="input_servicenow_description"></a> [servicenow\_description](#input\_servicenow\_description) | Description for the ServiceNow Subscription Resource | `string` | `""` | no |
 | <a name="input_servicenow_enabled"></a> [servicenow\_enabled](#input\_servicenow\_enabled) | Boolean value enabling ServiceNow Sink Subscription | `string` | `""` | no |
 | <a name="input_servicenow_event_exceptions"></a> [servicenow\_event\_exceptions](#input\_servicenow\_event\_exceptions) | Events to exclude from the possibilities available to the stream for the Subscription | `list(string)` | `[]` | no |
