@@ -23,6 +23,7 @@ variable "direct_equinix_ipv4_ip" {
 variable "direct_equinix_ipv6_ip" {
   description = "IPv6 Address for Direct Routing Protocol"
   type        = string
+  default     = ""
 }
 
 
@@ -55,4 +56,10 @@ variable "bgp_customer_asn" {
   description = "Customer ASN for BGP Routing Protocol"
   type        = string
   default     = ""
+}
+variable "bgp_auth_key" {
+  description = "BGP authorization key"
+  type        = string
+  default     = ""
+  sensitive   = true
 }
