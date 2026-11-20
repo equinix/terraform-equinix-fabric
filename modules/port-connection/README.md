@@ -104,7 +104,7 @@ variable "aside_vlan_tag" {
 variable "aside_secondary_vlan_tag" {
   description = "Secondary VLan Tag information for DOT1Q connections, and the outer VLan tag for QINQ connections)"
   type        = string
-  default = ""
+  default     = ""
 }
 variable "aside_vlan_inner_tag" {
   description = "VLan Tag information for QINQ connections"
@@ -138,6 +138,11 @@ variable "zside_location" {
 }
 variable "zside_sp_name" {
   description = "Equinix Service Profile Name"
+  type        = string
+  default     = ""
+}
+variable "zside_sp_uuid" {
+  description = "Equinix Service Profile UUID - use instead of zside_sp_name for private service profiles"
   type        = string
   default     = ""
 }
@@ -271,7 +276,7 @@ data "equinix_fabric_ports" "aside_secondary_port" {
 }
 
 data "equinix_fabric_service_profiles" "zside_sp" {
-  count = var.zside_ap_type == "SP" ? 1 : 0
+  count = var.zside_ap_type == "SP" && var.zside_sp_name != "" ? 1 : 0
   filter {
     property = "/name"
     operator = "="
@@ -312,7 +317,7 @@ resource "equinix_fabric_connection" "primary_port_connection" {
   redundancy { priority = "PRIMARY" }
   order {
     purchase_order_number = var.purchase_order_number != "" ? var.purchase_order_number : null
-    term_length = var.term_length >= 1 ? var.term_length: null
+    term_length           = var.term_length >= 1 ? var.term_length : null
   }
 
   additional_info = var.additional_info != [] ? var.additional_info : null
@@ -345,7 +350,7 @@ resource "equinix_fabric_connection" "primary_port_connection" {
         seller_region      = var.zside_seller_region != "" ? var.zside_seller_region : null
         profile {
           type = var.zside_ap_profile_type
-          uuid = data.equinix_fabric_service_profiles.zside_sp[0].data.0.uuid
+          uuid = var.zside_sp_uuid != "" ? var.zside_sp_uuid : data.equinix_fabric_service_profiles.zside_sp[0].data.0.uuid
         }
         location {
           metro_code = var.zside_location
@@ -422,7 +427,7 @@ resource "equinix_fabric_connection" "secondary_port_connection" {
   }
   order {
     purchase_order_number = var.purchase_order_number != "" ? var.purchase_order_number : null
-    term_length = var.term_length >= 1 ? var.term_length: null
+    term_length           = var.term_length >= 1 ? var.term_length : null
   }
 
   additional_info = var.additional_info != [] ? var.additional_info : null
@@ -457,7 +462,7 @@ resource "equinix_fabric_connection" "secondary_port_connection" {
         seller_region      = var.zside_seller_region
         profile {
           type = var.zside_ap_profile_type
-          uuid = data.equinix_fabric_service_profiles.zside_sp[0].data.0.uuid
+          uuid = var.zside_sp_uuid != "" ? var.zside_sp_uuid : data.equinix_fabric_service_profiles.zside_sp[0].data.0.uuid
         }
         location {
           metro_code = var.zside_location
@@ -594,6 +599,7 @@ No modules.
 | <a name="input_zside_seller_region"></a> [zside\_seller\_region](#input\_zside\_seller\_region) | Access point seller region | `string` | `""` | no |
 | <a name="input_zside_service_token_uuid"></a> [zside\_service\_token\_uuid](#input\_zside\_service\_token\_uuid) | Service Token UUID | `string` | `""` | no |
 | <a name="input_zside_sp_name"></a> [zside\_sp\_name](#input\_zside\_sp\_name) | Equinix Service Profile Name | `string` | `""` | no |
+| <a name="input_zside_sp_uuid"></a> [zside\_sp\_uuid](#input\_zside\_sp\_uuid) | Equinix Service Profile UUID - use instead of zside\_sp\_name for private service profiles | `string` | `""` | no |
 | <a name="input_zside_vlan_inner_tag"></a> [zside\_vlan\_inner\_tag](#input\_zside\_vlan\_inner\_tag) | Inner VLan tag for QINQ connections | `string` | `""` | no |
 | <a name="input_zside_vlan_tag"></a> [zside\_vlan\_tag](#input\_zside\_vlan\_tag) | VLan Tag information for DOT1Q connections, and the outer VLan tag for QINQ connections | `string` | `""` | no |
 
