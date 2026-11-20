@@ -93,6 +93,11 @@ variable "equinix_client_secret" {
   type        = string
   sensitive   = true
 }
+variable "project_id" {
+  description = "Equinix Project ID"
+  type        = string
+  default     = ""
+}
 variable "stream_description" {
   description = "Description of the created stream(s) in the module"
   type        = string
@@ -190,8 +195,9 @@ provider "equinix" {
 module "stream_webhook_subscription" {
   source = "equinix/fabric/equinix//modules/streaming-observability"
 
-  stream_name               = var.stream_name
-  stream_description        = var.stream_description
+  stream_name        = var.stream_name
+  stream_description = var.stream_description
+  project_id         = var.project_id
 
   webhook_name              = var.webhook_name
   webhook_description       = var.webhook_description
@@ -201,7 +207,7 @@ module "stream_webhook_subscription" {
   webhook_metric_exceptions = var.webhook_metric_exceptions
   webhook_metric_selections = var.webhook_metric_selections
   webhook_event_uri         = var.webhook_event_uri
-  webhook_metric_uri         = var.webhook_metric_uri
+  webhook_metric_uri        = var.webhook_metric_uri
   webhook_format            = var.webhook_format
 }
 ```
@@ -233,6 +239,7 @@ No resources.
 |------|-------------|------|---------|:--------:|
 | <a name="input_equinix_client_id"></a> [equinix\_client\_id](#input\_equinix\_client\_id) | Equinix client ID (consumer key), obtained after registering app in the developer platform | `string` | n/a | yes |
 | <a name="input_equinix_client_secret"></a> [equinix\_client\_secret](#input\_equinix\_client\_secret) | Equinix client secret ID (consumer secret), obtained after registering app in the developer platform | `string` | n/a | yes |
+| <a name="input_project_id"></a> [project\_id](#input\_project\_id) | Equinix Project ID | `string` | `""` | no |
 | <a name="input_stream_description"></a> [stream\_description](#input\_stream\_description) | Description of the created stream(s) in the module | `string` | n/a | yes |
 | <a name="input_stream_name"></a> [stream\_name](#input\_stream\_name) | Name (and name prefix) for the created stream(s) in the module | `string` | n/a | yes |
 | <a name="input_webhook_description"></a> [webhook\_description](#input\_webhook\_description) | Description for the webhook Subscription Resource | `string` | `""` | no |

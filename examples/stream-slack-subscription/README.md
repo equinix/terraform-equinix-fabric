@@ -91,6 +91,11 @@ variable "equinix_client_secret" {
   type        = string
   sensitive   = true
 }
+variable "project_id" {
+  description = "Equinix Project ID"
+  type        = string
+  default     = ""
+}
 variable "stream_description" {
   description = "Description of the created stream(s) in the module"
   type        = string
@@ -178,6 +183,7 @@ module "stream_slack_subscription" {
 
   stream_name        = var.stream_name
   stream_description = var.stream_description
+  project_id         = var.project_id
 
   slack_name              = var.slack_name
   slack_description       = var.slack_description
@@ -218,6 +224,7 @@ No resources.
 |------|-------------|------|---------|:--------:|
 | <a name="input_equinix_client_id"></a> [equinix\_client\_id](#input\_equinix\_client\_id) | Equinix client ID (consumer key), obtained after registering app in the developer platform | `string` | n/a | yes |
 | <a name="input_equinix_client_secret"></a> [equinix\_client\_secret](#input\_equinix\_client\_secret) | Equinix client secret ID (consumer secret), obtained after registering app in the developer platform | `string` | n/a | yes |
+| <a name="input_project_id"></a> [project\_id](#input\_project\_id) | Equinix Project ID | `string` | `""` | no |
 | <a name="input_slack_description"></a> [slack\_description](#input\_slack\_description) | Description of the slack Subscription | `string` | `""` | no |
 | <a name="input_slack_enabled"></a> [slack\_enabled](#input\_slack\_enabled) | Boolean value enabling slack Subscription | `string` | `""` | no |
 | <a name="input_slack_event_exceptions"></a> [slack\_event\_exceptions](#input\_slack\_event\_exceptions) | Events to exclude from the possibilities available to the stream for the Subscription | `list(string)` | `[]` | no |

@@ -119,10 +119,17 @@ variable "purchase_order_number" {
 variable "aside_port_name" {
   description = "Equinix A-Side Port Name"
   type        = string
+  default     = ""
+}
+variable "aside_port_uuid" {
+  description = "Equinix A-Side Port UUID"
+  type        = string
+  default     = ""
 }
 variable "aside_vlan_tag" {
   description = "Vlan Tag information, outer vlanSTag for QINQ connections"
   type        = string
+  default     = ""
 }
 variable "aside_vlan_inner_tag" {
   description = "Vlan Inner Tag information, inner vlanCTag for QINQ connections"
@@ -175,6 +182,10 @@ provider "equinix" {
   client_secret = var.equinix_client_secret
 }
 
+module "random_vlan_tag" {
+  source = "equinix/fabric/equinix//modules/random-vlan-tag"
+}
+
 module "create_port_2_alibaba_connection" {
   source = "equinix/fabric/equinix//modules/port-connection"
 
@@ -187,8 +198,8 @@ module "create_port_2_alibaba_connection" {
   project_id            = var.project_id
 
   # A-side
-  aside_port_name = var.aside_port_name
-  aside_vlan_tag  = var.aside_vlan_tag
+  aside_port_uuid = var.aside_port_uuid
+  aside_vlan_tag  = module.random_vlan_tag.result_string
 
   # Z-side
   zside_ap_type               = var.zside_ap_type
@@ -216,6 +227,7 @@ No providers.
 | Name | Source | Version |
 |------|--------|---------|
 | <a name="module_create_port_2_alibaba_connection"></a> [create\_port\_2\_alibaba\_connection](#module\_create\_port\_2\_alibaba\_connection) | equinix/fabric/equinix//modules/port-connection | n/a |
+| <a name="module_random_vlan_tag"></a> [random\_vlan\_tag](#module\_random\_vlan\_tag) | equinix/fabric/equinix//modules/random-vlan-tag | n/a |
 
 ## Resources
 
@@ -225,9 +237,10 @@ No resources.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_aside_port_name"></a> [aside\_port\_name](#input\_aside\_port\_name) | Equinix A-Side Port Name | `string` | n/a | yes |
+| <a name="input_aside_port_name"></a> [aside\_port\_name](#input\_aside\_port\_name) | Equinix A-Side Port Name | `string` | `""` | no |
+| <a name="input_aside_port_uuid"></a> [aside\_port\_uuid](#input\_aside\_port\_uuid) | Equinix A-Side Port UUID | `string` | `""` | no |
 | <a name="input_aside_vlan_inner_tag"></a> [aside\_vlan\_inner\_tag](#input\_aside\_vlan\_inner\_tag) | Vlan Inner Tag information, inner vlanCTag for QINQ connections | `string` | `""` | no |
-| <a name="input_aside_vlan_tag"></a> [aside\_vlan\_tag](#input\_aside\_vlan\_tag) | Vlan Tag information, outer vlanSTag for QINQ connections | `string` | n/a | yes |
+| <a name="input_aside_vlan_tag"></a> [aside\_vlan\_tag](#input\_aside\_vlan\_tag) | Vlan Tag information, outer vlanSTag for QINQ connections | `string` | `""` | no |
 | <a name="input_bandwidth"></a> [bandwidth](#input\_bandwidth) | Connection bandwidth in Mbps | `number` | n/a | yes |
 | <a name="input_connection_name"></a> [connection\_name](#input\_connection\_name) | Connection name. An alpha-numeric 24 characters string which can include only hyphens and underscores | `string` | n/a | yes |
 | <a name="input_connection_type"></a> [connection\_type](#input\_connection\_type) | Defines the connection type like VG\_VC, EVPL\_VC, EPL\_VC, EC\_VC, IP\_VC, ACCESS\_EPL\_VC | `string` | n/a | yes |

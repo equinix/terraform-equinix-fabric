@@ -198,13 +198,14 @@ provider "equinix" {
   client_secret = var.equinix_client_secret
 }
 
-resource "random_integer" "random_vlan_tag" {
-  min = 50
-  max = 2549
+module "random_vlan_tag" {
+  source = "equinix/fabric/equinix//modules/random-vlan-tag"
+  min    = 50
+  max    = 2549
 }
 
 output "random_vlan_tag" {
-  value = random_integer.random_vlan_tag.result
+  value = module.random_vlan_tag.result
 }
 
 module "create_port_2_precision_time_ptp_service_profile" {
@@ -219,7 +220,7 @@ module "create_port_2_precision_time_ptp_service_profile" {
 
   # A-side
   aside_port_name = var.aside_port_name
-  aside_vlan_tag  = tostring(random_integer.random_vlan_tag.result)
+  aside_vlan_tag  = module.random_vlan_tag.result_string
 
   # Z-side
   zside_ap_type         = var.zside_ap_type
@@ -261,20 +262,19 @@ resource "equinix_fabric_precision_time_service" "ptp" {
 | Name | Version |
 |------|---------|
 | <a name="provider_equinix"></a> [equinix](#provider\_equinix) | >= 3.5.0 |
-| <a name="provider_random"></a> [random](#provider\_random) | n/a |
 
 ## Modules
 
 | Name | Source | Version |
 |------|--------|---------|
 | <a name="module_create_port_2_precision_time_ptp_service_profile"></a> [create\_port\_2\_precision\_time\_ptp\_service\_profile](#module\_create\_port\_2\_precision\_time\_ptp\_service\_profile) | equinix/fabric/equinix//modules/port-connection | n/a |
+| <a name="module_random_vlan_tag"></a> [random\_vlan\_tag](#module\_random\_vlan\_tag) | equinix/fabric/equinix//modules/random-vlan-tag | n/a |
 
 ## Resources
 
 | Name | Type |
 |------|------|
 | [equinix_fabric_precision_time_service.ptp](https://registry.terraform.io/providers/equinix/equinix/latest/docs/resources/fabric_precision_time_service) | resource |
-| [random_integer.random_vlan_tag](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/integer) | resource |
 
 ## Inputs
 
