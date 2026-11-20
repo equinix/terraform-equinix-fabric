@@ -15,7 +15,7 @@ module "stream_splunk_subscription" {
   splunk_description       = var.splunk_description
   splunk_uri               = var.splunk_uri
   splunk_event_exceptions  = var.splunk_event_exceptions
-  splunk_event_selections  = var.splunk_event_exceptions
+  splunk_event_selections  = var.splunk_event_selections
   splunk_metric_exceptions = var.splunk_metric_exceptions
   splunk_metric_selections = var.splunk_metric_selections
   splunk_source            = var.splunk_source
