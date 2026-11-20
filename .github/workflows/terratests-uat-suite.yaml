@@ -42,7 +42,7 @@ jobs:
       - uses: actions/checkout@v7
       - id: get_id_token
         name: Get GitHub OIDC Token for PFCR
-        uses: actions/github-script@v6
+        uses: actions/github-script@v9
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
