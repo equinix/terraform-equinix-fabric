@@ -4,7 +4,7 @@ data "equinix_fabric_port" "aside_port" {
 
 resource "equinix_fabric_connection" "ia_vc" {
   name      = var.connection_name
-  type      = var.connection_type
+  type      = "IA_VC"
   bandwidth = var.connection_bandwidth
 
   notifications {
@@ -39,9 +39,9 @@ resource "equinix_fabric_connection" "ia_vc" {
 
   z_side {
     access_point {
-      type = var.zside_ap_type
+      type = "SP"
       profile {
-        type = var.zside_ap_profile_type
+        type = "IA_PROFILE"
         uuid = var.service_profile_uuid
       }
       location {

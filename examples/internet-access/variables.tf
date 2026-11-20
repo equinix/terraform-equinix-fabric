@@ -10,38 +10,39 @@ variable "equinix_client_secret" {
 }
 
 variable "name" {
-  description = "Name of the Internet Access service"
+  description = "The name of the EIA service"
   type        = string
 }
 
 variable "type" {
-  description = "Type of the service. One of: SINGLE_IA, DUAL_IA"
+  description = "Type of the EIA service. One of: SINGLE_IA, DUAL_IA"
   type        = string
 }
 
 variable "project_id" {
-  description = "Equinix subscriber-assigned project ID"
+  description = "Subscriber-assigned project ID"
   type        = string
 }
 
 variable "account_number" {
-  description = "Account number the service is billed to"
+  description = "Account number"
   type        = string
 }
 
 variable "billing_type" {
-  description = "Billing type. One of: FIXED, USAGE_BASED, BURST_BASED"
+  description = "Billing type of the EIA service. One of: FIXED, USAGE_BASED, BURST_BASED"
   type        = string
 }
 
 variable "bandwidth" {
-  description = "Bandwidth of the service in Mbps"
+  description = "Bandwidth of the service"
   type        = number
 }
 
 variable "purchase_order_number" {
   description = "Purchase order number"
   type        = string
+  default     = null
 }
 
 variable "routing_protocol_type" {
@@ -75,29 +76,34 @@ variable "connection_bandwidth" {
 }
 
 variable "asn_uuid" {
-  description = "BGP only. UUID of an existing equinix_fabric_asn (see the asn example)"
+  description = "BGP only. Unique identifier of the ASN (equinix_fabric_asn)"
   type        = string
+  default     = null
 }
 
 variable "customer_asn" {
-  description = "BGP only. Customer ASN number"
+  description = "BGP only. Customer ASN. Valid range is 1-64495 or 65536-4199999999"
   type        = number
+  default     = null
 }
 
 variable "customer_asn_range" {
   description = "BGP only. Customer ASN range. One of: BITS_16, BITS_32"
   type        = string
+  default     = null
 }
 
 variable "bgp_auth_key" {
   description = "BGP only. BGP authentication key"
   type        = string
+  default     = null
   sensitive   = true
 }
 
 variable "export_policy" {
   description = "BGP only. Export policy. One of: FULL, DEFAULT, FULL_DEFAULT, PARTIAL"
   type        = string
+  default     = null
 }
 
 
@@ -107,23 +113,8 @@ variable "notifications_emails" {
 }
 
 variable "ip_block_prefix_length" {
-  description = "Prefix length of the IP block used as the customer route"
+  description = "Prefix length of the IP block attached as the customer route"
   type        = number
-}
-
-variable "connection_type" {
-  description = "Type of the connection to the Internet Access service, IA_VC"
-  type        = string
-}
-
-variable "zside_ap_type" {
-  description = "Z-side access point type of the connection, SP"
-  type        = string
-}
-
-variable "zside_ap_profile_type" {
-  description = "Z-side service profile type of the connection, IA_PROFILE"
-  type        = string
 }
 
 variable "ip_block_type" {
